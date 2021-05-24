@@ -12,7 +12,7 @@ The project has just started and it is open for everyone to contribute to it. It
 - By the community, for the community
 
 ### Contribute
-Everyone can contribute, just pull the project from Github, look at issues you might be able to fix, or add your own cool functionality to the app and push it back up to Github.
+Everyone can contribute, just pull the project from Github, look at issues you might be able to fix, or add your own cool functionality to the app and push it back up to Github. You can also look at the Projects tab and see if there is something that you could add. Feedback is highly appreciated!
 
 ### Screenshots
 <img src="https://user-images.githubusercontent.com/50681275/119388676-e6692c00-bcca-11eb-8569-244e41e765d3.jpg" width="150" height="150">
