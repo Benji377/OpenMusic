@@ -17,4 +17,8 @@ public class Song {
     public String getFullName(){
         return this.path.getName();
     }
+
+    public File getFile() {
+        return path;
+    }
 }

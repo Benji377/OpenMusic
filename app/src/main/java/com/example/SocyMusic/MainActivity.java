@@ -14,11 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.SocyMusic.SocyMusic.SocyMusic;
 import com.example.musicplayer.R;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -32,7 +34,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
-    String[] items;
+    SocyMusic music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listViewSong);
 
-        runtimePermission();
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("SocyMusic");
+        checkRuntimePermissions();
     }
 
     @Override
@@ -65,12 +65,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void runtimePermission() {
+    private void checkRuntimePermissions() {
         Dexter.withContext(this).withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                        displaySongs();
+                        start();
                     }
 
                     @Override
@@ -81,81 +81,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public ArrayList<File> findSong (File file) {
-        ArrayList<File> arrayList = new ArrayList<>();
+    /**
+     * To start the application
+     */
+    private void start(){
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("SocyMusic");
 
-        File[] files = file.listFiles();
+        this.music = new SocyMusic(Environment.getExternalStorageDirectory());
 
-        if (files != null) {
-            for (File singlefile : files) {
-                if (singlefile.isDirectory() && !singlefile.isHidden()) {
-                    arrayList.addAll(findSong(singlefile));
-                } else {
-                    if (singlefile.getName().endsWith(".mp3") || singlefile.getName().endsWith(".wav")) {
-                        arrayList.add(singlefile);
-                    }
-                }
-            }
-        }
-        return arrayList;
-    }
-
-    void displaySongs() {
-        final ArrayList<File> mySongs = findSong(Environment.getExternalStorageDirectory());
-
-        items = new String[mySongs.size()];
-        for (int i = 0; i<mySongs.size(); i++) {
-            items[i] = mySongs.get(i).getName().toString().replace(".mp3", "")
-                    .replace(".wav", "");
-
-        }
-        /*
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-        listView.setAdapter(myAdapter);
-        */
-
-        customAdapter customAdapter = new customAdapter();
-        listView.setAdapter(customAdapter);
+        SonglistAdapter songlistAdapter = new SonglistAdapter(music, getApplicationContext(), getLayoutInflater());
+        listView.setAdapter(songlistAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String songName = (String) listView.getItemAtPosition(position);
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class)
-                .putExtra("songs", mySongs)
-                .putExtra("songname", songName)
-                .putExtra("pos", position));
+                        //Convert the object to an ArrayList to pass it to a new Activity
+                        .putExtra("songs", music.toArrayList())
+                        .putExtra("songname", songName)
+                        .putExtra("pos", position));
             }
         });
-    }
-
-    class customAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return items.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            View myView = getLayoutInflater().inflate(R.layout.list_item, null);
-            myView.setBackgroundColor(Color.TRANSPARENT);
-            TextView textsong = myView.findViewById(R.id.textsongname);
-            textsong.setSelected(true);
-            textsong.setText(items[position]);
-
-            return myView;
-        }
     }
 }
