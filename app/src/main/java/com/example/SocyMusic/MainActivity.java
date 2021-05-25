@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).check();
     }
+
 
     public ArrayList<File> findSong (File file) {
         ArrayList<File> arrayList = new ArrayList<>();
@@ -149,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             View myView = getLayoutInflater().inflate(R.layout.list_item, null);
+            myView.setBackgroundColor(Color.TRANSPARENT);
             TextView textsong = myView.findViewById(R.id.textsongname);
             textsong.setSelected(true);
             textsong.setText(items[position]);
