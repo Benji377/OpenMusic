@@ -23,7 +23,6 @@ Everyone can contribute, just pull the project from Github, look at issues you m
 ### Coming soon
 - Mediaplayer notification
 - Credits and settings button
-- Youtube downloader (maybe, probably not since its illegal)
 - Feature to return to the player
 - Shuffle mode
 - Repeat mode
