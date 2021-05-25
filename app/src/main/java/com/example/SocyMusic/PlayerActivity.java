@@ -7,17 +7,18 @@ import androidx.core.app.NotificationCompat;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
-import android.media.session.MediaSession;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
-import android.support.v4.media.session.MediaSessionCompat;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,10 +32,11 @@ import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 import java.io.File;
 import java.util.ArrayList;
 
+
 public class PlayerActivity extends AppCompatActivity {
 
+    private static final String CHANNEL_ID = "channel_123";
     // All required variables get declared here
-    private static final String CHANNEL_ID = "";
     Button btnplay, btnnext, btnprev, btnff, btnfr;
     TextView txtsname, txtsstart, txtsstop;
     SeekBar seekmusic;
@@ -46,6 +48,7 @@ public class PlayerActivity extends AppCompatActivity {
     int position;
     ArrayList<File> mySongs;
     Thread updateseekbar;
+
 
 
     @Override
@@ -117,6 +120,7 @@ public class PlayerActivity extends AppCompatActivity {
         // Starts the mediaplayer
         mediaPlayer.start();
 
+
         // Starts the seekbar thread
         updateseekbar = new Thread() {
             @Override
@@ -183,6 +187,8 @@ public class PlayerActivity extends AppCompatActivity {
         btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                createNotificationChannel();
+                addNotification();
                 if (mediaPlayer.isPlaying()) {
                     btnplay.setBackgroundResource(R.drawable.ic_play);
                     mediaPlayer.pause();
@@ -309,5 +315,53 @@ public class PlayerActivity extends AppCompatActivity {
         time+=sec;
 
         return time;
+    }
+
+    private void addNotification() {
+        Intent intent = new Intent(this, PlayerActivity.class);
+
+        // Creating a pending intent and wrapping our intent
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        try {
+            // Perform the operation associated with our pendingIntent
+            pendingIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
+
+        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                // Show controls on lock screen even when user hides sensitive content.
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.music)
+                // Add media control buttons that invoke intents in your media service
+                .addAction(R.drawable.ic_prev, "Previous", pendingIntent) // #0
+                .addAction(R.drawable.ic_pause, "Pause", pendingIntent)  // #1
+                .addAction(R.drawable.ic_next, "Next", pendingIntent)     // #2
+                // Apply the media style template
+                .setContentTitle("Wonderful music")
+                .setContentText("My Awesome Band")
+                //.setLargeIcon()
+                .build();
+
+
+        // Add as notification
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(0, notification);
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

@@ -3,4 +3,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="credits">Credits</string>
     <string name="download">Download</string>
+    <string name="channel_name">defaultChannel</string>
+    <string name="channel_description">its a channel</string>
 </resources>
