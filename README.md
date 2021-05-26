@@ -12,6 +12,7 @@ SocyMusic is an in Java written Android music player made from users, for users 
 
 ### Contribute
 Everyone can contribute, just pull the project from Github, look at issues you might be able to fix, or add your own cool functionality to the app and push it back up to Github. You can also look at the Projects tab and see if there is something that you could add. Feedback is highly appreciated!
+Don't forget to add yourself as a contributor to the bottom of this file.
 
 ### Screenshots
 <img src="https://user-images.githubusercontent.com/50681275/119388676-e6692c00-bcca-11eb-8569-244e41e765d3.jpg" width="150" height="150">
@@ -26,3 +27,6 @@ Everyone can contribute, just pull the project from Github, look at issues you m
 - Shuffle mode
 - Repeat mode
 - Google Assistant support
+
+### Contributors
+[![](https://github.com/benji377.png?size=50)](https://github.com/benji377)
