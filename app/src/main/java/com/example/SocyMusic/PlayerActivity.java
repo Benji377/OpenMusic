@@ -318,25 +318,26 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void addNotification() {
-        Intent intent = new Intent(this, PlayerActivity.class);
+        Intent previousIntent = new Intent(this, NotificationBroadcastReceiver.class);
+        previousIntent.putExtra("notificationId",0);
+        PendingIntent previousPendingIntent = PendingIntent.getActivity(this, 0, previousIntent, 0);
 
-        // Creating a pending intent and wrapping our intent
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        try {
-            // Perform the operation associated with our pendingIntent
-            pendingIntent.send();
-        } catch (PendingIntent.CanceledException e) {
-            e.printStackTrace();
-        }
+        Intent pauseIntent = new Intent(this, NotificationBroadcastReceiver.class);
+        previousIntent.putExtra("notificationId",1);
+        PendingIntent pausePendingIntent = PendingIntent.getActivity(this, 0, pauseIntent, 0);
+
+        Intent nextIntent = new Intent(this, NotificationBroadcastReceiver.class);
+        previousIntent.putExtra("notificationId",2);
+        PendingIntent nextPendingIntent = PendingIntent.getActivity(this, 0, nextIntent, 0);
 
         Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                 // Show controls on lock screen even when user hides sensitive content.
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSmallIcon(R.drawable.music)
                 // Add media control buttons that invoke intents in your media service
-                .addAction(R.drawable.ic_prev, "Previous", pendingIntent) // #0
-                .addAction(R.drawable.ic_pause, "Pause", pendingIntent)  // #1
-                .addAction(R.drawable.ic_next, "Next", pendingIntent)     // #2
+                .addAction(R.drawable.ic_prev, "Previous", previousPendingIntent) // #0
+                .addAction(R.drawable.ic_pause, "Pause", pausePendingIntent)  // #1
+                .addAction(R.drawable.ic_next, "Next", nextPendingIntent)     // #2
                 // Apply the media style template
                 .setContentTitle("Wonderful music")
                 .setContentText("My Awesome Band")
