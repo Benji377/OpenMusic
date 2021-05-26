@@ -13,6 +13,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -120,6 +121,8 @@ public class PlayerActivity extends AppCompatActivity {
         // Starts the mediaplayer
         mediaPlayer.start();
 
+        createNotificationChannel();
+        addNotification();
 
         // Starts the seekbar thread
         updateseekbar = new Thread() {
@@ -187,8 +190,6 @@ public class PlayerActivity extends AppCompatActivity {
         btnplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createNotificationChannel();
-                addNotification();
                 if (mediaPlayer.isPlaying()) {
                     btnplay.setBackgroundResource(R.drawable.ic_play);
                     mediaPlayer.pause();
@@ -330,18 +331,20 @@ public class PlayerActivity extends AppCompatActivity {
         previousIntent.putExtra("notificationId",2);
         PendingIntent nextPendingIntent = PendingIntent.getActivity(this, 0, nextIntent, 0);
 
+        Bitmap large_icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.app_icon);
+
         Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                 // Show controls on lock screen even when user hides sensitive content.
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setSmallIcon(R.drawable.music)
+                .setSmallIcon(R.drawable.ic_music)
                 // Add media control buttons that invoke intents in your media service
                 .addAction(R.drawable.ic_prev, "Previous", previousPendingIntent) // #0
-                .addAction(R.drawable.ic_pause, "Pause", pausePendingIntent)  // #1
+                .addAction(R.drawable.ic_pause, "Play", pausePendingIntent)  // #1
                 .addAction(R.drawable.ic_next, "Next", nextPendingIntent)     // #2
                 // Apply the media style template
-                .setContentTitle("Wonderful music")
-                .setContentText("My Awesome Band")
-                //.setLargeIcon()
+                .setContentTitle("Now Playing")
+                .setContentText(sname)
+                .setLargeIcon(large_icon)
                 .build();
 
 
