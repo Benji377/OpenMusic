@@ -10,7 +10,7 @@ android {
         applicationId "com.example.musicplayer"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 0.2
+        versionCode 1
         versionName "v0.2-beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
