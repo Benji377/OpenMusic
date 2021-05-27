@@ -14,14 +14,7 @@ Note that the features listed below might be slightly outdated as I will not be 
 ## Screenshots
 This is what the music player looks like so far. As you can see the design has been kept very simple and minimalistic.
 
-- Icon:
-<img src="https://user-images.githubusercontent.com/50681275/119388676-e6692c00-bcca-11eb-8569-244e41e765d3.jpg" width="150" height="150">
-
-- Main menu with songs list:
-<img src="https://user-images.githubusercontent.com/50681275/119388697-eb2de000-bcca-11eb-97f6-00b4c7d5daf9.jpg" width="150" height="300">
-
-- Music player with visualizer:
-<img src="https://user-images.githubusercontent.com/50681275/119388684-e8cb8600-bcca-11eb-983b-2311b8a9a441.jpg" width="150" height="300">
+<img src="https://user-images.githubusercontent.com/50681275/119388676-e6692c00-bcca-11eb-8569-244e41e765d3.jpg" width="150" height="150">  <img src="https://user-images.githubusercontent.com/50681275/119388697-eb2de000-bcca-11eb-97f6-00b4c7d5daf9.jpg" width="150" height="300">  <img src="https://user-images.githubusercontent.com/50681275/119388684-e8cb8600-bcca-11eb-983b-2311b8a9a441.jpg" width="150" height="300">
 
 ## Coming soon
 Those are the features that will be added in the future, on some there is already being worked on, but others might take a while to get added. If you think you can do any of these or you have a feature in mind which is not listed below, you are free to fork the project, add it yourself and then create a pull request to add it to the main project, that would be great.
