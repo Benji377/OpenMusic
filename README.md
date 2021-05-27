@@ -1,4 +1,4 @@
 # SocyMusic
-SocyMusic is an in Java written Android music player made from users, for users The project has just started and it is open for everyone to contribute to it. It's a very basic music player for now, but with your help, it could become something super cool and interesting!
+SocyMusic is an open-source music player written entirely in Java. It has a lot of features, like playing music in background, having a fanzy visualizer and no ads at all. It is still a big work in progress project and everyone can participate. Just read about [how to contribute](https://benji377.github.io/SocyMusic/#contributing) and help us make the greatest music player the world has ever seen!
 
-If you want to know more about it, you can some more informations here: [Website](https://benji377.github.io/SocyMusic/)
+If you are interested, you can read more about it here: [Website](https://benji377.github.io/SocyMusic/)
