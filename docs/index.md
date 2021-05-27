@@ -1,3 +1,5 @@
+# SocyMusic
+
 ## Introduction
 SocyMusic was originally a school project on Windows, but then I thought that it could be a nice idea to expand it. The main reason for this is that a lot of android music players nowadays have a lot of ads which I think is frustrating sometimes. After coding for some time, I soon encountered a lot of problems that took me a long time to fix, I just never coded anything for Android before, so it was really difficult at first. Therefore I decided to publish it on Github and hope that someone might want to help, and that's where we are right now. The project is open for everyone, everyone can fork it, add his own stuff or edit it and create a pull request for it. Below are some features that the music player currently has:
 
