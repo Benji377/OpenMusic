@@ -27,6 +27,3 @@ Don't forget to add yourself as a contributor to the bottom of this file.
 - Shuffle mode
 - Repeat mode
 - Google Assistant support
-
-### Contributors
-[![](https://github.com/benji377.png?size=50)](https://github.com/benji377)
