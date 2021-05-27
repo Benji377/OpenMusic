@@ -1,5 +1,3 @@
-# SocyMusic
-
 ## Introduction
 SocyMusic was originally a school project on Windows, but then I thought that it could be a nice idea to expand it. The main reason for this is that a lot of android music players nowadays have a lot of ads which I think is frustrating sometimes. After coding for some time, I soon encountered a lot of problems that took me a long time to fix, I just never coded anything for Android before, so it was really difficult at first. Therefore I decided to publish it on Github and hope that someone might want to help, and that's where we are right now. The project is open for everyone, everyone can fork it, add his own stuff or edit it and create a pull request for it. Below are some features that the music player currently has:
 
@@ -30,14 +28,23 @@ Those are the features that will be added in the future, on some there is alread
 
 ## Contributing
 If you like the project and would like to contribute, here are some suggestions to what to do first:
+- Fork the project to your own GitHub account
+-Make your changes, do whatever you want, staying inside the LICENSE rules
+- If you have made something interesting and want it to get merged
+- Create a pull request
+- Wait for approval
+- If we like the changes, we will merge 
+
+Some tips to work on help on this project
+
 - Download the latest release and make yourself an idea of how the app works in general
 - If you know the English language well, you might want to look at the .md files and correct any mistakes (English is not my native language, but I try my best to make it understandable for everyone)
-- If you are a translator... well I have no idea how that works here on Github, so you might need to start from scatch
+- If you are a translator... Please have some patience, we are currently in the process of implementing localization
 - Look at the .java files, maybe you can make some stuff more efficient or easy
 - Look in the projects tab on Github, I always write there on what is currently being worked one, what still needs to be done and what has been implemented already
-- Look at others issues and pull requests, you might see that someon is already working on your suggestion, or that there is an issue you know how to fix
+- Look at others issues and pull requests, you might see that someone is already working on your suggestion, or that there is an issue you know how to fix
 
-Finally you can just fork the project and work freely on your project. Or you can also create a pull requests, its really just up to you.
+Finally you can just fork the project and work freely on your project.
 
 ## Contact
 If you are unsure of something, have special suggestions or just want to contact me in general, you can do so by writing me on any of the following socials:
