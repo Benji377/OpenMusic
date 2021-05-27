@@ -34,13 +34,15 @@ If you like the project and would like to contribute, here are some suggestions 
 - Look at the .java files, maybe you can make some stuff more efficient or easy
 - Look in the projects tab on Github, I always write there on what is currently being worked one, what still needs to be done and what has been implemented already
 - Look at others issues and pull requests, you might see that someon is already working on your suggestion, or that there is an issue you know how to fix
+
 Finally you can just fork the project and work freely on your project. Or you can also create a pull requests, its really just up to you.
 
 ## Contact
 If you are unsure of something, have special suggestions or just want to contact me in general, you can do so by writing me on any of the following socials:
 - Twitter: [Benben377](https://twitter.com/Benben377)
 - Instagram: [Benji](https://www.instagram.com/benji_the_one/)
-- Youtube: [Benben377](https://www.youtube.com/channel/UCgkbKNjZCFy9EiToD5MK4Og)
+- Youtube: [Benben377](https://www.youtube.com/channel/UCgkbKNjZCFy9EiToD5MK4O)
+
 For feedback or not so important stuff, there is a discussions tab on Github you can write in.
 
 ### Additional notes
