@@ -2,22 +2,13 @@ package com.example.SocyMusic;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -36,19 +27,18 @@ import java.util.ArrayList;
 
 public class PlayerActivity extends AppCompatActivity {
 
-    private static final String CHANNEL_ID = "channel_123";
     // All required variables get declared here
-    Button btnplay, btnnext, btnprev, btnff, btnfr;
-    TextView txtsname, txtsstart, txtsstop;
-    SeekBar seekmusic;
+    Button playSong_button, nextSong_button, previousSong_button, fastForwardSong_button, fastRewindSong_button;
+    TextView songName_textview, songStarttime_textview, songEndtime_textview;
+    SeekBar song_loadingbar;
     BarVisualizer visualizer;
-    ImageView imageView;
-    String sname;
+    ImageView song_thumbnail;
+    String songName;
     public static final String EXTRA_NAME = "song_name";
     static MediaPlayer mediaPlayer;
-    int position;
-    ArrayList<File> mySongs;
-    Thread updateseekbar;
+    int song_position;
+    ArrayList<File> list_of_songs;
+    Thread song_loadingbar_updater_thread;
 
 
 
@@ -83,21 +73,21 @@ public class PlayerActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         // Adds all buttons previously declared above
-        btnprev = findViewById(R.id.btnprev);
-        btnnext = findViewById(R.id.btnnext);
-        btnplay = findViewById(R.id.playbtn);
-        btnff = findViewById(R.id.btnff);
-        btnfr = findViewById(R.id.btnfr);
+        previousSong_button = findViewById(R.id.btnprev);
+        nextSong_button = findViewById(R.id.btnnext);
+        playSong_button = findViewById(R.id.playbtn);
+        fastForwardSong_button = findViewById(R.id.btnff);
+        fastRewindSong_button = findViewById(R.id.btnfr);
 
         // Adds all texts
-        txtsname = findViewById(R.id.txtsongname);
-        txtsstart = findViewById(R.id.txtsstart);
-        txtsstop = findViewById(R.id.txtsstop);
+        songName_textview = findViewById(R.id.txtsongname);
+        songStarttime_textview = findViewById(R.id.txtsstart);
+        songEndtime_textview = findViewById(R.id.txtsstop);
 
         // Adds seekbar, visualizer and the image of the player
-        seekmusic = findViewById(R.id.seekbar);
+        song_loadingbar = findViewById(R.id.seekbar);
         visualizer = findViewById(R.id.blast);
-        imageView = findViewById(R.id.imageview);
+        song_thumbnail = findViewById(R.id.imageview);
 
         // Stops the mediaplayer to create a new one later
         if (mediaPlayer != null) {
@@ -109,23 +99,20 @@ public class PlayerActivity extends AppCompatActivity {
         Bundle bundle = i.getExtras();
 
         // Gets all the info about the song
-        mySongs = (ArrayList) bundle.getParcelableArrayList("songs");
+        list_of_songs = (ArrayList) bundle.getParcelableArrayList("songs");
         String songName = i.getStringExtra("songname");
-        position = bundle.getInt("pos", 0);
-        txtsname.setSelected(true);
-        Uri uri = Uri.parse(mySongs.get(position).toString());
-        sname = mySongs.get(position).getName();
-        txtsname.setText(sname);
+        song_position = bundle.getInt("pos", 0);
+        songName_textview.setSelected(true);
+        Uri uri = Uri.parse(list_of_songs.get(song_position).toString());
+        this.songName = list_of_songs.get(song_position).getName();
+        songName_textview.setText(this.songName);
 
         mediaPlayer = MediaPlayer.create(getApplicationContext(), uri);
         // Starts the mediaplayer
         mediaPlayer.start();
 
-        createNotificationChannel();
-        addNotification();
-
         // Starts the seekbar thread
-        updateseekbar = new Thread() {
+        song_loadingbar_updater_thread = new Thread() {
             @Override
             public void run() {
                 int totalDuration = mediaPlayer.getDuration();
@@ -135,25 +122,25 @@ public class PlayerActivity extends AppCompatActivity {
                     try {
                         sleep(500);
                         currentposition = mediaPlayer.getCurrentPosition();
-                        seekmusic.setProgress(currentposition);
+                        song_loadingbar.setProgress(currentposition);
                     } catch (InterruptedException | IllegalStateException e){
                         e.printStackTrace();
                     }
                 }
 
                 if (currentposition == totalDuration) {
-                    btnnext.performClick();
+                    nextSong_button.performClick();
                 }
             }
         };
-        seekmusic.setMax(mediaPlayer.getDuration());
-        updateseekbar.start();
-        seekmusic.getProgressDrawable().setColorFilter(getResources()
+        song_loadingbar.setMax(mediaPlayer.getDuration());
+        song_loadingbar_updater_thread.start();
+        song_loadingbar.getProgressDrawable().setColorFilter(getResources()
                 .getColor(R.color.purple_500), PorterDuff.Mode.MULTIPLY);
-        seekmusic.getThumb().setColorFilter(getResources().getColor(R.color.purple_500), PorterDuff.Mode.SRC_IN);
+        song_loadingbar.getThumb().setColorFilter(getResources().getColor(R.color.purple_500), PorterDuff.Mode.SRC_IN);
 
         // Controls the changes at the seekbar
-        seekmusic.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        song_loadingbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
@@ -172,7 +159,7 @@ public class PlayerActivity extends AppCompatActivity {
 
 
         String endTime = createTime(mediaPlayer.getDuration());
-        txtsstop.setText(endTime);
+        songEndtime_textview.setText(endTime);
 
         final Handler handler = new Handler();
         final int delay = 1000;
@@ -181,20 +168,20 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void run() {
                 String currentTime = createTime(mediaPlayer.getCurrentPosition());
-                txtsstart.setText(currentTime);
+                songStarttime_textview.setText(currentTime);
                 handler.postDelayed(this, delay);
             }
         }, delay);
 
 
-        btnplay.setOnClickListener(new View.OnClickListener() {
+        playSong_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mediaPlayer.isPlaying()) {
-                    btnplay.setBackgroundResource(R.drawable.ic_play);
+                    playSong_button.setBackgroundResource(R.drawable.ic_play);
                     mediaPlayer.pause();
                 } else {
-                    btnplay.setBackgroundResource(R.drawable.ic_pause);
+                    playSong_button.setBackgroundResource(R.drawable.ic_pause);
                     mediaPlayer.start();
                 }
             }
@@ -203,7 +190,7 @@ public class PlayerActivity extends AppCompatActivity {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                btnnext.performClick();
+                nextSong_button.performClick();
             }
         });
 
@@ -212,25 +199,25 @@ public class PlayerActivity extends AppCompatActivity {
             visualizer.setAudioSessionId(audiosessionId);
         }
 
-        btnnext.setOnClickListener(new View.OnClickListener() {
+        nextSong_button.setOnClickListener(new View.OnClickListener() {
             @Override
             // plays the next song
             public void onClick(View v) {
                 mediaPlayer.stop();
                 mediaPlayer.release();
-                position = ((position+1)%mySongs.size());
-                Uri u = Uri.parse(mySongs.get(position).toString());
+                song_position = ((song_position +1)% list_of_songs.size());
+                Uri u = Uri.parse(list_of_songs.get(song_position).toString());
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), u);
-                sname = mySongs.get(position).getName();
-                txtsname.setText(sname);
+                PlayerActivity.this.songName = list_of_songs.get(song_position).getName();
+                songName_textview.setText(PlayerActivity.this.songName);
                 // Updates the duration of the song
                 String stopTime = createTime(mediaPlayer.getDuration());
-                txtsstop.setText(stopTime);
-                seekmusic.setMax(mediaPlayer.getDuration());
+                songEndtime_textview.setText(stopTime);
+                song_loadingbar.setMax(mediaPlayer.getDuration());
                 // starts the mediaplayer
                 mediaPlayer.start();
-                btnplay.setBackgroundResource(R.drawable.ic_pause);
-                startAnimation(imageView);
+                playSong_button.setBackgroundResource(R.drawable.ic_pause);
+                startAnimation(song_thumbnail);
                 int audiosessionId = mediaPlayer.getAudioSessionId();
                 if (audiosessionId != -1) {
                     visualizer.setAudioSessionId(audiosessionId);
@@ -238,7 +225,7 @@ public class PlayerActivity extends AppCompatActivity {
             }
         });
 
-        btnprev.setOnClickListener(new View.OnClickListener() {
+        previousSong_button.setOnClickListener(new View.OnClickListener() {
             @Override
             // plays the previous song
             public void onClick(View v) {
@@ -246,22 +233,22 @@ public class PlayerActivity extends AppCompatActivity {
                 mediaPlayer.stop();
                 mediaPlayer.release();
                 // goes back one position in the playlist
-                position = ((position-1)<0)?(mySongs.size()-1):(position-1);
-                Uri u = Uri.parse(mySongs.get(position).toString());
+                song_position = ((song_position -1)<0)?(list_of_songs.size()-1):(song_position -1);
+                Uri u = Uri.parse(list_of_songs.get(song_position).toString());
                 // creates a new mediaplayer
                 mediaPlayer = MediaPlayer.create(getApplicationContext(), u);
                 // sets all info of song
-                sname = mySongs.get(position).getName();
-                txtsname.setText(sname);
+                PlayerActivity.this.songName = list_of_songs.get(song_position).getName();
+                songName_textview.setText(PlayerActivity.this.songName);
                 // Updates the maximum length of the song
                 String stopTime = createTime(mediaPlayer.getDuration());
-                txtsstop.setText(stopTime);
-                seekmusic.setMax(mediaPlayer.getDuration());
+                songEndtime_textview.setText(stopTime);
+                song_loadingbar.setMax(mediaPlayer.getDuration());
                 // strats playing of the song
                 mediaPlayer.start();
-                btnplay.setBackgroundResource(R.drawable.ic_pause);
+                playSong_button.setBackgroundResource(R.drawable.ic_pause);
                 // starts the animation
-                startAnimation(imageView);
+                startAnimation(song_thumbnail);
                 int audiosessionId = mediaPlayer.getAudioSessionId();
                 if (audiosessionId != -1) {
                     visualizer.setAudioSessionId(audiosessionId);
@@ -269,7 +256,7 @@ public class PlayerActivity extends AppCompatActivity {
             }
         });
 
-        btnff.setOnClickListener(new View.OnClickListener() {
+        fastForwardSong_button.setOnClickListener(new View.OnClickListener() {
             @Override
             // moves 10 seconds forward in the song
             public void onClick(View v) {
@@ -279,7 +266,7 @@ public class PlayerActivity extends AppCompatActivity {
             }
         });
 
-        btnfr.setOnClickListener(new View.OnClickListener() {
+        fastRewindSong_button.setOnClickListener(new View.OnClickListener() {
             @Override
             // moves 10 seconds backwards in the song
             public void onClick(View v) {
@@ -295,12 +282,13 @@ public class PlayerActivity extends AppCompatActivity {
     // Metod to start the animation
     public void startAnimation(View view) {
         // rotates the red note image at 360 degrees
-        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "rotation", 0f, 360f);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(song_thumbnail, "rotation", 0f, 360f);
         animator.setDuration(1000);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(animator);
         animatorSet.start();
     }
+
 
     // Converts integer to a displayable time String
     public String createTime(int duration) {
@@ -316,56 +304,5 @@ public class PlayerActivity extends AppCompatActivity {
         time+=sec;
 
         return time;
-    }
-
-    private void addNotification() {
-        Intent previousIntent = new Intent(this, NotificationBroadcastReceiver.class);
-        previousIntent.putExtra("notificationId",0);
-        PendingIntent previousPendingIntent = PendingIntent.getActivity(this, 0, previousIntent, 0);
-
-        Intent pauseIntent = new Intent(this, NotificationBroadcastReceiver.class);
-        previousIntent.putExtra("notificationId",1);
-        PendingIntent pausePendingIntent = PendingIntent.getActivity(this, 0, pauseIntent, 0);
-
-        Intent nextIntent = new Intent(this, NotificationBroadcastReceiver.class);
-        previousIntent.putExtra("notificationId",2);
-        PendingIntent nextPendingIntent = PendingIntent.getActivity(this, 0, nextIntent, 0);
-
-        Bitmap large_icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.app_icon);
-
-        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                // Show controls on lock screen even when user hides sensitive content.
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setSmallIcon(R.drawable.ic_music)
-                // Add media control buttons that invoke intents in your media service
-                .addAction(R.drawable.ic_prev, "Previous", previousPendingIntent) // #0
-                .addAction(R.drawable.ic_pause, "Play", pausePendingIntent)  // #1
-                .addAction(R.drawable.ic_next, "Next", nextPendingIntent)     // #2
-                // Apply the media style template
-                .setContentTitle("Now Playing")
-                .setContentText(sname)
-                .setLargeIcon(large_icon)
-                .build();
-
-
-        // Add as notification
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, notification);
-    }
-
-    private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
     }
 }

@@ -10,11 +10,11 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         PlayerActivity pactivity = new PlayerActivity();
 
         if (notificationId == 0) {
-            pactivity.btnprev.performClick();
+            pactivity.previousSong_button.performClick();
         } else if (notificationId == 1) {
-            pactivity.btnplay.performClick();
+            pactivity.playSong_button.performClick();
         } else if (notificationId == 2) {
-            pactivity.btnnext.performClick();
+            pactivity.nextSong_button.performClick();
         } else {
             // if you want cancel notification
             NotificationManager manager = (NotificationManager) context.getSystemService(Context. NOTIFICATION_SERVICE ) ;

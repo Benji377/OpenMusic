@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 }).check();
     }
 
+
     public ArrayList<File> findSong (File file) {
         ArrayList<File> arrayList = new ArrayList<>();
 
@@ -108,10 +109,6 @@ public class MainActivity extends AppCompatActivity {
                     .replace(".wav", "");
 
         }
-        /*
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-        listView.setAdapter(myAdapter);
-        */
 
         customAdapter customAdapter = new customAdapter();
         listView.setAdapter(customAdapter);
@@ -121,9 +118,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String songName = (String) listView.getItemAtPosition(position);
                 startActivity(new Intent(getApplicationContext(), PlayerActivity.class)
-                .putExtra("songs", mySongs)
-                .putExtra("songname", songName)
-                .putExtra("pos", position));
+                        .putExtra("songs", mySongs)
+                        .putExtra("songname", songName)
+                        .putExtra("pos", position));
             }
         });
     }
