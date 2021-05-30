@@ -24,4 +24,14 @@
 
     </ListView>
 
+    <TextView
+        android:id="@+id/listEmptyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/song_list_empty"
+        android:textColor="@color/teal_700"
+        android:textSize="24sp"
+        android:layout_centerInParent="true"
+        />
+
 </RelativeLayout>
