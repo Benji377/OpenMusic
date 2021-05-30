@@ -5,4 +5,5 @@
     <string name="download">Download</string>
     <string name="channel_name">defaultChannel</string>
     <string name="channel_description">its a channel</string>
+    <string name="song_list_empty">No songs found…</string>
 </resources>

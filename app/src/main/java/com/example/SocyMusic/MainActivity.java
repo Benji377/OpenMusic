@@ -123,6 +123,8 @@ public class MainActivity extends AppCompatActivity {
                         .putExtra("pos", position));
             }
         });
+        TextView emptyText = findViewById(R.id.listEmptyTextView);
+        listView.setEmptyView(emptyText);
     }
 
     class customAdapter extends BaseAdapter {
