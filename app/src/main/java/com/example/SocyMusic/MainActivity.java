@@ -105,27 +105,29 @@ public class MainActivity extends AppCompatActivity {
 
         items = new String[mySongs.size()];
         for (int i = 0; i<mySongs.size(); i++) {
-            items[i] = mySongs.get(i).getName().toString().replace(".mp3", "")
+            items[i] = mySongs.get(i).getName().replace(".mp3", "")
                     .replace(".wav", "");
-
         }
 
         customAdapter customAdapter = new customAdapter();
         listView.setAdapter(customAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String songName = (String) listView.getItemAtPosition(position);
-                startActivity(new Intent(getApplicationContext(), PlayerActivity.class)
-                        .putExtra("songs", mySongs)
-                        .putExtra("songname", songName)
-                        .putExtra("pos", position));
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            if(!mySongs.get(position).exists()){
+                Toast.makeText(this,"File moved or deleted.", Toast.LENGTH_LONG).show();
+                //TODO refresh list
+                return;
             }
+            String songName = (String) listView.getItemAtPosition(position);
+            startActivity(new Intent(getApplicationContext(), PlayerActivity.class)
+                    .putExtra("songs", mySongs)
+                    .putExtra("songname", songName)
+                    .putExtra("pos", position));
         });
         TextView emptyText = findViewById(R.id.listEmptyTextView);
         listView.setEmptyView(emptyText);
     }
+
 
     class customAdapter extends BaseAdapter {
 
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return items[position];
         }
 
         @Override
@@ -146,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
             View myView = getLayoutInflater().inflate(R.layout.list_item, null);
             TextView textsong = myView.findViewById(R.id.textsongname);
             textsong.setSelected(true);
