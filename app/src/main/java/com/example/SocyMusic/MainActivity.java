@@ -32,7 +32,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     ListView listView;
     String[] items;
-
+    ArrayList<File> mySongs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,21 +101,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void displaySongs() {
-        final ArrayList<File> mySongs = findSong(Environment.getExternalStorageDirectory());
-
-        items = new String[mySongs.size()];
-        for (int i = 0; i<mySongs.size(); i++) {
-            items[i] = mySongs.get(i).getName().replace(".mp3", "")
-                    .replace(".wav", "");
-        }
-
+        loadSongs();
         customAdapter customAdapter = new customAdapter();
         listView.setAdapter(customAdapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             if(!mySongs.get(position).exists()){
                 Toast.makeText(this,"File moved or deleted.", Toast.LENGTH_LONG).show();
-                //TODO refresh list
+                loadSongs();
+                customAdapter.notifyDataSetChanged();
                 return;
             }
             String songName = (String) listView.getItemAtPosition(position);
@@ -126,6 +120,15 @@ public class MainActivity extends AppCompatActivity {
         });
         TextView emptyText = findViewById(R.id.listEmptyTextView);
         listView.setEmptyView(emptyText);
+    }
+
+    private void loadSongs() {
+        mySongs = findSong(Environment.getExternalStorageDirectory());
+        items = new String[mySongs.size()];
+        for (int i = 0; i<mySongs.size(); i++) {
+            items[i] = mySongs.get(i).getName().replace(".mp3", "")
+                    .replace(".wav", "");
+        }
     }
 
 
