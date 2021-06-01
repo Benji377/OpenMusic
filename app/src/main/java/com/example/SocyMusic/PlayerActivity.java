@@ -247,6 +247,11 @@ public class PlayerActivity extends AppCompatActivity {
                 // strats playing of the song
                 mediaPlayer.start();
                 playSong_button.setBackgroundResource(R.drawable.ic_pause);
+
+                // Starts notification
+                NotificationBar notificationBar = new NotificationBar();
+                notificationBar.createNotificationChannel();
+                notificationBar.addNotification();
                 // starts the animation
                 startAnimation(song_thumbnail);
                 int audiosessionId = mediaPlayer.getAudioSessionId();

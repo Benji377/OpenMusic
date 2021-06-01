@@ -77,7 +77,7 @@ public class NotificationBar extends AppCompatActivity {
         return PendingIntent.getActivity(this, 0, nextIntent, 0);
     }
 
-    private void addNotification() {
+    public void addNotification() {
         Bitmap large_icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.app_icon);
 
         Notification notification = new NotificationCompat.Builder(getApplicationContext(), getChnannelId())
