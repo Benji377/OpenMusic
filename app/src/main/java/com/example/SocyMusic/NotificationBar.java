@@ -24,7 +24,7 @@ public class NotificationBar extends AppCompatActivity {
     Intent playIntent = new Intent(this, NotificationBroadcastReceiver.class);
     Intent nextIntent = new Intent(this, NotificationBroadcastReceiver.class);
 
-    PlayerActivity player = new PlayerActivity();
+    PlayerFragment player = new PlayerFragment();
 
     public String getChnannelId() {
         return CHNANNEL_ID;
@@ -90,7 +90,7 @@ public class NotificationBar extends AppCompatActivity {
                 .addAction(R.drawable.ic_next, "Next", getNextPendingIntent())     // #2
                 // Apply the media style template
                 .setContentTitle("Now Playing")
-                .setContentText(player.songName)
+                .setContentText(SongsData.getInstance().getSongPlaying().getTitle())
                 .setLargeIcon(large_icon)
                 .build();
 

@@ -1,26 +1,32 @@
 package com.example.SocyMusic;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.File;
+import java.io.Serializable;
 
-// Class is not being used yet
-public class Song extends AppCompatActivity {
-    private File song;
-
-
-    public String song_name() {
-        return song.getName();
-    }
-
-    public File getSong() {
-        return song;
-    }
-    public void setSong(File file) {
-        this.song = file;
-    }
+public class Song implements Serializable {
+    private File songFile;
+    private String songTitle;
 
     public Song(File file) {
-        setSong(file);
+        this(file, file.getName().replaceAll("(?<!^)[.][^.]*$", ""));
+    }
+
+    public Song(File file, String title) {
+        this.songFile = file;
+        this.songTitle = title;
+    }
+
+    public File getFile() {
+        return songFile;
+    }
+
+    public void setSongFile(File songFile) {
+        this.songFile = songFile;
+    }
+
+    public String getTitle() {
+        return songTitle;
     }
 
 }

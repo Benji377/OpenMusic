@@ -21,8 +21,6 @@
             android:enabled = "true"
             android:exported = "true" >
         </receiver>
-        <activity android:name="com.example.SocyMusic.PlayerActivity"
-            android:screenOrientation="portrait"/>
         <activity android:name="com.example.SocyMusic.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>

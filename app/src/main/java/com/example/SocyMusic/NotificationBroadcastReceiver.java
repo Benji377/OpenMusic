@@ -7,7 +7,7 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive (Context context , Intent intent) {
         int notificationId = intent.getIntExtra( "notificationId" , 1 ) ;
-        PlayerActivity pactivity = new PlayerActivity();
+        PlayerFragment pactivity = new PlayerFragment();
 
         if (notificationId == 0) {
             pactivity.previousSong_button.performClick();
