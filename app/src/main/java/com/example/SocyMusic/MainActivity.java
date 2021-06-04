@@ -1,7 +1,14 @@
 package com.example.SocyMusic;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +24,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -37,12 +46,16 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
     TextView songTitleTextView;
     Button playButton;
 
+    private static final String CHNANNEL_ID = "channel_123";
+    private static final int NOTIFICATION_ID = 181;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActionBar actionBar = getSupportActionBar();
 
+
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("SocyMusic");
 
 
@@ -173,6 +186,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
                 ((PlayerFragment) playerFragment).updateSongPlaying();
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
+
+            createNotification();
         });
         TextView emptyText = findViewById(R.id.listEmptyTextView);
         listView.setEmptyView(emptyText);
@@ -211,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
             return myView;
         }
     }
+
 
     // Experimenting with Notifications
     private void createNotification() {
