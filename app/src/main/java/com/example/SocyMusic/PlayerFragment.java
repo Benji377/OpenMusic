@@ -85,6 +85,11 @@ public class PlayerFragment extends Fragment {
                 v.setLayoutParams(params);
             }
         });
+        
+        // Adding Notification --> crashes app
+        notificationBar = new NotificationBar();
+        notificationBar.createNotificationChannel();
+        notificationBar.addNotification();
 
         // Stops the mediaplayer to create a new one later
         if (mediaPlayer != null) {
