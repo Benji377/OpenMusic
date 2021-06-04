@@ -124,9 +124,11 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        else
+            super.onBackPressed();
 
     }
 
