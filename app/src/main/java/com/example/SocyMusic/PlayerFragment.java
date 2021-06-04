@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -85,9 +86,9 @@ public class PlayerFragment extends Fragment {
                 v.setLayoutParams(params);
             }
         });
-        
+
         // Adding Notification --> crashes app
-        notificationBar = new NotificationBar();
+        NotificationBar notificationBar = new NotificationBar(this.getContext());
         notificationBar.createNotificationChannel();
         notificationBar.addNotification();
 
@@ -98,6 +99,11 @@ public class PlayerFragment extends Fragment {
         }
 
         mediaPlayer = MediaPlayer.create(view.getContext(), uri);
+
+        if (mediaPlayer == null)
+            //TODO: handle error
+            Toast.makeText(getContext(), "Song file corrupted or unreadable.", Toast.LENGTH_LONG).show();
+
         // Starts the mediaplayer
         mediaPlayer.start();
 
@@ -108,19 +114,19 @@ public class PlayerFragment extends Fragment {
                 int totalDuration = mediaPlayer.getDuration();
                 int currentposition = 0;
 
-                while (currentposition < totalDuration) {
+                while (true) {
                     try {
                         sleep(500);
                         currentposition = mediaPlayer.getCurrentPosition();
-                        song_loadingbar.setProgress(currentposition);
+
+                        if (song_loadingbar.getTag(R.id.currently_seeking) == null || !(Boolean) song_loadingbar.getTag(R.id.currently_seeking))
+                            song_loadingbar.setProgress(currentposition);
                     } catch (InterruptedException | IllegalStateException e) {
                         e.printStackTrace();
                     }
+
                 }
 
-                if (currentposition == totalDuration) {
-                    nextSong_button.performClick();
-                }
             }
         };
         song_loadingbar.setMax(mediaPlayer.getDuration());
@@ -133,17 +139,19 @@ public class PlayerFragment extends Fragment {
         song_loadingbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                seekBar.setTag(R.id.currently_seeking, true);
 
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mediaPlayer.seekTo(seekBar.getProgress());
+                songStarttime_textview.setText(createTime(mediaPlayer.getCurrentPosition()));
+                seekBar.setTag(R.id.currently_seeking, false);
             }
         });
 
@@ -171,6 +179,8 @@ public class PlayerFragment extends Fragment {
             } else {
                 playSong_button.setBackgroundResource(R.drawable.ic_pause);
                 mediaPlayer.start();
+                //song_loadingbar_updater_thread.notify();
+
             }
         });
 
@@ -201,10 +211,7 @@ public class PlayerFragment extends Fragment {
             updateSongPlaying();
             playSong_button.setBackgroundResource(R.drawable.ic_pause);
 
-//                 Starts notification
-//                NotificationBar notificationBar = new NotificationBar();
-//                notificationBar.createNotificationChannel();
-//                notificationBar.addNotification();
+
             // starts the animation
             startAnimation(song_thumbnail);
             int audiosessionId12 = mediaPlayer.getAudioSessionId();
@@ -279,7 +286,7 @@ public class PlayerFragment extends Fragment {
         animatorSet.start();
     }
 
-
+    //TODO: split method into parts for more reusabliity
     public void updateSongPlaying() {
         // stops the mediaplayer
         mediaPlayer.stop();
@@ -288,12 +295,20 @@ public class PlayerFragment extends Fragment {
         Uri u = Uri.parse(songPlaying.getFile().toString());
         // creates a new mediaplayer
         mediaPlayer = MediaPlayer.create(getContext(), u);
+        if (mediaPlayer == null) {
+            //TODO: handle error
+            Toast.makeText(getContext(), "Song file corrupted or unreadable.", Toast.LENGTH_LONG).show();
+
+        }
+        mediaPlayer.setOnCompletionListener(mp -> nextSong_button.performClick());
         // sets all info of song
         songName_textview.setText(songPlaying.getTitle());
         // Updates the maximum length of the song
         String stopTime = createTime(mediaPlayer.getDuration());
         songEndtime_textview.setText(stopTime);
+        songStarttime_textview.setText(createTime(0));
         song_loadingbar.setMax(mediaPlayer.getDuration());
+        song_loadingbar.setProgress(0);
         // strats playing of the song
         mediaPlayer.start();
 
