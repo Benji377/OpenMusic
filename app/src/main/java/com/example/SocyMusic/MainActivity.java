@@ -211,4 +211,44 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
             return myView;
         }
     }
+
+    // Experimenting with Notifications
+    private void createNotification() {
+
+        Log.e("Notification", "createNotification()");
+
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHNANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Bitmap large_icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.app_icon);
+
+        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHNANNEL_ID)
+                // Show controls on lock screen even when user hides sensitive content.
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.ic_music)
+                // Add media control buttons that invoke intents in your media service
+                // Apply the media style template
+                .setContentTitle("Now Playing")
+                //.setContentText(SongsData.getInstance().getSongPlaying().getTitle())
+                .setContentText("ContentText")
+                .setLargeIcon(large_icon)
+                .build();
+
+
+        // Add as notification
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(NOTIFICATION_ID, notification);
+    }
+
 }
