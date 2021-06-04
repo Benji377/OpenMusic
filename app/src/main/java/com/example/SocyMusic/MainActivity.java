@@ -1,7 +1,14 @@
 package com.example.SocyMusic;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +24,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -37,12 +46,16 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
     TextView songTitleTextView;
     Button playButton;
 
+    private static final String CHNANNEL_ID = "channel_123";
+    private static final int NOTIFICATION_ID = 181;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActionBar actionBar = getSupportActionBar();
 
+
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("SocyMusic");
 
 
@@ -173,6 +186,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
                 ((PlayerFragment) playerFragment).updateSongPlaying();
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
+
+            createNotification();
         });
         TextView emptyText = findViewById(R.id.listEmptyTextView);
         listView.setEmptyView(emptyText);
@@ -211,4 +226,45 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
             return myView;
         }
     }
+
+
+    // Experimenting with Notifications
+    private void createNotification() {
+
+        Log.e("Notification", "createNotification()");
+
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHNANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Bitmap large_icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.app_icon);
+
+        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHNANNEL_ID)
+                // Show controls on lock screen even when user hides sensitive content.
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.ic_music)
+                // Add media control buttons that invoke intents in your media service
+                // Apply the media style template
+                .setContentTitle("Now Playing")
+                //.setContentText(SongsData.getInstance().getSongPlaying().getTitle())
+                .setContentText("ContentText")
+                .setLargeIcon(large_icon)
+                .build();
+
+
+        // Add as notification
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(NOTIFICATION_ID, notification);
+    }
+
 }
