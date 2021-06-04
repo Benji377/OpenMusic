@@ -73,7 +73,18 @@ public class PlayerFragment extends Fragment {
 
         Uri uri = Uri.parse(songPlaying.getFile().toString());
         songName_textview.setText(songPlaying.getTitle());
+        songName_textview.setEnabled(true);
         songName_textview.setSelected(true);
+        songName_textview.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                ViewGroup.LayoutParams params = v.getLayoutParams();
+                params.width = right - left;
+                params.height = bottom - top;
+                v.removeOnLayoutChangeListener(this);
+                v.setLayoutParams(params);
+            }
+        });
 
         // Stops the mediaplayer to create a new one later
         if (mediaPlayer != null) {
