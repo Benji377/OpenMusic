@@ -1,9 +1,16 @@
 <resources>
     <string name="app_name">SocyMusic</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="credits">Credits</string>
     <string name="download">Download</string>
     <string name="channel_name">defaultChannel</string>
     <string name="channel_description">its a channel</string>
     <string name="song_list_empty">No songs found…</string>
+    <string name="settings">Settings</string>
+    <string name="pop_up_text">
+        \tCREDITS\n
+    - Benji377: Owner\n
+    - SilviaJack28: Designer\n
+    - Squivix: Contributor\n
+    - MaxKofler: Contributor
+    </string>
 </resources>

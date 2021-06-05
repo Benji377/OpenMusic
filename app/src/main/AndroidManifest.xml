@@ -16,11 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicPlayer">
-        <receiver
-            android:name = "com.example.SocyMusic.NotificationBroadcastReceiver"
-            android:enabled = "true"
-            android:exported = "true" >
-        </receiver>
         <activity android:name="com.example.SocyMusic.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
