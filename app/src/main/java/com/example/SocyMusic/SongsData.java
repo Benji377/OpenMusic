@@ -4,7 +4,6 @@ import android.os.Environment;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class SongsData {
     public static SongsData data;

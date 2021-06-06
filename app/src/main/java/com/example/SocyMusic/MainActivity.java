@@ -1,14 +1,14 @@
 package com.example.SocyMusic;
 
 import android.Manifest;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.IBinder;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,8 +29,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -44,15 +42,16 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PlayerFragment.OnCompleteListener {
+public class MainActivity extends AppCompatActivity implements PlayerFragment.PlayerFragmentHost, ServiceConnection {
     ListView listView;
     BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
     View songInfoPane;
     TextView songTitleTextView;
     Button playButton;
 
-    private static final String CHNANNEL_ID = "channel_123";
-    private static final int NOTIFICATION_ID = 181;
+    private PlayerFragment playerFragment;
+    private MediaPlayerService mediaPlayerService;
+    private MediaPlayerReceiver mediaPlayerReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
 
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("SocyMusic");
+        actionBar.setTitle(getString(R.string.app_name));
 
 
         listView = findViewById(R.id.listViewSong);
@@ -88,9 +87,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
                     actionBar.setTitle("Now Playing");
                 else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     actionBar.setTitle("SocyMusic");
-                    TextView realSongNameTextView = playerContainer.findViewById(R.id.txtsongname);
-                    if (!realSongNameTextView.getText().equals(songTitleTextView.getText()))
-                        songTitleTextView.setText(realSongNameTextView.getText());
+                    songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
+                    playButton.setBackgroundResource(mediaPlayerService.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
                 }
             }
 
@@ -100,21 +98,12 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
             }
         });
 
-        songInfoPane.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
-        });
+        songInfoPane.setOnClickListener(v -> bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED));
 
         playButton = findViewById(R.id.bsh_play_button);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Button realPlayButton = playerContainer.findViewById(R.id.playbtn);
-                realPlayButton.callOnClick();
-                playButton.setBackground(realPlayButton.getBackground());
-            }
+        playButton.setOnClickListener(v -> {
+            playerFragment.togglePlayPause();
+            playButton.setBackgroundResource(mediaPlayerService.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
         });
         runtimePermission();
 
@@ -123,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
     @Override
     // Is the option menu you see in the top left corner (3 dots)
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -189,16 +177,21 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
             songTitleTextView.setText(songClicked.getTitle());
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment playerFragment = fragmentManager.findFragmentById(R.id.player_fragment_container);
-            if (playerFragment == null) {
+            Fragment fragment = fragmentManager.findFragmentById(R.id.player_fragment_container);
+            if (fragment == null) {
                 playerFragment = PlayerFragment.newInstance();
                 fragmentManager.beginTransaction().add(R.id.player_fragment_container, playerFragment).commit();
+
+                Intent serviceIntent = new Intent(this, MediaPlayerService.class);
+                serviceIntent.putExtra(MediaPlayerService.EXTRA_SONG, songClicked);
+                startService(serviceIntent);
+                bindService(serviceIntent, this, Context.BIND_AUTO_CREATE);
             } else {
-                ((PlayerFragment) playerFragment).updateSongPlaying();
+                playerFragment = (PlayerFragment) fragment;
+                playerFragment.updateSongPlaying();
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
 
-            createNotification();
         });
         TextView emptyText = findViewById(R.id.listEmptyTextView);
         listView.setEmptyView(emptyText);
@@ -208,6 +201,47 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
     public void onLoadComplete() {
         bottomSheetBehavior.setHideable(false);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+
+    @Override
+    public void onTogglePlayPause() {
+        if (mediaPlayerService != null)
+            mediaPlayerService.togglePlayPause();
+    }
+
+    @Override
+    public void onSwitchTrack(Song song) {
+        if (mediaPlayerService != null)
+            mediaPlayerService.updateSong(song);
+    }
+
+    @Override
+    protected void onPause() {
+        if (isFinishing()) {
+            unbindService(this);
+            if (mediaPlayerService != null)
+                mediaPlayerService.stopSelf();
+            PlayerFragment.mediaPlayer.stop();
+            PlayerFragment.mediaPlayer.release();
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mediaPlayerReceiver == null)
+            mediaPlayerReceiver = new MediaPlayerReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(MediaPlayerService.ACTION_PREV);
+        intentFilter.addAction(MediaPlayerService.ACTION_TOGGLE_PLAY_PAUSE);
+        intentFilter.addAction(MediaPlayerService.ACTION_NEXT);
+        intentFilter.addAction(MediaPlayerService.ACTION_CANCEL);
+        registerReceiver(mediaPlayerReceiver, intentFilter);
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+            songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
+            playButton.setBackgroundResource(mediaPlayerService.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
+        }
     }
 
 
@@ -238,44 +272,37 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
         }
     }
 
-
-    // Experimenting with Notifications
-    private void createNotification() {
-
-        Log.e("Notification", "createNotification()");
-
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHNANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+    private class MediaPlayerReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()) {
+                case MediaPlayerService.ACTION_PREV:
+                    playerFragment.playPrevSong();
+                    mediaPlayerService.updateSong(SongsData.getInstance().getSongPlaying());
+                    break;
+                case MediaPlayerService.ACTION_TOGGLE_PLAY_PAUSE:
+                    playerFragment.togglePlayPause();
+                    playButton.setBackgroundResource(mediaPlayerService.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
+                    break;
+                case MediaPlayerService.ACTION_NEXT:
+                    playerFragment.playNextSong();
+                    mediaPlayerService.updateSong(SongsData.getInstance().getSongPlaying());
+                    break;
+                case MediaPlayerService.ACTION_CANCEL:
+                    mediaPlayerService.stopSelf();
+                    break;
+            }
         }
+    }
 
-        Bitmap large_icon = BitmapFactory.decodeResource(this.getResources(), R.drawable.app_icon);
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder iBinder) {
+        mediaPlayerService = ((MediaPlayerService.LocalBinder) iBinder).getService();
+    }
 
-        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHNANNEL_ID)
-                // Show controls on lock screen even when user hides sensitive content.
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setSmallIcon(R.drawable.ic_music)
-                // Add media control buttons that invoke intents in your media service
-                // Apply the media style template
-                .setContentTitle("Now Playing")
-                //.setContentText(SongsData.getInstance().getSongPlaying().getTitle())
-                .setContentText("ContentText")
-                .setLargeIcon(large_icon)
-                .build();
-
-
-        // Add as notification
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(NOTIFICATION_ID, notification);
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        mediaPlayerService = null;
     }
 
     // Shows a pop up window
@@ -298,12 +325,9 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.On
         popupView.setElevation(20);
 
         // dismiss the popup window when touched
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
-            }
+        popupView.setOnTouchListener((v, event) -> {
+            popupWindow.dismiss();
+            return true;
         });
     }
 
