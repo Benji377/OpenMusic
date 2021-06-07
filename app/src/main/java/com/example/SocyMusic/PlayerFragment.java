@@ -279,7 +279,14 @@ public class PlayerFragment extends Fragment {
 
 
     protected void playNextSong() {
-        SongsData.getInstance().playNext();
+        // Checks if song is the last song in the list
+        if (SongsData.getInstance().getSongPlaying() == SongsData.getInstance().getSongAt(SongsData.getInstance().songsCount()-1)) {
+            // Starts from the beginning of the list again
+            SongsData.getInstance().setPlaying(0);
+        } else {
+            // Plays next song
+            SongsData.getInstance().playNext();
+        }
         updateSongPlaying();
         hostCallBack.onSwitchTrack(songPlaying);
 
@@ -292,7 +299,14 @@ public class PlayerFragment extends Fragment {
     }
 
     protected void playPrevSong() {
-        songPlaying = SongsData.getInstance().playPrev();
+        // Checks if song is the first song in the list
+        if (SongsData.getInstance().getSongPlaying() == SongsData.getInstance().getSongAt(0)) {
+            // Starts from the end of the list again
+            SongsData.getInstance().setPlaying(SongsData.getInstance().songsCount()-1);
+        } else {
+            // Plays next song
+            SongsData.getInstance().playNext();
+        }
         updateSongPlaying();
         hostCallBack.onSwitchTrack(songPlaying);
 
