@@ -5,8 +5,8 @@
         android:id="@+id/download"
         android:orderInCategory="1"
         app:showAsAction="never"/>
-    <item android:title="@string/settings"
-        android:id="@+id/settings"
+    <item android:title="@string/playlist"
+        android:id="@+id/playlist"
         android:orderInCategory="2"
         app:showAsAction="never"/>
     <item android:title="@string/credits"

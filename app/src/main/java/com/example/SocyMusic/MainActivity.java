@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         } else if (item.getItemId() == R.id.download) {
             // Replace this action
             Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
-        } else if (item.getItemId() == R.id.settings) {
+        } else if (item.getItemId() == R.id.playlist) {
             // Replace this action
             Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
         }
