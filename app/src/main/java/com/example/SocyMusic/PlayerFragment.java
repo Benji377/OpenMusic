@@ -304,8 +304,8 @@ public class PlayerFragment extends Fragment {
             // Starts from the end of the list again
             SongsData.getInstance().setPlaying(SongsData.getInstance().songsCount()-1);
         } else {
-            // Plays next song
-            SongsData.getInstance().playNext();
+            // Plays previous song
+            SongsData.getInstance().playPrev();
         }
         updateSongPlaying();
         hostCallBack.onSwitchTrack(songPlaying);
