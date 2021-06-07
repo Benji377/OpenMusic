@@ -122,9 +122,11 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         // To add an item to the menu, add it to menu/main.xml first!
 
         if (item.getItemId() == R.id.credits) {
+            //TODO: Replace Pop-up with Fragment
             onButtonShowPopupWindowClick(listView);
+            // Fragment not displaying strangely
+            new AboutPageFragment();
         } else if (item.getItemId() == R.id.download) {
-            // Replace this action
             Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
         } else if (item.getItemId() == R.id.playlist) {
             // Replace this action
