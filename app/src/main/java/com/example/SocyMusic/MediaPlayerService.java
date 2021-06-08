@@ -26,17 +26,19 @@ public class MediaPlayerService extends Service {
 
     private Song songPlaying;
     private MediaSessionCompat mediaSession;
+    private boolean isPlaying;
 
     private final IBinder binder = new LocalBinder();
-    private boolean isPlaying;
+    private static final String MEDIA_SESSION_TAG = "mediaservicetag";
     private static final int SERVICE_REQUEST_CODE = 9034;
     private static final int NOTIFICATION_ID = 181;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mediaSession = new MediaSessionCompat(this, "mediaservicetag");
-        isPlaying = true;
+        mediaSession = new MediaSessionCompat(this, MEDIA_SESSION_TAG);
+        isPlaying = MediaPlayerUtil.isPlaying();
     }
 
     @Override
@@ -53,15 +55,9 @@ public class MediaPlayerService extends Service {
     }
 
 
-    public void togglePlayPause() {
-        isPlaying = !isPlaying;
-        Notification notification = buildNotification();
-        startForeground(NOTIFICATION_ID, notification);
-    }
-
-    public void updateSong(Song song) {
-        isPlaying = true;
-        songPlaying = song;
+    public void refreshNotification() {
+        songPlaying = SongsData.getInstance().getSongPlaying();
+        isPlaying = MediaPlayerUtil.isPlaying();
         Notification notification = buildNotification();
         startForeground(NOTIFICATION_ID, notification);
     }
@@ -86,6 +82,7 @@ public class MediaPlayerService extends Service {
 
         mediaSession.setMediaButtonReceiver(playPauseIntent);
 
+
         return new NotificationCompat.Builder(this, SocyMusicApp.MEDIA_CHANNEL_ID)
                 .setContentTitle(songPlaying.getTitle())
                 .setSmallIcon(R.drawable.ic_music)
@@ -106,17 +103,14 @@ public class MediaPlayerService extends Service {
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
+        MediaPlayerUtil.stop();
         stopSelf();
-        PlayerFragment.mediaPlayer.stop();
-        PlayerFragment.mediaPlayer.release();
-        PlayerFragment.stopped = true;
         super.onTaskRemoved(rootIntent);
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-
         return binder;
     }
 
@@ -126,8 +120,5 @@ public class MediaPlayerService extends Service {
         }
     }
 
-    public boolean isPlaying() {
-        return isPlaying;
-    }
 
 }

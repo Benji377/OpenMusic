@@ -4,8 +4,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.PorterDuff;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -16,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,13 +32,11 @@ public class PlayerFragment extends Fragment {
     BarVisualizer visualizer;
     ImageView song_thumbnail;
 
-    public static MediaPlayer mediaPlayer;
     Thread song_loadingBar_updater_thread;
 
     private PlayerFragmentHost hostCallBack;
     private Song songPlaying;
     private boolean currentlySeeking;
-    public static boolean stopped;
 
     @Override
     // When the player gets created
@@ -74,7 +69,9 @@ public class PlayerFragment extends Fragment {
         visualizer = view.findViewById(R.id.blast);
         song_thumbnail = view.findViewById(R.id.imageview);
 
-        songName_textview.setText(songPlaying.getTitle());
+        MediaPlayerUtil.startPlaying(getContext(), songPlaying);
+        updatePlayerUI();
+
         songName_textview.setEnabled(true);
         songName_textview.setSelected(true);
         songName_textview.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -88,8 +85,6 @@ public class PlayerFragment extends Fragment {
             }
         });
 
-        updateSongPlaying();
-
 
         // Starts the seekbar thread
         song_loadingBar_updater_thread = new Thread() {
@@ -101,7 +96,7 @@ public class PlayerFragment extends Fragment {
                     if (isResumed()) {
                         try {
                             sleep(500);
-                            currentPosition = mediaPlayer.getCurrentPosition();
+                            currentPosition = MediaPlayerUtil.getPosition();//mediaPlayer.getCurrentPosition();
 
                             if (!currentlySeeking)
                                 song_loadingBar.setProgress(currentPosition);
@@ -112,7 +107,6 @@ public class PlayerFragment extends Fragment {
                 }
             }
         };
-        song_loadingBar.setMax(mediaPlayer.getDuration());
         song_loadingBar_updater_thread.start();
         song_loadingBar.getProgressDrawable().setColorFilter(getResources()
                 .getColor(R.color.purple_500), PorterDuff.Mode.MULTIPLY);
@@ -131,8 +125,8 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mediaPlayer.seekTo(seekBar.getProgress());
-                songStartTime_textview.setText(createTime(mediaPlayer.getCurrentPosition()));
+                MediaPlayerUtil.seekTo(seekBar.getProgress());
+                songStartTime_textview.setText(createTime(MediaPlayerUtil.getPosition()));
                 currentlySeeking = false;
             }
         });
@@ -143,8 +137,8 @@ public class PlayerFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!stopped) {
-                    String currentTime = createTime(mediaPlayer.getCurrentPosition());
+                if (!MediaPlayerUtil.isStopped()) {
+                    String currentTime = createTime(MediaPlayerUtil.getPosition());
                     songStartTime_textview.setText(currentTime);
                     handler.postDelayed(this, delay);
                 }
@@ -154,7 +148,7 @@ public class PlayerFragment extends Fragment {
 
         playSong_button.setOnClickListener(v -> togglePlayPause());
 
-        int audioSessionId = mediaPlayer.getAudioSessionId();
+        int audioSessionId = MediaPlayerUtil.getAudioSessionId();
         if (audioSessionId != -1) {
             visualizer.setAudioSessionId(audioSessionId);
         }
@@ -167,15 +161,17 @@ public class PlayerFragment extends Fragment {
 
         // moves 10 seconds forward in the song
         fastForwardSong_button.setOnClickListener(v -> {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + 10000);
+            if (MediaPlayerUtil.isPlaying()) {
+                MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() + 10000);
+                songStartTime_textview.setText(MediaPlayerUtil.getPosition());
             }
         });
 
         // moves 10 seconds backwards in the song
         fastRewindSong_button.setOnClickListener(v -> {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - 10000);
+            if (MediaPlayerUtil.isPlaying()) {
+                MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() + 10000);
+                songStartTime_textview.setText(MediaPlayerUtil.getPosition());
             }
         });
 
@@ -203,7 +199,7 @@ public class PlayerFragment extends Fragment {
 
     @Override
     public void onResume() {
-        song_loadingBar.setProgress(mediaPlayer.getCurrentPosition());
+        updatePlayerUI();
         super.onResume();
     }
 
@@ -228,107 +224,69 @@ public class PlayerFragment extends Fragment {
     }
 
     // Method to start the animation
-    public void startAnimation() {
+    public void animateSongthumbail(int direction) {
         // rotates the red note image at 360 degrees
-        ObjectAnimator animator = ObjectAnimator.ofFloat(song_thumbnail, "rotation", 0f, 360f);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(song_thumbnail, "rotation", 0f, 360f * direction);
         animator.setDuration(1000);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(animator);
         animatorSet.start();
     }
 
-    public void updateSongPlaying() {
-        // stops the media player
-        if (mediaPlayer != null && !stopped) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            stopped = true;
-        }
+    public void updatePlayerUI() {
         songPlaying = SongsData.getInstance().getSongPlaying();
-        Uri u = Uri.parse(songPlaying.getFile().toString());
-        // creates a new media player
 
-        mediaPlayer = MediaPlayer.create(getContext(), u);
-        int skipCount = 0;
-        Toast errorToast = null;
-        while (mediaPlayer == null) {
-            //TODO: handle case where all files are unreadable, for now: infinite loop
-            skipCount++;
-            errorToast = Toast.makeText(getContext(), String.format(getString(R.string.error_file_corrupted_msg), skipCount), Toast.LENGTH_LONG);
-            songPlaying = SongsData.getInstance().playNext();
-            u = Uri.parse(songPlaying.getFile().toString());
-            mediaPlayer = MediaPlayer.create(getContext(), u);
-        }
-        if (errorToast != null)
-            errorToast.show();
-        stopped = false;
-        mediaPlayer.setOnCompletionListener(mp -> nextSong_button.performClick());
-        // sets all info of song
         songName_textview.setText(songPlaying.getTitle());
-        // Updates the maximum length of the song
-        String stopTime = createTime(mediaPlayer.getDuration());
-        songEndTime_textview.setText(stopTime);
-        songStartTime_textview.setText(createTime(0));
-        song_loadingBar.setMax(mediaPlayer.getDuration());
-        song_loadingBar.setProgress(0);
-        // starts playing the song
-        mediaPlayer.start();
-        playSong_button.setBackgroundResource(R.drawable.ic_pause);
+        int position = MediaPlayerUtil.getPosition();
+        int duration = MediaPlayerUtil.getDuration();
+        song_loadingBar.setMax(duration);
+        song_loadingBar.setProgress(position);
+
+        songEndTime_textview.setText(createTime(duration));
+        songStartTime_textview.setText(createTime(position));
+        updatePlayButton();
+    }
+
+    public void updatePlayButton() {
+        if (MediaPlayerUtil.isPlaying())
+            playSong_button.setBackgroundResource(R.drawable.ic_pause);
+        else
+            playSong_button.setBackgroundResource(R.drawable.ic_play);
 
     }
 
 
     protected void playNextSong() {
-        // Checks if song is the last song in the list
-        if (SongsData.getInstance().getSongPlaying() == SongsData.getInstance().getSongAt(SongsData.getInstance().songsCount()-1)) {
-            // Starts from the beginning of the list again
-            SongsData.getInstance().setPlaying(0);
-        } else {
-            // Plays next song
-            SongsData.getInstance().playNext();
-        }
-        updateSongPlaying();
-        hostCallBack.onSwitchTrack(songPlaying);
-
+        MediaPlayerUtil.playNext(getContext());
         if (isResumed()) {
-            startAnimation();
-            int audioSessionId1 = mediaPlayer.getAudioSessionId();
+            animateSongthumbail(1);
+            int audioSessionId1 = MediaPlayerUtil.getAudioSessionId();
             if (audioSessionId1 != -1)
                 visualizer.setAudioSessionId(audioSessionId1);
         }
+        hostCallBack.onPlaybackUpdate();
     }
 
     protected void playPrevSong() {
-        // Checks if song is the first song in the list
-        if (SongsData.getInstance().getSongPlaying() == SongsData.getInstance().getSongAt(0)) {
-            // Starts from the end of the list again
-            SongsData.getInstance().setPlaying(SongsData.getInstance().songsCount()-1);
-        } else {
-            // Plays previous song
-            SongsData.getInstance().playPrev();
-        }
-        updateSongPlaying();
-        hostCallBack.onSwitchTrack(songPlaying);
-
+        MediaPlayerUtil.playPrev(getContext());
         if (isResumed()) {
             // starts the animation
-            startAnimation();
-            int audiosessionId12 = mediaPlayer.getAudioSessionId();
-            if (audiosessionId12 != -1)
-                visualizer.setAudioSessionId(audiosessionId12);
+            animateSongthumbail(-1);
+            int audioSessionId12 = MediaPlayerUtil.getAudioSessionId();
+            if (audioSessionId12 != -1)
+                visualizer.setAudioSessionId(audioSessionId12);
         }
+        hostCallBack.onPlaybackUpdate();
     }
 
 
     protected void togglePlayPause() {
-        if (mediaPlayer.isPlaying()) {
-            playSong_button.setBackgroundResource(R.drawable.ic_play);
-            mediaPlayer.pause();
-        } else {
+        MediaPlayerUtil.togglePlayPause();
+        if (MediaPlayerUtil.isPlaying())
             playSong_button.setBackgroundResource(R.drawable.ic_pause);
-            mediaPlayer.start();
-        }
-        hostCallBack.onTogglePlayPause();
+        else
+            playSong_button.setBackgroundResource(R.drawable.ic_play);
+        hostCallBack.onPlaybackUpdate();
     }
 
     // Converts integer to a displayable time String
@@ -351,9 +309,6 @@ public class PlayerFragment extends Fragment {
         //callback methods
         void onLoadComplete();
 
-        void onTogglePlayPause();
-
-        void onSwitchTrack(Song song);
-
+        void onPlaybackUpdate();
     }
 }

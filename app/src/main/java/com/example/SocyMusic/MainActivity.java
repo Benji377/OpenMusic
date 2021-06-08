@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     actionBar.setTitle("SocyMusic");
                     songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
-                    playButton.setBackgroundResource(mediaPlayerService.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
+                    playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
                 }
             }
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         playButton = findViewById(R.id.bsh_play_button);
         playButton.setOnClickListener(v -> {
             playerFragment.togglePlayPause();
-            playButton.setBackgroundResource(mediaPlayerService.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
+            playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
         });
         runtimePermission();
 
@@ -189,7 +189,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 bindService(serviceIntent, this, Context.BIND_AUTO_CREATE);
             } else {
                 playerFragment = (PlayerFragment) fragment;
-                playerFragment.updateSongPlaying();
+                MediaPlayerUtil.startPlaying(this, SongsData.getInstance().getSongPlaying());
+                if(mediaPlayerService!=null)
+                    mediaPlayerService.refreshNotification();
+                playerFragment.updatePlayerUI();
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
 
@@ -205,15 +208,11 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     }
 
     @Override
-    public void onTogglePlayPause() {
+    public void onPlaybackUpdate() {
         if (mediaPlayerService != null)
-            mediaPlayerService.togglePlayPause();
-    }
-
-    @Override
-    public void onSwitchTrack(Song song) {
-        if (mediaPlayerService != null)
-            mediaPlayerService.updateSong(song);
+            mediaPlayerService.refreshNotification();
+        songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
+        playerFragment.updatePlayerUI();
     }
 
     @Override
@@ -222,8 +221,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             unbindService(this);
             if (mediaPlayerService != null)
                 mediaPlayerService.stopSelf();
-            PlayerFragment.mediaPlayer.stop();
-            PlayerFragment.mediaPlayer.release();
+            MediaPlayerUtil.stop();
         }
         super.onPause();
     }
@@ -239,10 +237,13 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         intentFilter.addAction(MediaPlayerService.ACTION_NEXT);
         intentFilter.addAction(MediaPlayerService.ACTION_CANCEL);
         registerReceiver(mediaPlayerReceiver, intentFilter);
+
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
-            playButton.setBackgroundResource(mediaPlayerService.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
+            playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
         }
+        if (playerFragment != null)
+            playerFragment.updatePlayerUI();
     }
 
 
@@ -276,23 +277,32 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     private class MediaPlayerReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()) {
+            String action = intent.getAction();
+            switch (action) {
                 case MediaPlayerService.ACTION_PREV:
-                    playerFragment.playPrevSong();
-                    mediaPlayerService.updateSong(SongsData.getInstance().getSongPlaying());
+                    MediaPlayerUtil.playPrev(MainActivity.this);
+                    mediaPlayerService.refreshNotification();
+                    if (playerFragment != null)
+                        playerFragment.updatePlayerUI();
                     break;
                 case MediaPlayerService.ACTION_TOGGLE_PLAY_PAUSE:
-                    playerFragment.togglePlayPause();
-                    playButton.setBackgroundResource(mediaPlayerService.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
+                    MediaPlayerUtil.togglePlayPause();
+                    mediaPlayerService.refreshNotification();
+                    playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
+                    if (playerFragment != null)
+                        playerFragment.updatePlayButton();
                     break;
                 case MediaPlayerService.ACTION_NEXT:
-                    playerFragment.playNextSong();
-                    mediaPlayerService.updateSong(SongsData.getInstance().getSongPlaying());
+                    MediaPlayerUtil.playNext(MainActivity.this);
+                    mediaPlayerService.refreshNotification();
+                    if (playerFragment != null)
+                        playerFragment.updatePlayerUI();
                     break;
                 case MediaPlayerService.ACTION_CANCEL:
                     mediaPlayerService.stopSelf();
                     break;
             }
+
         }
     }
 
