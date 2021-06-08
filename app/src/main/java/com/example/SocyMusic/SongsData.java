@@ -10,10 +10,12 @@ public class SongsData {
     private ArrayList<Song> allSongs;
     private ArrayList<Song> playingQueue;
     private int playingQueueIndex;
+    private boolean repeat;
 
     private SongsData() {
         reloadSongs();
         playingQueue = new ArrayList<>();
+        repeat = true;
     }
 
     public Song getSongPlaying() {
@@ -32,9 +34,7 @@ public class SongsData {
 
     public void setPlaying(int playingIndex) {
         playingQueueIndex = playingIndex;
-        if (playingQueueIndex > playingQueue.size() - 1)
-            playingQueueIndex = playingQueue.size() - 1;
-        else if (playingQueueIndex < 0)
+        if (playingQueueIndex < 0 || playingQueueIndex > playingQueue.size() - 1 && repeat)
             playingQueueIndex = 0;
     }
 
@@ -93,5 +93,17 @@ public class SongsData {
 
     public int songsCount() {
         return allSongs.size();
+    }
+
+    public boolean isRepeat() {
+        return repeat;
+    }
+
+    public void setRepeat(boolean repeat) {
+        this.repeat = repeat;
+    }
+
+    public boolean lastInQueue() {
+        return playingQueueIndex == playingQueue.size() - 1;
     }
 }
