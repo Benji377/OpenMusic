@@ -9,8 +9,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,9 +18,7 @@ import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +27,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.musicplayer.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -122,10 +120,13 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         // To add an item to the menu, add it to menu/main.xml first!
 
         if (item.getItemId() == R.id.credits) {
-            //TODO: Replace Pop-up with Fragment
-            onButtonShowPopupWindowClick(listView);
-            // Fragment not displaying strangely
-            new AboutPageFragment();
+            FragmentManager aboutFragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = aboutFragmentManager.beginTransaction();
+            AboutPageFragment pageFragment = new AboutPageFragment();
+            fragmentTransaction.add(R.id.player_fragment_container, pageFragment, "HELLO");
+            fragmentTransaction.commit();
+
+
         } else if (item.getItemId() == R.id.download) {
             Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
         } else if (item.getItemId() == R.id.playlist) {
@@ -314,32 +315,6 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     @Override
     public void onServiceDisconnected(ComponentName name) {
         mediaPlayerService = null;
-    }
-
-    // Shows a pop up window
-    public void onButtonShowPopupWindowClick(View view) {
-
-        // inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater)
-                getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_window, null);
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-        // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window token
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-        popupView.setElevation(20);
-
-        // dismiss the popup window when touched
-        popupView.setOnTouchListener((v, event) -> {
-            popupWindow.dismiss();
-            return true;
-        });
     }
 
 }
