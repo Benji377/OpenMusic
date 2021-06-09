@@ -264,7 +264,7 @@ public class PlayerFragment extends Fragment {
             if (audioSessionId1 != -1)
                 visualizer.setAudioSessionId(audioSessionId1);
         }
-        hostCallBack.onPlaybackUpdate();
+        hostCallBack.onSongUpdate();
     }
 
     protected void playPrevSong() {
@@ -276,7 +276,7 @@ public class PlayerFragment extends Fragment {
             if (audioSessionId12 != -1)
                 visualizer.setAudioSessionId(audioSessionId12);
         }
-        hostCallBack.onPlaybackUpdate();
+        hostCallBack.onSongUpdate();
     }
 
 
@@ -310,5 +310,7 @@ public class PlayerFragment extends Fragment {
         void onLoadComplete();
 
         void onPlaybackUpdate();
+
+        void onSongUpdate();
     }
 }

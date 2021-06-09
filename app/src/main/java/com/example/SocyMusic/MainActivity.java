@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     private PlayerFragment playerFragment;
     private MediaPlayerService mediaPlayerService;
     private MediaPlayerReceiver mediaPlayerReceiver;
+    private boolean hideActionBarMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +83,13 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED)
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    hideActionBarMenu = true;
+                    invalidateOptionsMenu();
                     actionBar.setTitle("Now Playing");
-                else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    hideActionBarMenu = false;
+                    invalidateOptionsMenu();
                     actionBar.setTitle("SocyMusic");
                     songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
                     playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
@@ -112,6 +117,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     // Is the option menu you see in the top left corner (3 dots)
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+
+        for (int i = 0; i < menu.size(); i++)
+            menu.getItem(i).setVisible(!hideActionBarMenu);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -190,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             } else {
                 playerFragment = (PlayerFragment) fragment;
                 MediaPlayerUtil.startPlaying(this, SongsData.getInstance().getSongPlaying());
-                if(mediaPlayerService!=null)
+                if (mediaPlayerService != null)
                     mediaPlayerService.refreshNotification();
                 playerFragment.updatePlayerUI();
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -209,6 +218,14 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     @Override
     public void onPlaybackUpdate() {
+        if (mediaPlayerService != null)
+            mediaPlayerService.refreshNotification();
+        playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
+        playerFragment.updatePlayButton();
+    }
+
+    @Override
+    public void onSongUpdate() {
         if (mediaPlayerService != null)
             mediaPlayerService.refreshNotification();
         songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
