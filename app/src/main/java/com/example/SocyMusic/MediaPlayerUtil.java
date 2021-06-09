@@ -19,7 +19,7 @@ public class MediaPlayerUtil {
         mediaPlayer.setOnCompletionListener(mp -> {
             playNext(context);
             if (context instanceof MainActivity)
-                ((MainActivity) context).onPlaybackUpdate();
+                ((MainActivity) context).onSongUpdate();
         });
         mediaPlayer.start();
         return true;
