@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_img"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context="com.example.SocyMusic.PlayerFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtsongname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:text="Song name"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:textSize="22sp"
+            android:textStyle="italic"
+            tools:ignore="HardcodedText"/>
+
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/music" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <SeekBar
+                android:id="@+id/seekbar"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_margin="20dp"
+                android:layout_marginBottom="40dp" />
+
+            <TextView
+                android:id="@+id/txtsstart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="false"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="15dp"
+                android:layout_toStartOf="@+id/seekbar"
+                android:text="0:00"
+                android:textColor="#FFF"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText"/>
+
+            <TextView
+                android:id="@+id/txtsstop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="false"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="15dp"
+                android:layout_toEndOf="@+id/seekbar"
+                android:text="4:10"
+                android:textColor="#FFF"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/playbtn"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/ic_pause" />
+
+            <Button
+                android:id="@+id/btnnext"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/playbtn"
+                android:background="@drawable/ic_next"
+                android:foreground="@drawable/ic_next" />
+
+            <Button
+                android:id="@+id/btnprev"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:layout_toStartOf="@+id/playbtn"
+                android:background="@drawable/ic_prev"
+                android:foreground="@drawable/ic_prev" />
+
+            <Button
+                android:id="@+id/btnff"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_toEndOf="@+id/btnnext"
+                android:background="@drawable/ic_fast_forward"
+                android:foreground="@drawable/ic_fast_forward" />
+
+            <Button
+                android:id="@+id/btnfr"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@+id/btnprev"
+                android:background="@drawable/ic_fast_rewind"
+                android:foreground="@drawable/ic_fast_rewind" />
+
+            <CheckBox
+                android:id="@+id/repeat_checkbox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/btnfr"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@+id/btnprev"
+                android:background="@drawable/repeat_button_selector"
+                android:button="@null"
+                android:text="" />
+
+            <com.gauravk.audiovisualizer.visualizer.BarVisualizer
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/blast"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_alignParentBottom="true"
+                custom:avColor="#FF362E"
+                custom:avDensity="0.5"
+                custom:avSpeed="normal"
+                custom:avType="outline"
+                custom:avWidth="4dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
