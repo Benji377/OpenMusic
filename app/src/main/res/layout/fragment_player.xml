@@ -28,7 +28,8 @@
             android:textAlignment="center"
             android:textColor="#FFF"
             android:textSize="22sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            tools:ignore="HardcodedText"/>
 
         <ImageView
             android:id="@+id/imageview"
@@ -60,7 +61,8 @@
                 android:layout_toStartOf="@+id/seekbar"
                 android:text="0:00"
                 android:textColor="#FFF"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="HardcodedText"/>
 
             <TextView
                 android:id="@+id/txtsstop"
@@ -72,7 +74,8 @@
                 android:layout_toEndOf="@+id/seekbar"
                 android:text="4:10"
                 android:textColor="#FFF"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="HardcodedText"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -129,6 +132,18 @@
                 android:layout_toStartOf="@+id/btnprev"
                 android:background="@drawable/ic_fast_rewind"
                 android:foreground="@drawable/ic_fast_rewind" />
+
+            <CheckBox
+                android:id="@+id/repeat_checkbox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/btnfr"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@+id/btnprev"
+                android:background="@drawable/repeat_button_selector"
+                android:button="@null"
+                android:text="" />
 
             <com.gauravk.audiovisualizer.visualizer.BarVisualizer xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/blast"
