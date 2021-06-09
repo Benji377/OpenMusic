@@ -31,14 +31,14 @@
     <FrameLayout
         android:id="@+id/player_bottom_sheet"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <FrameLayout
             android:id="@+id/player_fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
 
         <FrameLayout
             android:id="@+id/about_fragment_container"
