@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:layout_marginBottom="50dp">
 
     </ListView>
 
