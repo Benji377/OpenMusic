@@ -37,6 +37,7 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import java.io.File;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PlayerFragment.PlayerFragmentHost, ServiceConnection {
@@ -172,10 +173,20 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
 
     void displaySongs() {
+        Log.e("Init", "Displaysong init");
+
+        // Loading files from SD-Card???
+        File[] storages = getApplicationContext().getExternalFilesDirs(null);
+        for (File storage : storages) {
+            SongsData.getInstance().loadSongs(storage);
+            Log.e("ExtStorage", "path: " + storage.getPath());
+        }
+
         customAdapter customAdapter = new customAdapter();
         listView.setAdapter(customAdapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
+
             if (!SongsData.getInstance().songExists(position)) {
                 Toast.makeText(this, "File moved or deleted.", Toast.LENGTH_LONG).show();
                 SongsData.getInstance().reloadSongs();
