@@ -9,8 +9,8 @@
         android:id="@+id/playlist"
         android:orderInCategory="2"
         app:showAsAction="never"/>
-    <item android:title="@string/credits"
-        android:id="@+id/credits"
+    <item android:title="@string/about"
+        android:id="@+id/about"
         android:orderInCategory="3"
         app:showAsAction="never" />
 </menu>
