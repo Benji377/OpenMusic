@@ -10,15 +10,20 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.musicplayer.BuildConfig;
 import com.example.musicplayer.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.karumi.dexter.Dexter;
@@ -39,6 +45,9 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.File;
 import java.util.List;
+
+import mehdi.sakout.aboutpage.AboutPage;
+import mehdi.sakout.aboutpage.Element;
 
 public class MainActivity extends AppCompatActivity implements PlayerFragment.PlayerFragmentHost, ServiceConnection {
     ListView listView;
@@ -52,11 +61,11 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     private MediaPlayerReceiver mediaPlayerReceiver;
     private boolean hideActionBarMenu;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.app_name));
@@ -129,13 +138,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         // To add an item to the menu, add it to menu/main.xml first!
 
-        if (item.getItemId() == R.id.credits) {
-            FragmentManager aboutFragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = aboutFragmentManager.beginTransaction();
-            AboutPageFragment pageFragment = new AboutPageFragment();
-            fragmentTransaction.add(R.id.player_fragment_container, pageFragment, "HELLO");
-            fragmentTransaction.commit();
-
+        if (item.getItemId() == R.id.about) {
+            showPopupWindow(listView);
 
         } else if (item.getItemId() == R.id.download) {
             Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
@@ -173,6 +177,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
 
     void displaySongs() {
+
+
+        //TODO: Fix this issue
+        /*
         Log.e("Init", "Displaysong init");
 
         // Loading files from SD-Card???
@@ -181,6 +189,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             SongsData.getInstance().loadSongs(storage);
             Log.e("ExtStorage", "path: " + storage.getPath());
         }
+         */
 
         customAdapter customAdapter = new customAdapter();
         listView.setAdapter(customAdapter);
@@ -343,6 +352,42 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     @Override
     public void onServiceDisconnected(ComponentName name) {
         mediaPlayerService = null;
+    }
+
+    public void showPopupWindow(View view) {
+
+        // Reference:
+        // https://blog.fossasia.org/creating-an-awesome-about-us-page-for-the-open-event-organizer-android-app/
+        // https://github.com/medyo/android-about-page
+
+        View popupView = new AboutPage(getApplicationContext(), R.style.Widget_App_AboutPage)
+                .isRTL(false)
+                .setImage(R.mipmap.ic_launcher)
+                .setDescription(getString(R.string.about_us_description))
+                .addItem(new Element("Version " + BuildConfig.VERSION_NAME, R.drawable.ic_info))
+                .addGroup("Connect with us")
+                .addWebsite("https://benji377.github.io/SocyMusic/")
+                .addGitHub("Benji377/SocyMusic")
+                .create();
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 
 }

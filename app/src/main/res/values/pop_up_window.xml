@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="Widget.App.AboutPage" parent="about_About">
+        <item name="aboutBackground">@drawable/pop_up_background</item>
+    </style>
+
+</resources>
