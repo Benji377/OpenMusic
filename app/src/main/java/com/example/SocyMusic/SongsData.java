@@ -65,13 +65,13 @@ public class SongsData {
 
 
     public ArrayList<Song> loadSongs(File dir) {
-        Log.e("LOadCall", "loadsongs method called"+dir.getPath());
+        Log.e("LOadCall", "loadsongs method called "+dir.getPath());
         File[] files = dir.listFiles();
         ArrayList<Song> songsFound = new ArrayList<>();
         if (files != null) {
             for (File singlefile : files) {
                 if (singlefile.isDirectory() && !singlefile.isHidden()) {
-                    Log.e("Dir", "Singlefile directory"+singlefile.getName());
+                    Log.e("Dir", "Singlefile directory "+singlefile.getName());
                     songsFound.addAll(loadSongs(singlefile));
                 } else {
                     if (singlefile.getName().endsWith(".mp3") || singlefile.getName().endsWith(".wav")) {
@@ -83,6 +83,15 @@ public class SongsData {
         }
 
         return songsFound;
+    }
+
+    public void addSongs(File[] filedirs) {
+
+        ArrayList<Song> tempList = new ArrayList<>();
+
+        for (File filedir : filedirs) {
+            allSongs.addAll(loadSongs(filedir));
+        }
     }
 
 
@@ -108,5 +117,8 @@ public class SongsData {
 
     public boolean lastInQueue() {
         return playingQueueIndex == playingQueue.size() - 1;
+    }
+    public boolean firstInQueue() {
+        return playingQueueIndex == 0;
     }
 }
