@@ -174,15 +174,15 @@ public class PlayerFragment extends Fragment {
         fastForwardButton.setOnClickListener(v -> {
             if (MediaPlayerUtil.isPlaying()) {
                 MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() + 10000);
-                songStartTimeTextview.setText(MediaPlayerUtil.getPosition());
+                songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
             }
         });
 
         // moves 10 seconds backwards in the song
         fastRewindButton.setOnClickListener(v -> {
             if (MediaPlayerUtil.isPlaying()) {
-                MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() + 10000);
-                songStartTimeTextview.setText(MediaPlayerUtil.getPosition());
+                MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() - 10000);
+                songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
             }
         });
 
