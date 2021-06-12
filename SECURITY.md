@@ -6,6 +6,8 @@ Those are the supported versions. For now there are beta versions only.
 | Version  | Supported          | Beta    |
 | -------  | ------------------ | -----   |
 | future   | :white_check_mark: | :x:     |
+| 1.1.2-beta | :x:              | :white_check_mark:     |
+| 1.1.1-beta | :x:              | :white_check_mark:     |
 | 1.0      | :white_check_mark: | :x:     |
 | 0.2-beta | :x:                | :white_check_mark: |
 | 0.1-beta | :x:                | :white_check_mark: |
