@@ -357,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         // https://blog.fossasia.org/creating-an-awesome-about-us-page-for-the-open-event-organizer-android-app/
         // https://github.com/medyo/android-about-page
 
-        View popupView = new AboutPage(getApplicationContext(), R.style.Widget_App_AboutPage)
+        View popupView = new AboutPage(MainActivity.this, R.style.Widget_App_AboutPage)
                 .isRTL(false)
                 .setImage(R.mipmap.ic_launcher)
                 .setDescription(getString(R.string.about_us_description))
