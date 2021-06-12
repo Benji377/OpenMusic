@@ -12,15 +12,12 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.example.musicplayer.R;
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 

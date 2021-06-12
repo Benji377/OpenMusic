@@ -1,8 +1,6 @@
 package com.example.SocyMusic;
 
 import android.os.Environment;
-import android.util.Log;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -65,17 +63,14 @@ public class SongsData {
 
 
     public ArrayList<Song> loadSongs(File dir) {
-        Log.e("LOadCall", "loadsongs method called "+dir.getPath());
         File[] files = dir.listFiles();
         ArrayList<Song> songsFound = new ArrayList<>();
         if (files != null) {
             for (File singlefile : files) {
                 if (singlefile.isDirectory() && !singlefile.isHidden()) {
-                    Log.e("Dir", "Singlefile directory "+singlefile.getName());
                     songsFound.addAll(loadSongs(singlefile));
                 } else {
                     if (singlefile.getName().endsWith(".mp3") || singlefile.getName().endsWith(".wav")) {
-                        Log.e("Found!", "Song added"+singlefile.getName());
                         songsFound.add(new Song(singlefile));
                     }
                 }
@@ -86,8 +81,6 @@ public class SongsData {
     }
 
     public void addSongs(File[] filedirs) {
-
-        ArrayList<Song> tempList = new ArrayList<>();
 
         for (File filedir : filedirs) {
             allSongs.addAll(loadSongs(filedir));

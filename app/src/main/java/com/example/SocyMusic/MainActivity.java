@@ -25,13 +25,11 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 import com.example.musicplayer.BuildConfig;
 import com.example.musicplayer.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -40,10 +38,8 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-
 import java.io.File;
 import java.util.List;
-
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 

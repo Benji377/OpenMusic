@@ -9,11 +9,9 @@ import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.media.session.MediaSessionCompat;
-
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.media.app.NotificationCompat.MediaStyle;
-
 import com.example.musicplayer.R;
 
 public class MediaPlayerService extends Service {
