@@ -28,13 +28,20 @@ public class MediaPlayerUtil {
     public static void playNext(Context context) {
         SongsData songsData = SongsData.getInstance();
         if (songsData.lastInQueue() && !songsData.isRepeat())
-            return;
-        SongsData.getInstance().playNext();
+            //plays the first song
+            SongsData.getInstance().setPlaying(0);
+        else
+            SongsData.getInstance().playNext();
         startPlaying(context, SongsData.getInstance().getSongPlaying());
     }
 
     public static void playPrev(Context context) {
-        SongsData.getInstance().playPrev();
+        SongsData songsData = SongsData.getInstance();
+        if (songsData.firstInQueue() && !songsData.isRepeat())
+            //plays the last song
+            SongsData.getInstance().setPlaying(SongsData.getInstance().songsCount()-1);
+        else
+            SongsData.getInstance().playPrev();
         startPlaying(context, SongsData.getInstance().getSongPlaying());
     }
 

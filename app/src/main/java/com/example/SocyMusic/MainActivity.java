@@ -41,6 +41,7 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import java.io.File;
 import java.util.List;
 
 import mehdi.sakout.aboutpage.AboutPage;
@@ -134,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         // To add an item to the menu, add it to menu/main.xml first!
-
         if (item.getItemId() == R.id.about) {
             showPopupWindow(listView);
 
@@ -175,18 +175,12 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     void displaySongs() {
 
-
         //TODO: Fix this issue
-        /*
         Log.e("Init", "Displaysong init");
 
         // Loading files from SD-Card???
         File[] storages = getApplicationContext().getExternalFilesDirs(null);
-        for (File storage : storages) {
-            SongsData.getInstance().loadSongs(storage);
-            Log.e("ExtStorage", "path: " + storage.getPath());
-        }
-         */
+        SongsData.getInstance().addSongs(storages);
 
         customAdapter customAdapter = new customAdapter();
         listView.setAdapter(customAdapter);
