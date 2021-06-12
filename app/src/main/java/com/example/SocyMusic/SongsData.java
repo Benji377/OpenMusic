@@ -16,7 +16,6 @@ public class SongsData {
     private SongsData() {
         reloadSongs();
         playingQueue = new ArrayList<>();
-        repeat = false;
     }
 
     public Song getSongPlaying() {
