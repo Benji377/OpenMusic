@@ -171,10 +171,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     void displaySongs() {
 
-        //TODO: Fix this issue
-        Log.e("Init", "Displaysong init");
-
-        // Loading files from SD-Card???
+        // Loading files from SD-Card
         File[] storages = getApplicationContext().getExternalFilesDirs(null);
         SongsData.getInstance().addSongs(storages);
 
