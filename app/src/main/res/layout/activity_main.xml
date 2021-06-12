@@ -71,13 +71,14 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
                 android:text="Song name goes here"
+                tools:ignore="HardcodedText"
                 android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/bsh_play_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:background="@drawable/ic_pause" />
 
 
