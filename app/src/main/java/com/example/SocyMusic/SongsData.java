@@ -114,4 +114,8 @@ public class SongsData {
     public boolean firstInQueue() {
         return playingQueueIndex == 0;
     }
+
+    public int currentSongIndex() {
+        return playingQueueIndex;
+    }
 }
