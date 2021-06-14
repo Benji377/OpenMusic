@@ -29,6 +29,7 @@ public class PlayerFragment extends Fragment {
     private Button fastForwardButton;
     private Button fastRewindButton;
     private CheckBox repeatCheckBox;
+    private CheckBox shuffleCheckBox;
 
     private TextView songNameTextview;
     private TextView songStartTimeTextview;
@@ -75,6 +76,7 @@ public class PlayerFragment extends Fragment {
         fastForwardButton = view.findViewById(R.id.btnff);
         fastRewindButton = view.findViewById(R.id.btnfr);
         repeatCheckBox = view.findViewById(R.id.repeat_checkbox);
+        shuffleCheckBox = view.findViewById(R.id.shuffle_checkbox);
 
         // Adds all texts
         songNameTextview = view.findViewById(R.id.txtsongname);
@@ -92,6 +94,9 @@ public class PlayerFragment extends Fragment {
 
         // The option to repeat the song or not
         repeatCheckBox.setChecked(SongsData.getInstance().isRepeat());
+
+        // The option to shuffle the queue
+        shuffleCheckBox.setChecked(SongsData.getInstance().isShuffle());
 
         // This is necessary to fix the marquee, which was lagging sometimes
         songNameTextview.setEnabled(true);
@@ -217,6 +222,11 @@ public class PlayerFragment extends Fragment {
         // Sets if the song should be repeated or not
         repeatCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             SongsData.getInstance().setRepeat(isChecked);
+        });
+
+        // Sets if the queue should be shuffled
+        shuffleCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SongsData.getInstance().setShuffle(isChecked);
         });
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

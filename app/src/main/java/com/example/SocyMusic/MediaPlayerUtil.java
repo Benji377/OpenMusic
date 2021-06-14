@@ -4,6 +4,8 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
+import java.util.Random;
+
 public class MediaPlayerUtil {
     private static MediaPlayer mediaPlayer;
 
@@ -46,8 +48,11 @@ public class MediaPlayerUtil {
     public static void playNext(Context context) {
         // Fixed instance
         SongsData songsData = SongsData.getInstance();
+        // Shuffles the queue
+        if (songsData.isShuffle() && !songsData.isRepeat()) {
+            SongsData.getInstance().setPlaying(getRandomIndex());
         // Repeats the song
-        if (songsData.isRepeat()) {
+        } else if (songsData.isRepeat()) {
             SongsData.getInstance().setPlaying(songsData.currentSongIndex());
         // Plays the first song in queue
         } else if (songsData.lastInQueue() && !songsData.isRepeat()) {
@@ -69,8 +74,11 @@ public class MediaPlayerUtil {
     public static void playPrev(Context context) {
         // Fixed instance
         SongsData songsData = SongsData.getInstance();
-        // Plays the same song again
-        if (songsData.isRepeat()) {
+        // Shuffles the queue
+        if (songsData.isShuffle() && !songsData.isRepeat()) {
+            SongsData.getInstance().setPlaying(getRandomIndex());
+            // Plays the same song again
+        } else if (songsData.isRepeat()) {
             SongsData.getInstance().setPlaying(songsData.currentSongIndex());
         // Plays the last song in queue
         } else if (songsData.firstInQueue() && !songsData.isRepeat()) {
@@ -164,4 +172,12 @@ public class MediaPlayerUtil {
         return mediaPlayer.getAudioSessionId();
     }
 
+    /**
+     * Generates a random index for the shuffle mode
+     * @return a random integer between 0 and amount of songs
+     */
+    public static int getRandomIndex() {
+        Random r = new Random();
+        return r.nextInt(SongsData.getInstance().songsCount());
+    }
 }
