@@ -10,6 +10,7 @@ public class SongsData {
     private ArrayList<Song> playingQueue;
     private int playingQueueIndex;
     private boolean repeat;
+    private boolean shuffle;
 
     /**
      * SongsData custom constructor.
@@ -184,12 +185,24 @@ public class SongsData {
     }
 
     /**
+     * Checks if the player is in shuffle mode or not
+     * @return True if in shuffle mode, else false
+     */
+    public boolean isShuffle() {return shuffle;}
+
+    /**
      * Changes the repeat state of a song, sets if the song should be repeated or not
      * @param repeat True if the song should be repeated, or false if not
      */
     public void setRepeat(boolean repeat) {
         this.repeat = repeat;
     }
+
+    /**
+     * Changes the shuffle mode of the player
+     * @param shuffle True if shuffle mode should be activated
+     */
+    public void setShuffle(boolean shuffle) {this.shuffle = shuffle;}
 
     /**
      * Checks if the index is currently at the last position in the array
