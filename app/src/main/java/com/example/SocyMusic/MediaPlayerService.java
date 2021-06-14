@@ -16,29 +16,42 @@ import com.example.musicplayer.R;
 
 public class MediaPlayerService extends Service {
 
+    // Declaring all actions
     public static final String ACTION_PREV = "previous";
     public static final String ACTION_TOGGLE_PLAY_PAUSE = "play_pause";
     public static final String ACTION_NEXT = "next";
     public static final String ACTION_CANCEL = "cancel";
     public static final String EXTRA_SONG = "com.example.SocyMusic.song";
 
+    // Declaring components
     private Song songPlaying;
     private MediaSessionCompat mediaSession;
     private boolean isPlaying;
 
+    // Declaring constants
     private final IBinder binder = new LocalBinder();
     private static final String MEDIA_SESSION_TAG = "mediaservicetag";
     private static final int SERVICE_REQUEST_CODE = 9034;
     private static final int NOTIFICATION_ID = 181;
 
-
+    /**
+     * Gets executed when the class gets created
+     */
     @Override
     public void onCreate() {
         super.onCreate();
+        // Creates a new mediasession with a unique tag
         mediaSession = new MediaSessionCompat(this, MEDIA_SESSION_TAG);
         isPlaying = MediaPlayerUtil.isPlaying();
     }
 
+    /**
+     * Creates a new notification of the app
+     * @param intent For communication between classes
+     * @param flags For extra parameters
+     * @param startId ID of the startCommand
+     * @return 2
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         songPlaying = (Song) intent.getSerializableExtra(EXTRA_SONG);
@@ -47,12 +60,17 @@ public class MediaPlayerService extends Service {
         return START_NOT_STICKY;
     }
 
+    /**
+     * Gets executed if the notification gets closed
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
 
-
+    /**
+     * Creates a new notification with the new updated values
+     */
     public void refreshNotification() {
         songPlaying = SongsData.getInstance().getSongPlaying();
         isPlaying = MediaPlayerUtil.isPlaying();
@@ -60,6 +78,10 @@ public class MediaPlayerService extends Service {
         startForeground(NOTIFICATION_ID, notification);
     }
 
+    /**
+     * Sets all parameters and actions of the notification
+     * @return The new built notification
+     */
     private Notification buildNotification() {
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, SERVICE_REQUEST_CODE, notificationIntent, 0);
@@ -98,7 +120,10 @@ public class MediaPlayerService extends Service {
                 .build();
     }
 
-
+    /**
+     * Gets executed if a task gets removed
+     * @param rootIntent The main Intent
+     */
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         MediaPlayerUtil.stop();
@@ -106,12 +131,20 @@ public class MediaPlayerService extends Service {
         super.onTaskRemoved(rootIntent);
     }
 
+    /**
+     * Returns the binder
+     * @param intent Intent which gets binded
+     * @return The binder
+     */
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
     }
 
+    /**
+     * Creates a custom binder
+     */
     public class LocalBinder extends Binder {
         MediaPlayerService getService() {
             return MediaPlayerService.this;
