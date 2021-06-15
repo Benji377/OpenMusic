@@ -53,13 +53,17 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     TextView songTitleTextView;
     Button playButton;
 
+    // Private components
     private PlayerFragment playerFragment;
     private QueueFragment queueFragment;
     private MediaPlayerService mediaPlayerService;
     private MediaPlayerReceiver mediaPlayerReceiver;
     private ActionBar actionBar;
 
-
+    /**
+     * Gets executed every time the app starts
+     * @param savedInstanceState Android standard
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,13 +72,14 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.app_name));
 
-
+        // Sets all components
         listView = findViewById(R.id.listViewSong);
         songInfoPane = findViewById(R.id.song_info_pane);
         bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.player_bottom_sheet));
         songTitleTextView = findViewById(R.id.bsht_song_name_txt);
         songTitleTextView.setSelected(true);
 
+        // Creates a connection to the player fragment
         final FrameLayout playerContainer = findViewById(R.id.player_fragment_container);
         playerContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -84,10 +89,12 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             }
         });
 
+        // Creates the bottom navigation sheet and sets its behaviour
         bottomSheetBehavior.setHideable(true);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
+            // Controls if the sheet changed state
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     invalidateOptionsMenu();
@@ -102,24 +109,31 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             }
 
             @Override
+            // If user slides to the bottom on the sheet
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 songInfoPane.setAlpha(1f - slideOffset);
             }
         });
 
+        // Sets action for the infoPane
         songInfoPane.setOnClickListener(v -> bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED));
 
+        // Sets the playButton
         playButton = findViewById(R.id.bsh_play_button);
         playButton.setOnClickListener(v -> {
             playerFragment.togglePlayPause();
             playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
         });
+        // Checks for all the required permissions
         runtimePermission();
-
     }
 
+    /**
+     * Creates the option menu you can see in the upper left corner (three dots)
+     * @param menu The menu to be created
+     * @return The finished created menu
+     */
     @Override
-    // Is the option menu you see in the top left corner (3 dots)
     public boolean onCreateOptionsMenu(Menu menu) {
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)
             getMenuInflater().inflate(R.menu.main, menu);
@@ -134,8 +148,12 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Creates all available options and sets the action to be performed when the suer clicks on them
+     * @param item Item of the menu
+     * @return Which item has been selected
+     */
     @Override
-    // Creates the options available and what happens if you click on them
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         // To add an item to the menu, add it to menu/main.xml first!
@@ -186,6 +204,9 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         invalidateOptionsMenu();
     }
 
+    /**
+     * Sets what happens if the user presses the 'back'-key
+     */
     @Override
     public void onBackPressed() {
         if (queueFragment != null)
@@ -197,22 +218,30 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     }
 
+    /**
+     * Checks for all required permissions
+     * For example storage permission to find all the songs and record permission for the visualizer
+     */
     public void runtimePermission() {
         Dexter.withContext(this).withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                        // Display all the songs
                         displaySongs();
                     }
 
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+                        // Ask again and again until permissions are accepted
                         permissionToken.continuePermissionRequest();
                     }
                 }).check();
     }
 
-
+    /**
+     * This method searches for all songs it can find on the phone's storage and shows them as a list
+     */
     void displaySongs() {
 
         // Loading files from SD-Card
@@ -222,19 +251,23 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         customAdapter customAdapter = new customAdapter();
         listView.setAdapter(customAdapter);
 
+        // If you click on an tem in the list, the player fragment opens
         listView.setOnItemClickListener((parent, view, position, id) -> {
 
+            // Error occured
             if (!SongsData.getInstance().songExists(position)) {
                 Toast.makeText(this, "File moved or deleted.", Toast.LENGTH_LONG).show();
                 SongsData.getInstance().reloadSongs();
                 customAdapter.notifyDataSetChanged();
                 return;
             }
-
+            // Adds all the songs to the queue from that position onward
             SongsData.getInstance().playAllFrom(position);
+            // Plays the selected song
             Song songClicked = SongsData.getInstance().getSongPlaying();
             songTitleTextView.setText(songClicked.getTitle());
 
+            // Opens the player fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
             Fragment fragment = fragmentManager.findFragmentById(R.id.player_fragment_container);
             if (fragment == null) {
@@ -255,16 +288,25 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             }
 
         });
+        // Error occurs --> song not found
         TextView emptyText = findViewById(R.id.listEmptyTextView);
         listView.setEmptyView(emptyText);
     }
 
+    /**
+     * When the app finishes loading
+     * Must be implemented!
+     */
     @Override
     public void onLoadComplete() {
         bottomSheetBehavior.setHideable(false);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
+    /**
+     * If the song has changed state, the notification needs to be updated
+     * This method refreshes the notification and sets the buttons accordingly
+     */
     @Override
     public void onPlaybackUpdate() {
         if (mediaPlayerService != null)
@@ -273,6 +315,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         playerFragment.updatePlayButton();
     }
 
+    /**
+     * If a completely new song is being played, this method updates the notification and the text
+     * accordingly
+     */
     @Override
     public void onSongUpdate() {
         if (mediaPlayerService != null)
@@ -281,6 +327,9 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         playerFragment.updatePlayerUI();
     }
 
+    /**
+     * If playing is paused this method stops the mediaplayer service
+     */
     @Override
     protected void onPause() {
         if (isFinishing()) {
@@ -292,11 +341,16 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         super.onPause();
     }
 
+    /**
+     * Basically gets executed when the app gets resumed. which means when it is closed and reopened
+     */
     @Override
     protected void onResume() {
         super.onResume();
+        // Creates a new mediaplayer receiver if none exist
         if (mediaPlayerReceiver == null)
             mediaPlayerReceiver = new MediaPlayerReceiver();
+        // Sets all intents for actions
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MediaPlayerService.ACTION_PREV);
         intentFilter.addAction(MediaPlayerService.ACTION_TOGGLE_PLAY_PAUSE);
@@ -312,24 +366,48 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             playerFragment.updatePlayerUI();
     }
 
-
+    /**
+     * Custom adapter for SongsData related actions
+     */
     class customAdapter extends BaseAdapter {
 
+        /**
+         * Gets the amount of songs
+         * @return The number of songs
+         */
         @Override
         public int getCount() {
             return SongsData.getInstance().songsCount();
         }
 
+        /**
+         * Gets the song as object in a defined position in the queue
+         * @param position Position to search for the song
+         * @return The song as an object
+         */
         @Override
         public Object getItem(int position) {
             return SongsData.getInstance().getSongAt(position).getTitle();
         }
 
+        /**
+         * Not fully implemented yet!
+         * Returns the id of a song at a given position
+         * @param position The position of the song in the queue
+         * @return The ID of the song
+         */
         @Override
         public long getItemId(int position) {
             return 0;
         }
 
+        /**
+         * Returns the view of the list_item
+         * @param position Position of the song in the queue
+         * @param convertView Unused
+         * @param parent Root view
+         * @return The view of the song
+         */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View myView = getLayoutInflater().inflate(R.layout.list_item, null);
@@ -340,10 +418,20 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         }
     }
 
+    /**
+     * Extends the standard Broadcastreceiver to create a new receiver for the mediaplayer
+     */
     private class MediaPlayerReceiver extends BroadcastReceiver {
+
+        /**
+         * Sets what should happen when the receiver gets a signal
+         * @param context Context of the app
+         * @param intent Intent to get the action from
+         */
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            // Checks for different actions
             switch (action) {
                 case MediaPlayerService.ACTION_PREV:
                     MediaPlayerUtil.playPrev(MainActivity.this);
@@ -376,22 +464,33 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         }
     }
 
+    /**
+     * Sets what happens if the service connects
+     * @param name Name of the service
+     * @param iBinder Binder for the service
+     */
     @Override
     public void onServiceConnected(ComponentName name, IBinder iBinder) {
         mediaPlayerService = ((MediaPlayerService.LocalBinder) iBinder).getService();
     }
 
+    /**
+     * Sets what happens if the service disconnects
+     * @param name Name of the service
+     */
     @Override
     public void onServiceDisconnected(ComponentName name) {
         mediaPlayerService = null;
     }
 
+    /**
+     * Creates a popUp window, in this case specifically for the About-menu option
+     * @param view The view at which the popup should be shown
+     */
     public void showPopupWindow(View view) {
-
         // Reference:
         // https://blog.fossasia.org/creating-an-awesome-about-us-page-for-the-open-event-organizer-android-app/
         // https://github.com/medyo/android-about-page
-
         View popupView = new AboutPage(MainActivity.this, R.style.Widget_App_AboutPage)
                 .isRTL(false)
                 .setImage(R.mipmap.ic_launcher)
