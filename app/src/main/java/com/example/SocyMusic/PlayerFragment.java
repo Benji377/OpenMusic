@@ -15,9 +15,11 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.example.musicplayer.R;
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 
@@ -156,10 +158,7 @@ public class PlayerFragment extends Fragment {
 
         playSongButton.setOnClickListener(v -> togglePlayPause());
 
-        int audioSessionId = MediaPlayerUtil.getAudioSessionId();
-        if (audioSessionId != -1) {
-            visualizer.setAudioSessionId(audioSessionId);
-        }
+        initializeVisualizer();
 
         // plays the next song
         nextSongButton.setOnClickListener(v -> playNextSong());
@@ -183,9 +182,7 @@ public class PlayerFragment extends Fragment {
             }
         });
 
-        repeatCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            SongsData.getInstance().setRepeat(isChecked);
-        });
+        repeatCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> SongsData.getInstance().setRepeat(isChecked));
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -218,12 +215,15 @@ public class PlayerFragment extends Fragment {
     @Override
     // Releases the music visualizer bar without errors
     public void onDestroy() {
-        if (visualizer != null) {
-            visualizer.release();
-        }
+        releaseVisualizer();
         super.onDestroy();
     }
 
+    public void releaseVisualizer() {
+        if (visualizer != null) {
+            visualizer.release();
+        }
+    }
 
     public static PlayerFragment newInstance() {
 //        **insert arguments here**
@@ -267,9 +267,7 @@ public class PlayerFragment extends Fragment {
         MediaPlayerUtil.playNext(getContext());
         if (isResumed()) {
             animateSongThumbail(1);
-            int audioSessionId1 = MediaPlayerUtil.getAudioSessionId();
-            if (audioSessionId1 != -1)
-                visualizer.setAudioSessionId(audioSessionId1);
+            initializeVisualizer();
         }
         hostCallBack.onSongUpdate();
     }
@@ -279,9 +277,7 @@ public class PlayerFragment extends Fragment {
         if (isResumed()) {
             // starts the animation
             animateSongThumbail(-1);
-            int audioSessionId12 = MediaPlayerUtil.getAudioSessionId();
-            if (audioSessionId12 != -1)
-                visualizer.setAudioSessionId(audioSessionId12);
+            initializeVisualizer();
         }
         hostCallBack.onSongUpdate();
     }
@@ -310,6 +306,12 @@ public class PlayerFragment extends Fragment {
         time += sec;
 
         return time;
+    }
+
+    public void initializeVisualizer() {
+        int audioSessionId = MediaPlayerUtil.getAudioSessionId();
+        if (audioSessionId != -1 && audioSessionId != 0)
+            visualizer.setAudioSessionId(audioSessionId);
     }
 
     public interface PlayerFragmentHost {

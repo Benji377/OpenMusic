@@ -42,9 +42,10 @@
             android:layout_height="match_parent" />
 
         <FrameLayout
-            android:id="@+id/about_fragment_container"
+            android:id="@+id/queue_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
 
         <RelativeLayout
             android:id="@+id/song_info_pane"

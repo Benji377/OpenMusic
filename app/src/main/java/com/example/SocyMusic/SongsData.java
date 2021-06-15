@@ -1,8 +1,10 @@
 package com.example.SocyMusic;
 
 import android.os.Environment;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SongsData {
     public static SongsData data;
@@ -38,8 +40,10 @@ public class SongsData {
 
     public void playAllFrom(int position) {
         playingQueue.clear();
-        playingQueue.addAll(allSongs);
-        playingQueueIndex = position;
+        for (int i = 0; i < allSongs.size(); i++)
+            playingQueue.add(allSongs.get((i + position) % allSongs.size()));
+
+        playingQueueIndex = 0;
     }
 
     public void addToQueue(Song song) {
@@ -87,6 +91,9 @@ public class SongsData {
         }
     }
 
+    public int getPlayingQueueCount() {
+        return playingQueue.size();
+    }
 
     public boolean songExists(int position) {
         return allSongs.get(position).getFile().exists();
@@ -94,6 +101,10 @@ public class SongsData {
 
     public Song getSongAt(int position) {
         return allSongs.get(position);
+    }
+
+    public Song getSongFromQueueAt(int position) {
+        return playingQueue.get(position);
     }
 
     public int songsCount() {
@@ -111,7 +122,23 @@ public class SongsData {
     public boolean lastInQueue() {
         return playingQueueIndex == playingQueue.size() - 1;
     }
+
     public boolean firstInQueue() {
         return playingQueueIndex == 0;
+    }
+
+    public List<Song> getPlayingQueue() {
+        return playingQueue;
+    }
+
+    public void onQueueReordered(int from, int to) {
+        if (playingQueueIndex == from)
+            playingQueueIndex = to;
+        else {
+            if (from < to && playingQueueIndex > from && playingQueueIndex <= to)
+                playingQueueIndex--;
+            else if (from > to && playingQueueIndex < from && playingQueueIndex >= to)
+                playingQueueIndex++;
+        }
     }
 }
