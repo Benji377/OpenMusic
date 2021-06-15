@@ -52,7 +52,7 @@ public class MediaPlayerUtil {
         if (songsData.isShuffle() && !songsData.isRepeat()) {
             int randomIndex = getRandomIndex();
             // Avoids playing the same song twice
-            while (randomIndex == songsData.currentSongIndex() && SongsData.getInstance().songsCount() != 0) {
+            while (randomIndex == songsData.currentSongIndex() && SongsData.getInstance().songsCount() > 1) {
                 randomIndex = getRandomIndex();
             }
             SongsData.getInstance().setPlaying(randomIndex);
@@ -83,7 +83,7 @@ public class MediaPlayerUtil {
         if (songsData.isShuffle() && !songsData.isRepeat()) {
             int randomIndex = getRandomIndex();
             // Avoids playing the same song twice
-            while (randomIndex == songsData.currentSongIndex() && SongsData.getInstance().songsCount() != 0) {
+            while (randomIndex == songsData.currentSongIndex() && SongsData.getInstance().songsCount() > 1) {
                 randomIndex = getRandomIndex();
             }
             SongsData.getInstance().setPlaying(randomIndex);
