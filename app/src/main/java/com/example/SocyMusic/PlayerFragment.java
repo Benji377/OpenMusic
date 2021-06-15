@@ -15,9 +15,11 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.example.musicplayer.R;
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 
@@ -191,11 +193,7 @@ public class PlayerFragment extends Fragment {
         // Sets the action to execute when the button is pressed
         playSongButton.setOnClickListener(v -> togglePlayPause());
 
-        // Needed for the Mediaplayer to function
-        int audioSessionId = MediaPlayerUtil.getAudioSessionId();
-        if (audioSessionId != -1) {
-            visualizer.setAudioSessionId(audioSessionId);
-        }
+        initializeVisualizer();
 
         // Plays the next song
         nextSongButton.setOnClickListener(v -> playNextSong());
@@ -219,10 +217,7 @@ public class PlayerFragment extends Fragment {
             }
         });
 
-        // Sets if the song should be repeated or not
-        repeatCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            SongsData.getInstance().setRepeat(isChecked);
-        });
+        repeatCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> SongsData.getInstance().setRepeat(isChecked));
 
         // Sets if the queue should be shuffled
         shuffleCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -271,10 +266,14 @@ public class PlayerFragment extends Fragment {
      */
     @Override
     public void onDestroy() {
+        releaseVisualizer();
+        super.onDestroy();
+    }
+
+    public void releaseVisualizer() {
         if (visualizer != null) {
             visualizer.release();
         }
-        super.onDestroy();
     }
 
 
@@ -345,9 +344,7 @@ public class PlayerFragment extends Fragment {
         if (isResumed()) {
             // Rotates the thumbnail
             animateSongThumbail(1);
-            int audioSessionId1 = MediaPlayerUtil.getAudioSessionId();
-            if (audioSessionId1 != -1)
-                visualizer.setAudioSessionId(audioSessionId1);
+            initializeVisualizer();
         }
         hostCallBack.onSongUpdate();
     }
@@ -361,9 +358,7 @@ public class PlayerFragment extends Fragment {
         if (isResumed()) {
             // Rotates the thumbnail in the negative direction
             animateSongThumbail(-1);
-            int audioSessionId12 = MediaPlayerUtil.getAudioSessionId();
-            if (audioSessionId12 != -1)
-                visualizer.setAudioSessionId(audioSessionId12);
+            initializeVisualizer();
         }
         hostCallBack.onSongUpdate();
     }
@@ -403,6 +398,12 @@ public class PlayerFragment extends Fragment {
         time += sec;
         // time = min:sec
         return time;
+    }
+
+    public void initializeVisualizer() {
+        int audioSessionId = MediaPlayerUtil.getAudioSessionId();
+        if (audioSessionId != -1 && audioSessionId != 0)
+            visualizer.setAudioSessionId(audioSessionId);
     }
 
     /**

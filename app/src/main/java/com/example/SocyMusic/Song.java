@@ -3,10 +3,12 @@ package com.example.SocyMusic;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Song implements Serializable {
     private File songFile;
     private String songTitle;
+    private long ID;
 
     /**
      * First custom constructor for the Song class. Creates a Song with file only.
@@ -25,6 +27,7 @@ public class Song implements Serializable {
     public Song(File file, String title) {
         this.songFile = file;
         this.songTitle = title;
+
     }
 
     /**

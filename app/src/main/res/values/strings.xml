@@ -8,4 +8,6 @@
     <string name="song_list_empty">No songs found…</string>
     <string name="error_file_corrupted_msg">Skipped %d songs. File(s) corrupted or unreadable.</string>
     <string name="about_us_description">SocyMusic is an open-source Android music player written in Java to which everyone can contribute to.</string>
+    <string name="playing_queue">Playing queue</string>
+    <string name="now_playing">Now Playing</string>
 </resources>

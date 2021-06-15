@@ -1,8 +1,10 @@
 package com.example.SocyMusic;
 
 import android.os.Environment;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SongsData {
     public static SongsData data;
@@ -23,6 +25,7 @@ public class SongsData {
 
     /**
      * Method to retrieve the song that is being played
+     *
      * @return Song at which the playingQueueIndex points at
      */
     public Song getSongPlaying() {
@@ -32,6 +35,7 @@ public class SongsData {
     /**
      * Plays the next song by grabbing the next song in the playingQueueIndex
      * WARNING: Might cause ArrayOutOfBounds Exception!
+     *
      * @return the next Song that will be played
      */
     public Song playNext() {
@@ -42,6 +46,7 @@ public class SongsData {
     /**
      * Plays the previous song by grabbing the previous song in the playingQueueIndex
      * WARNING: Might cause ArrayOutOfBounds Exception if Index is 0
+     *
      * @return the previous song that will be played
      */
     public Song playPrev() {
@@ -51,6 +56,7 @@ public class SongsData {
 
     /**
      * Sets the playingQueueIndex to a specific index
+     *
      * @param playingIndex the index of the song
      */
     public void setPlaying(int playingIndex) {
@@ -62,16 +68,20 @@ public class SongsData {
     /**
      * Clears the previous Queue and creates a new one with all songs and starts playing from
      * a specific index/position
+     *
      * @param position the index from where the player should start playing
      */
     public void playAllFrom(int position) {
         playingQueue.clear();
-        playingQueue.addAll(allSongs);
-        playingQueueIndex = position;
+        for (int i = 0; i < allSongs.size(); i++)
+            playingQueue.add(allSongs.get((i + position) % allSongs.size()));
+
+        playingQueueIndex = 0;
     }
 
     /**
      * Adds a song at the end of the Queue
+     *
      * @param song the song to be added
      */
     public void addToQueue(Song song) {
@@ -80,6 +90,7 @@ public class SongsData {
 
     /**
      * Adds a song to a specific position/index to the queue
+     *
      * @param position index to where the song should be placed
      */
     public void addToQueue(int position) {
@@ -88,6 +99,7 @@ public class SongsData {
 
     /**
      * Creates an instance of the class if it doesn't already exist
+     *
      * @return the new created class
      */
     public static SongsData getInstance() {
@@ -108,6 +120,7 @@ public class SongsData {
      * Searches for .mp3 and .wav files in the given directory. If it finds directories on its way
      * it automatically searches in them too recursively. The songs it founds get added to an array.
      * Hidden files will be ignored.
+     *
      * @param dir Directory in which the songs should be searched
      * @return Array with songs
      */
@@ -150,8 +163,13 @@ public class SongsData {
         }
     }
 
+    public int getPlayingQueueCount() {
+        return playingQueue.size();
+    }
+
     /**
      * Checks if song at a given position/index exists
+     *
      * @param position The index to check for the song's existence
      * @return True if the song exists, else false
      */
@@ -161,6 +179,7 @@ public class SongsData {
 
     /**
      * Returns the song at a given position/index
+     *
      * @param position The index to retrieve the song from
      * @return The song at the given index
      */
@@ -168,8 +187,13 @@ public class SongsData {
         return allSongs.get(position);
     }
 
+    public Song getSongFromQueueAt(int position) {
+        return playingQueue.get(position);
+    }
+
     /**
      * Returns the amount of songs that are in the Array of songs right now
+     *
      * @return The size of the Array containing all the songs
      */
     public int songsCount() {
@@ -178,6 +202,7 @@ public class SongsData {
 
     /**
      * Checks if the player is in repeat mode or not
+     *
      * @return True if the song should be repeated, else false
      */
     public boolean isRepeat() {
@@ -186,12 +211,16 @@ public class SongsData {
 
     /**
      * Checks if the player is in shuffle mode or not
+     *
      * @return True if in shuffle mode, else false
      */
-    public boolean isShuffle() {return shuffle;}
+    public boolean isShuffle() {
+        return shuffle;
+    }
 
     /**
      * Changes the repeat state of a song, sets if the song should be repeated or not
+     *
      * @param repeat True if the song should be repeated, or false if not
      */
     public void setRepeat(boolean repeat) {
@@ -200,12 +229,16 @@ public class SongsData {
 
     /**
      * Changes the shuffle mode of the player
+     *
      * @param shuffle True if shuffle mode should be activated
      */
-    public void setShuffle(boolean shuffle) {this.shuffle = shuffle;}
+    public void setShuffle(boolean shuffle) {
+        this.shuffle = shuffle;
+    }
 
     /**
      * Checks if the index is currently at the last position in the array
+     *
      * @return True if it is the last song in the array, else false
      */
     public boolean lastInQueue() {
@@ -214,14 +247,31 @@ public class SongsData {
 
     /**
      * Checks if the index is currently at the first position in the array
+     *
      * @return True if it is the first song, else false
      */
     public boolean firstInQueue() {
         return playingQueueIndex == 0;
     }
 
+    public List<Song> getPlayingQueue() {
+        return playingQueue;
+    }
+
+    public void onQueueReordered(int from, int to) {
+        if (playingQueueIndex == from)
+            playingQueueIndex = to;
+        else {
+            if (from < to && playingQueueIndex > from && playingQueueIndex <= to)
+                playingQueueIndex--;
+            else if (from > to && playingQueueIndex < from && playingQueueIndex >= to)
+                playingQueueIndex++;
+        }
+    }
+
     /**
      * Gets the index of the currently playing song
+     *
      * @return The index of the currently playing song
      */
     public int currentSongIndex() {

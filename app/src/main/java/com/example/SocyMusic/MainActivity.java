@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,11 +24,13 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
 import com.example.musicplayer.BuildConfig;
 import com.example.musicplayer.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -38,13 +39,14 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
 import java.io.File;
 import java.util.List;
+
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 
-public class MainActivity extends AppCompatActivity implements PlayerFragment.PlayerFragmentHost, ServiceConnection {
-    // Package related variables
+public class MainActivity extends AppCompatActivity implements PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection {
     ListView listView;
     BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
     View songInfoPane;
@@ -53,9 +55,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     // Private components
     private PlayerFragment playerFragment;
+    private QueueFragment queueFragment;
     private MediaPlayerService mediaPlayerService;
     private MediaPlayerReceiver mediaPlayerReceiver;
-    private boolean hideActionBarMenu;
+    private ActionBar actionBar;
 
     /**
      * Gets executed every time the app starts
@@ -66,8 +69,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Creates the initial actionbar
-        ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.app_name));
 
         // Sets all components
@@ -95,15 +97,14 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             // Controls if the sheet changed state
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    hideActionBarMenu = true;
                     invalidateOptionsMenu();
-                    actionBar.setTitle("Now Playing");
+                    actionBar.setTitle(R.string.now_playing);
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    hideActionBarMenu = false;
                     invalidateOptionsMenu();
-                    actionBar.setTitle("SocyMusic");
+                    actionBar.setTitle(R.string.app_name);
                     songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
                     playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
+                    hideQueue();
                 }
             }
 
@@ -134,10 +135,16 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        for (int i = 0; i < menu.size(); i++)
-            menu.getItem(i).setVisible(!hideActionBarMenu);
-
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)
+            getMenuInflater().inflate(R.menu.main, menu);
+        else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            getMenuInflater().inflate(R.menu.playing, menu);
+            MenuItem showQueueButton = menu.findItem(R.id.menu_show_playing_queue);
+            if (queueFragment == null)
+                showQueueButton.setIcon(R.drawable.ic_queue);
+            else
+                showQueueButton.setIcon(R.drawable.ic_queue_selected);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -158,8 +165,43 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         } else if (item.getItemId() == R.id.playlist) {
             // Replace this action
             Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.menu_show_playing_queue) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment fragment = fragmentManager.findFragmentById(R.id.queue_fragment_container);
+            if (fragment == null)
+                showQueue();
+            else
+                hideQueue();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void hideQueue() {
+        if (queueFragment == null)
+            return;
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        View playerFragmentView = findViewById(R.id.player_holder);
+        queueFragment.onDestroyView();
+        fragmentManager.beginTransaction().remove(queueFragment).commit();
+
+        playerFragmentView.setVisibility(View.VISIBLE);
+        playerFragment.initializeVisualizer();
+        playerFragment.updatePlayerUI();
+        actionBar.setTitle(R.string.now_playing);
+        queueFragment = null;
+        invalidateOptionsMenu();
+    }
+
+    private void showQueue() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        View playerFragmentView = findViewById(R.id.player_holder);
+        queueFragment = new QueueFragment();
+        fragmentManager.beginTransaction().add(R.id.queue_fragment_container, queueFragment).commit();
+        actionBar.setTitle(R.string.playing_queue);
+        playerFragment.releaseVisualizer();
+        playerFragmentView.setVisibility(View.INVISIBLE);
+        invalidateOptionsMenu();
     }
 
     /**
@@ -167,8 +209,9 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
      */
     @Override
     public void onBackPressed() {
-
-        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
+        if (queueFragment != null)
+            hideQueue();
+        else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         else
             super.onBackPressed();
@@ -240,8 +283,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 MediaPlayerUtil.startPlaying(this, SongsData.getInstance().getSongPlaying());
                 if (mediaPlayerService != null)
                     mediaPlayerService.refreshNotification();
-                playerFragment.updatePlayerUI();
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                hideQueue();
             }
 
         });
@@ -395,6 +438,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                     mediaPlayerService.refreshNotification();
                     if (playerFragment != null)
                         playerFragment.updatePlayerUI();
+                    if (queueFragment != null)
+                        queueFragment.updateSong();
                     break;
                 case MediaPlayerService.ACTION_TOGGLE_PLAY_PAUSE:
                     MediaPlayerUtil.togglePlayPause();
@@ -408,6 +453,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                     mediaPlayerService.refreshNotification();
                     if (playerFragment != null)
                         playerFragment.updatePlayerUI();
+                    if (queueFragment != null)
+                        queueFragment.updateSong();
                     break;
                 case MediaPlayerService.ACTION_CANCEL:
                     mediaPlayerService.stopSelf();
