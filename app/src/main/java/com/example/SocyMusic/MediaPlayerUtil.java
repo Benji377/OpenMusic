@@ -50,7 +50,12 @@ public class MediaPlayerUtil {
         SongsData songsData = SongsData.getInstance();
         // Shuffles the queue
         if (songsData.isShuffle() && !songsData.isRepeat()) {
-            SongsData.getInstance().setPlaying(getRandomIndex());
+            int randomIndex = getRandomIndex();
+            // Avoids playing the same song twice
+            while (randomIndex == songsData.currentSongIndex() && SongsData.getInstance().songsCount() > 1) {
+                randomIndex = getRandomIndex();
+            }
+            SongsData.getInstance().setPlaying(randomIndex);
         // Repeats the song
         } else if (songsData.isRepeat()) {
             SongsData.getInstance().setPlaying(songsData.currentSongIndex());
@@ -76,8 +81,12 @@ public class MediaPlayerUtil {
         SongsData songsData = SongsData.getInstance();
         // Shuffles the queue
         if (songsData.isShuffle() && !songsData.isRepeat()) {
-            SongsData.getInstance().setPlaying(getRandomIndex());
-            // Plays the same song again
+            int randomIndex = getRandomIndex();
+            // Avoids playing the same song twice
+            while (randomIndex == songsData.currentSongIndex() && SongsData.getInstance().songsCount() > 1) {
+                randomIndex = getRandomIndex();
+            }
+            SongsData.getInstance().setPlaying(randomIndex);
         } else if (songsData.isRepeat()) {
             SongsData.getInstance().setPlaying(songsData.currentSongIndex());
         // Plays the last song in queue
