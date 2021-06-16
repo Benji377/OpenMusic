@@ -134,27 +134,28 @@
             android:foreground="@drawable/ic_fast_rewind"
             app:layout_constraintEnd_toStartOf="@+id/btnprev"
             app:layout_constraintTop_toBottomOf="@+id/seekbar" />
-    <CheckBox
-        android:id="@+id/shuffle_checkbox"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/shuffle_button_selector"
-        android:button="@color/cardview_shadow_end_color"
-        app:layout_constraintStart_toEndOf="@+id/btnnext"
-        app:layout_constraintTop_toBottomOf="@+id/btnff" />
 
-    <CheckBox
-        android:id="@+id/repeat_checkbox"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/repeat_button_selector"
-        android:button="@color/cardview_shadow_end_color"
-        app:layout_constraintEnd_toStartOf="@+id/btnprev"
-        app:layout_constraintTop_toBottomOf="@+id/btnfr" />
+        <CheckBox
+            android:id="@+id/shuffle_checkbox"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shuffle_button_selector"
+            android:button="@color/cardview_shadow_end_color"
+            app:layout_constraintStart_toEndOf="@+id/btnnext"
+            app:layout_constraintTop_toBottomOf="@+id/btnff" />
+
+        <CheckBox
+            android:id="@+id/repeat_checkbox"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/repeat_button_selector"
+            android:button="@color/cardview_shadow_end_color"
+            app:layout_constraintEnd_toStartOf="@+id/btnprev"
+            app:layout_constraintTop_toBottomOf="@+id/btnfr" />
 
         <com.gauravk.audiovisualizer.visualizer.BarVisualizer
             android:id="@+id/blast"
