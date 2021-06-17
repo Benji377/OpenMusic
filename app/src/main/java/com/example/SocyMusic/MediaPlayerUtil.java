@@ -11,8 +11,9 @@ public class MediaPlayerUtil {
 
     /**
      * Starts the mediaplayer and returns its state
+     *
      * @param context Context of the app
-     * @param song Song to be played
+     * @param song    Song to be played
      * @return true if successful, else false
      */
     public static boolean startPlaying(Context context, Song song) {
@@ -43,6 +44,7 @@ public class MediaPlayerUtil {
      * Plays the next song.
      * If repeat is set to true then it will just keep playing the same song
      * If the song is the last in queue it will play the first song in queue again
+     *
      * @param context Context of the app
      */
     public static void playNext(Context context) {
@@ -56,13 +58,13 @@ public class MediaPlayerUtil {
                 randomIndex = getRandomIndex();
             }
             SongsData.getInstance().setPlaying(randomIndex);
-        // Repeats the song
+            // Repeats the song
         } else if (songsData.isRepeat()) {
             SongsData.getInstance().setPlaying(songsData.currentSongIndex());
-        // Plays the first song in queue
+            // Plays the first song in queue
         } else if (songsData.lastInQueue() && !songsData.isRepeat()) {
             SongsData.getInstance().setPlaying(0);
-        // Plays the next song
+            // Plays the next song
         } else {
             SongsData.getInstance().playNext();
         }
@@ -74,6 +76,7 @@ public class MediaPlayerUtil {
      * Plays the previous song in queue
      * If the actual song is the first song it just plays the last song in queue
      * If  repeat is set to true, it just plays the same song again
+     *
      * @param context Context of the app
      */
     public static void playPrev(Context context) {
@@ -89,10 +92,10 @@ public class MediaPlayerUtil {
             SongsData.getInstance().setPlaying(randomIndex);
         } else if (songsData.isRepeat()) {
             SongsData.getInstance().setPlaying(songsData.currentSongIndex());
-        // Plays the last song in queue
+            // Plays the last song in queue
         } else if (songsData.firstInQueue() && !songsData.isRepeat()) {
             SongsData.getInstance().setPlaying(SongsData.getInstance().songsCount() - 1);
-        // Plays the previous song
+            // Plays the previous song
         } else {
             SongsData.getInstance().playPrev();
         }
@@ -115,6 +118,19 @@ public class MediaPlayerUtil {
             mediaPlayer.start();
     }
 
+    public static void play() {
+        if (mediaPlayer == null || mediaPlayer.isPlaying())
+            return;
+        mediaPlayer.start();
+    }
+
+
+    public static void pause() {
+        if (mediaPlayer == null || !mediaPlayer.isPlaying())
+            return;
+        mediaPlayer.pause();
+    }
+
     /**
      * Stops and releases the mediaplayer to avoid errors
      */
@@ -122,12 +138,13 @@ public class MediaPlayerUtil {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
-            mediaPlayer=null;
+            mediaPlayer = null;
         }
     }
 
     /**
      * Checks if the mediaplayer is stopped
+     *
      * @return true if stopped, else false
      */
     public static boolean isStopped() {
@@ -136,6 +153,7 @@ public class MediaPlayerUtil {
 
     /**
      * Checks if mediaplayer is playing
+     *
      * @return true if playing, else false
      */
     public static boolean isPlaying() {
@@ -144,6 +162,7 @@ public class MediaPlayerUtil {
 
     /**
      * Sets the mediaplayer to play at a defined position in the song
+     *
      * @param pos Position to be played at
      */
     public static void seekTo(int pos) {
@@ -153,6 +172,7 @@ public class MediaPlayerUtil {
 
     /**
      * Gets the position the mediaplayer is currently at
+     *
      * @return The position the player is at right now or -1 if an error occurs
      */
     public static int getPosition() {
@@ -163,6 +183,7 @@ public class MediaPlayerUtil {
 
     /**
      * Gets the duration of the song that is being played right now
+     *
      * @return The duration of the song or -1 if an error occurs
      */
     public static int getDuration() {
@@ -173,6 +194,7 @@ public class MediaPlayerUtil {
 
     /**
      * Gets the AudiosessionID of the mediaplayer
+     *
      * @return the ID or 0 if an error occurs
      */
     public static int getAudioSessionId() {
@@ -183,6 +205,7 @@ public class MediaPlayerUtil {
 
     /**
      * Generates a random index for the shuffle mode
+     *
      * @return a random integer between 0 and amount of songs
      */
     public static int getRandomIndex() {

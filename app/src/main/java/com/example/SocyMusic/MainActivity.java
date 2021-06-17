@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     /**
      * Gets executed every time the app starts
+     *
      * @param savedInstanceState Android standard
      */
     @Override
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     /**
      * Creates the option menu you can see in the upper left corner (three dots)
+     *
      * @param menu The menu to be created
      * @return The finished created menu
      */
@@ -150,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     /**
      * Creates all available options and sets the action to be performed when the suer clicks on them
+     *
      * @param item Item of the menu
      * @return Which item has been selected
      */
@@ -170,8 +173,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             Fragment fragment = fragmentManager.findFragmentById(R.id.queue_fragment_container);
             if (fragment == null)
                 showQueue();
-            else
+            else {
                 hideQueue();
+                playerFragment.updatePlayerUI();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -187,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         playerFragmentView.setVisibility(View.VISIBLE);
         playerFragment.initializeVisualizer();
-        playerFragment.updatePlayerUI();
         actionBar.setTitle(R.string.now_playing);
         queueFragment = null;
         invalidateOptionsMenu();
@@ -281,8 +285,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             } else {
                 playerFragment = (PlayerFragment) fragment;
                 MediaPlayerUtil.startPlaying(this, SongsData.getInstance().getSongPlaying());
-                if (mediaPlayerService != null)
-                    mediaPlayerService.refreshNotification();
+                onSongUpdate();
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 hideQueue();
             }
@@ -294,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     }
 
     /**
-     * When the app finishes loading
+     * When the player fragment finishes loading
      * Must be implemented!
      */
     @Override
@@ -324,7 +327,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         if (mediaPlayerService != null)
             mediaPlayerService.refreshNotification();
         songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
+        playButton.setBackgroundResource(R.drawable.ic_pause);
         playerFragment.updatePlayerUI();
+        if (queueFragment != null)
+            queueFragment.updateSong();
     }
 
     /**
@@ -353,6 +359,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         // Sets all intents for actions
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MediaPlayerService.ACTION_PREV);
+        intentFilter.addAction(MediaPlayerService.ACTION_PLAY);
+        intentFilter.addAction(MediaPlayerService.ACTION_PAUSE);
         intentFilter.addAction(MediaPlayerService.ACTION_TOGGLE_PLAY_PAUSE);
         intentFilter.addAction(MediaPlayerService.ACTION_NEXT);
         intentFilter.addAction(MediaPlayerService.ACTION_CANCEL);
@@ -366,6 +374,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             playerFragment.updatePlayerUI();
     }
 
+
     /**
      * Custom adapter for SongsData related actions
      */
@@ -373,6 +382,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         /**
          * Gets the amount of songs
+         *
          * @return The number of songs
          */
         @Override
@@ -382,6 +392,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         /**
          * Gets the song as object in a defined position in the queue
+         *
          * @param position Position to search for the song
          * @return The song as an object
          */
@@ -393,6 +404,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         /**
          * Not fully implemented yet!
          * Returns the id of a song at a given position
+         *
          * @param position The position of the song in the queue
          * @return The ID of the song
          */
@@ -403,9 +415,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         /**
          * Returns the view of the list_item
-         * @param position Position of the song in the queue
+         *
+         * @param position    Position of the song in the queue
          * @param convertView Unused
-         * @param parent Root view
+         * @param parent      Root view
          * @return The view of the song
          */
         @Override
@@ -425,8 +438,9 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         /**
          * Sets what should happen when the receiver gets a signal
+         *
          * @param context Context of the app
-         * @param intent Intent to get the action from
+         * @param intent  Intent to get the action from
          */
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -435,14 +449,17 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             switch (action) {
                 case MediaPlayerService.ACTION_PREV:
                     MediaPlayerUtil.playPrev(MainActivity.this);
-                    mediaPlayerService.refreshNotification();
-                    if (playerFragment != null)
-                        playerFragment.updatePlayerUI();
-                    if (queueFragment != null)
-                        queueFragment.updateSong();
+                    onSongUpdate();
                     break;
+                case MediaPlayerService.ACTION_PLAY:
+                case MediaPlayerService.ACTION_PAUSE:
                 case MediaPlayerService.ACTION_TOGGLE_PLAY_PAUSE:
-                    MediaPlayerUtil.togglePlayPause();
+                    if (action.equals(MediaPlayerService.ACTION_PLAY))
+                        MediaPlayerUtil.play();
+                    else if (action.equals(MediaPlayerService.ACTION_PAUSE))
+                        MediaPlayerUtil.pause();
+                    else
+                        MediaPlayerUtil.togglePlayPause();
                     mediaPlayerService.refreshNotification();
                     playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
                     if (playerFragment != null)
@@ -450,11 +467,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                     break;
                 case MediaPlayerService.ACTION_NEXT:
                     MediaPlayerUtil.playNext(MainActivity.this);
-                    mediaPlayerService.refreshNotification();
-                    if (playerFragment != null)
-                        playerFragment.updatePlayerUI();
-                    if (queueFragment != null)
-                        queueFragment.updateSong();
+                    onSongUpdate();
                     break;
                 case MediaPlayerService.ACTION_CANCEL:
                     mediaPlayerService.stopSelf();
@@ -466,7 +479,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     /**
      * Sets what happens if the service connects
-     * @param name Name of the service
+     *
+     * @param name    Name of the service
      * @param iBinder Binder for the service
      */
     @Override
@@ -476,6 +490,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     /**
      * Sets what happens if the service disconnects
+     *
      * @param name Name of the service
      */
     @Override
@@ -485,6 +500,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     /**
      * Creates a popUp window, in this case specifically for the About-menu option
+     *
      * @param view The view at which the popup should be shown
      */
     public void showPopupWindow(View view) {

@@ -2,12 +2,9 @@ package com.example.SocyMusic;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -127,8 +124,8 @@ public class QueueFragment extends Fragment {
 
 
         class ViewHolder extends DragItemAdapter.ViewHolder {
-            private TextView songTitleTextView;
-            private BarVisualizer visualizer;
+            private final TextView songTitleTextView;
+            private final BarVisualizer visualizer;
             private int position;
             private Song song;
 
@@ -168,7 +165,6 @@ public class QueueFragment extends Fragment {
                 SongsData.getInstance().setPlaying(position);
                 MediaPlayerUtil.startPlaying(getContext(), SongsData.getInstance().getSongPlaying());
                 updateViews();
-                notifyDataSetChanged();
                 hostCallBack.onSongUpdate();
             }
 
