@@ -10,4 +10,5 @@
     <string name="about_us_description">SocyMusic is an open-source Android music player written in Java to which everyone can contribute to.</string>
     <string name="playing_queue">Playing queue</string>
     <string name="now_playing">Now Playing</string>
+    <string name="settings">Settings</string>
 </resources>

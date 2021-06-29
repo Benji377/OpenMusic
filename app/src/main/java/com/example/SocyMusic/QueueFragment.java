@@ -22,6 +22,13 @@ public class QueueFragment extends Fragment {
     private DragListView listView;
     private ItemAdapter adapter;
     private QueueFragmentHost hostCallBack;
+    private SongsData songsData;
+
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        songsData = SongsData.getInstance(requireContext());
+    }
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -46,7 +53,7 @@ public class QueueFragment extends Fragment {
 
             @Override
             public void onItemDragEnded(int fromPosition, int toPosition) {
-                SongsData.getInstance().onQueueReordered(fromPosition, toPosition);
+                songsData.onQueueReordered(fromPosition, toPosition);
                 adapter.releasePlayingVisualizer();
             }
         });
@@ -85,7 +92,7 @@ public class QueueFragment extends Fragment {
             this.layoutID = layoutID;
             this.grabHandleID = grabHandleID;
             this.dragOnLongPress = dragOnLongPress;
-            setItemList(SongsData.getInstance().getPlayingQueue());
+            setItemList(songsData.getPlayingQueue());
         }
 
         @NonNull
@@ -99,7 +106,7 @@ public class QueueFragment extends Fragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             super.onBindViewHolder(holder, position);
             holder.position = position;
-            Song song = SongsData.getInstance().getSongFromQueueAt(position);
+            Song song = songsData.getSongFromQueueAt(position);
             holder.setSong(song);
             if (holder.isPlaying())
                 playingHolder = holder;
@@ -113,13 +120,13 @@ public class QueueFragment extends Fragment {
 
         @Override
         public long getUniqueItemId(int position) {
-            Song song = SongsData.getInstance().getSongFromQueueAt(position);
+            Song song = songsData.getSongFromQueueAt(position);
             return song.hashCode();
         }
 
         @Override
         public int getItemCount() {
-            return SongsData.getInstance().getPlayingQueueCount();
+            return songsData.getPlayingQueueCount();
         }
 
 
@@ -156,14 +163,14 @@ public class QueueFragment extends Fragment {
             }
 
             public boolean isPlaying() {
-                return song.equals(SongsData.getInstance().getSongPlaying());
+                return song.equals(songsData.getSongPlaying());
             }
 
             @Override
             public void onItemClicked(View view) {
                 super.onItemClicked(view);
-                SongsData.getInstance().setPlaying(position);
-                MediaPlayerUtil.startPlaying(getContext(), SongsData.getInstance().getSongPlaying());
+                songsData.setPlaying(position);
+                MediaPlayerUtil.startPlaying(requireContext(), songsData.getSongPlaying());
                 updateViews();
                 hostCallBack.onSongUpdate();
             }

@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     private MediaPlayerService mediaPlayerService;
     private MediaPlayerReceiver mediaPlayerReceiver;
     private ActionBar actionBar;
+    private SongsData songsData;
 
     /**
      * Gets executed every time the app starts
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        songsData = SongsData.getInstance(this);
         setContentView(R.layout.activity_main);
 
         actionBar = getSupportActionBar();
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     invalidateOptionsMenu();
                     actionBar.setTitle(R.string.app_name);
-                    songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
+                    songTitleTextView.setText(songsData.getSongPlaying().getTitle());
                     playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
                     hideQueue();
                 }
@@ -162,15 +164,16 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         // To add an item to the menu, add it to menu/main.xml first!
         if (item.getItemId() == R.id.about) {
             showPopupWindow(listView);
-
         } else if (item.getItemId() == R.id.download) {
             Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
         } else if (item.getItemId() == R.id.playlist) {
             // Replace this action
             Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
+        } else if (item.getItemId() == R.id.menu_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
         } else if (item.getItemId() == R.id.menu_show_playing_queue) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment fragment = fragmentManager.findFragmentById(R.id.queue_fragment_container);
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.queue_fragment_container);
             if (fragment == null)
                 showQueue();
             else {
@@ -184,7 +187,6 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     private void hideQueue() {
         if (queueFragment == null)
             return;
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         View playerFragmentView = findViewById(R.id.player_holder);
         queueFragment.onDestroyView();
@@ -250,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         // Loading files from SD-Card
         File[] storages = getApplicationContext().getExternalFilesDirs(null);
-        SongsData.getInstance().addSongs(storages);
+        songsData.addSongs(storages);
 
         customAdapter customAdapter = new customAdapter();
         listView.setAdapter(customAdapter);
@@ -259,16 +261,16 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         listView.setOnItemClickListener((parent, view, position, id) -> {
 
             // Error occured
-            if (!SongsData.getInstance().songExists(position)) {
+            if (!songsData.songExists(position)) {
                 Toast.makeText(this, "File moved or deleted.", Toast.LENGTH_LONG).show();
-                SongsData.getInstance().reloadSongs();
+                songsData.reloadSongs(this);
                 customAdapter.notifyDataSetChanged();
                 return;
             }
             // Adds all the songs to the queue from that position onward
-            SongsData.getInstance().playAllFrom(position);
+            songsData.playAllFrom(position);
             // Plays the selected song
-            Song songClicked = SongsData.getInstance().getSongPlaying();
+            Song songClicked = songsData.getSongPlaying();
             songTitleTextView.setText(songClicked.getTitle());
 
             // Opens the player fragment
@@ -284,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 bindService(serviceIntent, this, Context.BIND_AUTO_CREATE);
             } else {
                 playerFragment = (PlayerFragment) fragment;
-                MediaPlayerUtil.startPlaying(this, SongsData.getInstance().getSongPlaying());
+                MediaPlayerUtil.startPlaying(this, songsData.getSongPlaying());
                 onSongUpdate();
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 hideQueue();
@@ -326,7 +328,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     public void onSongUpdate() {
         if (mediaPlayerService != null)
             mediaPlayerService.refreshNotification();
-        songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
+        songTitleTextView.setText(songsData.getSongPlaying().getTitle());
         playButton.setBackgroundResource(R.drawable.ic_pause);
         playerFragment.updatePlayerUI();
         if (queueFragment != null)
@@ -367,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         registerReceiver(mediaPlayerReceiver, intentFilter);
 
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
-            songTitleTextView.setText(SongsData.getInstance().getSongPlaying().getTitle());
+            songTitleTextView.setText(songsData.getSongPlaying().getTitle());
             playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
         }
         if (playerFragment != null)
@@ -387,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
          */
         @Override
         public int getCount() {
-            return SongsData.getInstance().songsCount();
+            return songsData.songsCount();
         }
 
         /**
@@ -398,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
          */
         @Override
         public Object getItem(int position) {
-            return SongsData.getInstance().getSongAt(position).getTitle();
+            return songsData.getSongAt(position).getTitle();
         }
 
         /**
@@ -425,7 +427,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         public View getView(int position, View convertView, ViewGroup parent) {
             View myView = getLayoutInflater().inflate(R.layout.list_item, null);
             TextView textsong = myView.findViewById(R.id.textsongname);
-            textsong.setText(SongsData.getInstance().getSongAt(position).getTitle());
+            textsong.setText(songsData.getSongAt(position).getTitle());
             textsong.setSelected(true);
             return myView;
         }
