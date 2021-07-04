@@ -4,6 +4,8 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+
 public class MediaPlayerUtil {
     private static MediaPlayer mediaPlayer;
 
@@ -47,10 +49,10 @@ public class MediaPlayerUtil {
      */
     public static void playNext(Context context) {
         // Fixed instance
-        SongsData songsData = SongsData.getInstance();
+        SongsData songsData = SongsData.getInstance(context);
         // Repeats the song
         if (songsData.isRepeat()) {
-            SongsData.getInstance().setPlaying(songsData.currentSongIndex());
+            SongsData.getInstance(context).setPlaying(songsData.currentSongIndex());
         } else if (songsData.lastInQueue() && !songsData.isRepeat()) {
             songsData.setPlaying(0);
             // Plays the next song
@@ -70,9 +72,9 @@ public class MediaPlayerUtil {
      */
     public static void playPrev(Context context) {
         // Fixed instance
-        SongsData songsData = SongsData.getInstance();
+        SongsData songsData = SongsData.getInstance(context);
         if (songsData.isRepeat()) {
-            SongsData.getInstance().setPlaying(songsData.currentSongIndex());
+            SongsData.getInstance(context).setPlaying(songsData.currentSongIndex());
         // Plays the last song in queue
         } else if (songsData.firstInQueue() && !songsData.isRepeat()) {
             songsData.setPlaying(songsData.songsCount() - 1);
