@@ -46,21 +46,8 @@ public class MediaPlayerUtil {
     public static void playNext(Context context) {
         // Fixed instance
         SongsData songsData = SongsData.getInstance();
-<<<<<<< Updated upstream
-        // Shuffles the queue
-        if (songsData.isShuffle() && !songsData.isRepeat()) {
-            int randomIndex = getRandomIndex();
-            // Avoids playing the same song twice
-            while (randomIndex == songsData.currentSongIndex() && SongsData.getInstance().songsCount() != 0) {
-                randomIndex = getRandomIndex();
-            }
-            SongsData.getInstance().setPlaying(randomIndex);
-        // Repeats the song
-        } else if (songsData.isRepeat()) {
-=======
         // Repeats the song
         if (songsData.isRepeat()) {
->>>>>>> Stashed changes
             SongsData.getInstance().setPlaying(songsData.currentSongIndex());
         // Plays the first song in queue
         } else if (songsData.lastInQueue() && !songsData.isRepeat()) {
@@ -82,19 +69,7 @@ public class MediaPlayerUtil {
     public static void playPrev(Context context) {
         // Fixed instance
         SongsData songsData = SongsData.getInstance();
-<<<<<<< Updated upstream
-        // Shuffles the queue
-        if (songsData.isShuffle() && !songsData.isRepeat()) {
-            int randomIndex = getRandomIndex();
-            // Avoids playing the same song twice
-            while (randomIndex == songsData.currentSongIndex() && SongsData.getInstance().songsCount() != 0) {
-                randomIndex = getRandomIndex();
-            }
-            SongsData.getInstance().setPlaying(randomIndex);
-        } else if (songsData.isRepeat()) {
-=======
         if (songsData.isRepeat()) {
->>>>>>> Stashed changes
             SongsData.getInstance().setPlaying(songsData.currentSongIndex());
         // Plays the last song in queue
         } else if (songsData.firstInQueue() && !songsData.isRepeat()) {
