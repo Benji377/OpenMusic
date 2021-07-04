@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/download"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
         android:id="@+id/download"
         android:orderInCategory="1"
-        app:showAsAction="never"/>
-    <item android:title="@string/playlist"
+        android:title="@string/download"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/playlist"
         android:orderInCategory="2"
-        app:showAsAction="never"/>
-    <item android:title="@string/about"
-        android:id="@+id/about"
+        android:title="@string/playlist"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_settings"
         android:orderInCategory="3"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/about"
+        android:orderInCategory="4"
+        android:title="@string/about"
         app:showAsAction="never" />
 </menu>

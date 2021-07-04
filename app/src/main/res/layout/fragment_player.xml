@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,163 +7,171 @@
     android:background="@drawable/background_img"
     tools:context="com.example.SocyMusic.PlayerFragment">
 
-    <TextView
-        android:id="@+id/txtsongname"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/player_holder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="30dp"
-        android:ellipsize="marquee"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:text="Song name"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imageview"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtsongname"
-        app:srcCompat="@drawable/music" />
+        <TextView
+            android:id="@+id/txtsongname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="30dp"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:text="Song name"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
-    <SeekBar
-        android:id="@+id/seekbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="80dp"
-        android:progressTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageview" />
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtsongname"
+            app:srcCompat="@drawable/music" />
 
-    <TextView
-        android:id="@+id/txtsstart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="0:00"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/seekbar"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageview"
-        tools:ignore="HardcodedText"/>
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="80dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:progressTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageview" />
 
-    <TextView
-        android:id="@+id/txtsstop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="5:99"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/seekbar"
-        app:layout_constraintTop_toBottomOf="@+id/imageview"
-        tools:ignore="HardcodedText"/>
+        <TextView
+            android:id="@+id/txtsstart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="0:00"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/seekbar"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageview"
+            tools:ignore="HardcodedText" />
 
-    <Button
-        android:id="@+id/playbtn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/ic_pause"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+        <TextView
+            android:id="@+id/txtsstop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="5:99"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/seekbar"
+            app:layout_constraintTop_toBottomOf="@+id/imageview"
+            tools:ignore="HardcodedText" />
 
-    <Button
-        android:id="@+id/btnprev"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="75dp"
-        android:background="@drawable/ic_prev"
-        android:foreground="@drawable/ic_prev"
-        app:layout_constraintEnd_toStartOf="@+id/playbtn"
-        app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+        <Button
+            android:id="@+id/playbtn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/ic_pause"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
 
-    <Button
-        android:id="@+id/btnnext"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="75dp"
-        android:background="@drawable/ic_next"
-        android:foreground="@drawable/ic_next"
-        app:layout_constraintStart_toEndOf="@+id/playbtn"
-        app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+        <Button
+            android:id="@+id/btnprev"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/ic_prev"
+            android:foreground="@drawable/ic_prev"
+            app:layout_constraintEnd_toStartOf="@+id/playbtn"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
 
-    <Button
-        android:id="@+id/btnff"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/ic_fast_forward"
-        android:foreground="@drawable/ic_fast_forward"
-        app:layout_constraintStart_toEndOf="@+id/btnnext"
-        app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+        <Button
+            android:id="@+id/btnnext"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/ic_next"
+            android:foreground="@drawable/ic_next"
+            app:layout_constraintStart_toEndOf="@+id/playbtn"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
 
-    <Button
-        android:id="@+id/btnfr"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/ic_fast_rewind"
-        android:foreground="@drawable/ic_fast_rewind"
-        app:layout_constraintEnd_toStartOf="@+id/btnprev"
-        app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+        <Button
+            android:id="@+id/btnff"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/ic_fast_forward"
+            android:foreground="@drawable/ic_fast_forward"
+            app:layout_constraintStart_toEndOf="@+id/btnnext"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
 
-    <CheckBox
-        android:id="@+id/shuffle_checkbox"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/shuffle_button_selector"
-        android:button="@color/cardview_shadow_end_color"
-        app:layout_constraintStart_toEndOf="@+id/btnnext"
-        app:layout_constraintTop_toBottomOf="@+id/btnff" />
+        <Button
+            android:id="@+id/btnfr"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/ic_fast_rewind"
+            android:foreground="@drawable/ic_fast_rewind"
+            app:layout_constraintEnd_toStartOf="@+id/btnprev"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
 
-    <CheckBox
-        android:id="@+id/repeat_checkbox"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/repeat_button_selector"
-        android:button="@color/cardview_shadow_end_color"
-        app:layout_constraintEnd_toStartOf="@+id/btnprev"
-        app:layout_constraintTop_toBottomOf="@+id/btnfr" />
+        <CheckBox
+            android:id="@+id/shuffle_checkbox"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shuffle_button_selector"
+            android:button="@color/cardview_shadow_end_color"
+            app:layout_constraintStart_toEndOf="@+id/btnnext"
+            app:layout_constraintTop_toBottomOf="@+id/btnff" />
 
-    <com.gauravk.audiovisualizer.visualizer.BarVisualizer
-        xmlns:custom="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/blast"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        app:avColor="#FF362E"
-        app:avDensity="0.5"
-        app:avSpeed="normal"
-        app:avType="outline"
-        app:avWidth="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <CheckBox
+            android:id="@+id/repeat_checkbox"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/repeat_button_selector"
+            android:button="@color/cardview_shadow_end_color"
+            app:layout_constraintEnd_toStartOf="@+id/btnprev"
+            app:layout_constraintTop_toBottomOf="@+id/btnfr" />
+
+        <com.gauravk.audiovisualizer.visualizer.BarVisualizer
+            android:id="@+id/blast"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            app:avColor="#FF362E"
+            app:avDensity="0.5"
+            app:avSpeed="normal"
+            app:avType="outline"
+            app:avWidth="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

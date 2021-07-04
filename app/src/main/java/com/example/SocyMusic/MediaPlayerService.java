@@ -9,15 +9,20 @@ import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.media.session.MediaSessionCompat;
+import android.view.KeyEvent;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.media.app.NotificationCompat.MediaStyle;
+
 import com.example.musicplayer.R;
 
 public class MediaPlayerService extends Service {
 
     // Declaring all actions
     public static final String ACTION_PREV = "previous";
+    public static final String ACTION_PLAY = "play";
+    public static final String ACTION_PAUSE = "pause";
     public static final String ACTION_TOGGLE_PLAY_PAUSE = "play_pause";
     public static final String ACTION_NEXT = "next";
     public static final String ACTION_CANCEL = "cancel";
@@ -27,6 +32,7 @@ public class MediaPlayerService extends Service {
     private Song songPlaying;
     private MediaSessionCompat mediaSession;
     private boolean isPlaying;
+    private SongsData songsData;
 
     // Declaring constants
     private final IBinder binder = new LocalBinder();
@@ -40,15 +46,49 @@ public class MediaPlayerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        songsData = SongsData.getInstance(this);
         // Creates a new mediasession with a unique tag
         mediaSession = new MediaSessionCompat(this, MEDIA_SESSION_TAG);
+        mediaSession.setCallback(new MediaSessionCompat.Callback() {
+            @Override
+            public boolean onMediaButtonEvent(Intent mediaButtonEvent) {
+                KeyEvent event = (KeyEvent) mediaButtonEvent.getExtras().get(Intent.EXTRA_KEY_EVENT);
+                if (event == null || event.getAction() != KeyEvent.ACTION_UP)
+                    return false;
+                int keyCode = event.getKeyCode();
+                Intent intent = new Intent();
+                switch (keyCode) {
+                    case KeyEvent.KEYCODE_MEDIA_PAUSE:
+                        intent.setAction(ACTION_PAUSE);
+                        break;
+                    case KeyEvent.KEYCODE_MEDIA_PLAY:
+                        intent.setAction(ACTION_PLAY);
+                        break;
+                    case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+                        intent.setAction(ACTION_TOGGLE_PLAY_PAUSE);
+                        break;
+                    case KeyEvent.KEYCODE_MEDIA_NEXT:
+                        intent.setAction(ACTION_NEXT);
+                        break;
+                    case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+                        intent.setAction(ACTION_PREV);
+                        break;
+                    default:
+                        return false;
+                }
+                sendBroadcast(intent);
+                return true;
+            }
+
+        });
         isPlaying = MediaPlayerUtil.isPlaying();
     }
 
     /**
      * Creates a new notification of the app
-     * @param intent For communication between classes
-     * @param flags For extra parameters
+     *
+     * @param intent  For communication between classes
+     * @param flags   For extra parameters
      * @param startId ID of the startCommand
      * @return 2
      */
@@ -72,7 +112,7 @@ public class MediaPlayerService extends Service {
      * Creates a new notification with the new updated values
      */
     public void refreshNotification() {
-        songPlaying = SongsData.getInstance().getSongPlaying();
+        songPlaying = songsData.getSongPlaying();
         isPlaying = MediaPlayerUtil.isPlaying();
         Notification notification = buildNotification();
         startForeground(NOTIFICATION_ID, notification);
@@ -80,6 +120,7 @@ public class MediaPlayerService extends Service {
 
     /**
      * Sets all parameters and actions of the notification
+     *
      * @return The new built notification
      */
     private Notification buildNotification() {
@@ -102,7 +143,6 @@ public class MediaPlayerService extends Service {
 
         mediaSession.setMediaButtonReceiver(playPauseIntent);
 
-
         return new NotificationCompat.Builder(this, SocyMusicApp.MEDIA_CHANNEL_ID)
                 .setContentTitle(songPlaying.getTitle())
                 .setSmallIcon(R.drawable.ic_music)
@@ -122,6 +162,7 @@ public class MediaPlayerService extends Service {
 
     /**
      * Gets executed if a task gets removed
+     *
      * @param rootIntent The main Intent
      */
     @Override
@@ -133,6 +174,7 @@ public class MediaPlayerService extends Service {
 
     /**
      * Returns the binder
+     *
      * @param intent Intent which gets binded
      * @return The binder
      */
