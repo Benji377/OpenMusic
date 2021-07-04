@@ -3,13 +3,12 @@ package com.example.SocyMusic;
 import android.os.Environment;
 import java.io.File;
 import java.util.ArrayList;
-<<<<<<< Updated upstream
-=======
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
->>>>>>> Stashed changes
+
 
 public class SongsData {
     public static SongsData data;
@@ -209,9 +208,6 @@ public class SongsData {
      * Changes the shuffle mode of the player
      * @param shuffle True if shuffle mode should be activated
      */
-<<<<<<< Updated upstream
-    public void setShuffle(boolean shuffle) {this.shuffle = shuffle;}
-=======
     public void setShuffle(boolean shuffle) {
         this.shuffle = shuffle;
         if (shuffle) {
@@ -223,7 +219,6 @@ public class SongsData {
         }
 
     }
->>>>>>> Stashed changes
 
     /**
      * Checks if the index is currently at the last position in the array
