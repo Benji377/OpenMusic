@@ -4,8 +4,6 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
-import java.util.Random;
-
 public class MediaPlayerUtil {
     private static MediaPlayer mediaPlayer;
 
@@ -48,6 +46,7 @@ public class MediaPlayerUtil {
     public static void playNext(Context context) {
         // Fixed instance
         SongsData songsData = SongsData.getInstance();
+<<<<<<< Updated upstream
         // Shuffles the queue
         if (songsData.isShuffle() && !songsData.isRepeat()) {
             int randomIndex = getRandomIndex();
@@ -58,6 +57,10 @@ public class MediaPlayerUtil {
             SongsData.getInstance().setPlaying(randomIndex);
         // Repeats the song
         } else if (songsData.isRepeat()) {
+=======
+        // Repeats the song
+        if (songsData.isRepeat()) {
+>>>>>>> Stashed changes
             SongsData.getInstance().setPlaying(songsData.currentSongIndex());
         // Plays the first song in queue
         } else if (songsData.lastInQueue() && !songsData.isRepeat()) {
@@ -79,6 +82,7 @@ public class MediaPlayerUtil {
     public static void playPrev(Context context) {
         // Fixed instance
         SongsData songsData = SongsData.getInstance();
+<<<<<<< Updated upstream
         // Shuffles the queue
         if (songsData.isShuffle() && !songsData.isRepeat()) {
             int randomIndex = getRandomIndex();
@@ -88,6 +92,9 @@ public class MediaPlayerUtil {
             }
             SongsData.getInstance().setPlaying(randomIndex);
         } else if (songsData.isRepeat()) {
+=======
+        if (songsData.isRepeat()) {
+>>>>>>> Stashed changes
             SongsData.getInstance().setPlaying(songsData.currentSongIndex());
         // Plays the last song in queue
         } else if (songsData.firstInQueue() && !songsData.isRepeat()) {
@@ -180,6 +187,7 @@ public class MediaPlayerUtil {
             return 0;
         return mediaPlayer.getAudioSessionId();
     }
+<<<<<<< Updated upstream
 
     /**
      * Generates a random index for the shuffle mode
@@ -189,4 +197,6 @@ public class MediaPlayerUtil {
         Random r = new Random();
         return r.nextInt(SongsData.getInstance().songsCount());
     }
+=======
+>>>>>>> Stashed changes
 }
