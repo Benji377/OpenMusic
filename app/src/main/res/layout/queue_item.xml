@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,19 +14,35 @@
         android:background="@drawable/list_bg"
         android:padding="8dp">
 
+
+
+            <com.gauravk.audiovisualizer.visualizer.BarVisualizer
+                android:id="@+id/queue_small_visualizer"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:avColor="@color/primaryAppColor"
+                app:avDensity="0.04"
+                app:avSpeed="normal"
+                app:avType="outline"
+                app:avWidth="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/ic_drag_handle"/>
+
+
         <ImageView
             android:id="@+id/imgsong"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/queue_small_visualizer"
             android:background="@drawable/list_bg"
             android:src="@drawable/ic_music" />
 
         <TextView
-            android:id="@+id/textsongname"
+            android:id="@+id/queue_song_title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
