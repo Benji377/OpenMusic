@@ -150,8 +150,8 @@ public class PlayerFragment extends Fragment {
         // Sets properties of the seekbar
         songSeekBarUpdaterThread.start();
         songSeekBar.getProgressDrawable().setColorFilter(getResources()
-                .getColor(R.color.purple_500), PorterDuff.Mode.MULTIPLY);
-        songSeekBar.getThumb().setColorFilter(getResources().getColor(R.color.purple_500), PorterDuff.Mode.SRC_IN);
+                .getColor(R.color.primaryAppColor), PorterDuff.Mode.MULTIPLY);
+        songSeekBar.getThumb().setColorFilter(getResources().getColor(R.color.primaryAppColor), PorterDuff.Mode.SRC_IN);
 
         // Controls the changes at the seekbar
         songSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

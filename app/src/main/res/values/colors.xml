@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF362E</color>
-    <color name="colorAccent">#FFFFFF</color>
-    <color name="purple_200">#FF362E</color>
-    <color name="purple_500">#FF362E</color>
-    <color name="purple_700">#FF362E</color>
-    <color name="teal_200">#FF362E</color>
-    <color name="teal_700">#FF362E</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="primaryAppColor">#FF362E</color>
+    <color name="appBackgroundColor">#000000</color>
+    <color name="appForegroundColor">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="colorAccent">#000000</color>
 </resources>

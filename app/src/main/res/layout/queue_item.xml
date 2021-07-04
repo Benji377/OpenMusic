@@ -20,7 +20,7 @@
                 android:id="@+id/queue_small_visualizer"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:avColor="@color/purple_200"
+                app:avColor="@color/primaryAppColor"
                 app:avDensity="0.04"
                 app:avSpeed="normal"
                 app:avType="outline"
@@ -55,7 +55,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="Song name"
-            android:textColor="#FFF"
+            android:textColor="@color/white"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />
 
