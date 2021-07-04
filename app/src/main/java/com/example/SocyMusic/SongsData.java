@@ -10,6 +10,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+
 public class SongsData {
     public static SongsData data;
     private ArrayList<Song> allSongs;
@@ -241,6 +247,13 @@ public class SongsData {
      */
     public void setShuffle(boolean shuffle) {
         this.shuffle = shuffle;
+        if (shuffle) {
+            // Create random queue
+            setRandomQueue();
+        } else {
+            // rests queue to original
+            playAllFrom(0);
+        }
     }
 
     /**
@@ -283,5 +296,34 @@ public class SongsData {
      */
     public int currentSongIndex() {
         return playingQueueIndex;
+    }
+
+    /**
+     * Overried the current playingQueue and creates a random queue
+     */
+    public void setRandomQueue() {
+        // Temporary Arraylist to store all the songs
+        ArrayList<Song> temporary;
+        temporary = new ArrayList<>();
+        final Random r = new Random();
+        // Avoids getting double random numbers
+        // Example: The number 5 only gets called once
+        final Set<Integer> s = new HashSet<>();
+        // Adds the currently playing song, we dont want to shuffle this one too
+        temporary.add(getSongPlaying());
+        // Creates a random queue
+        for (int i = 1; i < playingQueue.size(); i++) {
+            while(true) {
+                int num = r.nextInt(playingQueue.size());
+                // leaves out currently playing song
+                if (!s.contains(num) && num != currentSongIndex()) {
+                    s.add(num);
+                    temporary.add(getSongAt(num));
+                    break;
+                }
+            }
+        }
+        // replaces queue
+        playingQueue = temporary;
     }
 }
