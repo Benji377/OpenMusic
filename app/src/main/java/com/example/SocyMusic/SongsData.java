@@ -1,6 +1,10 @@
 package com.example.SocyMusic;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Environment;
+
+import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,8 +22,8 @@ public class SongsData {
      * SongsData custom constructor.
      * When created automatically reloads all songs and creates the playingQueue
      */
-    private SongsData() {
-        reloadSongs();
+    private SongsData(@NonNull Context context) {
+        reloadSongs(context);
         playingQueue = new ArrayList<>();
     }
 
@@ -102,9 +106,9 @@ public class SongsData {
      *
      * @return the new created class
      */
-    public static SongsData getInstance() {
+    public static SongsData getInstance(Context context) {
         if (data == null)
-            data = new SongsData();
+            data = new SongsData(context);
         return data;
     }
 
@@ -112,9 +116,12 @@ public class SongsData {
      * Loads all songs from the internal memory of the phone and overwrites/creates the allSongs list
      * This excludes SD-cards, USB, etc...
      */
-    public void reloadSongs() {
+    public void reloadSongs(@NonNull Context context) {
+//        String path = PreferenceManager.getDefaultSharedPreferences(context).getString("root_path", Environment.getExternalStorageDirectory().getPath());
+//        DocumentFile root = DocumentFile.fromTreeUri(context, Uri.parse(path));
         allSongs = loadSongs(Environment.getExternalStorageDirectory());
     }
+
 
     /**
      * Searches for .mp3 and .wav files in the given directory. If it finds directories on its way

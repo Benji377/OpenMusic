@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="Appearance"
+        app:key="appearance_category">
+        <Preference
+
+            app:key="theme"
+            app:summary="Choose the primary colors of your app"
+            app:title="Theme" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Library">
+
+        <Preference
+            app:key="lib_paths"
+            app:summary="Configure where to look for songs on your device."
+            app:title="Library Files" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

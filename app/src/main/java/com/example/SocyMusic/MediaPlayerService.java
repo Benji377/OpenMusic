@@ -32,6 +32,7 @@ public class MediaPlayerService extends Service {
     private Song songPlaying;
     private MediaSessionCompat mediaSession;
     private boolean isPlaying;
+    private SongsData songsData;
 
     // Declaring constants
     private final IBinder binder = new LocalBinder();
@@ -45,6 +46,7 @@ public class MediaPlayerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        songsData = SongsData.getInstance(this);
         // Creates a new mediasession with a unique tag
         mediaSession = new MediaSessionCompat(this, MEDIA_SESSION_TAG);
         mediaSession.setCallback(new MediaSessionCompat.Callback() {
@@ -110,7 +112,7 @@ public class MediaPlayerService extends Service {
      * Creates a new notification with the new updated values
      */
     public void refreshNotification() {
-        songPlaying = SongsData.getInstance().getSongPlaying();
+        songPlaying = songsData.getSongPlaying();
         isPlaying = MediaPlayerUtil.isPlaying();
         Notification notification = buildNotification();
         startForeground(NOTIFICATION_ID, notification);
