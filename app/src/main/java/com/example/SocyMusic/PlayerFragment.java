@@ -15,9 +15,11 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.example.musicplayer.R;
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 
@@ -40,25 +42,29 @@ public class PlayerFragment extends Fragment {
     private ImageView songThumbnail;
 
     private PlayerFragmentHost hostCallBack;
+    private SongsData songsData;
     private Song songPlaying;
     private boolean currentlySeeking;
 
     /**
      * Gets automatically executed when the Player gets created
+     *
      * @param savedInstanceState Standard Android stuff
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        songsData = SongsData.getInstance(requireContext());
         // Gets the song which is actually playing
         // (The one the user clicked on in the list before)
-        songPlaying = SongsData.getInstance().getSongPlaying();
+        songPlaying = songsData.getSongPlaying();
     }
 
     /**
      * Creates the actual look of the Player with all its elements
-     * @param inflater Overridden
-     * @param container Overridden
+     *
+     * @param inflater           Overridden
+     * @param container          Overridden
      * @param savedInstanceState Overridden
      * @return The view of the Fragment
      */
@@ -93,10 +99,10 @@ public class PlayerFragment extends Fragment {
         updatePlayerUI();
 
         // The option to repeat the song or not
-        repeatCheckBox.setChecked(SongsData.getInstance().isRepeat());
+        repeatCheckBox.setChecked(songsData.isRepeat());
 
         // The option to shuffle the queue
-        shuffleCheckBox.setChecked(SongsData.getInstance().isShuffle());
+        shuffleCheckBox.setChecked(songsData.isShuffle());
 
         // This is necessary to fix the marquee, which was lagging sometimes
         songNameTextview.setEnabled(true);
@@ -132,8 +138,8 @@ public class PlayerFragment extends Fragment {
                             // If the seekbar gets manually adjusted, we need to get the new position
                             if (!currentlySeeking)
                                 songSeekBar.setProgress(currentPosition);
-                        // If the activity gets interrupted. For example app gets closed.
-                        // Prevents app from crashing
+                            // If the activity gets interrupted. For example app gets closed.
+                            // Prevents app from crashing
                         } catch (InterruptedException | IllegalStateException e) {
                             e.printStackTrace();
                         }
@@ -191,11 +197,7 @@ public class PlayerFragment extends Fragment {
         // Sets the action to execute when the button is pressed
         playSongButton.setOnClickListener(v -> togglePlayPause());
 
-        // Needed for the Mediaplayer to function
-        int audioSessionId = MediaPlayerUtil.getAudioSessionId();
-        if (audioSessionId != -1) {
-            visualizer.setAudioSessionId(audioSessionId);
-        }
+        initializeVisualizer();
 
         // Plays the next song
         nextSongButton.setOnClickListener(v -> playNextSong());
@@ -219,14 +221,11 @@ public class PlayerFragment extends Fragment {
             }
         });
 
-        // Sets if the song should be repeated or not
-        repeatCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            SongsData.getInstance().setRepeat(isChecked);
-        });
+        repeatCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> songsData.setRepeat(isChecked));
 
         // Sets if the queue should be shuffled
         shuffleCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            SongsData.getInstance().setShuffle(isChecked);
+            songsData.setShuffle(isChecked);
         });
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -242,6 +241,7 @@ public class PlayerFragment extends Fragment {
 
     /**
      * If the fragment is being attached to another activity
+     *
      * @param context The context of the app
      */
     @Override
@@ -249,7 +249,7 @@ public class PlayerFragment extends Fragment {
         super.onAttach(context);
         try {
             this.hostCallBack = (PlayerFragmentHost) context;
-        // If implementation is missing
+            // If implementation is missing
         } catch (final ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnCompleteListener");
         }
@@ -271,15 +271,20 @@ public class PlayerFragment extends Fragment {
      */
     @Override
     public void onDestroy() {
+        releaseVisualizer();
+        super.onDestroy();
+    }
+
+    public void releaseVisualizer() {
         if (visualizer != null) {
             visualizer.release();
         }
-        super.onDestroy();
     }
 
 
     /**
      * Creates a new instance of the fragment
+     *
      * @return The fragment as a class
      */
     public static PlayerFragment newInstance() {
@@ -290,6 +295,7 @@ public class PlayerFragment extends Fragment {
     /**
      * Method to animate the thumbnail of the song, gets executed when the user clicks
      * next or previous.
+     *
      * @param direction Defines in which direction it rotates (1, -1)
      */
     public void animateSongThumbail(int direction) {
@@ -309,7 +315,7 @@ public class PlayerFragment extends Fragment {
      */
     public void updatePlayerUI() {
         // Retrieves the song playing right now
-        songPlaying = SongsData.getInstance().getSongPlaying();
+        songPlaying = songsData.getSongPlaying();
 
         // Sets all properties again
         songNameTextview.setText(songPlaying.getTitle());
@@ -345,9 +351,7 @@ public class PlayerFragment extends Fragment {
         if (isResumed()) {
             // Rotates the thumbnail
             animateSongThumbail(1);
-            int audioSessionId1 = MediaPlayerUtil.getAudioSessionId();
-            if (audioSessionId1 != -1)
-                visualizer.setAudioSessionId(audioSessionId1);
+            initializeVisualizer();
         }
         hostCallBack.onSongUpdate();
     }
@@ -361,9 +365,7 @@ public class PlayerFragment extends Fragment {
         if (isResumed()) {
             // Rotates the thumbnail in the negative direction
             animateSongThumbail(-1);
-            int audioSessionId12 = MediaPlayerUtil.getAudioSessionId();
-            if (audioSessionId12 != -1)
-                visualizer.setAudioSessionId(audioSessionId12);
+            initializeVisualizer();
         }
         hostCallBack.onSongUpdate();
     }
@@ -384,6 +386,7 @@ public class PlayerFragment extends Fragment {
 
     /**
      * Converts the milliseconds in a displayable time-format like this --> min:sec
+     *
      * @param duration time in milliseconds
      * @return String with the converted time in minutes and seconds
      */
@@ -405,13 +408,21 @@ public class PlayerFragment extends Fragment {
         return time;
     }
 
+    public void initializeVisualizer() {
+        int audioSessionId = MediaPlayerUtil.getAudioSessionId();
+        if (audioSessionId != -1 && audioSessionId != 0)
+            visualizer.setAudioSessionId(audioSessionId);
+    }
+
     /**
      * Interface, needed for detecting specific states of the fragment
      */
     public interface PlayerFragmentHost {
         //callback methods
         void onLoadComplete();
+
         void onPlaybackUpdate();
+
         void onSongUpdate();
     }
 }

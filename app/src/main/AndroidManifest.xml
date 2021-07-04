@@ -29,9 +29,18 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.example.SocyMusic.SettingsActivity">
+        </activity>
+
         <service
             android:name="com.example.SocyMusic.MediaPlayerService"
-            android:stopWithTask="false"/>
+            android:stopWithTask="false" />
+        <receiver android:name="androidx.media.session.MediaButtonReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
