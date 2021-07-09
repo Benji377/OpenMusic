@@ -37,9 +37,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         libPathPreference = findPreference(PREFS_KEY_LIBRARY_PATHS);
         themePreference = findPreference(PREFS_KEY_THEME);
 
-        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
+        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 //                Intent resultIntent = result.getData();
 //                if (resultIntent == null)
 //                    return;
@@ -50,27 +48,20 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 //                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString("root_path", newPath).apply();
 //                    songsData.reloadSongs(requireContext());
 //                }
-            }
         });
 
-        libPathPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), "Coming Soon!", Toast.LENGTH_LONG).show();
-                return true;
+        libPathPreference.setOnPreferenceClickListener(preference -> {
+            Toast.makeText(getContext(), getString(R.string.all_coming_soon), Toast.LENGTH_LONG).show();
+            return true;
 //                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
 //                resultLauncher.launch(intent);
 //                return true;
-            }
         });
 
 
-        themePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Toast.makeText(getContext(), "Coming Soon!", Toast.LENGTH_LONG).show();
-                return true;
-            }
+        themePreference.setOnPreferenceClickListener(preference -> {
+            Toast.makeText(getContext(), getString(R.string.all_coming_soon), Toast.LENGTH_LONG).show();
+            return true;
         });
 
     }

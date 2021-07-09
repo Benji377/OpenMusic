@@ -4,21 +4,21 @@
     <item
         android:id="@+id/download"
         android:orderInCategory="1"
-        android:title="@string/download"
+        android:title="@string/main_menu_item_download"
         app:showAsAction="never" />
     <item
         android:id="@+id/playlist"
         android:orderInCategory="2"
-        android:title="@string/playlist"
+        android:title="@string/main_menu_item_playlist"
         app:showAsAction="never" />
     <item
         android:id="@+id/menu_settings"
         android:orderInCategory="3"
-        android:title="@string/settings"
+        android:title="@string/main_menu_item_settings"
         app:showAsAction="never" />
     <item
         android:id="@+id/about"
         android:orderInCategory="4"
-        android:title="@string/about"
+        android:title="@string/main_menu_item_about"
         app:showAsAction="never" />
 </menu>

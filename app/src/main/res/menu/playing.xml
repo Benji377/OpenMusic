@@ -4,6 +4,6 @@
     <item
         android:id="@+id/menu_show_playing_queue"
         android:icon="@drawable/ic_queue"
-        android:title="@string/playing_queue"
+        android:title="@string/queue_title"
         app:showAsAction="ifRoom" />
 </menu>

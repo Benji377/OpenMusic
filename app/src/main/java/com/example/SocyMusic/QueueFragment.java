@@ -36,9 +36,9 @@ public class QueueFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_queue, container, false);
 
-        listView = view.findViewById(R.id.queue_song_listview);
+        listView = view.findViewById(R.id.listview_queue_songs);
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new ItemAdapter(R.layout.queue_item, R.id.queue_small_visualizer, false);
+        adapter = new ItemAdapter(R.layout.list_item_queue, R.id.bar_visualizer_queue_item, false);
         listView.setAdapter(adapter, false);
         listView.setDragListListener(new DragListView.DragListListener() {
             @Override
@@ -73,7 +73,7 @@ public class QueueFragment extends Fragment {
         try {
             this.hostCallBack = (QueueFragment.QueueFragmentHost) context;
         } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnCompleteListener");
+            throw new ClassCastException(context.toString() + " must implement QueueFragmentHost");
         }
     }
 
@@ -138,8 +138,8 @@ public class QueueFragment extends Fragment {
 
             public ViewHolder(View itemView) {
                 super(itemView, grabHandleID, dragOnLongPress);
-                songTitleTextView = itemView.findViewById(R.id.queue_song_title_text_view);
-                visualizer = itemView.findViewById(R.id.queue_small_visualizer);
+                songTitleTextView = itemView.findViewById(R.id.textview_queue_item_song_title);
+                visualizer = itemView.findViewById(R.id.bar_visualizer_queue_item);
             }
 
             public void updateViews() {

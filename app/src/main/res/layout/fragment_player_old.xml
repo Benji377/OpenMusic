@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_img"
+    android:background="@drawable/player_background"
     android:orientation="vertical"
     android:weightSum="10"
     tools:context="com.example.SocyMusic.PlayerFragment">
@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtsongname"
+            android:id="@+id/textview_player_song_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -32,7 +32,7 @@
             tools:ignore="HardcodedText"/>
 
         <ImageView
-            android:id="@+id/imageview"
+            android:id="@+id/imageview_player_album_art"
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_marginBottom="8dp"
@@ -43,7 +43,7 @@
             android:layout_height="60dp">
 
             <SeekBar
-                android:id="@+id/seekbar"
+                android:id="@+id/seekbar_player"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -52,26 +52,26 @@
                 android:layout_marginBottom="40dp" />
 
             <TextView
-                android:id="@+id/txtsstart"
+                android:id="@+id/textview_player_elapsed_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="false"
                 android:layout_centerInParent="true"
                 android:layout_marginStart="15dp"
-                android:layout_toStartOf="@+id/seekbar"
+                android:layout_toStartOf="@+id/seekbar_player"
                 android:text="0:00"
                 android:textColor="#FFF"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText"/>
 
             <TextView
-                android:id="@+id/txtsstop"
+                android:id="@+id/textview_player_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="false"
                 android:layout_centerInParent="true"
                 android:layout_marginEnd="15dp"
-                android:layout_toEndOf="@+id/seekbar"
+                android:layout_toEndOf="@+id/seekbar_player"
                 android:text="4:10"
                 android:textColor="#FFF"
                 android:textSize="14sp"
@@ -89,65 +89,65 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/playbtn"
+                android:id="@+id/button_player_play_pause"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/ic_pause" />
 
             <Button
-                android:id="@+id/btnnext"
+                android:id="@+id/button_player_next"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
-                android:layout_toEndOf="@+id/playbtn"
+                android:layout_toEndOf="@+id/button_player_play_pause"
                 android:background="@drawable/ic_next"
                 android:foreground="@drawable/ic_next" />
 
             <Button
-                android:id="@+id/btnprev"
+                android:id="@+id/button_player_prev"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="15dp"
-                android:layout_toStartOf="@+id/playbtn"
+                android:layout_toStartOf="@+id/button_player_play_pause"
                 android:background="@drawable/ic_prev"
                 android:foreground="@drawable/ic_prev" />
 
             <Button
-                android:id="@+id/btnff"
+                android:id="@+id/button_player_fast_forward"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
-                android:layout_toEndOf="@+id/btnnext"
+                android:layout_toEndOf="@+id/button_player_next"
                 android:background="@drawable/ic_fast_forward"
                 android:foreground="@drawable/ic_fast_forward" />
 
             <Button
-                android:id="@+id/btnfr"
+                android:id="@+id/button_player_fast_rewind"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
-                android:layout_toStartOf="@+id/btnprev"
+                android:layout_toStartOf="@+id/button_player_prev"
                 android:background="@drawable/ic_fast_rewind"
                 android:foreground="@drawable/ic_fast_rewind" />
 
             <CheckBox
-                android:id="@+id/repeat_checkbox"
+                android:id="@+id/checkbox_player_repeat"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_below="@id/btnfr"
+                android:layout_below="@id/button_player_fast_rewind"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
-                android:layout_toStartOf="@+id/btnprev"
-                android:background="@drawable/repeat_button_selector"
+                android:layout_toStartOf="@+id/button_player_prev"
+                android:background="@drawable/ic_repeat_selector"
                 android:button="@null"
                 android:text="" />
 
             <com.gauravk.audiovisualizer.visualizer.BarVisualizer
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/blast"
+                android:id="@+id/bar_visualizer_player"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_alignParentBottom="true"

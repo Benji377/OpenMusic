@@ -76,26 +76,26 @@ public class PlayerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_player, container, false);
 
         // Adds all buttons previously declared above
-        previousSongButton = view.findViewById(R.id.btnprev);
-        nextSongButton = view.findViewById(R.id.btnnext);
-        playSongButton = view.findViewById(R.id.playbtn);
-        fastForwardButton = view.findViewById(R.id.btnff);
-        fastRewindButton = view.findViewById(R.id.btnfr);
-        repeatCheckBox = view.findViewById(R.id.repeat_checkbox);
-        shuffleCheckBox = view.findViewById(R.id.shuffle_checkbox);
+        previousSongButton = view.findViewById(R.id.button_player_prev);
+        nextSongButton = view.findViewById(R.id.button_player_next);
+        playSongButton = view.findViewById(R.id.button_player_play_pause);
+        fastForwardButton = view.findViewById(R.id.button_player_fast_forward);
+        fastRewindButton = view.findViewById(R.id.button_player_fast_rewind);
+        repeatCheckBox = view.findViewById(R.id.checkbox_player_repeat);
+        shuffleCheckBox = view.findViewById(R.id.checkbox_player_shuffle);
 
         // Adds all texts
-        songNameTextview = view.findViewById(R.id.txtsongname);
-        songStartTimeTextview = view.findViewById(R.id.txtsstart);
-        songEndTimeTextview = view.findViewById(R.id.txtsstop);
+        songNameTextview = view.findViewById(R.id.textview_player_song_title);
+        songStartTimeTextview = view.findViewById(R.id.textview_player_elapsed_time);
+        songEndTimeTextview = view.findViewById(R.id.textview_player_duration);
 
         // Adds seekbar, visualizer and the image of the player
-        songSeekBar = view.findViewById(R.id.seekbar);
-        visualizer = view.findViewById(R.id.blast);
-        songThumbnail = view.findViewById(R.id.imageview);
+        songSeekBar = view.findViewById(R.id.seekbar_player);
+        visualizer = view.findViewById(R.id.bar_visualizer_player);
+        songThumbnail = view.findViewById(R.id.imageview_player_album_art);
 
         // After creating every element, the song starts playing
-        MediaPlayerUtil.startPlaying(getContext(), songPlaying);
+        MediaPlayerUtil.startPlaying(requireContext(), songPlaying);
         updatePlayerUI();
 
         // The option to repeat the song or not
@@ -251,7 +251,7 @@ public class PlayerFragment extends Fragment {
             this.hostCallBack = (PlayerFragmentHost) context;
             // If implementation is missing
         } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnCompleteListener");
+            throw new ClassCastException(context.toString() + " must implement PlayerFragmentHost");
         }
     }
 

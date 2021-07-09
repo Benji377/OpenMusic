@@ -11,50 +11,49 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/list_bg"
+        android:background="@drawable/main_list_background"
         android:padding="8dp">
 
 
-
-            <com.gauravk.audiovisualizer.visualizer.BarVisualizer
-                android:id="@+id/queue_small_visualizer"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:avColor="@color/purple_200"
-                app:avDensity="0.04"
-                app:avSpeed="normal"
-                app:avType="outline"
-                app:avWidth="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                android:background="@drawable/ic_drag_handle"/>
+        <com.gauravk.audiovisualizer.visualizer.BarVisualizer
+            android:id="@+id/bar_visualizer_queue_item"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_drag_handle"
+            app:avColor="@color/purple_200"
+            app:avDensity="0.04"
+            app:avSpeed="normal"
+            app:avType="outline"
+            app:avWidth="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
         <ImageView
-            android:id="@+id/imgsong"
+            android:id="@+id/imageview_queue_item_album_art"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="5dp"
-            android:layout_toEndOf="@+id/queue_small_visualizer"
-            android:background="@drawable/list_bg"
+            android:layout_toEndOf="@+id/bar_visualizer_queue_item"
+            android:background="@drawable/main_list_background"
             android:src="@drawable/ic_music" />
 
         <TextView
-            android:id="@+id/queue_song_title_text_view"
+            android:id="@+id/textview_queue_item_song_title"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_toEndOf="@+id/imgsong"
+            android:layout_toEndOf="@+id/imageview_queue_item_album_art"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:padding="6dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:text="Song name"
+            android:text="Song Title"
             android:textColor="#FFF"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />

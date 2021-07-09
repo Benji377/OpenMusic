@@ -10,28 +10,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/list_bg"
+        android:background="@drawable/main_list_background"
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/imgsong"
+            android:id="@+id/imageview_main_item_album_art"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/list_bg"
+            android:background="@drawable/main_list_background"
             android:src="@drawable/ic_music" />
 
         <TextView
-            android:id="@+id/textsongname"
+            android:id="@+id/textview_main_item_song_title"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_toEndOf="@+id/imgsong"
+            android:layout_toEndOf="@+id/imageview_main_item_album_art"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:padding="6dp"
