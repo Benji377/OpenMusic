@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <com.woxthebox.draglistview.DragListView
-        android:id="@+id/queue_song_listview"
+        android:id="@+id/listview_queue_songs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"

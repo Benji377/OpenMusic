@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_img"
+    android:background="@drawable/player_background"
     tools:context="com.example.SocyMusic.PlayerFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/player_holder"
+        android:id="@+id/layout_player_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/txtsongname"
+            android:id="@+id/textview_player_song_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -22,7 +22,7 @@
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:singleLine="true"
-            android:text="Song name"
+            android:text="Song Title"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="30sp"
@@ -34,18 +34,18 @@
             tools:ignore="HardcodedText" />
 
         <ImageView
-            android:id="@+id/imageview"
+            android:id="@+id/imageview_player_album_art"
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtsongname"
+            app:layout_constraintTop_toBottomOf="@+id/textview_player_song_title"
             app:srcCompat="@drawable/music" />
 
         <SeekBar
-            android:id="@+id/seekbar"
+            android:id="@+id/seekbar_player"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
@@ -56,23 +56,23 @@
             android:progressTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageview" />
+            app:layout_constraintTop_toBottomOf="@+id/imageview_player_album_art" />
 
         <TextView
-            android:id="@+id/txtsstart"
+            android:id="@+id/textview_player_elapsed_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="0:00"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/seekbar"
+            app:layout_constraintEnd_toStartOf="@+id/seekbar_player"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageview"
+            app:layout_constraintTop_toBottomOf="@+id/imageview_player_album_art"
             tools:ignore="HardcodedText" />
 
         <TextView
-            android:id="@+id/txtsstop"
+            android:id="@+id/textview_player_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -80,12 +80,12 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/seekbar"
-            app:layout_constraintTop_toBottomOf="@+id/imageview"
+            app:layout_constraintStart_toEndOf="@+id/seekbar_player"
+            app:layout_constraintTop_toBottomOf="@+id/imageview_player_album_art"
             tools:ignore="HardcodedText" />
 
         <Button
-            android:id="@+id/playbtn"
+            android:id="@+id/button_player_play_pause"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginTop="60dp"
@@ -93,74 +93,74 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+            app:layout_constraintTop_toBottomOf="@+id/seekbar_player" />
 
         <Button
-            android:id="@+id/btnprev"
+            android:id="@+id/button_player_prev"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="75dp"
             android:background="@drawable/ic_prev"
             android:foreground="@drawable/ic_prev"
-            app:layout_constraintEnd_toStartOf="@+id/playbtn"
-            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+            app:layout_constraintEnd_toStartOf="@+id/button_player_play_pause"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar_player" />
 
         <Button
-            android:id="@+id/btnnext"
+            android:id="@+id/button_player_next"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="75dp"
             android:background="@drawable/ic_next"
             android:foreground="@drawable/ic_next"
-            app:layout_constraintStart_toEndOf="@+id/playbtn"
-            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+            app:layout_constraintStart_toEndOf="@+id/button_player_play_pause"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar_player" />
 
         <Button
-            android:id="@+id/btnff"
+            android:id="@+id/button_player_fast_forward"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="80dp"
             android:background="@drawable/ic_fast_forward"
             android:foreground="@drawable/ic_fast_forward"
-            app:layout_constraintStart_toEndOf="@+id/btnnext"
-            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+            app:layout_constraintStart_toEndOf="@+id/button_player_next"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar_player" />
 
         <Button
-            android:id="@+id/btnfr"
+            android:id="@+id/button_player_fast_rewind"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="80dp"
             android:layout_marginEnd="15dp"
             android:background="@drawable/ic_fast_rewind"
             android:foreground="@drawable/ic_fast_rewind"
-            app:layout_constraintEnd_toStartOf="@+id/btnprev"
-            app:layout_constraintTop_toBottomOf="@+id/seekbar" />
+            app:layout_constraintEnd_toStartOf="@+id/button_player_prev"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar_player" />
 
         <CheckBox
-            android:id="@+id/shuffle_checkbox"
+            android:id="@+id/checkbox_player_shuffle"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/shuffle_button_selector"
+            android:background="@drawable/ic_shuffle_selector"
             android:button="@color/cardview_shadow_end_color"
-            app:layout_constraintStart_toEndOf="@+id/btnnext"
-            app:layout_constraintTop_toBottomOf="@+id/btnff" />
+            app:layout_constraintStart_toEndOf="@+id/button_player_next"
+            app:layout_constraintTop_toBottomOf="@+id/button_player_fast_forward" />
 
         <CheckBox
-            android:id="@+id/repeat_checkbox"
+            android:id="@+id/checkbox_player_repeat"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="15dp"
-            android:background="@drawable/repeat_button_selector"
+            android:background="@drawable/ic_repeat_selector"
             android:button="@color/cardview_shadow_end_color"
-            app:layout_constraintEnd_toStartOf="@+id/btnprev"
-            app:layout_constraintTop_toBottomOf="@+id/btnfr" />
+            app:layout_constraintEnd_toStartOf="@+id/button_player_prev"
+            app:layout_constraintTop_toBottomOf="@+id/button_player_fast_rewind" />
 
         <com.gauravk.audiovisualizer.visualizer.BarVisualizer
-            android:id="@+id/blast"
+            android:id="@+id/bar_visualizer_player"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_alignParentBottom="true"

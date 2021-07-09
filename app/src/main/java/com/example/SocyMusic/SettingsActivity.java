@@ -17,14 +17,14 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle(R.string.settings);
+        getSupportActionBar().setTitle(R.string.main_menu_item_settings);
         setContentView(R.layout.activity_settings);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.settings_fragment_container);
+        Fragment fragment = fragmentManager.findFragmentById(R.id.layout_settings_container);
         if (fragment == null) {
             settingsFragment = new SettingsFragment();
             fragmentManager.beginTransaction()
-                    .add(R.id.settings_fragment_container, settingsFragment)
+                    .add(R.id.layout_settings_container, settingsFragment)
                     .commit();
         } else
             settingsFragment = (SettingsFragment) fragment;

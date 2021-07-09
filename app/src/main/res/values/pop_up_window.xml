@@ -1,7 +1,7 @@
 <resources>
 
     <style name="Widget.App.AboutPage" parent="about_About">
-        <item name="aboutBackground">@drawable/pop_up_background</item>
+        <item name="aboutBackground">@drawable/about_background</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 

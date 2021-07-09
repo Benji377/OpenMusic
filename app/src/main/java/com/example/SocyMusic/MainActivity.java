@@ -73,17 +73,17 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         setContentView(R.layout.activity_main);
 
         actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.app_name));
+        actionBar.setTitle(getString(R.string.all_app_name));
 
         // Sets all components
-        listView = findViewById(R.id.listViewSong);
-        songInfoPane = findViewById(R.id.song_info_pane);
-        bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.player_bottom_sheet));
-        songTitleTextView = findViewById(R.id.bsht_song_name_txt);
+        listView = findViewById(R.id.listview_main_songs);
+        songInfoPane = findViewById(R.id.layout_main_song_info_pane);
+        bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet_main_player));
+        songTitleTextView = findViewById(R.id.textview_main_song_title);
         songTitleTextView.setSelected(true);
 
         // Creates a connection to the player fragment
-        final FrameLayout playerContainer = findViewById(R.id.player_fragment_container);
+        final FrameLayout playerContainer = findViewById(R.id.layout_main_player_container);
         playerContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -101,10 +101,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     invalidateOptionsMenu();
-                    actionBar.setTitle(R.string.now_playing);
+                    actionBar.setTitle(R.string.player_title);
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     invalidateOptionsMenu();
-                    actionBar.setTitle(R.string.app_name);
+                    actionBar.setTitle(R.string.all_app_name);
                     songTitleTextView.setText(songsData.getSongPlaying().getTitle());
                     playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
                     hideQueue();
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         songInfoPane.setOnClickListener(v -> bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED));
 
         // Sets the playButton
-        playButton = findViewById(R.id.bsh_play_button);
+        playButton = findViewById(R.id.button_main_play_pause);
         playButton.setOnClickListener(v -> {
             playerFragment.togglePlayPause();
             playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
@@ -165,15 +165,15 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         if (item.getItemId() == R.id.about) {
             showPopupWindow(listView);
         } else if (item.getItemId() == R.id.download) {
-            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getText(R.string.all_coming_soon), Toast.LENGTH_SHORT).show();
         } else if (item.getItemId() == R.id.playlist) {
             // Replace this action
-            Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getText(R.string.all_coming_soon), Toast.LENGTH_SHORT).show();
         } else if (item.getItemId() == R.id.menu_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
         } else if (item.getItemId() == R.id.menu_show_playing_queue) {
-            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.queue_fragment_container);
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_main_queue_container);
             if (fragment == null)
                 showQueue();
             else {
@@ -188,23 +188,23 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         if (queueFragment == null)
             return;
         FragmentManager fragmentManager = getSupportFragmentManager();
-        View playerFragmentView = findViewById(R.id.player_holder);
+        View playerFragmentView = findViewById(R.id.layout_player_holder);
         queueFragment.onDestroyView();
         fragmentManager.beginTransaction().remove(queueFragment).commit();
 
         playerFragmentView.setVisibility(View.VISIBLE);
         playerFragment.initializeVisualizer();
-        actionBar.setTitle(R.string.now_playing);
+        actionBar.setTitle(R.string.player_title);
         queueFragment = null;
         invalidateOptionsMenu();
     }
 
     private void showQueue() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        View playerFragmentView = findViewById(R.id.player_holder);
+        View playerFragmentView = findViewById(R.id.layout_player_holder);
         queueFragment = new QueueFragment();
-        fragmentManager.beginTransaction().add(R.id.queue_fragment_container, queueFragment).commit();
-        actionBar.setTitle(R.string.playing_queue);
+        fragmentManager.beginTransaction().add(R.id.layout_main_queue_container, queueFragment).commit();
+        actionBar.setTitle(R.string.queue_title);
         playerFragment.releaseVisualizer();
         playerFragmentView.setVisibility(View.INVISIBLE);
         invalidateOptionsMenu();
@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
             // Error occured
             if (!songsData.songExists(position)) {
-                Toast.makeText(this, "File moved or deleted.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getText(R.string.main_err_file_gone), Toast.LENGTH_LONG).show();
                 songsData.reloadSongs(this);
                 customAdapter.notifyDataSetChanged();
                 return;
@@ -275,10 +275,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
             // Opens the player fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment fragment = fragmentManager.findFragmentById(R.id.player_fragment_container);
+            Fragment fragment = fragmentManager.findFragmentById(R.id.layout_main_player_container);
             if (fragment == null) {
                 playerFragment = PlayerFragment.newInstance();
-                fragmentManager.beginTransaction().add(R.id.player_fragment_container, playerFragment).commit();
+                fragmentManager.beginTransaction().add(R.id.layout_main_player_container, playerFragment).commit();
 
                 Intent serviceIntent = new Intent(this, MediaPlayerService.class);
                 serviceIntent.putExtra(MediaPlayerService.EXTRA_SONG, songClicked);
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         });
         // Error occurs --> song not found
-        TextView emptyText = findViewById(R.id.listEmptyTextView);
+        TextView emptyText = findViewById(R.id.textview_main_list_empty);
         listView.setEmptyView(emptyText);
     }
 
@@ -425,8 +425,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View myView = getLayoutInflater().inflate(R.layout.list_item, null);
-            TextView textsong = myView.findViewById(R.id.textsongname);
+            View myView = getLayoutInflater().inflate(R.layout.list_item_main, null);
+            TextView textsong = myView.findViewById(R.id.textview_main_item_song_title);
             textsong.setText(songsData.getSongAt(position).getTitle());
             textsong.setSelected(true);
             return myView;
@@ -512,8 +512,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         View popupView = new AboutPage(MainActivity.this, R.style.Widget_App_AboutPage)
                 .isRTL(false)
                 .setImage(R.mipmap.ic_launcher)
-                .setDescription(getString(R.string.about_us_description))
-                .addItem(new Element("Version " + BuildConfig.VERSION_NAME, R.drawable.ic_info))
+                .setDescription(getString(R.string.about_description))
+                .addItem(new Element(getString(R.string.about_version, BuildConfig.VERSION_NAME), R.drawable.ic_info))
                 .addGroup("Connect with us")
                 .addWebsite("https://benji377.github.io/SocyMusic/")
                 .addGitHub("Benji377/SocyMusic")
