@@ -15,20 +15,21 @@
         android:padding="8dp">
 
 
-        <com.gauravk.audiovisualizer.visualizer.BarVisualizer
-            android:id="@+id/bar_visualizer_queue_item"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_drag_handle"
-            app:avColor="@color/purple_200"
-            app:avDensity="0.04"
-            app:avSpeed="normal"
-            app:avType="outline"
-            app:avWidth="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+
+            <com.gauravk.audiovisualizer.visualizer.BarVisualizer
+                android:id="@+id/bar_visualizer_queue_item"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:avColor="@color/primaryAppColor"
+                app:avDensity="0.04"
+                app:avSpeed="normal"
+                app:avType="outline"
+                app:avWidth="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/ic_drag_handle"/>
 
 
         <ImageView

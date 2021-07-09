@@ -6,8 +6,6 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
-import java.util.Random;
-
 public class MediaPlayerUtil {
     private static MediaPlayer mediaPlayer;
 
@@ -52,18 +50,9 @@ public class MediaPlayerUtil {
     public static void playNext(Context context) {
         // Fixed instance
         SongsData songsData = SongsData.getInstance(context);
-        // Shuffles the queue
-        if (songsData.isShuffle() && !songsData.isRepeat()) {
-            int randomIndex = getRandomIndex(context);
-            // Avoids playing the same song twice
-            while (randomIndex == songsData.currentSongIndex() && songsData.songsCount() > 1) {
-                randomIndex = getRandomIndex(context);
-            }
-            songsData.setPlaying(randomIndex);
-            // Repeats the song
-        } else if (songsData.isRepeat()) {
-            songsData.setPlaying(songsData.currentSongIndex());
-            // Plays the first song in queue
+        // Repeats the song
+        if (songsData.isRepeat()) {
+            SongsData.getInstance(context).setPlaying(songsData.currentSongIndex());
         } else if (songsData.lastInQueue() && !songsData.isRepeat()) {
             songsData.setPlaying(0);
             // Plays the next song
@@ -84,17 +73,9 @@ public class MediaPlayerUtil {
     public static void playPrev(Context context) {
         // Fixed instance
         SongsData songsData = SongsData.getInstance(context);
-        // Shuffles the queue
-        if (songsData.isShuffle() && !songsData.isRepeat()) {
-            int randomIndex = getRandomIndex(context);
-            // Avoids playing the same song twice
-            while (randomIndex == songsData.currentSongIndex() && songsData.songsCount() > 1) {
-                randomIndex = getRandomIndex(context);
-            }
-            songsData.setPlaying(randomIndex);
-        } else if (songsData.isRepeat()) {
-            songsData.setPlaying(songsData.currentSongIndex());
-            // Plays the last song in queue
+        if (songsData.isRepeat()) {
+            SongsData.getInstance(context).setPlaying(songsData.currentSongIndex());
+        // Plays the last song in queue
         } else if (songsData.firstInQueue() && !songsData.isRepeat()) {
             songsData.setPlaying(songsData.songsCount() - 1);
             // Plays the previous song
@@ -203,15 +184,5 @@ public class MediaPlayerUtil {
         if (mediaPlayer == null)
             return 0;
         return mediaPlayer.getAudioSessionId();
-    }
-
-    /**
-     * Generates a random index for the shuffle mode
-     *
-     * @return a random integer between 0 and amount of songs
-     */
-    public static int getRandomIndex(Context context) {
-        Random r = new Random();
-        return r.nextInt(SongsData.getInstance(context).songsCount());
     }
 }

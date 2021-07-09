@@ -26,7 +26,7 @@
             android:singleLine="true"
             android:text="Song name"
             android:textAlignment="center"
-            android:textColor="#FFF"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="italic"
             tools:ignore="HardcodedText"/>
@@ -60,7 +60,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_toStartOf="@+id/seekbar_player"
                 android:text="0:00"
-                android:textColor="#FFF"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText"/>
 
@@ -73,7 +73,7 @@
                 android:layout_marginEnd="15dp"
                 android:layout_toEndOf="@+id/seekbar_player"
                 android:text="4:10"
-                android:textColor="#FFF"
+                android:textColor="@color/white"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText"/>
         </RelativeLayout>
@@ -151,7 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_alignParentBottom="true"
-                custom:avColor="#FF362E"
+                custom:avColor="@color/primaryAppColor"
                 custom:avDensity="0.5"
                 custom:avSpeed="normal"
                 custom:avType="outline"

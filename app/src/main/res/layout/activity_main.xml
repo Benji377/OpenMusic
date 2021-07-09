@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/main_song_list_empty"
-        android:textColor="@color/teal_700"
+        android:textColor="@color/primaryAppColor"
         android:textSize="24sp" />
 
 

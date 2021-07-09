@@ -6,6 +6,6 @@
         android:endColor="@color/white" />
 
     <stroke android:width="2dp"
-        android:color="@color/purple_200" />
+        android:color="@color/primaryAppColor" />
 
 </shape>
