@@ -48,6 +48,12 @@ Some tips to work on help on this project
 
 Finally you can just fork the project and work freely on your project.
 
+## Resource naming convention
+When contributing to this project, it's important that we all try to code in the same style to simplify organisation and make it easier for everyone to understand the code and contribute. Thats why we have strict naming conventions.
+We got ours from an [answer on Stackoverflow.](https://stackoverflow.com/a/39866695/14159914) It is very simple to follow and there is even an image that you can save on yozr desktop if you forget things easily.
+
+![UbsBV](https://user-images.githubusercontent.com/50681275/125126668-b9969a00-e0fb-11eb-8a86-b5a0399f12ec.png)
+
 ## Contact
 If you are unsure of something, have special suggestions or just want to contact me in general, you can do so by writing me on any of the following socials:
 - Twitter: [Benben377](https://twitter.com/Benben377)
