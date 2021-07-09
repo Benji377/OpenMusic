@@ -1,7 +1,6 @@
 package com.example.SocyMusic;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Environment;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
