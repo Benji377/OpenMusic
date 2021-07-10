@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import java.io.Console;
-
 // STILL IN DEVELOPMENT!!
 // Code from: https://stackoverflow.com/questions/3182937/android-create-playlist
 public class Playlist {
