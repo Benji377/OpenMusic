@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.musicplayer">
+    package="com.musicplayer.musicplayer">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:name="com.example.SocyMusic.SocyMusicApp"
+        android:name="com.musicplayer.SocyMusic.SocyMusicApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/all_app_name"
@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicPlayer">
         <activity
-            android:name="com.example.SocyMusic.MainActivity"
+            android:name="com.musicplayer.SocyMusic.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -29,11 +29,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.example.SocyMusic.SettingsActivity">
+        <activity android:name="com.musicplayer.SocyMusic.SettingsActivity">
         </activity>
 
         <service
-            android:name="com.example.SocyMusic.MediaPlayerService"
+            android:name="com.musicplayer.SocyMusic.MediaPlayerService"
             android:stopWithTask="false" />
         <receiver android:name="androidx.media.session.MediaButtonReceiver">
             <intent-filter>

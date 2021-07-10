@@ -1,4 +1,4 @@
-package com.example.SocyMusic;
+package com.musicplayer.SocyMusic;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -31,8 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.musicplayer.BuildConfig;
-import com.example.musicplayer.R;
+import com.musicplayer.musicplayer.BuildConfig;
+import com.musicplayer.musicplayer.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     /**
      * Checks for all required permissions
-     * For example storage permission to find all the songs and record permission for the visualizer
+     * For musicplayer storage permission to find all the songs and record permission for the visualizer
      */
     public void runtimePermission() {
         Dexter.withContext(this).withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)

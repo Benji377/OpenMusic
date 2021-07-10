@@ -1,11 +1,11 @@
-package com.example.SocyMusic;
+package com.musicplayer.SocyMusic;
 
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
-import com.example.musicplayer.R;
+import com.musicplayer.musicplayer.R;
 
 /**
  * This class is necessary to create notifications according to different Android versions

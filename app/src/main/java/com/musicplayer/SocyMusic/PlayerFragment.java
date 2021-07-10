@@ -1,4 +1,4 @@
-package com.example.SocyMusic;
+package com.musicplayer.SocyMusic;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -20,7 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.musicplayer.R;
+import com.musicplayer.musicplayer.R;
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 
 
@@ -138,7 +138,7 @@ public class PlayerFragment extends Fragment {
                             // If the seekbar gets manually adjusted, we need to get the new position
                             if (!currentlySeeking)
                                 songSeekBar.setProgress(currentPosition);
-                            // If the activity gets interrupted. For example app gets closed.
+                            // If the activity gets interrupted. For musicplayer app gets closed.
                             // Prevents app from crashing
                         } catch (InterruptedException | IllegalStateException e) {
                             e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.example.SocyMusic;
+package com.musicplayer.SocyMusic;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.musicplayer.R;
+import com.musicplayer.musicplayer.R;
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 import com.woxthebox.draglistview.DragItemAdapter;
 import com.woxthebox.draglistview.DragListView;

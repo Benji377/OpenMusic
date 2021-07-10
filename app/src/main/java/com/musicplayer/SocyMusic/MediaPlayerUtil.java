@@ -1,4 +1,4 @@
-package com.example.SocyMusic;
+package com.musicplayer.SocyMusic;
 
 import android.content.Context;
 import android.media.MediaPlayer;

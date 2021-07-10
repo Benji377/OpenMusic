@@ -1,4 +1,4 @@
-package com.example.SocyMusic;
+package com.musicplayer.SocyMusic;
 
 import android.content.Context;
 import android.os.Environment;
@@ -160,7 +160,7 @@ public class SongsData {
 
     /**
      * TODO: Improve this method
-     * Is used to find songs in other Directories, like for example SD-cards
+     * Is used to find songs in other Directories, like for musicplayer SD-cards
      * WARNING: Doesn't get updated if new songs are added/removed
      * WARNING: Only detects while if located inside specific directory:
      *

@@ -6,7 +6,7 @@
     android:background="@drawable/player_background"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context="com.example.SocyMusic.PlayerFragment">
+    tools:context="com.musicplayer.SocyMusic.PlayerFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

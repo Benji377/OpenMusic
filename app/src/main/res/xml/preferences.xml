@@ -11,8 +11,7 @@
             app:title="Theme" />
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="Library">
+    <PreferenceCategory android:title="Library">
         <Preference
             app:key="lib_paths"
             app:summary="Configure where to look for songs on your device."

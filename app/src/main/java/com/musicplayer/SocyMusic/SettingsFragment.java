@@ -1,4 +1,4 @@
-package com.example.SocyMusic;
+package com.musicplayer.SocyMusic;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import com.example.musicplayer.R;
+import com.musicplayer.musicplayer.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     private Preference themePreference;

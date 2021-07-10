@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/player_background"
-    tools:context="com.example.SocyMusic.PlayerFragment">
+    tools:context="com.musicplayer.SocyMusic.PlayerFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_player_holder"

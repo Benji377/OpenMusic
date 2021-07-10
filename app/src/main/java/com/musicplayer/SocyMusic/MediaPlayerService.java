@@ -1,4 +1,4 @@
-package com.example.SocyMusic;
+package com.musicplayer.SocyMusic;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.media.app.NotificationCompat.MediaStyle;
 
-import com.example.musicplayer.R;
+import com.musicplayer.musicplayer.R;
 
 public class MediaPlayerService extends Service {
 
@@ -26,7 +26,7 @@ public class MediaPlayerService extends Service {
     public static final String ACTION_TOGGLE_PLAY_PAUSE = "play_pause";
     public static final String ACTION_NEXT = "next";
     public static final String ACTION_CANCEL = "cancel";
-    public static final String EXTRA_SONG = "com.example.SocyMusic.song";
+    public static final String EXTRA_SONG = "com.musicplayer.SocyMusic.song";
 
     // Declaring components
     private Song songPlaying;
