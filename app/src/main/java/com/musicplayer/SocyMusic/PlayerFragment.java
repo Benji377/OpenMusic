@@ -327,6 +327,7 @@ public class PlayerFragment extends Fragment {
         // Sets the time of the song
         songEndTimeTextview.setText(createTime(duration));
         songStartTimeTextview.setText(createTime(position));
+        initializeVisualizer();
         // If paused or playing
         updatePlayButton();
     }
@@ -351,7 +352,6 @@ public class PlayerFragment extends Fragment {
         if (isResumed()) {
             // Rotates the thumbnail
             animateSongThumbail(1);
-            initializeVisualizer();
         }
         hostCallBack.onSongUpdate();
     }
@@ -365,7 +365,6 @@ public class PlayerFragment extends Fragment {
         if (isResumed()) {
             // Rotates the thumbnail in the negative direction
             animateSongThumbail(-1);
-            initializeVisualizer();
         }
         hostCallBack.onSongUpdate();
     }
