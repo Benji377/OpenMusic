@@ -165,21 +165,6 @@ public class SongsData {
         return songsFound;
     }
 
-    /**
-     * TODO: Improve this method
-     * Is used to find songs in other Directories, like for musicplayer SD-cards
-     * WARNING: Doesn't get updated if new songs are added/removed
-     * WARNING: Only detects while if located inside specific directory:
-     *
-     * @param filedirs Array of directories
-     */
-    public void addSongs(File[] filedirs) {
-        // For every directory in the given directories
-        for (File filedir : filedirs) {
-            // Adds the songs to the allSong arra without overwriting it
-            allSongs.addAll(loadSongs(filedir));
-        }
-    }
 
     public int getPlayingQueueCount() {
         return playingQueue.size();

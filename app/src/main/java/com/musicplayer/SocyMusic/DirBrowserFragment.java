@@ -31,7 +31,6 @@ public class DirBrowserFragment extends Fragment {
 
     private TextView symPathTextView;
 
-    private String[] rootPaths;
     private File[] rootDirs;
     private String currentAbsolutePath;
     private boolean isAtRoot;
@@ -42,7 +41,6 @@ public class DirBrowserFragment extends Fragment {
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         songsData = SongsData.getInstance(getContext());
-        rootPaths = getRootPaths();
         rootDirs = getRootDirs();
         currentAbsolutePath = getUpPath(rootDirs[0].getAbsolutePath());
         isAtRoot = true;
@@ -101,6 +99,7 @@ public class DirBrowserFragment extends Fragment {
     }
 
     private File[] getRootDirs() {
+        String[] rootPaths = getRootPaths();
         File[] rootDirs = new File[rootPaths.length];
         for (int i = 0; i < rootPaths.length; i++)
             rootDirs[i] = new File(rootPaths[i]);
