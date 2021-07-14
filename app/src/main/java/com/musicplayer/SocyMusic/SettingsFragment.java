@@ -16,10 +16,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private Preference themePreference;
     private Preference libPathPreference;
 
-    public static final String PREFS_KEY_LIBRARY_PATHS = "lib_paths";
-    public static final String PREFS_KEY_THEME = "theme";
-
-
     private ActivityResultLauncher<Intent> resultLauncher;
     private SongsData songsData;
 
@@ -32,28 +28,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
-        libPathPreference = findPreference(PREFS_KEY_LIBRARY_PATHS);
-        themePreference = findPreference(PREFS_KEY_THEME);
+        libPathPreference = findPreference(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS);
+        themePreference = findPreference(SocyMusicApp.PREFS_KEY_THEME);
 
         resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-//                Intent resultIntent = result.getData();
-//                if (resultIntent == null)
-//                    return;
-//                if (result.getResultCode() == Activity.RESULT_OK) {
-//                    requireContext().getContentResolver().takePersistableUriPermission(resultIntent.getData(),
-//                            Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//                    String newPath = resultIntent.getDataString();
-//                    PreferenceManager.getDefaultSharedPreferences(requireContext()).edit().putString("root_path", newPath).apply();
-//                    songsData.reloadSongs(requireContext());
-//                }
+            //TODO: move code from save method in DirBrowserFragment to here to let settingsFragment handle saving settings
         });
 
         libPathPreference.setOnPreferenceClickListener(preference -> {
-            Toast.makeText(getContext(), getString(R.string.all_coming_soon), Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getContext(), DirBrowserActivity.class);
+            resultLauncher.launch(intent);
             return true;
-//                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-//                resultLauncher.launch(intent);
-//                return true;
         });
 
 

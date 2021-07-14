@@ -25,6 +25,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,13 +44,12 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
-import java.io.File;
 import java.util.List;
 
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 
-public class MainActivity extends AppCompatActivity implements PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection {
+public class MainActivity extends AppCompatActivity implements PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
     ListView listView;
     BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
     View songInfoPane;
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     Button playButton;
 
     // Private components
+    private ActivityResultLauncher<Intent> resultLauncher;
     private PlayerFragment playerFragment;
     private QueueFragment queueFragment;
     private MediaPlayerService mediaPlayerService;
@@ -81,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet_main_player));
         songTitleTextView = findViewById(R.id.textview_main_song_title);
         songTitleTextView.setSelected(true);
+
+        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this);
 
         // Creates a connection to the player fragment
         final FrameLayout playerContainer = findViewById(R.id.layout_main_player_container);
@@ -143,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             getMenuInflater().inflate(R.menu.main, menu);
         else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             getMenuInflater().inflate(R.menu.playing, menu);
-            MenuItem showQueueButton = menu.findItem(R.id.menu_show_playing_queue);
+            MenuItem showQueueButton = menu.findItem(R.id.playing_menu_show_queue);
             if (queueFragment == null)
                 showQueueButton.setIcon(R.drawable.ic_queue);
             else
@@ -162,15 +168,15 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         // To add an item to the menu, add it to menu/main.xml first!
-        if (item.getItemId() == R.id.about) {
+        if (item.getItemId() == R.id.main_menu_about) {
             showPopupWindow(listView);
-        } else if (item.getItemId() == R.id.playlist) {
+        } else if (item.getItemId() == R.id.main_menu_playlist) {
             // Replace this action
             Toast.makeText(this, getText(R.string.all_coming_soon), Toast.LENGTH_SHORT).show();
-        } else if (item.getItemId() == R.id.menu_settings) {
+        } else if (item.getItemId() == R.id.main_menu_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
-            startActivity(settingsIntent);
-        } else if (item.getItemId() == R.id.menu_show_playing_queue) {
+            resultLauncher.launch(settingsIntent);
+        } else if (item.getItemId() == R.id.playing_menu_show_queue) {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_main_queue_container);
             if (fragment == null)
                 showQueue();
@@ -232,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                         // Display all the songs
+                        songsData.reloadSongs(MainActivity.this);
                         displaySongs();
                     }
 
@@ -247,12 +254,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
      * This method searches for all songs it can find on the phone's storage and shows them as a list
      */
     void displaySongs() {
-
-        // Loading files from SD-Card
-        File[] storages = getApplicationContext().getExternalFilesDirs(null);
-        songsData.addSongs(storages);
-
-        customAdapter customAdapter = new customAdapter();
+        CustomAdapter customAdapter = new CustomAdapter();
         listView.setAdapter(customAdapter);
 
         // If you click on an tem in the list, the player fragment opens
@@ -374,11 +376,18 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             playerFragment.updatePlayerUI();
     }
 
+    @Override
+    public void onActivityResult(ActivityResult result) {
+        //TODO: check if settings were changed before updating
+//        if (result.getResultCode() != RESULT_OK)
+//            return;
+        ((CustomAdapter) listView.getAdapter()).notifyDataSetChanged();
+    }
 
     /**
      * Custom adapter for SongsData related actions
      */
-    class customAdapter extends BaseAdapter {
+    class CustomAdapter extends BaseAdapter {
 
         /**
          * Gets the amount of songs

@@ -2,20 +2,20 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <PreferenceCategory android:title="Library">
+        <Preference
+            app:key="lib_paths"
+            app:summary="@string/prefs_summery_lib_paths"
+            app:title="@string/prefs_title_lib_paths" />
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:title="Appearance"
         app:key="appearance_category">
         <Preference
             app:key="theme"
-            app:summary="Choose the primary colors of your app"
-            app:title="Theme" />
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="Library">
-        <Preference
-            app:key="lib_paths"
-            app:summary="Configure where to look for songs on your device."
-            app:title="Library Files" />
+            app:summary="@string/prefs_summery_theme"
+            app:title="@string/prefs_title_theme" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -29,8 +29,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.musicplayer.SocyMusic.SettingsActivity">
-        </activity>
+        <activity android:name="com.musicplayer.SocyMusic.SettingsActivity"/>
+        <activity android:name="com.musicplayer.SocyMusic.DirBrowserActivity"/>
 
         <service
             android:name="com.musicplayer.SocyMusic.MediaPlayerService"

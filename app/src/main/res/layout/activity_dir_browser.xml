@@ -3,12 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.woxthebox.draglistview.DragListView
-        android:id="@+id/listview_queue_songs"
+    <FrameLayout
+        android:id="@+id/layout_dir_browser_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
-        android:padding="8dp"/>
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
