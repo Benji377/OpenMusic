@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/playing_menu_show_queue"
-        android:icon="@drawable/ic_queue"
-        android:title="@string/queue_title"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/dir_browser_menu_save"
+        android:title="@string/dir_browser_menu_item_save"
+        app:showAsAction="ifRoom|withText" />
+
 </menu>

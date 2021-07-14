@@ -22,4 +22,17 @@
 
     <string name="queue_title">Playing Queue</string>
     <string name="player_title">Now Playing</string>
+
+    <string name="dir_browser_title">Select Directories</string>
+    <string name="dir_browser_internal_storage">Internal Storage</string>
+    <string name="dir_browser_sd_card">SD card (%s)</string>
+    <string name="dir_browser_folder_list_empty">Folder is empty</string>
+    <string name="dir_browser_file_not_readable">Cannot read file</string>.
+
+    <string name="dir_browser_menu_item_save">Save</string>
+
+    <string name="prefs_title_lib_paths">Library Folders</string>
+    <string name="prefs_summery_lib_paths">Configure where to look for songs on your device.</string>
+    <string name="prefs_summery_theme">Choose the primary colors of your app</string>
+    <string name="prefs_title_theme">Theme</string>
 </resources>

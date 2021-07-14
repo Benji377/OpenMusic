@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Environment;
 
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -121,9 +122,15 @@ public class SongsData {
      * This excludes SD-cards, USB, etc...
      */
     public void reloadSongs(@NonNull Context context) {
-//        String path = PreferenceManager.getDefaultSharedPreferences(context).getString("root_path", Environment.getExternalStorageDirectory().getPath());
-//        DocumentFile root = DocumentFile.fromTreeUri(context, Uri.parse(path));
-        allSongs = loadSongs(Environment.getExternalStorageDirectory());
+
+        HashSet<String> paths = new HashSet<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, SocyMusicApp.defaultPathsSet));
+        allSongs = new ArrayList<>();
+        for (String path : paths) {
+            File file = new File(path);
+            if (!file.exists() || !file.canRead())
+                continue;
+            allSongs.addAll(loadSongs(file));
+        }
     }
 
 
@@ -311,7 +318,7 @@ public class SongsData {
         temporary.add(getSongPlaying());
         // Creates a random queue
         for (int i = 1; i < playingQueue.size(); i++) {
-            while(true) {
+            while (true) {
                 int num = r.nextInt(playingQueue.size());
                 // leaves out currently playing song
                 if (!s.contains(num) && num != currentSongIndex()) {

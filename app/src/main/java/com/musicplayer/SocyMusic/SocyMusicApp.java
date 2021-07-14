@@ -4,8 +4,11 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
+import android.os.Environment;
 
 import com.musicplayer.musicplayer.R;
+
+import java.util.HashSet;
 
 /**
  * This class is necessary to create notifications according to different Android versions
@@ -14,6 +17,11 @@ public class SocyMusicApp extends Application {
     // Unique ID for the media channel only!
     public static final String MEDIA_CHANNEL_ID = "media_channel";
 
+    //keys for preferences
+    public static final String PREFS_KEY_LIBRARY_PATHS = "lib_paths";
+    public static final String PREFS_KEY_THEME = "theme";
+    public static final HashSet<String> defaultPathsSet = new HashSet<>();
+
     /**
      * When this class gets invoked, this method gets called
      */
@@ -21,6 +29,7 @@ public class SocyMusicApp extends Application {
     public void onCreate() {
         super.onCreate();
         createNotificationChannels();
+        defaultPathsSet.add(Environment.getExternalStorageDirectory().getAbsolutePath());
     }
 
     /**
