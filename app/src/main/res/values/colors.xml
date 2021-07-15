@@ -7,4 +7,9 @@
     <color name="black">#000000</color>
 
     <color name="colorAccent">#000000</color>
+
+    <!-- Customize the background! -->
+    <color name="startGradient">#000000</color>
+    <color name="centerGradient">#FFFFFF</color>
+    <color name="endGradient">#FF362E</color>
 </resources>
