@@ -16,7 +16,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private Preference themePreference;
     private Preference libPathPreference;
 
-    private ActivityResultLauncher<Intent> resultLauncher;
     private SongsData songsData;
 
     @Override
@@ -31,16 +30,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         libPathPreference = findPreference(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS);
         themePreference = findPreference(SocyMusicApp.PREFS_KEY_THEME);
 
-        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            //TODO: move code from save method in DirBrowserFragment to here to let settingsFragment handle saving settings
-        });
-
-        libPathPreference.setOnPreferenceClickListener(preference -> {
-            Intent intent = new Intent(getContext(), DirBrowserActivity.class);
-            resultLauncher.launch(intent);
-            return true;
-        });
-
+        libPathPreference.setIntent(new Intent(getContext(), DirBrowserActivity.class));
 
         themePreference.setOnPreferenceClickListener(preference -> {
             Toast.makeText(getContext(), getString(R.string.all_coming_soon), Toast.LENGTH_LONG).show();
