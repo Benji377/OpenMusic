@@ -226,6 +226,7 @@ public class PlayerFragment extends Fragment {
         // Sets if the queue should be shuffled
         shuffleCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             songsData.setShuffle(isChecked);
+            hostCallBack.onShuffle();
         });
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -423,5 +424,7 @@ public class PlayerFragment extends Fragment {
         void onPlaybackUpdate();
 
         void onSongUpdate();
+
+        void onShuffle();
     }
 }

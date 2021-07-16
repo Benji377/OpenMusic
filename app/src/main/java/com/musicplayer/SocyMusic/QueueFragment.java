@@ -77,7 +77,7 @@ public class QueueFragment extends Fragment {
         }
     }
 
-    public void updateSong() {
+    public void updateQueue() {
         adapter.notifyDataSetChanged();
     }
 

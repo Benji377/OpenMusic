@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.TypedValue;
@@ -34,7 +33,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -339,7 +337,13 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         playButton.setBackgroundResource(R.drawable.ic_pause);
         playerFragment.updatePlayerUI();
         if (queueFragment != null)
-            queueFragment.updateSong();
+            queueFragment.updateQueue();
+    }
+
+    @Override
+    public void onShuffle() {
+        if(queueFragment!=null)
+            queueFragment.updateQueue();
     }
 
     /**
@@ -385,9 +389,6 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     @Override
     public void onActivityResult(ActivityResult result) {
-        //TODO: check if settings were changed before updating
-//        if (result.getResultCode() != RESULT_OK)
-//            return;
         ((CustomAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 

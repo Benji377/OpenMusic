@@ -34,6 +34,5 @@
         android:textColor="@android:color/darker_gray"
         android:textSize="24sp"
         android:visibility="gone" />
-    <!--TODO: get this empty textview to work with a recyclerview-->
 
 </RelativeLayout>
