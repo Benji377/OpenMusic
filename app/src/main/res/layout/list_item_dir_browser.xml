@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,25 +11,36 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:background="@drawable/main_list_background"
-        android:padding="8dp">
+        android:padding="4dp">
 
+        <LinearLayout
+            android:id="@+id/layout_dir_item_checkbox_holder"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:paddingHorizontal="10dp">
 
-        <CheckBox
-            android:id="@+id/checkbox_dir_item_selected"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true" />
+            <it.sephiroth.android.library.checkbox3state.CheckBox3
+                android:id="@+id/checkbox_dir_item_selected"
+                style="@style/Sephiroth.Widget.Checkbox3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:enabled="true"
+                android:text="@null"
+                app:sephiroth_checkbox3_checkableCycle="@array/sephiroth_checkbox3_cycleCheckedUncheckedOnly"
+                app:sephiroth_checkbox3_indeterminate="false" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imageview_dir_item"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/checkbox_dir_item_selected"
+            android:layout_toEndOf="@id/layout_dir_item_checkbox_holder"
             android:src="@drawable/ic_folder" />
 
         <TextView
@@ -50,5 +62,4 @@
             tools:ignore="HardcodedText" />
 
     </RelativeLayout>
-
 </androidx.cardview.widget.CardView>

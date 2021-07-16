@@ -27,7 +27,7 @@
     <string name="dir_browser_internal_storage">Internal Storage</string>
     <string name="dir_browser_sd_card">SD card (%s)</string>
     <string name="dir_browser_folder_list_empty">Folder is empty</string>
-    <string name="dir_browser_file_not_readable">Cannot read file</string>.
+    <string name="dir_browser_folder_unreadable">Cannot access folder</string>.
 
     <string name="dir_browser_menu_item_save">Save</string>
 
