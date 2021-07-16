@@ -1,7 +1,6 @@
 package com.musicplayer.SocyMusic;
 
 import android.content.Context;
-import android.os.Environment;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
@@ -21,6 +20,7 @@ public class SongsData {
     private ArrayList<Song> playingQueue;
     private ArrayList<Song> originalQueue;
     private int playingQueueIndex;
+    private int originalQueueIndex;
     private boolean repeat;
     private boolean shuffle;
 
@@ -49,7 +49,7 @@ public class SongsData {
      * @return the next Song that will be played
      */
     public Song playNext() {
-        setPlaying(playingQueueIndex + 1);
+        setPlayingIndex(playingQueueIndex + 1);
         return getSongPlaying();
     }
 
@@ -60,7 +60,7 @@ public class SongsData {
      * @return the previous song that will be played
      */
     public Song playPrev() {
-        setPlaying(playingQueueIndex - 1);
+        setPlayingIndex(playingQueueIndex - 1);
         return getSongPlaying();
     }
 
@@ -69,7 +69,7 @@ public class SongsData {
      *
      * @param playingIndex the index of the song
      */
-    public void setPlaying(int playingIndex) {
+    public void setPlayingIndex(int playingIndex) {
         playingQueueIndex = playingIndex;
         if (playingQueueIndex < 0 || playingQueueIndex > playingQueue.size() - 1 && repeat)
             playingQueueIndex = 0;
@@ -243,8 +243,9 @@ public class SongsData {
             // Create random queue
             setRandomQueue();
         } else {
-            // rests queue to original
+            // resets queue to original
             playingQueue = originalQueue;
+            playingQueueIndex = originalQueueIndex;
         }
     }
 
@@ -286,7 +287,7 @@ public class SongsData {
      *
      * @return The index of the currently playing song
      */
-    public int currentSongIndex() {
+    public int getPlayingIndex() {
         return playingQueueIndex;
     }
 
@@ -316,5 +317,7 @@ public class SongsData {
         }
         // replaces queue
         playingQueue = temporary;
+        originalQueueIndex = playingQueueIndex;
+        playingQueueIndex = 0;
     }
 }

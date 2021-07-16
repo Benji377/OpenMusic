@@ -169,7 +169,7 @@ public class QueueFragment extends Fragment {
             @Override
             public void onItemClicked(View view) {
                 super.onItemClicked(view);
-                songsData.setPlaying(position);
+                songsData.setPlayingIndex(position);
                 MediaPlayerUtil.startPlaying(requireContext(), songsData.getSongPlaying());
                 updateViews();
                 hostCallBack.onSongUpdate();
