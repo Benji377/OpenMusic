@@ -241,8 +241,8 @@ public class SongsData {
             // Create random queue
             setRandomQueue();
         } else {
-            // rests queue to original
-            playAllFrom(0);
+            // resets queue to original
+            playAllFrom(1);
         }
     }
 
