@@ -19,6 +19,7 @@ public class SongsData {
     public static SongsData data;
     private ArrayList<Song> allSongs;
     private ArrayList<Song> playingQueue;
+    private ArrayList<Song> originalQueue;
     private int playingQueueIndex;
     private boolean repeat;
     private boolean shuffle;
@@ -86,6 +87,7 @@ public class SongsData {
             playingQueue.add(allSongs.get((i + position) % allSongs.size()));
 
         playingQueueIndex = 0;
+        originalQueue = playingQueue;
     }
 
     /**
@@ -242,7 +244,7 @@ public class SongsData {
             setRandomQueue();
         } else {
             // rests queue to original
-            playAllFrom(0);
+            playingQueue = originalQueue;
         }
     }
 
@@ -293,8 +295,7 @@ public class SongsData {
      */
     public void setRandomQueue() {
         // Temporary Arraylist to store all the songs
-        ArrayList<Song> temporary;
-        temporary = new ArrayList<>();
+        ArrayList<Song> temporary = new ArrayList<>();
         final Random r = new Random();
         // Avoids getting double random numbers
         // Example: The number 5 only gets called once
@@ -302,13 +303,13 @@ public class SongsData {
         // Adds the currently playing song, we dont want to shuffle this one too
         temporary.add(getSongPlaying());
         // Creates a random queue
-        for (int i = 1; i < playingQueue.size(); i++) {
+        for (int i = 0; i < playingQueue.size() - 1; i++) {
             while (true) {
                 int num = r.nextInt(playingQueue.size());
                 // leaves out currently playing song
-                if (!s.contains(num) && num != currentSongIndex()) {
+                if (!s.contains(num) && num != playingQueueIndex) {
                     s.add(num);
-                    temporary.add(getSongAt(num));
+                    temporary.add(getSongFromQueueAt(num));
                     break;
                 }
             }
