@@ -1,58 +1,48 @@
 package com.musicplayer.SocyMusic;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
+
 import android.util.Log;
 
-// STILL IN DEVELOPMENT!!
-// Code from: https://stackoverflow.com/questions/3182937/android-create-playlist
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+// Since the MediaStore.playlist is deprecated, it suggests to use M3U files instead.
+// This is a very simple playlist class for now.
+// m3u is a regular text file that can be read line by line. Just remember the lines that start with # are comments.
+// TODO: Test this class, expand functionality, make PlaylistFragment and fragment_playlist work
 public class Playlist {
-    private int playlistId;
+    List<String> mp3;
+    int next;
 
-    public Playlist(int playlistId) {
-        this.playlistId = playlistId;
+
+    public Playlist(File f){
+        mp3=new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                addMP3(line);
+            }
+        } catch (IOException ex) {
+            Log.e("FileReading", "Error reading the file");
+        }
+        next=-1;
     }
 
-    public void createPlaylist(ContentResolver resolver, String pName) {
-        Uri uri = MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI;
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Audio.Playlists.NAME, pName);
-        Uri newPlaylistUri = resolver.insert(uri, values);
-        Log.e("Create playlist", "newPlaylistUri:" + newPlaylistUri);
+    private void addMP3(String line){
+        if(line==null)return;
+        if(!Character.isUpperCase(line.charAt(0)))return;
+        if(line.indexOf(":\\")!=1)return;
+        if(line.indexOf(".mp3", line.length()-4)==-1)return;
+        mp3.add(line);
     }
 
-
-    public void addToPlaylist(ContentResolver resolver, int audioId) {
-
-        String[] cols = new String[] {
-                "count(*)"
-        };
-        Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId);
-        Cursor cur = resolver.query(uri, cols, null, null, null);
-        cur.moveToFirst();
-        final int base = cur.getInt(0);
-        cur.close();
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.Audio.Playlists.Members.PLAY_ORDER, base + audioId);
-        values.put(MediaStore.Audio.Playlists.Members.AUDIO_ID, audioId);
-        resolver.insert(uri, values);
-    }
-
-    public void removeFromPlaylist(ContentResolver resolver, int audioId) {
-        Log.v("made it to add",""+audioId);
-        String[] cols = new String[] {
-                "count(*)"
-        };
-        Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId);
-        Cursor cur = resolver.query(uri, cols, null, null, null);
-        cur.moveToFirst();
-        final int base = cur.getInt(0);
-        cur.close();
-        ContentValues values = new ContentValues();
-
-        resolver.delete(uri, MediaStore.Audio.Playlists.Members.AUDIO_ID +" = "+audioId, null);
+    public String getNext(){
+        next++;
+        if(mp3.size()<=next)next=0;
+        return mp3.get(next);
     }
 }
