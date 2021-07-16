@@ -15,7 +15,7 @@
         android:textSize="18sp"
         tools:ignore="HardcodedText" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.musicplayer.SocyMusic.custom_views.EmptyRecyclerView
         android:id="@+id/recyclerview_dir_browser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,11 +1,10 @@
 package com.musicplayer.SocyMusic;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +15,7 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.musicplayer.SocyMusic.custom_views.EmptyRecyclerView;
 import com.musicplayer.musicplayer.R;
 
 import java.io.File;
@@ -25,9 +25,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import hendrawd.storageutil.library.StorageUtil;
+import it.sephiroth.android.library.checkbox3state.CheckBox3;
 
 public class DirBrowserFragment extends Fragment {
-    private RecyclerView foldersRecyclerview;
+    private EmptyRecyclerView foldersRecyclerview;
 
     private TextView symPathTextView;
 
@@ -59,8 +60,7 @@ public class DirBrowserFragment extends Fragment {
         FolderAdapter adapter = new FolderAdapter(rootDirs);
         foldersRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         foldersRecyclerview.setAdapter(adapter);
-
-        //TODO: foldersRecyclerview.setEmptyView(view.findViewById(R.id.textview_dir_browser_list_empty));
+        foldersRecyclerview.setEmptyView(view.findViewById(R.id.textview_dir_browser_list_empty));
 
         return view;
     }
@@ -81,6 +81,7 @@ public class DirBrowserFragment extends Fragment {
             if (subDirectories == null)
                 return;
             FolderAdapter adapter = (FolderAdapter) foldersRecyclerview.getAdapter();
+            assert adapter != null;
             adapter.setDirectories(subDirectories);
             adapter.notifyDataSetChanged();
         }
@@ -120,13 +121,12 @@ public class DirBrowserFragment extends Fragment {
         return rootPaths;
     }
 
-    public void save() {
+    private void save() {
         PreferenceManager.getDefaultSharedPreferences(requireContext())
                 .edit()
                 .putStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, savedPaths)
                 .apply();
         songsData.reloadSongs(requireContext());
-        requireActivity().finish();
     }
 
 
@@ -140,7 +140,7 @@ public class DirBrowserFragment extends Fragment {
         public void setDirectories(File[] files) {
             ArrayList<File> dirsFound = new ArrayList<>();
             for (File file : files) {
-                if (file.exists() && file.isDirectory())
+                if (file.exists() && file.isDirectory() && !file.isHidden())
                     dirsFound.add(file);
             }
             this.directories = new File[dirsFound.size()];
@@ -165,28 +165,51 @@ public class DirBrowserFragment extends Fragment {
         }
     }
 
-    private class FolderHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class FolderHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         private File folder;
         private TextView dirNameTextView;
-        private CheckBox selectedCheckBox;
+        private CheckBox3 selectedCheckBox;
+
 
         public FolderHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_dir_browser, parent, false));
             dirNameTextView = itemView.findViewById(R.id.textview_dir_item_name);
             selectedCheckBox = itemView.findViewById(R.id.checkbox_dir_item_selected);
             itemView.setOnClickListener(this);
-            selectedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if (isChecked)
+            itemView.setOnLongClickListener(this);
+
+            selectedCheckBox.setOnClickListener(v -> {
+                if (selectedCheckBox.isChecked())
                     savedPaths.add(folder.getAbsolutePath());
                 else
                     savedPaths.remove(folder.getAbsolutePath());
+
+                //remove sub-dirs (whether this dir was added or removed)
+                ArrayList<String> pathsToRemove = new ArrayList<>();
+                for (String savedPath : savedPaths) {
+                    if (isSubDir(savedPath, folder.getAbsolutePath()))
+                        pathsToRemove.add(savedPath);
+                }
+                savedPaths.removeAll(pathsToRemove);
+
+                save();
             });
+            ((View) selectedCheckBox.getParent()).setOnClickListener(this::onLongClick);
+
         }
 
         public void bind(File folder) {
             this.folder = folder;
-            //TODO: check the selected checkbox if the dir is a sub-dir of a dir in savedPaths
-            selectedCheckBox.setChecked(savedPaths.contains(folder.getAbsolutePath()));
+            if (!folder.canRead() || folder.list() == null) {
+                dirNameTextView.setTextColor(Color.DKGRAY);
+                selectedCheckBox.setEnabled(false);
+                return;
+            }
+
+            dirNameTextView.setTextColor(requireContext().getColor(R.color.white));
+            selectedCheckBox.setEnabled(true);
+
+            setSelectedCheckBoxState();
             String name = folder.getName();
             if (isAtRoot) {
                 if (name.equals("0"))
@@ -197,6 +220,56 @@ public class DirBrowserFragment extends Fragment {
                 dirNameTextView.setText(name);
         }
 
+        private void setSelectedCheckBoxState() {
+            if (folderSelected())
+                selectedCheckBox.setChecked(true, false);   //checked
+            else if (subFolderSelected())
+                selectedCheckBox.setChecked(!selectedCheckBox.isChecked(), true);    //indeterminate
+            else
+                selectedCheckBox.setChecked(false, false);  //unchecked
+        }
+
+        private boolean folderSelected() {
+            //if folder itself is in the saved paths
+            if (savedPaths.contains(folder.getAbsolutePath()))
+                return true;
+            // or if folder's parent is in the saved paths
+            for (String path : savedPaths) {
+                if (isSubDir(folder.getAbsolutePath(), path))
+                    return true;
+            }
+            return false;
+        }
+
+        private boolean subFolderSelected() {
+            //if any of the folder's subfolders is in the saved paths
+            for (String path : savedPaths) {
+                if (isSubDir(path, folder.getAbsolutePath()))
+                    return true;
+            }
+            return false;
+        }
+
+        /**
+         * Tests if the path1 is a valid a subdirectory of path2
+         *
+         * @param path1 path of the subdirectory (to be tested)
+         * @param path2 path of the parent directory (to be tested)
+         * @return true if path1 is a valid a subdirectory of path2, false otherwise
+         */
+        private boolean isSubDir(String path1, String path2) {
+            String[] dirs1 = path1.split("/");
+            String[] dirs2 = path2.split("/");
+            if (dirs1.length <= dirs2.length)
+                return false;
+            for (int i = 0; i < dirs2.length; i++) {
+                if (!dirs1[i].equals(dirs2[i]))
+                    return false;
+            }
+            return true;
+        }
+
+
         @Override
         public void onClick(View v) {
             FolderAdapter adapter = (FolderAdapter) getBindingAdapter();
@@ -205,7 +278,7 @@ public class DirBrowserFragment extends Fragment {
 
             File[] subDirectories = folder.listFiles();
             if (!folder.canRead() || subDirectories == null) {
-                Toast.makeText(getContext(), R.string.dir_browser_file_not_readable, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.dir_browser_folder_unreadable, Toast.LENGTH_SHORT).show();
                 return;
             }
             adapter.setDirectories(subDirectories);
@@ -213,6 +286,13 @@ public class DirBrowserFragment extends Fragment {
             symPathTextView.setText(getDownPath((String) symPathTextView.getText(), folder.getName().equals("0") ? getString(R.string.dir_browser_internal_storage) : folder.getName()));
             currentAbsolutePath = folder.getAbsolutePath();
             isAtRoot = false;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            selectedCheckBox.toggle();
+            selectedCheckBox.callOnClick();
+            return true;
         }
     }
 }
