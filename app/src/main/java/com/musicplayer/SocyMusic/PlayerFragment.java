@@ -25,13 +25,17 @@ import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 
 
 public class PlayerFragment extends Fragment {
+    // TODO: Add new button functionality
     private Button playSongButton;
     private Button nextSongButton;
     private Button previousSongButton;
-    private Button fastForwardButton;
-    private Button fastRewindButton;
+    private Button queueButton;
+    private Button playlistButton;
+    //private Button fastForwardButton;
+    //private Button fastRewindButton;
     private CheckBox repeatCheckBox;
     private CheckBox shuffleCheckBox;
+    private CheckBox favoriteCheckBox;
 
     private TextView songNameTextview;
     private TextView songStartTimeTextview;
@@ -79,8 +83,8 @@ public class PlayerFragment extends Fragment {
         previousSongButton = view.findViewById(R.id.button_player_prev);
         nextSongButton = view.findViewById(R.id.button_player_next);
         playSongButton = view.findViewById(R.id.button_player_play_pause);
-        fastForwardButton = view.findViewById(R.id.button_player_fast_forward);
-        fastRewindButton = view.findViewById(R.id.button_player_fast_rewind);
+        //fastForwardButton = view.findViewById(R.id.button_player_fast_forward);
+        //fastRewindButton = view.findViewById(R.id.button_player_fast_rewind);
         repeatCheckBox = view.findViewById(R.id.checkbox_player_repeat);
         shuffleCheckBox = view.findViewById(R.id.checkbox_player_shuffle);
 
@@ -205,7 +209,9 @@ public class PlayerFragment extends Fragment {
         // Plays the previous song
         previousSongButton.setOnClickListener(v -> playPrevSong());
 
+        // TODO: Replace this with long press on next and previous buttons
         // Moves 10 seconds forward in the song
+        /*
         fastForwardButton.setOnClickListener(v -> {
             if (MediaPlayerUtil.isPlaying()) {
                 MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() + 10000);
@@ -220,6 +226,7 @@ public class PlayerFragment extends Fragment {
                 songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
             }
         });
+         */
 
         repeatCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> songsData.setRepeat(isChecked));
 
