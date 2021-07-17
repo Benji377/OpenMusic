@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
@@ -38,6 +38,7 @@
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_marginTop="75dp"
+            android:contentDescription="@string/fragment_player_imageview_player_album_art"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,14 +50,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:clickable="true"
             android:focusable="true"
             android:progressTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_player_addfavorite" />
+            app:layout_constraintTop_toBottomOf="@+id/checkbox_player_favorite" />
 
         <TextView
             android:id="@+id/textview_player_elapsed_time"
@@ -152,12 +153,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_player_song_title" />
 
-        <Button
-            android:id="@+id/button_player_addfavorite"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_queue"
-            android:foreground="@drawable/ic_queue"
+        <CheckBox
+            android:id="@+id/checkbox_player_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_favorite"
+            android:button="@color/cardview_shadow_end_color"
             app:layout_constraintBottom_toBottomOf="@+id/button_player_queue"
             app:layout_constraintEnd_toStartOf="@+id/button_player_addtoplaylist"
             app:layout_constraintHorizontal_bias="0.5"
@@ -169,11 +170,11 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/ic_queue"
-            android:foreground="@drawable/ic_queue"
-            app:layout_constraintBottom_toBottomOf="@+id/button_player_addfavorite"
+            android:background="@drawable/ic_playlist_add"
+            android:foreground="@drawable/ic_playlist_add"
+            app:layout_constraintBottom_toBottomOf="@+id/checkbox_player_favorite"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/button_player_addfavorite" />
+            app:layout_constraintTop_toTopOf="@+id/checkbox_player_favorite" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group"
