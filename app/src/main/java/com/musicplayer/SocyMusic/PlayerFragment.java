@@ -210,6 +210,7 @@ public class PlayerFragment extends Fragment {
         previousSongButton.setOnClickListener(v -> playPrevSong());
 
         // TODO: Replace this with long press on next and previous buttons
+        // https://www.tutorialspoint.com/how-to-detect-long-press-in-android
         // Moves 10 seconds forward in the song
         /*
         fastForwardButton.setOnClickListener(v -> {
