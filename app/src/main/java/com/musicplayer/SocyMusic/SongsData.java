@@ -20,7 +20,6 @@ public class SongsData {
     private ArrayList<Song> playingQueue;
     private ArrayList<Song> originalQueue;
     private int playingQueueIndex;
-    private int originalQueueIndex;
     private boolean repeat;
     private boolean shuffle;
 
@@ -244,8 +243,16 @@ public class SongsData {
             setRandomQueue();
         } else {
             // resets queue to original
+            Song songPlaying = getSongPlaying();
             playingQueue = originalQueue;
-            playingQueueIndex = originalQueueIndex;
+            //find where the song that was playing randomly was in the original queue
+            for (int i = 0; i < playingQueue.size(); i++) {
+                if (playingQueue.get(i).equals(songPlaying)) {
+                    playingQueueIndex = i;
+                    break;
+                }
+            }
+
         }
     }
 
@@ -317,7 +324,6 @@ public class SongsData {
         }
         // replaces queue
         playingQueue = temporary;
-        originalQueueIndex = playingQueueIndex;
         playingQueueIndex = 0;
     }
 }
