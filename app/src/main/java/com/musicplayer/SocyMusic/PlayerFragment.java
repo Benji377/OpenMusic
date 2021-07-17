@@ -208,29 +208,23 @@ public class PlayerFragment extends Fragment {
 
         // Plays the next song
         nextSongButton.setOnClickListener(v -> playNextSong());
-
-        // Plays the previous song
-        previousSongButton.setOnClickListener(v -> playPrevSong());
-
-        // TODO: Replace this with long press on next and previous buttons
-        // https://www.tutorialspoint.com/how-to-detect-long-press-in-android
-        // Moves 10 seconds forward in the song
-        /*
-        fastForwardButton.setOnClickListener(v -> {
+        nextSongButton.setOnLongClickListener(v -> {
             if (MediaPlayerUtil.isPlaying()) {
                 MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() + 10000);
                 songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
             }
+            return true;
         });
 
-        // Moves 10 seconds backwards in the song
-        fastRewindButton.setOnClickListener(v -> {
+        // Plays the previous song
+        previousSongButton.setOnClickListener(v -> playPrevSong());
+        previousSongButton.setOnLongClickListener(v -> {
             if (MediaPlayerUtil.isPlaying()) {
                 MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() - 10000);
                 songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
             }
+            return true;
         });
-         */
 
         repeatCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> songsData.setRepeat(isChecked));
 
