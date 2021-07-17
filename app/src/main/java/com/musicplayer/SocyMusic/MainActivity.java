@@ -36,14 +36,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.musicplayer.musicplayer.BuildConfig;
-import com.musicplayer.musicplayer.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.musicplayer.musicplayer.BuildConfig;
+import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 

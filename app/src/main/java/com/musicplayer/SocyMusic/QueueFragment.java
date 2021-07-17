@@ -13,8 +13,8 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.musicplayer.musicplayer.R;
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
+import com.musicplayer.musicplayer.R;
 import com.woxthebox.draglistview.DragItemAdapter;
 import com.woxthebox.draglistview.DragListView;
 

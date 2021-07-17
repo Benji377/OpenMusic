@@ -21,19 +21,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.musicplayer.musicplayer.R;
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
+import com.musicplayer.musicplayer.R;
 
 
 public class PlayerFragment extends Fragment {
-    // TODO: Add new button functionality
     private Button playSongButton;
     private Button nextSongButton;
     private Button previousSongButton;
     private Button queueButton;
     private Button playlistButton;
-    //private Button fastForwardButton;
-    //private Button fastRewindButton;
     private CheckBox repeatCheckBox;
     private CheckBox shuffleCheckBox;
     private CheckBox favoriteCheckBox;
@@ -84,8 +81,6 @@ public class PlayerFragment extends Fragment {
         previousSongButton = view.findViewById(R.id.button_player_prev);
         nextSongButton = view.findViewById(R.id.button_player_next);
         playSongButton = view.findViewById(R.id.button_player_play_pause);
-        //fastForwardButton = view.findViewById(R.id.button_player_fast_forward);
-        //fastRewindButton = view.findViewById(R.id.button_player_fast_rewind);
         repeatCheckBox = view.findViewById(R.id.checkbox_player_repeat);
         shuffleCheckBox = view.findViewById(R.id.checkbox_player_shuffle);
         favoriteCheckBox = view.findViewById(R.id.checkbox_player_favorite);
