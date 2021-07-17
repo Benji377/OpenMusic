@@ -24,7 +24,7 @@
             android:singleLine="true"
             android:text="Song Title"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/player_fragment_textColor"
             android:textSize="30sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +54,7 @@
             android:layout_marginEnd="20dp"
             android:clickable="true"
             android:focusable="true"
-            android:progressTint="@color/white"
+            android:progressTint="@color/player_fragment_textColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkbox_player_favorite" />
@@ -66,7 +66,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:text="0:00"
-            android:textColor="@color/white"
+            android:textColor="@color/player_fragment_textColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekbar_player"
             tools:ignore="HardcodedText" />
@@ -78,7 +78,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:text="5:99"
-            android:textColor="@color/white"
+            android:textColor="@color/player_fragment_textColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekbar_player"
             tools:ignore="HardcodedText" />

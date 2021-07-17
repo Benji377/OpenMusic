@@ -15,4 +15,7 @@
 
     <!-- Customize the visualizer -->
     <color name="visualizerColor">#FFFFFF</color>
+
+    <!-- Player Fragment text colors -->
+    <color name="player_fragment_textColor">#000000</color>
 </resources>

@@ -5,10 +5,8 @@
 
     <gradient
         android:startColor = "@color/startGradient"
-        android:centerColor="@color/black"
-        android:endColor = "@color/black"
-        android:angle = "90"
+        android:centerColor="@color/centerGradient"
+        android:endColor = "@color/endGradient"
+        android:angle = "135"
         android:type = "linear" />
 </shape>
-
-    <!-- android:endColor = "@color/endGradient" -->
