@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -87,6 +88,7 @@ public class PlayerFragment extends Fragment {
         //fastRewindButton = view.findViewById(R.id.button_player_fast_rewind);
         repeatCheckBox = view.findViewById(R.id.checkbox_player_repeat);
         shuffleCheckBox = view.findViewById(R.id.checkbox_player_shuffle);
+        favoriteCheckBox = view.findViewById(R.id.checkbox_player_favorite);
 
         // Adds all texts
         songNameTextview = view.findViewById(R.id.textview_player_song_title);
@@ -104,9 +106,10 @@ public class PlayerFragment extends Fragment {
 
         // The option to repeat the song or not
         repeatCheckBox.setChecked(songsData.isRepeat());
-
         // The option to shuffle the queue
         shuffleCheckBox.setChecked(songsData.isShuffle());
+        // The option to set the song in the favorite playlist
+        favoriteCheckBox.setChecked(songsData.isInFavorite());
 
         // This is necessary to fix the marquee, which was lagging sometimes
         songNameTextview.setEnabled(true);
@@ -233,6 +236,15 @@ public class PlayerFragment extends Fragment {
         // Sets if the queue should be shuffled
         shuffleCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             songsData.setShuffle(isChecked);
+        });
+
+        favoriteCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            songsData.setFavorited(isChecked);
+            if (songsData.isInFavorite()) {
+                Toast.makeText(getContext(), "Song added to Favorites", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Song removed from Favorites", Toast.LENGTH_SHORT).show();
+            }
         });
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

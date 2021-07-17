@@ -12,4 +12,7 @@
     <color name="startGradient">#000000</color>
     <color name="centerGradient">#FFFFFF</color>
     <color name="endGradient">#FF362E</color>
+
+    <!-- Customize the visualizer -->
+    <color name="visualizerColor">#FFFFFF</color>
 </resources>
