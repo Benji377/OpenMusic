@@ -109,12 +109,13 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     invalidateOptionsMenu();
                     actionBar.setTitle(R.string.player_title);
+                    songInfoPane.setClickable(false);
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     invalidateOptionsMenu();
                     actionBar.setTitle(R.string.all_app_name);
                     songTitleTextView.setText(songsData.getSongPlaying().getTitle());
                     playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
-
+                    songInfoPane.setClickable(true);
                     ((ViewGroup.MarginLayoutParams) listView.getLayoutParams()).bottomMargin = dpToPixel(50);
 
                     hideQueue();
@@ -335,14 +336,15 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             mediaPlayerService.refreshNotification();
         songTitleTextView.setText(songsData.getSongPlaying().getTitle());
         playButton.setBackgroundResource(R.drawable.ic_pause);
-        playerFragment.updatePlayerUI();
         if (queueFragment != null)
             queueFragment.updateQueue();
+        else
+            playerFragment.updatePlayerUI();
     }
 
     @Override
     public void onShuffle() {
-        if(queueFragment!=null)
+        if (queueFragment != null)
             queueFragment.updateQueue();
     }
 
