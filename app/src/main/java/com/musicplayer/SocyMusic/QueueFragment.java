@@ -1,6 +1,7 @@
 package com.musicplayer.SocyMusic;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 import com.musicplayer.musicplayer.R;
@@ -54,10 +56,16 @@ public class QueueFragment extends Fragment {
             @Override
             public void onItemDragEnded(int fromPosition, int toPosition) {
                 songsData.onQueueReordered(fromPosition, toPosition);
+                hostCallBack.onQueueReordered();
                 adapter.releasePlayingVisualizer();
+                int playingIndex = songsData.getPlayingIndex();
+                if (fromPosition <= playingIndex || toPosition <= playingIndex) {
+                    adapter.notifyItemRangeChanged(0, playingIndex);
+                }
             }
         });
         listView.setCanDragHorizontally(false);
+        listView.getRecyclerView().getLayoutManager().scrollToPosition(songsData.getPlayingIndex());
         return view;
     }
 
@@ -144,6 +152,10 @@ public class QueueFragment extends Fragment {
 
             public void updateViews() {
                 songTitleTextView.setText(song.getTitle());
+                if (position < songsData.getPlayingIndex())
+                    songTitleTextView.setTextColor(Color.GRAY);
+                else
+                    songTitleTextView.setTextColor(Color.WHITE);
                 visualizer.release();
                 if (isPlaying()) {
                     visualizer.setBackground(null);
@@ -182,6 +194,8 @@ public class QueueFragment extends Fragment {
 
     public interface QueueFragmentHost {
         void onSongUpdate();
+
+        void onQueueReordered();
     }
 }
 

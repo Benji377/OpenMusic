@@ -46,6 +46,7 @@ public class PlayerFragment extends Fragment {
     private PlayerFragmentHost hostCallBack;
     private SongsData songsData;
     private Song songPlaying;
+    private boolean startPlaying;
     private boolean currentlySeeking;
 
     /**
@@ -96,7 +97,8 @@ public class PlayerFragment extends Fragment {
         songThumbnail = view.findViewById(R.id.imageview_player_album_art);
 
         // After creating every element, the song starts playing
-        MediaPlayerUtil.startPlaying(requireContext(), songPlaying);
+        if (startPlaying)
+            MediaPlayerUtil.startPlaying(requireContext(), songPlaying);
         updatePlayerUI();
 
         // The option to repeat the song or not
@@ -298,8 +300,15 @@ public class PlayerFragment extends Fragment {
      * @return The fragment as a class
      */
     public static PlayerFragment newInstance() {
-//        **insert arguments here**
-        return new PlayerFragment();
+        PlayerFragment instance = new PlayerFragment();
+        instance.startPlaying = true;
+        return instance;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        startPlaying = false;
     }
 
     /**
