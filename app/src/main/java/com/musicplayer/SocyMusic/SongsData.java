@@ -81,11 +81,10 @@ public class SongsData {
      * @param position the index from where the player should start playing
      */
     public void playAllFrom(int position) {
-        playingQueue.clear();
-        for (int i = 0; i < allSongs.size(); i++)
-            playingQueue.add(allSongs.get((i + position) % allSongs.size()));
+        playingQueue = new ArrayList<>();
+        playingQueue.addAll(allSongs);
 
-        playingQueueIndex = 0;
+        playingQueueIndex = position;
         originalQueue = playingQueue;
     }
 
