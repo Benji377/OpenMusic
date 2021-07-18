@@ -7,7 +7,7 @@
         <item name="aboutDescriptionTextAppearance">@style/popup_descriptionTextAppearance</item>
         <item name="aboutGroupTextAppearance">@style/popup_groupTextAppearance</item>
         <item name="aboutSeparatorColor">@color/white</item>
-        <item name="aboutElementIconTint">#FF362E</item>
+        <item name="aboutElementIconTint">@color/white</item>
     </style>
 
     <style name="popup_descriptionTextAppearance" parent="@android:style/TextAppearance">

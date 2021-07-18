@@ -545,10 +545,11 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
 
         // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window tolken
+        // which view you pass in doesn't matter, it is only used for the window token
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
         // dismiss the popup window when touched
+        /*
         popupView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -556,6 +557,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 return true;
             }
         });
+         */
     }
 
     private int dpToPixel(int dp) {
