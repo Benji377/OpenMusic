@@ -34,7 +34,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+<<<<<<< Updated upstream
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+=======
+import androidx.appcompat.app.AppCompatDelegate;
+>>>>>>> Stashed changes
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -53,6 +57,7 @@ import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 
 public class MainActivity extends AppCompatActivity implements PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
+
     ListView listView;
     BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
     View songInfoPane;
@@ -145,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     }
 
     /**
-     * Creates the option menu you can see in the upper left corner (three dots)
+     * Creates the option menu you can see in the upper right corner (three dots)
      *
      * @param menu The menu to be created
      * @return The finished created menu
@@ -178,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         if (item.getItemId() == R.id.main_menu_about) {
             showPopupWindow(listView);
         } else if (item.getItemId() == R.id.main_menu_playlist) {
-            // Replace this action
+            // TODO: Add Playlist fragment call here
             Toast.makeText(this, getText(R.string.all_coming_soon), Toast.LENGTH_SHORT).show();
         } else if (item.getItemId() == R.id.main_menu_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
@@ -536,8 +541,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         // create the popup window
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
 
         // show the popup window
         // which view you pass in doesn't matter, it is only used for the window tolken
