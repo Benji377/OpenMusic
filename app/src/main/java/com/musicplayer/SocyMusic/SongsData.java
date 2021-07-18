@@ -7,9 +7,8 @@ import androidx.preference.PreferenceManager;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
-
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -22,6 +21,7 @@ public class SongsData {
     private int playingQueueIndex;
     private boolean repeat;
     private boolean shuffle;
+    private boolean favorited;
 
     /**
      * SongsData custom constructor.
@@ -222,6 +222,15 @@ public class SongsData {
     }
 
     /**
+     * Checks if the song is in the favorite playlist or not
+     *
+     * @return True if in favorite playlist, else false
+     */
+    public boolean isInFavorite() {
+        return favorited;
+    }
+
+    /**
      * Changes the repeat state of a song, sets if the song should be repeated or not
      *
      * @param repeat True if the song should be repeated, or false if not
@@ -253,6 +262,10 @@ public class SongsData {
             }
 
         }
+    }
+
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
     }
 
     /**
