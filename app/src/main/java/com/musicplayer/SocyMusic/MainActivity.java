@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.TypedValue;
@@ -34,22 +33,19 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-<<<<<<< Updated upstream
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-=======
 import androidx.appcompat.app.AppCompatDelegate;
->>>>>>> Stashed changes
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.musicplayer.musicplayer.BuildConfig;
-import com.musicplayer.musicplayer.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.musicplayer.musicplayer.BuildConfig;
+import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 
@@ -116,12 +112,13 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     invalidateOptionsMenu();
                     actionBar.setTitle(R.string.player_title);
+                    songInfoPane.setClickable(false);
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     invalidateOptionsMenu();
                     actionBar.setTitle(R.string.all_app_name);
                     songTitleTextView.setText(songsData.getSongPlaying().getTitle());
                     playButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
-
+                    songInfoPane.setClickable(true);
                     ((ViewGroup.MarginLayoutParams) listView.getLayoutParams()).bottomMargin = dpToPixel(50);
 
                     hideQueue();
@@ -342,9 +339,16 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             mediaPlayerService.refreshNotification();
         songTitleTextView.setText(songsData.getSongPlaying().getTitle());
         playButton.setBackgroundResource(R.drawable.ic_pause);
-        playerFragment.updatePlayerUI();
         if (queueFragment != null)
-            queueFragment.updateSong();
+            queueFragment.updateQueue();
+        else
+            playerFragment.updatePlayerUI();
+    }
+
+    @Override
+    public void onShuffle() {
+        if (queueFragment != null)
+            queueFragment.updateQueue();
     }
 
     /**
@@ -390,9 +394,6 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     @Override
     public void onActivityResult(ActivityResult result) {
-        //TODO: check if settings were changed before updating
-//        if (result.getResultCode() != RESULT_OK)
-//            return;
         ((CustomAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 

@@ -21,19 +21,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.musicplayer.musicplayer.R;
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
+import com.musicplayer.musicplayer.R;
 
 
 public class PlayerFragment extends Fragment {
-    // TODO: Add new button functionality
     private Button playSongButton;
     private Button nextSongButton;
     private Button previousSongButton;
     private Button queueButton;
     private Button playlistButton;
-    //private Button fastForwardButton;
-    //private Button fastRewindButton;
     private CheckBox repeatCheckBox;
     private CheckBox shuffleCheckBox;
     private CheckBox favoriteCheckBox;
@@ -84,8 +81,6 @@ public class PlayerFragment extends Fragment {
         previousSongButton = view.findViewById(R.id.button_player_prev);
         nextSongButton = view.findViewById(R.id.button_player_next);
         playSongButton = view.findViewById(R.id.button_player_play_pause);
-        //fastForwardButton = view.findViewById(R.id.button_player_fast_forward);
-        //fastRewindButton = view.findViewById(R.id.button_player_fast_rewind);
         repeatCheckBox = view.findViewById(R.id.checkbox_player_repeat);
         shuffleCheckBox = view.findViewById(R.id.checkbox_player_shuffle);
         favoriteCheckBox = view.findViewById(R.id.checkbox_player_favorite);
@@ -208,34 +203,30 @@ public class PlayerFragment extends Fragment {
 
         // Plays the next song
         nextSongButton.setOnClickListener(v -> playNextSong());
-
-        // Plays the previous song
-        previousSongButton.setOnClickListener(v -> playPrevSong());
-
-        // TODO: Replace this with long press on next and previous buttons
-        // Moves 10 seconds forward in the song
-        /*
-        fastForwardButton.setOnClickListener(v -> {
+        nextSongButton.setOnLongClickListener(v -> {
             if (MediaPlayerUtil.isPlaying()) {
                 MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() + 10000);
                 songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
             }
+            return true;
         });
 
-        // Moves 10 seconds backwards in the song
-        fastRewindButton.setOnClickListener(v -> {
+        // Plays the previous song
+        previousSongButton.setOnClickListener(v -> playPrevSong());
+        previousSongButton.setOnLongClickListener(v -> {
             if (MediaPlayerUtil.isPlaying()) {
                 MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() - 10000);
                 songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
             }
+            return true;
         });
-         */
 
         repeatCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> songsData.setRepeat(isChecked));
 
         // Sets if the queue should be shuffled
         shuffleCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             songsData.setShuffle(isChecked);
+            hostCallBack.onShuffle();
         });
 
         favoriteCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -442,5 +433,7 @@ public class PlayerFragment extends Fragment {
         void onPlaybackUpdate();
 
         void onSongUpdate();
+
+        void onShuffle();
     }
 }
