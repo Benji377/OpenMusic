@@ -13,7 +13,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -33,8 +32,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -71,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     private ActionBar actionBar;
     private SongsData songsData;
 
-    private boolean scrollTriggeredByProgram;
+    private boolean scrollTriggeredByCode;
 
     /**
      * Gets executed every time the app starts
@@ -154,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             @Override
             public void onPageScrollStateChanged(int state) {
                 super.onPageScrollStateChanged(state);
-                if (state == ViewPager.SCROLL_STATE_IDLE && newPageSelected && !scrollTriggeredByProgram) {
+                if (state == ViewPager.SCROLL_STATE_IDLE && newPageSelected && !scrollTriggeredByCode) {
                     newPageSelected = false;
                     int position = songInfoPager.getCurrentItem();
                     songsData.setPlayingIndex(position);
@@ -162,8 +159,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                     onSongUpdate();
 
                 }
-                if (scrollTriggeredByProgram && state == ViewPager.SCROLL_STATE_IDLE) {
-                    scrollTriggeredByProgram = false;
+                if (scrollTriggeredByCode && state == ViewPager.SCROLL_STATE_IDLE) {
+                    scrollTriggeredByCode = false;
                     newPageSelected = false;
                 }
             }
@@ -342,8 +339,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         bottomSheetBehavior.setHideable(false);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         songInfoPager.setAdapter(new InfoPanePagerAdapter(songsData.getPlayingQueue()));
-        scrollTriggeredByProgram = true;
-        songInfoPager.setCurrentItem(songsData.getPlayingIndex());
+        if (songsData.getPlayingIndex() != 0) {
+            scrollTriggeredByCode = true;
+            songInfoPager.setCurrentItem(songsData.getPlayingIndex());
+        }
     }
 
     /**
@@ -372,19 +371,21 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             queueFragment.updateQueue();
         else if (playerFragment != null)
             playerFragment.updatePlayerUI();
+
         InfoPanePagerAdapter pagerAdapter = (InfoPanePagerAdapter) songInfoPager.getAdapter();
         //determine if queue changed or if simple scroll happened
         if (pagerAdapter.getQueue() != songsData.getPlayingQueue())
             pagerAdapter.updateQueue(songsData.getPlayingQueue());
 
-        scrollTriggeredByProgram = true;
+        scrollTriggeredByCode = true;
         songInfoPager.setCurrentItem(songsData.getPlayingIndex());
+        songInfoPager.getAdapter().notifyItemChanged(songInfoPager.getCurrentItem(), songsData.getSongPlaying());
     }
 
     @Override
     public void onQueueReordered() {
         songInfoPager.getAdapter().notifyDataSetChanged();
-        scrollTriggeredByProgram = true;
+        scrollTriggeredByCode = true;
         songInfoPager.setCurrentItem(songsData.getPlayingIndex());
     }
 
@@ -429,8 +430,9 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         intentFilter.addAction(MediaPlayerService.ACTION_CANCEL);
         registerReceiver(mediaPlayerReceiver, intentFilter);
 
-        if (playerFragment == null)
+        if (playerFragment == null) {
             playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentById(R.id.layout_main_player_container);
+        }
         if (playerFragment != null)
             playerFragment.updatePlayerUI();
 
