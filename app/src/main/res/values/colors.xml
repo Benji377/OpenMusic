@@ -6,8 +6,6 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
-    <color name="colorAccent">#000000</color>
-
     <!-- Customize the background! -->
     <color name="startGradient">#000000</color>
     <color name="centerGradient">#000000</color>
@@ -22,4 +20,8 @@
     <!-- Overall icon colors -->
     <color name="primaryIconColor">#FFFFFF</color>
     <color name="activatedIconColor">#FF362E</color>
+
+    <!-- Popup colors -->
+    <color name="popup_textcolor">#FFFFFF</color>
+    <color name="colorAccent">#FFFFFF</color>
 </resources>

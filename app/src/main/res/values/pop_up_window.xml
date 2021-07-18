@@ -7,7 +7,7 @@
         <item name="aboutDescriptionTextAppearance">@style/popup_descriptionTextAppearance</item>
         <item name="aboutGroupTextAppearance">@style/popup_groupTextAppearance</item>
         <item name="aboutSeparatorColor">@color/white</item>
-        <item name="aboutElementIconTint">@color/about_item_icon_color</item>
+        <item name="aboutElementIconTint">#FF362E</item>
     </style>
 
     <style name="popup_descriptionTextAppearance" parent="@android:style/TextAppearance">
@@ -25,7 +25,5 @@
         <item name="android:textColor">@color/popup_textcolor</item>
         <item name="android:textSize">@dimen/about_group_item_text_size</item>
     </style>
-
-    <color name="about_item_icon_color">#FF362E</color>
 
 </resources>
