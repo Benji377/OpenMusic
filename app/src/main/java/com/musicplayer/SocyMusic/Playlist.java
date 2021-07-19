@@ -1,5 +1,7 @@
 package com.musicplayer.SocyMusic;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,7 +9,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import timber.log.Timber;
 
 /*
     Since I am struggling a lot with this, I'm just going to write down how it should work and try to
@@ -33,19 +34,24 @@ public class Playlist {
         this.playlistFile = file;
     }
 
+    public Playlist() {
+        // Trying an empty constructor
+    }
+
     public void createPlaylist(String filename) {
-        filename = filename + ".m3u";
-        playlistFile = new File(filename);
+        // Doesn't create files for some strange reason
+        String filename_complete = filename + ".m3u";
+        playlistFile = new File(filename_complete);
         boolean result;
         try {
             result = playlistFile.createNewFile();
             if (result) {
-                Timber.e("File created: %s", playlistFile.getCanonicalPath());
+                Log.e("File created: %s", playlistFile.getCanonicalPath());
             } else {
-                Timber.e("File already exists%s", playlistFile.getCanonicalPath());
+                Log.e("File already exists%s", playlistFile.getCanonicalPath());
             }
         } catch (IOException e) {
-            Timber.e("File creation failed");
+            Log.e("IOException", "File creation failed");
         }
     }
 
@@ -59,7 +65,7 @@ public class Playlist {
                 writer.write(songfile.getPath() + "\n");
                 writer.close();
             } catch(IOException e) {
-                Timber.e("Filewriter issue");
+                Log.e("Exceptionfile", "Filewriter issue");
             }
         } else {
             // Create the playlist file first and then add the song to it
@@ -99,7 +105,7 @@ public class Playlist {
             }
             reader.close();
         } catch (IOException e) {
-            Timber.e("Error reading playlistfile");
+            Log.e("Exceptionfile", "Error reading playlistfile");
         }
     }
 }

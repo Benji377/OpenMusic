@@ -20,9 +20,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 import com.musicplayer.musicplayer.R;
+
+import java.io.File;
 
 
 public class PlayerFragment extends Fragment {
@@ -48,6 +52,8 @@ public class PlayerFragment extends Fragment {
     private Song songPlaying;
     private boolean startPlaying;
     private boolean currentlySeeking;
+
+    private QueueFragment queueFragment;
 
     /**
      * Gets automatically executed when the Player gets created
@@ -85,6 +91,8 @@ public class PlayerFragment extends Fragment {
         repeatCheckBox = view.findViewById(R.id.checkbox_player_repeat);
         shuffleCheckBox = view.findViewById(R.id.checkbox_player_shuffle);
         favoriteCheckBox = view.findViewById(R.id.checkbox_player_favorite);
+        queueButton = view.findViewById(R.id.button_player_queue);
+        playlistButton = view.findViewById(R.id.button_player_addtoplaylist);
 
         // Adds all texts
         songNameTextview = view.findViewById(R.id.textview_player_song_title);
@@ -121,6 +129,24 @@ public class PlayerFragment extends Fragment {
                 v.removeOnLayoutChangeListener(this);
                 v.setLayoutParams(params);
             }
+        });
+
+        queueButton.setOnClickListener(v -> {
+            // TODO: Fix this. Opens the quequefragment, but generates errors when trying to close it.
+            QueueFragment queueFragment = new QueueFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            releaseVisualizer();
+            View playerFragmentView = getView().findViewById(R.id.layout_player_holder);
+            playerFragmentView.setVisibility(View.INVISIBLE);
+            transaction.replace(R.id.layout_main_queue_container, queueFragment); // give your fragment container id in first parameter
+            transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+            transaction.commit();
+        });
+
+        playlistButton.setOnClickListener(v -> {
+            Playlist playlist = new Playlist();
+            // Testing the playlist -> FAILED
+            playlist.createPlaylist("playlist_temp");
         });
 
 
