@@ -20,13 +20,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 import com.musicplayer.musicplayer.R;
 
-import java.io.File;
+import java.util.List;
 
 
 public class PlayerFragment extends Fragment {
@@ -39,7 +40,7 @@ public class PlayerFragment extends Fragment {
     private CheckBox shuffleCheckBox;
     private CheckBox favoriteCheckBox;
 
-    private TextView songNameTextview;
+    private ViewPager2 songPager;
     private TextView songStartTimeTextview;
     private TextView songEndTimeTextview;
 
@@ -52,6 +53,7 @@ public class PlayerFragment extends Fragment {
     private Song songPlaying;
     private boolean startPlaying;
     private boolean currentlySeeking;
+    private boolean scrollTriggeredByCode;
 
     private QueueFragment queueFragment;
 
@@ -84,6 +86,8 @@ public class PlayerFragment extends Fragment {
         // Creates a view by inflating its layout
         View view = inflater.inflate(R.layout.fragment_player, container, false);
 
+        songPager = view.findViewById(R.id.viewpager_player_song);
+
         // Adds all buttons previously declared above
         previousSongButton = view.findViewById(R.id.button_player_prev);
         nextSongButton = view.findViewById(R.id.button_player_next);
@@ -95,7 +99,6 @@ public class PlayerFragment extends Fragment {
         playlistButton = view.findViewById(R.id.button_player_addtoplaylist);
 
         // Adds all texts
-        songNameTextview = view.findViewById(R.id.textview_player_song_title);
         songStartTimeTextview = view.findViewById(R.id.textview_player_elapsed_time);
         songEndTimeTextview = view.findViewById(R.id.textview_player_duration);
 
@@ -107,6 +110,42 @@ public class PlayerFragment extends Fragment {
         // After creating every element, the song starts playing
         if (startPlaying)
             MediaPlayerUtil.startPlaying(requireContext(), songPlaying);
+
+        songPager.setAdapter(new SongPagerAdapter(songsData.getPlayingQueue()));
+        songPager.setCurrentItem(songsData.getPlayingIndex(), false);
+
+        songPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            private boolean newPageSelected;
+            private int previousPosition = songPager.getCurrentItem();
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                newPageSelected = position != previousPosition;
+                previousPosition = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (state == ViewPager2.SCROLL_STATE_IDLE && newPageSelected && !scrollTriggeredByCode) {
+                    newPageSelected = false;
+                    songsData.setPlayingIndex(songPager.getCurrentItem());
+                    MediaPlayerUtil.playCurrent(getContext());
+                    hostCallBack.onSongUpdate();
+                }
+                if (scrollTriggeredByCode && state == ViewPager2.SCROLL_STATE_IDLE) {
+                    scrollTriggeredByCode = false;
+                    newPageSelected = false;
+                }
+            }
+        });
+
+
         updatePlayerUI();
 
         // The option to repeat the song or not
@@ -115,21 +154,6 @@ public class PlayerFragment extends Fragment {
         shuffleCheckBox.setChecked(songsData.isShuffle());
         // The option to set the song in the favorite playlist
         favoriteCheckBox.setChecked(songsData.isInFavorite());
-
-        // This is necessary to fix the marquee, which was lagging sometimes
-        songNameTextview.setEnabled(true);
-        songNameTextview.setSelected(true);
-        songNameTextview.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            // Manually sets the width and height of the TextView to fix the marquee issue
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                ViewGroup.LayoutParams params = v.getLayoutParams();
-                params.width = right - left;
-                params.height = bottom - top;
-                v.removeOnLayoutChangeListener(this);
-                v.setLayoutParams(params);
-            }
-        });
 
         queueButton.setOnClickListener(v -> {
             // TODO: Fix this. Opens the quequefragment, but generates errors when trying to close it.
@@ -319,6 +343,15 @@ public class PlayerFragment extends Fragment {
         }
     }
 
+    public void invalidatePager() {
+        SongPagerAdapter adapter = (SongPagerAdapter) songPager.getAdapter();
+        if (songPager.getAdapter() != null) {
+            adapter.setQueue(songsData.getPlayingQueue());
+            songPager.getAdapter().notifyDataSetChanged();
+            songPager.setCurrentItem(songsData.getPlayingIndex(), false);
+        }
+    }
+
 
     /**
      * Creates a new instance of the fragment
@@ -363,7 +396,10 @@ public class PlayerFragment extends Fragment {
         songPlaying = songsData.getSongPlaying();
 
         // Sets all properties again
-        songNameTextview.setText(songPlaying.getTitle());
+        if (songPager.getCurrentItem() != songsData.getPlayingIndex()) {
+            scrollTriggeredByCode = true;
+            songPager.setCurrentItem(songsData.getPlayingIndex());
+        }
         int position = MediaPlayerUtil.getPosition();
         int duration = MediaPlayerUtil.getDuration();
         songSeekBar.setMax(duration);
@@ -456,6 +492,67 @@ public class PlayerFragment extends Fragment {
         int audioSessionId = MediaPlayerUtil.getAudioSessionId();
         if (audioSessionId != -1 && audioSessionId != 0)
             visualizer.setAudioSessionId(audioSessionId);
+    }
+
+    class SongPagerAdapter extends RecyclerView.Adapter<SongPageHolder> {
+        private List<Song> queue;
+
+        public SongPagerAdapter(List<Song> queue) {
+            this.queue = queue;
+        }
+
+        @NonNull
+        @Override
+        public SongPageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View itemView = getLayoutInflater().inflate(R.layout.pager_item_song, parent, false);
+            return new SongPageHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull SongPageHolder holder, int position) {
+            Song song = queue.get(position);
+            holder.bind(song);
+        }
+
+        @Override
+        public int getItemCount() {
+            return queue.size();
+        }
+
+        public void setQueue(List<Song> queue) {
+            this.queue = queue;
+        }
+    }
+
+    class SongPageHolder extends RecyclerView.ViewHolder {
+        TextView songTitleTextView;
+
+        public SongPageHolder(@NonNull View itemView) {
+            super(itemView);
+            songTitleTextView = itemView.findViewById(R.id.textview_player_song_title);
+
+            // This is necessary to fix the marquee, which was lagging sometimes
+            songTitleTextView.setEnabled(true);
+            songTitleTextView.setSelected(true);
+            songTitleTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                // Manually sets the width and height of the TextView to fix the marquee issue
+                public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                                           int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    ViewGroup.LayoutParams params = v.getLayoutParams();
+                    params.width = right - left;
+                    params.height = bottom - top;
+                    v.removeOnLayoutChangeListener(this);
+                    v.setLayoutParams(params);
+                }
+            });
+
+        }
+
+        public void bind(Song song) {
+            songTitleTextView.setText(song.getTitle());
+
+        }
     }
 
     /**

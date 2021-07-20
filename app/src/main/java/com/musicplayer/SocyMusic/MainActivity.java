@@ -54,10 +54,9 @@ import mehdi.sakout.aboutpage.Element;
 
 public class MainActivity extends AppCompatActivity implements PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
 
-    ListView listView;
-    BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
-    ViewPager2 songInfoPager;
-
+    private ListView songsListView;
+    private BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
+    private ViewPager2 songInfoPager;
 
     // Private components
     private ActivityResultLauncher<Intent> resultLauncher;
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         actionBar.setTitle(getString(R.string.all_app_name));
 
         // Sets all components
-        listView = findViewById(R.id.listview_main_songs);
+        songsListView = findViewById(R.id.listview_main_songs);
         songInfoPager = findViewById(R.id.viewpager_main_info_panes);
         bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet_main_player));
 
@@ -112,16 +111,16 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                     invalidateOptionsMenu();
                     actionBar.setTitle(R.string.player_title);
                     songInfoPager.setUserInputEnabled(false);
-                    songInfoPager.findViewWithTag(songInfoPager.getCurrentItem()).setClickable(false);
+//                    songInfoPager.findViewWithTag(songInfoPager.getCurrentItem()).setClickable(false);
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     invalidateOptionsMenu();
                     actionBar.setTitle(R.string.all_app_name);
-                    ((ViewGroup.MarginLayoutParams) listView.getLayoutParams()).bottomMargin = dpToPixel(50);
+                    ((ViewGroup.MarginLayoutParams) songsListView.getLayoutParams()).bottomMargin = dpToPixel(50);
                     songInfoPager.setUserInputEnabled(true);
-                    songInfoPager.findViewWithTag(songInfoPager.getCurrentItem()).setClickable(true);
+//                    songInfoPager.findViewWithTag(songInfoPager.getCurrentItem()).setClickable(true);
                     hideQueue();
                 } else if (newState == BottomSheetBehavior.STATE_HIDDEN)
-                    ((ViewGroup.MarginLayoutParams) listView.getLayoutParams()).bottomMargin = dpToPixel(0);
+                    ((ViewGroup.MarginLayoutParams) songsListView.getLayoutParams()).bottomMargin = dpToPixel(0);
             }
 
             @Override
@@ -155,14 +154,14 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                     newPageSelected = false;
                     int position = songInfoPager.getCurrentItem();
                     songsData.setPlayingIndex(position);
-                    MediaPlayerUtil.startPlaying(MainActivity.this, songsData.getSongPlaying());
+                    MediaPlayerUtil.playCurrent(MainActivity.this);
                     onSongUpdate();
-
                 }
                 if (scrollTriggeredByCode && state == ViewPager.SCROLL_STATE_IDLE) {
                     scrollTriggeredByCode = false;
                     newPageSelected = false;
                 }
+
             }
         });
 
@@ -202,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         // To add an item to the menu, add it to menu/main.xml first!
         if (item.getItemId() == R.id.main_menu_about) {
-            showPopupWindow(listView);
+            showPopupWindow(songsListView);
         } else if (item.getItemId() == R.id.main_menu_playlist) {
             // TODO: Add Playlist fragment call here
             Toast.makeText(this, getText(R.string.all_coming_soon), Toast.LENGTH_SHORT).show();
@@ -288,10 +287,10 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
      */
     void displaySongs() {
         SongListAdapter customAdapter = new SongListAdapter();
-        listView.setAdapter(customAdapter);
+        songsListView.setAdapter(customAdapter);
 
         // If you click on an tem in the list, the player fragment opens
-        listView.setOnItemClickListener((parent, view, position, id) -> {
+        songsListView.setOnItemClickListener((parent, view, position, id) -> {
 
             // Error occured
             if (!songsData.songExists(position)) {
@@ -327,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         });
         // Error occurs --> song not found
         TextView emptyText = findViewById(R.id.textview_main_list_empty);
-        listView.setEmptyView(emptyText);
+        songsListView.setEmptyView(emptyText);
     }
 
     /**
@@ -385,6 +384,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     @Override
     public void onQueueReordered() {
         songInfoPager.getAdapter().notifyDataSetChanged();
+        playerFragment.invalidatePager();
         scrollTriggeredByCode = true;
         songInfoPager.setCurrentItem(songsData.getPlayingIndex());
     }
@@ -395,6 +395,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             queueFragment.updateQueue();
         InfoPanePagerAdapter pagerAdapter = (InfoPanePagerAdapter) songInfoPager.getAdapter();
         pagerAdapter.updateQueue(songsData.getPlayingQueue());
+        playerFragment.invalidatePager();
     }
 
     /**
@@ -440,7 +441,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     @Override
     public void onActivityResult(ActivityResult result) {
-        ((SongListAdapter) listView.getAdapter()).notifyDataSetChanged();
+        ((SongListAdapter) songsListView.getAdapter()).notifyDataSetChanged();
     }
 
     /**
