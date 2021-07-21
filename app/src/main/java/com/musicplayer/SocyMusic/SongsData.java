@@ -258,6 +258,10 @@ public class SongsData {
 
     public void setFavorited(boolean favorited) {
         this.favorited = favorited;
+        if (favorited) {
+            Playlist playlist = new Playlist();
+            playlist.addSong(getSongPlaying(), "favorites");
+        }
     }
 
     /**

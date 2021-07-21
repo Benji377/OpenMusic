@@ -7,6 +7,9 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.fragment.app.Fragment;
 
 import com.musicplayer.musicplayer.R;
@@ -126,6 +130,18 @@ public class PlayerFragment extends Fragment {
             }
         });
 
+<<<<<<< Updated upstream
+=======
+        queueButton.setOnClickListener(v -> {
+            // TODO: Someone capable of doing this, please make the Queue show here on Button click
+        });
+
+        playlistButton.setOnClickListener(v -> {
+            Playlist playlist = new Playlist();
+            playlist.createPlaylist(getContext(), "favorites");
+        });
+
+>>>>>>> Stashed changes
 
         // Starts the seekbar thread
         //mediaPlayer.getCurrentPosition();

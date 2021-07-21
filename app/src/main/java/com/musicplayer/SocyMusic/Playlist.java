@@ -1,8 +1,15 @@
 package com.musicplayer.SocyMusic;
 
+<<<<<<< Updated upstream
+=======
+import android.content.Context;
+import android.util.Log;
+
+>>>>>>> Stashed changes
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,6 +40,7 @@ public class Playlist {
         this.playlistFile = file;
     }
 
+<<<<<<< Updated upstream
     public void createPlaylist(String filename) {
         filename = filename + ".m3u";
         playlistFile = new File(filename);
@@ -46,25 +54,43 @@ public class Playlist {
             }
         } catch (IOException e) {
             Timber.e("File creation failed");
+=======
+    public Playlist() {
+        // Trying an empty constructor
+    }
+
+    public void createPlaylist(Context context, String filename) {
+        // Doesn't create files for some strange reason
+        String filename_complete = filename + ".m3u";
+        try (FileOutputStream fos = context.openFileOutput(filename_complete, Context.MODE_PRIVATE)){
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+>>>>>>> Stashed changes
         }
     }
 
-    public void addSong(File songfile, String playlistname) {
+    public void addSong(Song songfile, String playlistname) {
         playlistname = playlistname + ".m3u";
         File f = new File(playlistname);
         if (f.exists() && !f.isDirectory()) {
             // Write data to M3U file
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(playlistname));
-                writer.write(songfile.getPath() + "\n");
+                writer.write(songfile.getFile().getPath() + "\n");
                 writer.close();
             } catch(IOException e) {
+<<<<<<< Updated upstream
                 Timber.e("Filewriter issue");
+=======
+                Log.e("Exceptionfile", "Filewriter issue");
+                e.printStackTrace();
+>>>>>>> Stashed changes
             }
         } else {
             // Create the playlist file first and then add the song to it
-            createPlaylist(playlistname);
-            addSong(songfile, playlistname);
+            //createPlaylist(context, playlistname);
+            //addSong(songfile, playlistname);
         }
     }
 
