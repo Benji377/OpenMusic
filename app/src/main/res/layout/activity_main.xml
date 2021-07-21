@@ -14,8 +14,7 @@
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
-        android:padding="8dp">
-    </ListView>
+        android:padding="8dp"/>
 
     <TextView
         android:id="@+id/textview_main_list_empty"
@@ -40,51 +39,18 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:focusable="true"
-            android:focusableInTouchMode="true"/>
+            android:focusableInTouchMode="true" />
 
         <FrameLayout
             android:id="@+id/layout_main_queue_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
-
-        <RelativeLayout
-            android:id="@+id/layout_main_song_info_pane"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager_main_info_panes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
-
-            <ImageView
-                android:id="@+id/imageview_main_album_art"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:padding="5dp"
-                app:srcCompat="@drawable/music" />
-
-            <TextView
-                android:id="@+id/textview_main_song_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/imageview_main_album_art"
-                android:layout_toStartOf="@id/button_main_play_pause"
-                android:ellipsize="marquee"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:singleLine="true"
-                android:text="Song name goes here"
-                tools:ignore="HardcodedText"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/button_main_play_pause"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/ic_pause" />
-
-
-        </RelativeLayout>
+            android:layout_height="50dp"
+            />
 
 
     </FrameLayout>

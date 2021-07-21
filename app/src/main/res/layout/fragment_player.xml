@@ -12,38 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textview_player_song_title"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager_player_song"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:singleLine="true"
-            android:text="Song Title"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="italic"
+            android:layout_height="325dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageview_player_album_art"
-            tools:ignore="HardcodedText" />
-
-        <ImageView
-            android:id="@+id/imageview_player_album_art"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_marginTop="75dp"
-            android:contentDescription="@string/fragment_player_imageview_player_album_art"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/music" />
+            android:layout_marginTop="75dp"/>
+
 
         <SeekBar
             android:id="@+id/seekbar_player"
@@ -54,7 +32,7 @@
             android:layout_marginEnd="20dp"
             android:clickable="true"
             android:focusable="true"
-            android:progressTint="@color/white"
+            android:progressTint="@color/player_fragment_textColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkbox_player_favorite" />
@@ -66,7 +44,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:text="0:00"
-            android:textColor="@color/white"
+            android:textColor="@color/player_fragment_textColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekbar_player"
             tools:ignore="HardcodedText" />
@@ -78,7 +56,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
             android:text="5:99"
-            android:textColor="@color/white"
+            android:textColor="@color/player_fragment_textColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/seekbar_player"
             tools:ignore="HardcodedText" />
@@ -151,7 +129,7 @@
             android:background="@drawable/ic_queue"
             android:foreground="@drawable/ic_queue"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_player_song_title" />
+            app:layout_constraintTop_toBottomOf="@+id/viewpager_player_song" />
 
         <CheckBox
             android:id="@+id/checkbox_player_favorite"

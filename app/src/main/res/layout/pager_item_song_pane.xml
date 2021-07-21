@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/imageview_song_pane_item_album_art"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        app:srcCompat="@drawable/music" />
+
+    <TextView
+        android:id="@+id/textview_song_pane_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="8dp"
+        android:layout_toStartOf="@id/button_song_pane_item_play_pause"
+        android:layout_toEndOf="@id/imageview_song_pane_item_album_art"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:text="Song name goes here"
+        android:textColor="@color/black"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/button_song_pane_item_play_pause"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ic_pause" />
+
+
+</RelativeLayout>

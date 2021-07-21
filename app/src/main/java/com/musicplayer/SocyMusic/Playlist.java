@@ -1,11 +1,8 @@
 package com.musicplayer.SocyMusic;
 
-<<<<<<< Updated upstream
-=======
 import android.content.Context;
 import android.util.Log;
-
->>>>>>> Stashed changes
+import android.util.Log;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,7 +11,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import timber.log.Timber;
 
 /*
     Since I am struggling a lot with this, I'm just going to write down how it should work and try to
@@ -39,22 +35,6 @@ public class Playlist {
     public Playlist(File file) {
         this.playlistFile = file;
     }
-
-<<<<<<< Updated upstream
-    public void createPlaylist(String filename) {
-        filename = filename + ".m3u";
-        playlistFile = new File(filename);
-        boolean result;
-        try {
-            result = playlistFile.createNewFile();
-            if (result) {
-                Timber.e("File created: %s", playlistFile.getCanonicalPath());
-            } else {
-                Timber.e("File already exists%s", playlistFile.getCanonicalPath());
-            }
-        } catch (IOException e) {
-            Timber.e("File creation failed");
-=======
     public Playlist() {
         // Trying an empty constructor
     }
@@ -66,7 +46,7 @@ public class Playlist {
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
->>>>>>> Stashed changes
+            Log.e("IOException", "File creation failed");
         }
     }
 
@@ -80,12 +60,7 @@ public class Playlist {
                 writer.write(songfile.getFile().getPath() + "\n");
                 writer.close();
             } catch(IOException e) {
-<<<<<<< Updated upstream
-                Timber.e("Filewriter issue");
-=======
                 Log.e("Exceptionfile", "Filewriter issue");
-                e.printStackTrace();
->>>>>>> Stashed changes
             }
         } else {
             // Create the playlist file first and then add the song to it
@@ -125,7 +100,7 @@ public class Playlist {
             }
             reader.close();
         } catch (IOException e) {
-            Timber.e("Error reading playlistfile");
+            Log.e("Exceptionfile", "Error reading playlistfile");
         }
     }
 }

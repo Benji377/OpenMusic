@@ -1,16 +1,14 @@
 package com.musicplayer.SocyMusic;
 
 import android.content.Context;
-import android.os.Environment;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
-
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -19,6 +17,7 @@ public class SongsData {
     public static SongsData data;
     private ArrayList<Song> allSongs;
     private ArrayList<Song> playingQueue;
+    private ArrayList<Song> originalQueue;
     private int playingQueueIndex;
     private boolean repeat;
     private boolean shuffle;
@@ -49,7 +48,7 @@ public class SongsData {
      * @return the next Song that will be played
      */
     public Song playNext() {
-        setPlaying(playingQueueIndex + 1);
+        setPlayingIndex(playingQueueIndex + 1);
         return getSongPlaying();
     }
 
@@ -60,7 +59,7 @@ public class SongsData {
      * @return the previous song that will be played
      */
     public Song playPrev() {
-        setPlaying(playingQueueIndex - 1);
+        setPlayingIndex(playingQueueIndex - 1);
         return getSongPlaying();
     }
 
@@ -69,7 +68,7 @@ public class SongsData {
      *
      * @param playingIndex the index of the song
      */
-    public void setPlaying(int playingIndex) {
+    public void setPlayingIndex(int playingIndex) {
         playingQueueIndex = playingIndex;
         if (playingQueueIndex < 0 || playingQueueIndex > playingQueue.size() - 1 && repeat)
             playingQueueIndex = 0;
@@ -82,11 +81,11 @@ public class SongsData {
      * @param position the index from where the player should start playing
      */
     public void playAllFrom(int position) {
-        playingQueue.clear();
-        for (int i = 0; i < allSongs.size(); i++)
-            playingQueue.add(allSongs.get((i + position) % allSongs.size()));
+        playingQueue = new ArrayList<>();
+        playingQueue.addAll(allSongs);
 
-        playingQueueIndex = 0;
+        playingQueueIndex = position;
+        originalQueue = playingQueue;
     }
 
     /**
@@ -252,7 +251,16 @@ public class SongsData {
             setRandomQueue();
         } else {
             // resets queue to original
-            playAllFrom(1);
+            Song songPlaying = getSongPlaying();
+            playingQueue = originalQueue;
+            //find where the song that was playing randomly was in the original queue
+            for (int i = 0; i < playingQueue.size(); i++) {
+                if (playingQueue.get(i).equals(songPlaying)) {
+                    playingQueueIndex = i;
+                    break;
+                }
+            }
+
         }
     }
 
@@ -302,7 +310,7 @@ public class SongsData {
      *
      * @return The index of the currently playing song
      */
-    public int currentSongIndex() {
+    public int getPlayingIndex() {
         return playingQueueIndex;
     }
 
@@ -311,8 +319,7 @@ public class SongsData {
      */
     public void setRandomQueue() {
         // Temporary Arraylist to store all the songs
-        ArrayList<Song> temporary;
-        temporary = new ArrayList<>();
+        ArrayList<Song> temporary = new ArrayList<>();
         final Random r = new Random();
         // Avoids getting double random numbers
         // Example: The number 5 only gets called once
@@ -320,18 +327,19 @@ public class SongsData {
         // Adds the currently playing song, we dont want to shuffle this one too
         temporary.add(getSongPlaying());
         // Creates a random queue
-        for (int i = 1; i < playingQueue.size(); i++) {
+        for (int i = 0; i < playingQueue.size() - 1; i++) {
             while (true) {
                 int num = r.nextInt(playingQueue.size());
                 // leaves out currently playing song
-                if (!s.contains(num) && num != currentSongIndex()) {
+                if (!s.contains(num) && num != playingQueueIndex) {
                     s.add(num);
-                    temporary.add(getSongAt(num));
+                    temporary.add(getSongFromQueueAt(num));
                     break;
                 }
             }
         }
         // replaces queue
         playingQueue = temporary;
+        playingQueueIndex = 0;
     }
 }

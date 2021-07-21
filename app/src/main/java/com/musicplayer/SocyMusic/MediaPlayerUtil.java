@@ -40,6 +40,11 @@ public class MediaPlayerUtil {
         return true;
     }
 
+    public static void playCurrent(Context context) {
+        SongsData songsData = SongsData.getInstance(context);
+        startPlaying(context, songsData.getSongPlaying());
+    }
+
     /**
      * Plays the next song.
      * If repeat is set to true then it will just keep playing the same song
@@ -52,9 +57,9 @@ public class MediaPlayerUtil {
         SongsData songsData = SongsData.getInstance(context);
         // Repeats the song
         if (songsData.isRepeat()) {
-            SongsData.getInstance(context).setPlaying(songsData.currentSongIndex());
+            SongsData.getInstance(context).setPlayingIndex(songsData.getPlayingIndex());
         } else if (songsData.lastInQueue() && !songsData.isRepeat()) {
-            songsData.setPlaying(0);
+            songsData.setPlayingIndex(0);
             // Plays the next song
         } else {
             songsData.playNext();
@@ -74,10 +79,10 @@ public class MediaPlayerUtil {
         // Fixed instance
         SongsData songsData = SongsData.getInstance(context);
         if (songsData.isRepeat()) {
-            SongsData.getInstance(context).setPlaying(songsData.currentSongIndex());
-        // Plays the last song in queue
+            SongsData.getInstance(context).setPlayingIndex(songsData.getPlayingIndex());
+            // Plays the last song in queue
         } else if (songsData.firstInQueue() && !songsData.isRepeat()) {
-            songsData.setPlaying(songsData.songsCount() - 1);
+            songsData.setPlayingIndex(songsData.songsCount() - 1);
             // Plays the previous song
         } else {
             songsData.playPrev();
