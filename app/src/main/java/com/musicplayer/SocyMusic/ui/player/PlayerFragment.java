@@ -165,9 +165,8 @@ public class PlayerFragment extends Fragment {
         });
 
         playlistButton.setOnClickListener(v -> {
-            Playlist playlist = new Playlist();
+            Playlist playlist = new Playlist("favorites");
             // Testing the playlist -> FAILED
-            playlist.createPlaylist("playlist_temp");
         });
 
 
