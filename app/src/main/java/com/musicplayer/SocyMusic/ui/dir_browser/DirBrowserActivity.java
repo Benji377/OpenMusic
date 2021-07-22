@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic;
+package com.musicplayer.SocyMusic.ui.dir_browser;
 
 import android.os.Bundle;
 

@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic;
+package com.musicplayer.SocyMusic.ui.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.musicplayer.SocyMusic.SocyMusicApp;
+import com.musicplayer.SocyMusic.SongsData;
+import com.musicplayer.SocyMusic.ui.dir_browser.DirBrowserActivity;
 import com.musicplayer.musicplayer.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {

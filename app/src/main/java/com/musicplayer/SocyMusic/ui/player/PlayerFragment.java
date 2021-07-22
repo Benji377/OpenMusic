@@ -1,7 +1,5 @@
-package com.musicplayer.SocyMusic;
+package com.musicplayer.SocyMusic.ui.player;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -12,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,13 +18,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
+import com.musicplayer.SocyMusic.MediaPlayerUtil;
+import com.musicplayer.SocyMusic.Playlist;
+import com.musicplayer.SocyMusic.Song;
+import com.musicplayer.SocyMusic.SongsData;
+import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.musicplayer.R;
-
-import java.util.List;
 
 
 public class PlayerFragment extends Fragment {
@@ -46,7 +45,6 @@ public class PlayerFragment extends Fragment {
 
     private SeekBar songSeekBar;
     private BarVisualizer visualizer;
-    private ImageView songThumbnail;
 
     private PlayerFragmentHost hostCallBack;
     private SongsData songsData;
@@ -105,13 +103,12 @@ public class PlayerFragment extends Fragment {
         // Adds seekbar, visualizer and the image of the player
         songSeekBar = view.findViewById(R.id.seekbar_player);
         visualizer = view.findViewById(R.id.bar_visualizer_player);
-        songThumbnail = view.findViewById(R.id.imageview_player_album_art);
 
         // After creating every element, the song starts playing
         if (startPlaying)
             MediaPlayerUtil.startPlaying(requireContext(), songPlaying);
 
-        songPager.setAdapter(new SongPagerAdapter(songsData.getPlayingQueue()));
+        songPager.setAdapter(new SongPagerAdapter(requireContext(), songsData.getPlayingQueue()));
         songPager.setCurrentItem(songsData.getPlayingIndex(), false);
 
         songPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -317,6 +314,12 @@ public class PlayerFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        startPlaying = false;
+    }
+
     /**
      * Gets executed if the app has been stopped before and now has been restarted
      */
@@ -345,7 +348,7 @@ public class PlayerFragment extends Fragment {
 
     public void invalidatePager() {
         SongPagerAdapter adapter = (SongPagerAdapter) songPager.getAdapter();
-        if (songPager.getAdapter() != null) {
+        if (adapter != null) {
             adapter.setQueue(songsData.getPlayingQueue());
             songPager.getAdapter().notifyDataSetChanged();
             songPager.setCurrentItem(songsData.getPlayingIndex(), false);
@@ -362,29 +365,6 @@ public class PlayerFragment extends Fragment {
         PlayerFragment instance = new PlayerFragment();
         instance.startPlaying = true;
         return instance;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        startPlaying = false;
-    }
-
-    /**
-     * Method to animate the thumbnail of the song, gets executed when the user clicks
-     * next or previous.
-     *
-     * @param direction Defines in which direction it rotates (1, -1)
-     */
-    public void animateSongThumbail(int direction) {
-        // rotates the red note image at 360 or -360 degrees
-        ObjectAnimator animator = ObjectAnimator.ofFloat(songThumbnail, "rotation", 0f, 360f * direction);
-        // 1000ms = 1s
-        animator.setDuration(1000);
-        // External animation class --> Github
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animator);
-        animatorSet.start();
     }
 
     /**
@@ -430,10 +410,6 @@ public class PlayerFragment extends Fragment {
     protected void playNextSong() {
         // Plays the next song
         MediaPlayerUtil.playNext(getContext());
-        if (isResumed()) {
-            // Rotates the thumbnail
-            animateSongThumbail(1);
-        }
         hostCallBack.onSongUpdate();
     }
 
@@ -443,10 +419,6 @@ public class PlayerFragment extends Fragment {
     protected void playPrevSong() {
         // Plays the previous song
         MediaPlayerUtil.playPrev(getContext());
-        if (isResumed()) {
-            // Rotates the thumbnail in the negative direction
-            animateSongThumbail(-1);
-        }
         hostCallBack.onSongUpdate();
     }
 
@@ -454,7 +426,7 @@ public class PlayerFragment extends Fragment {
      * Changes the state of the song from play to pause and vice-versa
      * Also sets the appearance of the button accordingly
      */
-    protected void togglePlayPause() {
+    public void togglePlayPause() {
         // Changes the state of the song
         MediaPlayerUtil.togglePlayPause();
         if (MediaPlayerUtil.isPlaying())
@@ -492,67 +464,6 @@ public class PlayerFragment extends Fragment {
         int audioSessionId = MediaPlayerUtil.getAudioSessionId();
         if (audioSessionId != -1 && audioSessionId != 0)
             visualizer.setAudioSessionId(audioSessionId);
-    }
-
-    class SongPagerAdapter extends RecyclerView.Adapter<SongPageHolder> {
-        private List<Song> queue;
-
-        public SongPagerAdapter(List<Song> queue) {
-            this.queue = queue;
-        }
-
-        @NonNull
-        @Override
-        public SongPageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = getLayoutInflater().inflate(R.layout.pager_item_song, parent, false);
-            return new SongPageHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull SongPageHolder holder, int position) {
-            Song song = queue.get(position);
-            holder.bind(song);
-        }
-
-        @Override
-        public int getItemCount() {
-            return queue.size();
-        }
-
-        public void setQueue(List<Song> queue) {
-            this.queue = queue;
-        }
-    }
-
-    class SongPageHolder extends RecyclerView.ViewHolder {
-        TextView songTitleTextView;
-
-        public SongPageHolder(@NonNull View itemView) {
-            super(itemView);
-            songTitleTextView = itemView.findViewById(R.id.textview_player_song_title);
-
-            // This is necessary to fix the marquee, which was lagging sometimes
-            songTitleTextView.setEnabled(true);
-            songTitleTextView.setSelected(true);
-            songTitleTextView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                @Override
-                // Manually sets the width and height of the TextView to fix the marquee issue
-                public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                                           int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                    ViewGroup.LayoutParams params = v.getLayoutParams();
-                    params.width = right - left;
-                    params.height = bottom - top;
-                    v.removeOnLayoutChangeListener(this);
-                    v.setLayoutParams(params);
-                }
-            });
-
-        }
-
-        public void bind(Song song) {
-            songTitleTextView.setText(song.getTitle());
-
-        }
     }
 
     /**

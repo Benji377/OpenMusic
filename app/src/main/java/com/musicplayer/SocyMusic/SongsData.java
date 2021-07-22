@@ -7,6 +7,8 @@ import androidx.preference.PreferenceManager;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -177,7 +179,11 @@ public class SongsData {
      * @return True if the song exists, else false
      */
     public boolean songExists(int position) {
-        return allSongs.get(position).getFile().exists();
+        try {
+            return allSongs.get(position).getFile().exists();
+        } catch (IndexOutOfBoundsException ex) {
+            return false;
+        }
     }
 
     /**
@@ -337,5 +343,10 @@ public class SongsData {
         // replaces queue
         playingQueue = temporary;
         playingQueueIndex = 0;
+    }
+
+    public List<Song> getAllSongs() {
+        //return read-only list of all songs
+        return allSongs;
     }
 }

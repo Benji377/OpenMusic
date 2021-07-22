@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic;
+package com.musicplayer.SocyMusic.ui.main;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -16,11 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +31,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -44,6 +41,14 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.musicplayer.SocyMusic.MediaPlayerService;
+import com.musicplayer.SocyMusic.MediaPlayerUtil;
+import com.musicplayer.SocyMusic.Song;
+import com.musicplayer.SocyMusic.SongsData;
+import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
+import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
+import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
+import com.musicplayer.SocyMusic.ui.settings.SettingsActivity;
 import com.musicplayer.musicplayer.BuildConfig;
 import com.musicplayer.musicplayer.R;
 
@@ -54,7 +59,7 @@ import mehdi.sakout.aboutpage.Element;
 
 public class MainActivity extends AppCompatActivity implements PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
 
-    private ListView songsListView;
+    private CustomRecyclerView songsRecyclerView;
     private BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
     private ViewPager2 songInfoPager;
 
@@ -84,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         actionBar.setTitle(getString(R.string.all_app_name));
 
         // Sets all components
-        songsListView = findViewById(R.id.listview_main_songs);
+        songsRecyclerView = findViewById(R.id.recyclerview_main_all_songs);
         songInfoPager = findViewById(R.id.viewpager_main_info_panes);
         bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet_main_player));
 
@@ -115,12 +120,12 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     invalidateOptionsMenu();
                     actionBar.setTitle(R.string.all_app_name);
-                    ((ViewGroup.MarginLayoutParams) songsListView.getLayoutParams()).bottomMargin = dpToPixel(50);
+                    ((ViewGroup.MarginLayoutParams) songsRecyclerView.getLayoutParams()).bottomMargin = dpToPixel(50);
                     songInfoPager.setUserInputEnabled(true);
 //                    songInfoPager.findViewWithTag(songInfoPager.getCurrentItem()).setClickable(true);
                     hideQueue();
                 } else if (newState == BottomSheetBehavior.STATE_HIDDEN)
-                    ((ViewGroup.MarginLayoutParams) songsListView.getLayoutParams()).bottomMargin = dpToPixel(0);
+                    ((ViewGroup.MarginLayoutParams) songsRecyclerView.getLayoutParams()).bottomMargin = dpToPixel(0);
             }
 
             @Override
@@ -201,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         // To add an item to the menu, add it to menu/main.xml first!
         if (item.getItemId() == R.id.main_menu_about) {
-            showPopupWindow(songsListView);
+            showPopupWindow(songsRecyclerView);
         } else if (item.getItemId() == R.id.main_menu_playlist) {
             // TODO: Add Playlist fragment call here
             Toast.makeText(this, getText(R.string.all_coming_soon), Toast.LENGTH_SHORT).show();
@@ -286,47 +291,56 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
      * This method searches for all songs it can find on the phone's storage and shows them as a list
      */
     void displaySongs() {
-        SongListAdapter customAdapter = new SongListAdapter();
-        songsListView.setAdapter(customAdapter);
+        SongListAdapter customAdapter = new SongListAdapter(this, songsData.getAllSongs());
+        songsRecyclerView.setAdapter(customAdapter);
+        songsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // If you click on an tem in the list, the player fragment opens
-        songsListView.setOnItemClickListener((parent, view, position, id) -> {
+        customAdapter.setOnItemClickListener(new SongListAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(int position, View view) {
+                // Error occured
+                if (!songsData.songExists(position)) {
+                    Toast.makeText(MainActivity.this, getText(R.string.main_err_file_gone), Toast.LENGTH_LONG).show();
+                    songsData.reloadSongs(MainActivity.this);
+                    customAdapter.notifyDataSetChanged();
+                    return;
+                }
+                // Adds all the songs to the queue from that position onward
+                songsData.playAllFrom(position);
+                // Plays the selected song
+                Song songClicked = songsData.getSongPlaying();
 
-            // Error occured
-            if (!songsData.songExists(position)) {
-                Toast.makeText(this, getText(R.string.main_err_file_gone), Toast.LENGTH_LONG).show();
-                songsData.reloadSongs(this);
-                customAdapter.notifyDataSetChanged();
-                return;
+                // Opens the player fragment
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                Fragment fragment = fragmentManager.findFragmentById(R.id.layout_main_player_container);
+                if (fragment == null) {
+                    playerFragment = PlayerFragment.newInstance();
+                    fragmentManager.beginTransaction().add(R.id.layout_main_player_container, playerFragment).commit();
+
+                    Intent serviceIntent = new Intent(MainActivity.this, MediaPlayerService.class);
+                    serviceIntent.putExtra(MediaPlayerService.EXTRA_SONG, songClicked);
+                    startService(serviceIntent);
+                    bindService(serviceIntent, MainActivity.this, Context.BIND_AUTO_CREATE);
+                } else {
+                    playerFragment = (PlayerFragment) fragment;
+                    playerFragment.invalidatePager();
+                    MediaPlayerUtil.startPlaying(MainActivity.this, songClicked);
+                    onSongUpdate();
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    hideQueue();
+                }
+
             }
-            // Adds all the songs to the queue from that position onward
-            songsData.playAllFrom(position);
-            // Plays the selected song
-            Song songClicked = songsData.getSongPlaying();
 
-            // Opens the player fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment fragment = fragmentManager.findFragmentById(R.id.layout_main_player_container);
-            if (fragment == null) {
-                playerFragment = PlayerFragment.newInstance();
-                fragmentManager.beginTransaction().add(R.id.layout_main_player_container, playerFragment).commit();
-
-                Intent serviceIntent = new Intent(this, MediaPlayerService.class);
-                serviceIntent.putExtra(MediaPlayerService.EXTRA_SONG, songClicked);
-                startService(serviceIntent);
-                bindService(serviceIntent, this, Context.BIND_AUTO_CREATE);
-            } else {
-                playerFragment = (PlayerFragment) fragment;
-                MediaPlayerUtil.startPlaying(this, songsData.getSongPlaying());
-                onSongUpdate();
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                hideQueue();
+            @Override
+            public boolean onItemLongClick(int position, View view) {
+                return true;
             }
-
         });
         // Error occurs --> song not found
         TextView emptyText = findViewById(R.id.textview_main_list_empty);
-        songsListView.setEmptyView(emptyText);
+        songsRecyclerView.setEmptyView(emptyText);
     }
 
     /**
@@ -337,7 +351,20 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     public void onLoadComplete() {
         bottomSheetBehavior.setHideable(false);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        songInfoPager.setAdapter(new InfoPanePagerAdapter(songsData.getPlayingQueue()));
+        InfoPanePagerAdapter customAdapter = new InfoPanePagerAdapter(this, songsData.getPlayingQueue());
+        customAdapter.setPaneListeners(new InfoPanePagerAdapter.PaneListeners() {
+            @Override
+            public void onPaneClick() {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+
+            @Override
+            public void onPauseButtonClick() {
+                playerFragment.togglePlayPause();
+            }
+        });
+        songInfoPager.setAdapter(customAdapter);
+
         if (songsData.getPlayingIndex() != 0) {
             scrollTriggeredByCode = true;
             songInfoPager.setCurrentItem(songsData.getPlayingIndex());
@@ -374,7 +401,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         InfoPanePagerAdapter pagerAdapter = (InfoPanePagerAdapter) songInfoPager.getAdapter();
         //determine if queue changed or if simple scroll happened
         if (pagerAdapter.getQueue() != songsData.getPlayingQueue())
-            pagerAdapter.updateQueue(songsData.getPlayingQueue());
+            pagerAdapter.setQueue(songsData.getPlayingQueue());
 
         scrollTriggeredByCode = true;
         songInfoPager.setCurrentItem(songsData.getPlayingIndex());
@@ -394,7 +421,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         if (queueFragment != null)
             queueFragment.updateQueue();
         InfoPanePagerAdapter pagerAdapter = (InfoPanePagerAdapter) songInfoPager.getAdapter();
-        pagerAdapter.updateQueue(songsData.getPlayingQueue());
+        pagerAdapter.setQueue(songsData.getPlayingQueue());
+        pagerAdapter.notifyDataSetChanged();
         playerFragment.invalidatePager();
     }
 
@@ -441,120 +469,17 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
     @Override
     public void onActivityResult(ActivityResult result) {
-        ((SongListAdapter) songsListView.getAdapter()).notifyDataSetChanged();
+        songsData.reloadSongs(this);
+        invalidateSongList();
     }
 
-    /**
-     * Custom adapter for SongsData related actions
-     */
-    class SongListAdapter extends BaseAdapter {
-
-        /**
-         * Gets the amount of songs
-         *
-         * @return The number of songs
-         */
-        @Override
-        public int getCount() {
-            return songsData.songsCount();
-        }
-
-        /**
-         * Gets the song as object in a defined position in the queue
-         *
-         * @param position Position to search for the song
-         * @return The song as an object
-         */
-        @Override
-        public Object getItem(int position) {
-            return songsData.getSongAt(position).getTitle();
-        }
-
-        /**
-         * Not fully implemented yet!
-         * Returns the id of a song at a given position
-         *
-         * @param position The position of the song in the queue
-         * @return The ID of the song
-         */
-        @Override
-        public long getItemId(int position) {
-            return songsData.getSongAt(position).hashCode();
-        }
-
-        /**
-         * Returns the view of the list_item
-         *
-         * @param position    Position of the song in the queue
-         * @param convertView Unused
-         * @param parent      Root view
-         * @return The view of the song
-         */
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View myView = getLayoutInflater().inflate(R.layout.list_item_main, null);
-            TextView textsong = myView.findViewById(R.id.textview_main_item_song_title);
-            textsong.setText(songsData.getSongAt(position).getTitle());
-            textsong.setSelected(true);
-            return myView;
+    private void invalidateSongList() {
+        SongListAdapter adapter = (SongListAdapter) songsRecyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.setAllSongs(songsData.getAllSongs());
+            adapter.notifyDataSetChanged();
         }
     }
-
-    class InfoPanePagerAdapter extends RecyclerView.Adapter<InfoPaneHolder> {
-        List<Song> queue;
-
-        public InfoPanePagerAdapter(List<Song> queue) {
-            this.queue = queue;
-        }
-
-        @NonNull
-        @Override
-        public InfoPaneHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemView = getLayoutInflater().inflate(R.layout.pager_item_song_pane, parent, false);
-            return new InfoPaneHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull InfoPaneHolder holder, int position) {
-            holder.itemView.setTag(position);
-            Song song = queue.get(position);
-            holder.bind(song);
-        }
-
-        @Override
-        public int getItemCount() {
-            return songsData.getPlayingQueueCount();
-        }
-
-        public void updateQueue(List<Song> queue) {
-            this.queue = queue;
-            notifyDataSetChanged();
-        }
-
-        public List<Song> getQueue() {
-            return queue;
-        }
-    }
-
-    class InfoPaneHolder extends RecyclerView.ViewHolder {
-        private TextView songTitleTextView;
-        private Button playPauseButton;
-
-        public InfoPaneHolder(@NonNull View itemView) {
-            super(itemView);
-            songTitleTextView = itemView.findViewById(R.id.textview_song_pane_item_title);
-            playPauseButton = itemView.findViewById(R.id.button_song_pane_item_play_pause);
-            playPauseButton.setOnClickListener(v -> playerFragment.togglePlayPause());
-            itemView.setOnClickListener(v -> bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED));
-        }
-
-        public void bind(Song song) {
-            songTitleTextView.setText(song.getTitle());
-            playPauseButton.setBackgroundResource(MediaPlayerUtil.isPlaying() ? R.drawable.ic_pause : R.drawable.ic_play);
-        }
-
-    }
-
 
     /**
      * Extends the standard Broadcastreceiver to create a new receiver for the mediaplayer
