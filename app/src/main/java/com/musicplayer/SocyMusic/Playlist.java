@@ -1,7 +1,5 @@
 package com.musicplayer.SocyMusic;
 
-import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
     Since I am struggling a lot with this, I'm just going to write down how it should work and try to
@@ -25,87 +24,110 @@ import java.util.ArrayList;
     2. If the user moves files, the path stored in the M3U file doesn't automatically change and
     therefore causes issues.
 */
+
 public class Playlist {
-    // TODO: Implement playlist!
-    File playlistFile;
-    ArrayList<Song> songList;
+    private String playlistName;
+    private File playlistFile;
+    List<String> songPathList;
+    private int songCount;
 
-    public Playlist(File file) {
-        this.playlistFile = file;
+    public String getPlaylistName() {
+        return playlistName;
+    }
+    public void setPlaylistName(String playlistName) {
+        this.playlistName = playlistName;
+    }
+    public File getPlaylistFile() {
+        return playlistFile;
+    }
+    public void setPlaylistFile(File playlistFile) {
+        this.playlistFile = playlistFile;
+    }
+    public List<String> getSongPathList() {
+        return songPathList;
+    }
+    public void setSongPathList(List<String> songPathList) {
+        this.songPathList = songPathList;
+    }
+    public int getSongCount() {
+        return songCount;
     }
 
-    public Playlist() {
-        // Trying an empty constructor
+    public void setSongCount(int songCount) {
+        this.songCount = songCount;
     }
 
-    public void createPlaylist(String filename) {
-        // Doesn't create files for some strange reason
-        String filename_complete = filename + ".m3u";
-        playlistFile = new File(filename_complete);
-        boolean result;
+    public Playlist(String playlistName) {
+        File file = new File(getPlaylistName());
         try {
-            result = playlistFile.createNewFile();
-            if (result) {
-                Log.e("File created: %s", playlistFile.getCanonicalPath());
-            } else {
-                Log.e("File already exists%s", playlistFile.getCanonicalPath());
-            }
-        } catch (IOException e) {
-            Log.e("IOException", "File creation failed");
-        }
-    }
-
-    public void addSong(File songfile, String playlistname) {
-        playlistname = playlistname + ".m3u";
-        File f = new File(playlistname);
-        if (f.exists() && !f.isDirectory()) {
-            // Write data to M3U file
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(playlistname));
-                writer.write(songfile.getPath() + "\n");
+            if(file.createNewFile()) {
+                System.out.println("File created at:" + file.getPath());
+                FileWriter writer = new FileWriter(getPlaylistName());
+                writer.write("#EXTM3U\n");
+                writer.write("\n");
                 writer.close();
-            } catch(IOException e) {
-                Log.e("Exceptionfile", "Filewriter issue");
+                setPlaylistName(playlistName);
+                setPlaylistFile(file);
+                setSongCount(0);
+                setSongPathList(new ArrayList<String>());
+            } else {
+                System.out.println("File already exists");
             }
-        } else {
-            // Create the playlist file first and then add the song to it
-            createPlaylist(playlistname);
-            addSong(songfile, playlistname);
-        }
-    }
-
-    public void removeSong(File songfile, String playlistname) throws IOException {
-        playlistname = playlistname + ".m3u";
-        File playlistfile = new File(playlistname);
-        File temp = File.createTempFile("playlistfile", ".m3u", playlistfile.getParentFile());
-        String delete = songfile.getPath();
-        BufferedReader reader = new BufferedReader(new FileReader(playlistfile));
-        BufferedWriter writer = new BufferedWriter(new FileWriter(temp));
-        String line;
-        while((line = reader.readLine()) != null) {
-            line = line.replace(delete, "");
-            writer.write(line);
-        }
-        reader.close();
-        writer.close();
-        playlistfile.delete();
-        temp.renameTo(playlistfile);
-    }
-
-    public void listSongs(String playlistName) {
-        playlistName = playlistName + ".m3u";
-        songList = new ArrayList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(playlistName));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                File songfile = new File(line);
-                Song song = new Song(songfile);
-                songList.add(song);
-            }
-            reader.close();
         } catch (IOException e) {
-            Log.e("Exceptionfile", "Error reading playlistfile");
+            e.printStackTrace();
+        }
+    }
+
+    public boolean addSong(File songFile) {
+        try {
+            FileWriter writer = new FileWriter(getPlaylistName(), true);
+            writer.write("#EXTINF:"+songFile.getName() + "\n");
+            writer.write(songFile.getPath() + "\n");
+            writer.write("\n");
+            writer.close();
+            System.out.println("Wrote to file!");
+            setSongCount(getSongCount()+1);
+            getSongPathList().add(songFile.getPath());
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean removeSong(File songFile) {
+        String currentLine;
+        File tempFile = new File("temp_file.m3u");
+        File playlistFile = getPlaylistFile();
+        BufferedReader reader = null;
+        BufferedWriter writer = null;
+        try {
+            reader = new BufferedReader(new FileReader(playlistFile));
+            writer = new BufferedWriter(new FileWriter(tempFile));
+            while ((currentLine = reader.readLine()) != null) {
+                if (currentLine.equals("#EXTINF:"+ songFile.getName())) {
+                    // Skips the next two lines too
+                    reader.readLine();
+                    reader.readLine();
+                    continue;
+                }
+                writer.write(currentLine + System.getProperty("line.separator"));
+            }
+            writer.close();
+            reader.close();
+            playlistFile.delete();
+            if (tempFile.renameTo(playlistFile)) {
+                setSongCount(getSongCount()-1);
+                List<String> temp_list = getSongPathList();
+                temp_list.removeIf(element -> element.contains(songFile.getPath()));
+                setSongPathList(temp_list);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
