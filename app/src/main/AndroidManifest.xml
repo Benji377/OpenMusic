@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicPlayer">
         <activity
-            android:name="com.musicplayer.SocyMusic.MainActivity"
+            android:name="com.musicplayer.SocyMusic.ui.main.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -29,8 +29,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.musicplayer.SocyMusic.SettingsActivity"/>
-        <activity android:name="com.musicplayer.SocyMusic.DirBrowserActivity"/>
+        <activity android:name="com.musicplayer.SocyMusic.ui.settings.SettingsActivity"/>
+        <activity android:name="com.musicplayer.SocyMusic.ui.dir_browser.DirBrowserActivity"/>
 
         <service
             android:name="com.musicplayer.SocyMusic.MediaPlayerService"

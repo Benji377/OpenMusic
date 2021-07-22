@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
- * Custom RecyclerView that has an empty to show when empty and hide when not automatically,
+ * Custom RecyclerView that has an empty view to show when empty and hide when not automatically,
  * just like ListView's setEmptyView() method.
  * Code taken from: https://stackoverflow.com/a/27801394/14200676
  */
-public class EmptyRecyclerView extends RecyclerView {
+public class CustomRecyclerView extends RecyclerView {
     private View emptyView;
     final private AdapterDataObserver observer = new AdapterDataObserver() {
         @Override
@@ -31,15 +31,15 @@ public class EmptyRecyclerView extends RecyclerView {
         }
     };
 
-    public EmptyRecyclerView(Context context) {
+    public CustomRecyclerView(Context context) {
         super(context);
     }
 
-    public EmptyRecyclerView(Context context, AttributeSet attrs) {
+    public CustomRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public EmptyRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public CustomRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

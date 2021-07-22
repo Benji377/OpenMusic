@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic;
+package com.musicplayer.SocyMusic.ui.settings;
 
 import android.os.Bundle;
 

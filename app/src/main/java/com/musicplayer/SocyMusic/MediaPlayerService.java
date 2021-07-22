@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.media.app.NotificationCompat.MediaStyle;
 
+import com.musicplayer.SocyMusic.ui.main.MainActivity;
 import com.musicplayer.musicplayer.R;
 
 public class MediaPlayerService extends Service {
@@ -188,7 +189,7 @@ public class MediaPlayerService extends Service {
      * Creates a custom binder
      */
     public class LocalBinder extends Binder {
-        MediaPlayerService getService() {
+        public MediaPlayerService getService() {
             return MediaPlayerService.this;
         }
     }

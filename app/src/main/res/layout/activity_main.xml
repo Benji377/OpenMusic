@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000"
-    tools:context="com.musicplayer.SocyMusic.MainActivity">
+    tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
 
 
-    <ListView
-        android:id="@+id/listview_main_songs"
+    <com.musicplayer.SocyMusic.custom_views.CustomRecyclerView
+        android:id="@+id/recyclerview_main_all_songs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
