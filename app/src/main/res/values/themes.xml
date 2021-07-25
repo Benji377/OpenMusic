@@ -14,4 +14,46 @@
         <item name="android:textColor">@color/black</item>
         -->
     </style>
+
+    <!-- Themes for every background so far. Changes the colors of the app! -->
+    <style name="GreenTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#075e07</item>
+        <item name="colorPrimaryVariant">#075e07</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/black</item>
+    </style>
+
+    <style name="BlueTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#084a85</item>
+        <item name="colorPrimaryVariant">#084a85</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/black</item>
+    </style>
+
+    <style name="WhiteTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#575757</item>
+        <item name="colorPrimaryVariant">#575757</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/black</item>
+    </style>
+
+    <style name="OrangeTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#e5741e</item>
+        <item name="colorPrimaryVariant">#e5741e</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/black</item>
+    </style>
+
 </resources>
