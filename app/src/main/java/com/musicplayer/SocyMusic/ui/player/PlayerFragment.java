@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
@@ -200,8 +201,8 @@ public class PlayerFragment extends Fragment {
         // Sets properties of the seekbar
         songSeekBarUpdaterThread.start();
         songSeekBar.getProgressDrawable().setColorFilter(getResources()
-                .getColor(R.color.primaryAppColor), PorterDuff.Mode.MULTIPLY);
-        songSeekBar.getThumb().setColorFilter(getResources().getColor(R.color.primaryAppColor), PorterDuff.Mode.SRC_IN);
+                .getColor(R.color.design_default_color_on_primary), PorterDuff.Mode.MULTIPLY);
+        //songSeekBar.getThumb().setColorFilter(getResources().getColor(R.color.design_default_color_on_primary), PorterDuff.Mode.SRC_IN);
 
         // Controls the changes at the seekbar
         songSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
