@@ -20,6 +20,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">#075e07</item>
         <item name="colorPrimaryVariant">#075e07</item>
+        <item name="android:color">#075e07</item>
         <item name="colorOnPrimary">@color/white</item>
         <!--
         <item name="android:background">@drawable/background_img_green</item>

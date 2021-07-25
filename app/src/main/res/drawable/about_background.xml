@@ -6,6 +6,6 @@
         android:endColor="@color/black" />
 
     <stroke android:width="2dp"
-        android:color="@color/primaryAppColor" />
+        android:color="?colorPrimary" />
 
 </shape>
