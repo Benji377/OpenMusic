@@ -21,7 +21,9 @@
         <item name="colorPrimary">#075e07</item>
         <item name="colorPrimaryVariant">#075e07</item>
         <item name="colorOnPrimary">@color/white</item>
-
+        <!--
+        <item name="android:background">@drawable/background_img_green</item>
+        -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:navigationBarColor">@color/black</item>
     </style>
@@ -31,7 +33,9 @@
         <item name="colorPrimary">#084a85</item>
         <item name="colorPrimaryVariant">#084a85</item>
         <item name="colorOnPrimary">@color/white</item>
-
+        <!--
+        <item name="android:background">@drawable/background_img_blue</item>
+        -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:navigationBarColor">@color/black</item>
     </style>
@@ -41,7 +45,9 @@
         <item name="colorPrimary">#575757</item>
         <item name="colorPrimaryVariant">#575757</item>
         <item name="colorOnPrimary">@color/white</item>
-
+        <!--
+        <item name="android:background">@drawable/background_img_white</item>
+        -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:navigationBarColor">@color/black</item>
     </style>
@@ -51,7 +57,9 @@
         <item name="colorPrimary">#e5741e</item>
         <item name="colorPrimaryVariant">#e5741e</item>
         <item name="colorOnPrimary">@color/white</item>
-
+        <!--
+        <item name="android:background">@drawable/background_img_orange</item>
+        -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:navigationBarColor">@color/black</item>
     </style>
