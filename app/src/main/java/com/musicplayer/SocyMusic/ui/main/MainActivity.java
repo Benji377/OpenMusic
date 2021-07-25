@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     private SongsData songsData;
 
     private boolean scrollTriggeredByCode;
+    private SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     /**
      * Gets executed every time the app starts
@@ -110,6 +111,14 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.all_app_name));
+
+        // Settings listener to update theme in realtime
+        listener = (sharedPreferences, key) -> {
+            if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
+                recreate();
+            }
+        };
+        prefs.registerOnSharedPreferenceChangeListener(listener);
 
         // Sets all components
         songsRecyclerView = findViewById(R.id.recyclerview_main_all_songs);
