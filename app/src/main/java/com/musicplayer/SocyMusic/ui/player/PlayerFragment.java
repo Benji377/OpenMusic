@@ -2,7 +2,6 @@ package com.musicplayer.SocyMusic.ui.player;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
@@ -27,14 +25,8 @@ import com.musicplayer.SocyMusic.MediaPlayerUtil;
 import com.musicplayer.SocyMusic.Playlist;
 import com.musicplayer.SocyMusic.Song;
 import com.musicplayer.SocyMusic.SongsData;
-import com.musicplayer.SocyMusic.ThemeUtils;
-import com.musicplayer.SocyMusic.ui.main.MainActivity;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.musicplayer.R;
-
-import java.util.Objects;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class PlayerFragment extends Fragment {
@@ -91,37 +83,6 @@ public class PlayerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Creates a view by inflating its layout
         View view = inflater.inflate(R.layout.fragment_player, container, false);
-
-        // Randomly picks a background :D
-        int randomNum = ThreadLocalRandom.current().nextInt(0, 5);
-        switch (randomNum) {
-            case 0:
-                view.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.default_background_image, null));
-                // Tried to change the theme to change the color of buttons and more. NOT WORKING
-                // Should use settings in the future
-                //ThemeUtils.changeToTheme(requireActivity(), ThemeUtils.RED);
-                break;
-            case 1:
-                view.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.background_img_white, null));
-                //ThemeUtils.changeToTheme(requireActivity(), ThemeUtils.WHITE);
-                break;
-            case 2:
-                view.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.background_img_blue, null));
-                //ThemeUtils.changeToTheme(requireActivity(), ThemeUtils.BLUE);
-                break;
-            case 3:
-                view.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.background_img_green, null));
-                //ThemeUtils.changeToTheme(requireActivity(), ThemeUtils.GREEN);
-                break;
-            case 4:
-                view.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.background_img_orange, null));
-                //ThemeUtils.changeToTheme(requireActivity(), ThemeUtils.ORANGE);
-                break;
-            default:
-                view.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.default_background_image, null));
-                //ThemeUtils.changeToTheme(requireActivity(), ThemeUtils.RED);
-                break;
-        }
 
         songPager = view.findViewById(R.id.viewpager_player_song);
 

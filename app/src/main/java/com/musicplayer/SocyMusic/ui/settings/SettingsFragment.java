@@ -2,7 +2,6 @@ package com.musicplayer.SocyMusic.ui.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.preference.Preference;
@@ -32,12 +31,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         themePreference = findPreference(SocyMusicApp.PREFS_KEY_THEME);
 
         libPathPreference.setIntent(new Intent(getContext(), DirBrowserActivity.class));
-
-        themePreference.setOnPreferenceClickListener(preference -> {
-            Toast.makeText(getContext(), getString(R.string.all_coming_soon), Toast.LENGTH_LONG).show();
-            return true;
-        });
-
+        //themePreference.setIntent(new Intent(getContext(), ThemeBrowserActivity.class));
     }
 
 }

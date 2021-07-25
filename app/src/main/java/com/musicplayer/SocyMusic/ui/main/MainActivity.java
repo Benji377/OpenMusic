@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.TypedValue;
@@ -31,6 +32,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -43,6 +45,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.musicplayer.SocyMusic.MediaPlayerService;
 import com.musicplayer.SocyMusic.MediaPlayerUtil;
+import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.Song;
 import com.musicplayer.SocyMusic.SongsData;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
@@ -83,6 +86,26 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         songsData = SongsData.getInstance(this);
+        // Sets the theme!
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String theme = prefs.getString(SocyMusicApp.PREFS_KEY_THEME, "Red_theme");
+        switch (theme) {
+            case "Red_theme":
+                setTheme(R.style.Theme_MusicPlayer);
+                break;
+            case "White_theme":
+                setTheme(R.style.WhiteTheme);
+                break;
+            case "Blue_theme":
+                setTheme(R.style.BlueTheme);
+                break;
+            case "Green_theme":
+                setTheme(R.style.GreenTheme);
+                break;
+            case "Orange_theme":
+                setTheme(R.style.OrangeTheme);
+                break;
+        }
         setContentView(R.layout.activity_main);
 
         actionBar = getSupportActionBar();
@@ -134,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 songInfoPager.setAlpha(1f - slideOffset);
             }
         });
+
 
         // Sets action for the infoPane
         songInfoPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

@@ -12,10 +12,12 @@
     <PreferenceCategory
         android:title="Appearance"
         app:key="appearance_category">
-        <Preference
+        <ListPreference
             app:key="theme"
             app:summary="@string/prefs_summery_theme"
-            app:title="@string/prefs_title_theme" />
+            app:title="@string/prefs_title_theme"
+            android:entries="@array/themeOptions"
+            android:entryValues="@array/themeValues"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
