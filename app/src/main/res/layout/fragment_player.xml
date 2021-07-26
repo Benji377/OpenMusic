@@ -32,7 +32,7 @@
             android:layout_marginEnd="20dp"
             android:clickable="true"
             android:focusable="true"
-            android:progressTint="@color/white"
+            android:progressTint="?colorPrimaryVariant"
             android:thumbTint="?colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
