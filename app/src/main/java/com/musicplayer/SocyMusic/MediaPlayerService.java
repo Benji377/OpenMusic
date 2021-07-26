@@ -128,7 +128,7 @@ public class MediaPlayerService extends Service {
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, SERVICE_REQUEST_CODE, notificationIntent, 0);
 
-        Bitmap artwork = BitmapFactory.decodeResource(getResources(), R.drawable.music);
+        Bitmap artwork = BitmapFactory.decodeResource(getResources(), R.drawable.music_combined);
 
         PendingIntent prevIntent = PendingIntent.getBroadcast(this, SERVICE_REQUEST_CODE,
                 new Intent().setAction(ACTION_PREV), 0);
