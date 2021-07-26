@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/default_background_image"
+    android:background="?playerBackground"
     tools:context="com.musicplayer.SocyMusic.ui.player.PlayerFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
