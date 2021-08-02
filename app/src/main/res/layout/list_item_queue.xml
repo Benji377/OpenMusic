@@ -20,7 +20,7 @@
                 android:id="@+id/bar_visualizer_queue_item"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:avColor="?colorPrimary"
+                app:avColor="?colorPrimaryVariant"
                 app:avDensity="0.04"
                 app:avSpeed="normal"
                 app:avType="outline"
@@ -55,7 +55,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="Song Title"
-            android:textColor="#FFF"
+            android:textColor="@color/white"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />
 

@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class Song implements Serializable {
     private File songFile;
-    private String songTitle;
+    private final String songTitle;
 
     /**
      * First custom constructor for the Song class. Creates a Song with file only.

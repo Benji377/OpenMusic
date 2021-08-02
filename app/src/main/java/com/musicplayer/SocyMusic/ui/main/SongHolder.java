@@ -10,8 +10,8 @@ import com.musicplayer.SocyMusic.Song;
 import com.musicplayer.musicplayer.R;
 
 public class SongHolder extends RecyclerView.ViewHolder {
-    private TextView songTitleTextView;
-    private SongListAdapter.ItemClickListener clickListener;
+    private final TextView songTitleTextView;
+    private final SongListAdapter.ItemClickListener clickListener;
 
     public SongHolder(@NonNull View itemView, SongListAdapter.ItemClickListener clickListeners) {
         super(itemView);

@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     private SongsData songsData;
 
     private boolean scrollTriggeredByCode;
-    private SharedPreferences.OnSharedPreferenceChangeListener listener;
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     /**
      * Gets executed every time the app starts
@@ -106,19 +106,39 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
             case "Orange_theme":
                 setTheme(R.style.OrangeTheme);
                 break;
+            case "Yellow_theme":
+                setTheme(R.style.YellowTheme);
+                break;
+            case "Aqua_theme":
+                setTheme(R.style.AquaTheme);
+                break;
+            case "Purple_theme":
+                setTheme(R.style.PurpleTheme);
+                break;
+            case "Purpleblue_theme":
+                setTheme(R.style.PurpleblueTheme);
+                break;
+            case "Orangegreen_theme":
+                setTheme(R.style.OrangegreenTheme);
+                break;
+            case "Purpleaqua_theme":
+                setTheme(R.style.PurpleaquaTheme);
+                break;
         }
-        setContentView(R.layout.activity_main);
-
-        actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.all_app_name));
-
         // Settings listener to update theme in realtime
-        listener = (sharedPreferences, key) -> {
+        // Use instance field for listener
+        // It will not be gc'd as long as this instance is kept referenced
+        listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();
             }
         };
         prefs.registerOnSharedPreferenceChangeListener(listener);
+
+        setContentView(R.layout.activity_main);
+
+        actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.all_app_name));
 
         // Sets all components
         songsRecyclerView = findViewById(R.id.recyclerview_main_all_songs);

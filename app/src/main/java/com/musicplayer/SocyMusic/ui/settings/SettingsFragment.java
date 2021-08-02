@@ -31,7 +31,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         themePreference = findPreference(SocyMusicApp.PREFS_KEY_THEME);
 
         libPathPreference.setIntent(new Intent(getContext(), DirBrowserActivity.class));
-        //themePreference.setIntent(new Intent(getContext(), ThemeBrowserActivity.class));
     }
 
 }

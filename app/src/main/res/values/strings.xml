@@ -44,6 +44,12 @@
         <item>Blue</item>
         <item>Green</item>
         <item>Orange</item>
+        <item>Yellow</item>
+        <item>Aqua</item>
+        <item>Purple</item>
+        <item>Purple - Blue</item>
+        <item>Orange - Green</item>
+        <item>Purple - Aqua</item>
     </string-array>
 
     <string-array name="themeValues">
@@ -52,5 +58,11 @@
         <item>Blue_theme</item>
         <item>Green_theme</item>
         <item>Orange_theme</item>
+        <item>Yellow_theme</item>
+        <item>Aqua_theme</item>
+        <item>Purple_theme</item>
+        <item>Purpleblue_theme</item>
+        <item>Orangegreen_theme</item>
+        <item>Purpleaqua_theme</item>
     </string-array>
 </resources>

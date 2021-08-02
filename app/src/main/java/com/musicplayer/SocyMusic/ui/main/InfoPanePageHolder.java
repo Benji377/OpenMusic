@@ -12,8 +12,8 @@ import com.musicplayer.SocyMusic.Song;
 import com.musicplayer.musicplayer.R;
 
 class InfoPanePageHolder extends RecyclerView.ViewHolder {
-    private TextView songTitleTextView;
-    private Button playPauseButton;
+    private final TextView songTitleTextView;
+    private final Button playPauseButton;
 
     public InfoPanePageHolder(@NonNull View itemView, InfoPanePagerAdapter.PaneListeners listeners) {
         super(itemView);

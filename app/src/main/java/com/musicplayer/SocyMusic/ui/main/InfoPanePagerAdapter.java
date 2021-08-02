@@ -14,7 +14,7 @@ import com.musicplayer.musicplayer.R;
 import java.util.List;
 
 public class InfoPanePagerAdapter extends RecyclerView.Adapter<InfoPanePageHolder> {
-    private Context context;
+    private final Context context;
     private List<Song> queue;
     private PaneListeners listeners;
 
