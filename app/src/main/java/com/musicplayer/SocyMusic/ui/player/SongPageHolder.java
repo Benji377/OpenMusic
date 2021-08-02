@@ -12,14 +12,13 @@ import com.musicplayer.SocyMusic.Song;
 import com.musicplayer.musicplayer.R;
 
 public class SongPageHolder extends RecyclerView.ViewHolder {
-    private TextView songTitleTextView;
-    private ImageView songThumbnail;
+    private final TextView songTitleTextView;
+    private final ImageView songThumbnail;
 
     public SongPageHolder(@NonNull View itemView) {
         super(itemView);
         songTitleTextView = itemView.findViewById(R.id.textview_player_song_title);
         songThumbnail = itemView.findViewById(R.id.imageview_player_album_art);
-        ;
         // This is necessary to fix the marquee, which was lagging sometimes
         songTitleTextView.setEnabled(true);
         songTitleTextView.setSelected(true);

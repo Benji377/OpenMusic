@@ -155,6 +155,7 @@ public class PlayerFragment extends Fragment {
 
         queueButton.setOnClickListener(v -> {
             // TODO: Fix this. Opens the quequefragment, but generates errors when trying to close it.
+            /*
             QueueFragment queueFragment = new QueueFragment();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             releaseVisualizer();
@@ -163,10 +164,13 @@ public class PlayerFragment extends Fragment {
             transaction.replace(R.id.layout_main_queue_container, queueFragment); // give your fragment container id in first parameter
             transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
             transaction.commit();
+             */
+            Toast.makeText(getContext(), "Coming soon", Toast.LENGTH_SHORT).show();
         });
 
         playlistButton.setOnClickListener(v -> {
-            Playlist playlist = new Playlist("favorites");
+            Toast.makeText(getContext(), "Coming soon", Toast.LENGTH_SHORT).show();
+            //Playlist playlist = new Playlist("favorites");
             // Testing the playlist -> FAILED
         });
 
@@ -200,9 +204,6 @@ public class PlayerFragment extends Fragment {
         };
         // Sets properties of the seekbar
         songSeekBarUpdaterThread.start();
-        //songSeekBar.getProgressDrawable().setColorFilter(getResources()
-                //.getColor(R.color.design_default_color_on_primary), PorterDuff.Mode.MULTIPLY);
-        //songSeekBar.getThumb().setColorFilter(getResources().getColor(R.color.design_default_color_on_primary), PorterDuff.Mode.SRC_IN);
 
         // Controls the changes at the seekbar
         songSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

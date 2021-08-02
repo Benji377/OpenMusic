@@ -16,7 +16,7 @@ import com.musicplayer.musicplayer.R;
 import com.woxthebox.draglistview.DragItemAdapter;
 
 public class ItemHolder extends DragItemAdapter.ViewHolder {
-    private Context context;
+    private final Context context;
     private final SongsData songsData;
     private final TextView songTitleTextView;
     private final BarVisualizer visualizer;

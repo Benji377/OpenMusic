@@ -15,11 +15,11 @@ import java.io.File;
 import it.sephiroth.android.library.checkbox3state.CheckBox3;
 
 public class FolderHolder extends RecyclerView.ViewHolder {
-    private FolderCallBack folderCallBack;
+    private final FolderCallBack folderCallBack;
     private File folder;
-    private TextView dirNameTextView;
-    private CheckBox3 selectedCheckBox;
-    private FolderAdapter.AdapterListeners adapterListeners;
+    private final TextView dirNameTextView;
+    private final CheckBox3 selectedCheckBox;
+    private final FolderAdapter.AdapterListeners adapterListeners;
 
     public FolderHolder(LayoutInflater inflater, ViewGroup parent, FolderAdapter.AdapterListeners listeners, FolderCallBack folderCallBack) {
         super(inflater.inflate(R.layout.list_item_dir_browser, parent, false));

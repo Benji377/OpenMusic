@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class FolderAdapter extends RecyclerView.Adapter<FolderHolder> {
-    private Context context;
+    private final Context context;
     private File[] directories;
     private AdapterListeners listeners;
     private FolderHolder.FolderCallBack folderCallBack;

@@ -14,7 +14,7 @@ import com.musicplayer.musicplayer.R;
 import java.util.List;
 
 public class SongPagerAdapter extends RecyclerView.Adapter<SongPageHolder> {
-    private Context context;
+    private final Context context;
     private List<Song> queue;
 
     public SongPagerAdapter(Context context, List<Song> queue) {
