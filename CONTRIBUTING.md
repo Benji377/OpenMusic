@@ -29,6 +29,12 @@ Fork with [GitHub Codespaces](https://github.com/features/codespaces):
 ### Open a pull request
 When you're done making changes and you'd like to propose them for review, use the [pull request template](#pull-request-template) to open your PR (pull request).
 
+## Resource naming convention
+When contributing to this project, it's important that we all try to code in the same style to simplify organisation and make it easier for everyone to understand the code and contribute. Thats why we have strict naming conventions.
+We got ours from an [answer on Stackoverflow.](https://stackoverflow.com/a/39866695/14159914) It is very simple to follow and there is even an image that you can save on your desktop if you forget things easily.
+
+![UbsBV](https://user-images.githubusercontent.com/50681275/125126668-b9969a00-e0fb-11eb-8a86-b5a0399f12ec.png)
+
 ### Submit your PR & get it reviewed
 - Once you submit your PR, others from the SocyMusic dev team will review it with you.
 - After that, we may have questions, check back on your PR to keep up with the conversation.
