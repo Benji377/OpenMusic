@@ -32,11 +32,26 @@ Those are the features that will be added in the future, on some there is alread
 Everyone can contribute. We need designer to make the app beautiful, we need translators and writers to make the app globally accessible and obviously we need developers to create an awesome app!
 Check out about contributing [here](CONTRIBUTING.md)
 
-## Resource naming convention
-When contributing to this project, it's important that we all try to code in the same style to simplify organisation and make it easier for everyone to understand the code and contribute. Thats why we have strict naming conventions.
-We got ours from an [answer on Stackoverflow.](https://stackoverflow.com/a/39866695/14159914) It is very simple to follow and there is even an image that you can save on yozr desktop if you forget things easily.
+## Downloading the app
+There are two ways to download the app (maybe there are more, but these are the ones I would suggest):
+- Downloading the [latest release](https://github.com/Benji377/SocyMusic/releases/latest)
+- Downloading the source code and building the app yourself
+The second option might be better for people who want to have the latest version of the app
 
-![UbsBV](https://user-images.githubusercontent.com/50681275/125126668-b9969a00-e0fb-11eb-8a86-b5a0399f12ec.png)
+**Downloading the release**
+This option is the simplest and fastest way to get the app up and running. 
+1. Just follow the link above, choose your release and download the attached asset at the bottom of the page. The app file name ens with the .apk extension.
+2. Once downloaded click on the file and your Android device will start installing the app
+3. Well done! You made it!
+Note that sometimes your phone might not recognize the app and flag it as a virus, you can safely ignore that warning
+
+**Downloading the source code**
+This is a slightly more difficult method, but still feasable.
+1. In the repository, click on the green "Code" button and [download the source code as zip file](https://github.com/Benji377/SocyMusic/archive/refs/heads/main.zip)
+2. Extract all the zip files in one place
+3. Run the build.gradle file to build the project. Alternatively you can also import the project in Android studio
+4. You should now have an .apk file in your "\app\build\outputs\apk\debug" folder
+5. Transfer the file to your phone and install the app
 
 ## Contact
 If you are unsure of something, have special suggestions or just want to contact me in general, you can do so by writing me on any of the following socials:
