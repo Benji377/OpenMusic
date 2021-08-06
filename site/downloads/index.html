@@ -57,9 +57,9 @@
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">Downloads</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a>
+    <li class="toctree-l2"><a class="reference internal" href="#release-download">Release download</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#project-layout">Project layout</a>
+    <li class="toctree-l2"><a class="reference internal" href="#source-download">Source download</a>
     </li>
     </ul>
                     </li>
@@ -105,21 +105,16 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
-<p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
-<ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs -h</code> - Print help message and exit.</li>
-</ul>
-<h2 id="project-layout">Project layout</h2>
-<pre><code>mkdocs.yml    # The configuration file.
-docs/
-    index.md  # The documentation homepage.
-    ...       # Other markdown pages, images and other files.
-</code></pre>
+                <h1 id="downloads">Downloads</h1>
+<p>There are multiple ways of downloading the app, some are easier, some are harder, some are more efficient and some have special benefits. Please note that this section is meant for users, not contributors. If you want to download the project and contribute to it, refer to the <a href="./contributing/">contributing</a> section</p>
+<h2 id="release-download">Release download</h2>
+<p>The easiest way to download the app is trough the <a href="https://github.com/Benji377/SocyMusic/releases/latest">Releases</a> on Github. Before you download anything, make sure the version is the correct one. If you want to download the latest release, download the latest release with a beta tag in it, else download one without it. Beta-releases might not be stable and cause some issues while using, normal releases are better.
+After you go to the link above, scroll to the bottom of the page, click on Assets and download your prefered file format. APK is the recommend one. After downloading the file, transfer it to your phone and then click on it, a pop-up should appear and the installation start.
+<strong>Note:</strong> Sometimes phones block the installation because they don't recognize the app, you can safely ignore it and continue the download</p>
+<h2 id="source-download">Source download</h2>
+<p>This is a more advanced method of installing the app. It will require you to have some coding knowledge. Start by going to the <a href="https://github.com/Benji377/SocyMusic">Github repository</a> and download the whole source. You could do this with GIT or just download the ZIP file. Please refer to this great guide on how to do it: <a href="https://www.instructables.com/Downloading-Code-From-GitHub/">Instructables</a>.
+After downloading the project, navigate to the folder where the project is located and use the <a href="https://docs.gradle.org/current/userguide/gradle_wrapper.html">Gradle Wrapper</a> to build the project. You will need to open the command line and write <code>gradlew assembleDebug</code> to create an apk. Now you can just transfer the apk to your phone again and install it as usual.</p>
+<p><strong>Note:</strong> Even if you need to build the file from scratch in the source download, it does have the advantage of giving you the newest version of the app possible. This is especially useful if you plan on <a href="./contributing/">testing the app</a>.</p>
               
             </div>
           </div>
