@@ -3,7 +3,7 @@ This is the documentation for the Android music player SocyMusic. Check us out o
 ## Index:
 - [Information](./information/)
     - [How it started](./information/#how-it-started)
-    - [Concept](./information/#concept-and-goals)
+    - [Concept and goals](./information/#concept-and-goals)
     - [Compatibility](./information/#compatibility)
 - [Downloads](./downloads/)
     - [Release download](./downloads/#release-download)
