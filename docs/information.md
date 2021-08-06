@@ -10,3 +10,28 @@ With concept we mean the idea behind the app. And the idea behind SocyMusic is n
 The app is compatible on all Android devices which have a minimum of Android 7.0 installed.
 The app is actually being compiled in SDK version 30, which is the equivalent of Android version 11, this would be the best option to use the app at its fullest.
 IOS(iPhone) is not compatible and as of now there are no plans on actually coding it.
+Here is a table to show it better:
+
+| Android Name| Version numbers | API level | Release date | compatible |
+|-------------|-----------------|-----------|--------------|------------|
+|No name | 1.0 | 1 | September 23, 2008 | no |
+|No name | 1.1 | 2|	February 9, 2009| no |
+|Cupcake|1.5 | 3|	April 27, 2009| no |
+|Donut|1.6 | 4|	September 15, 2009| no |
+|Eclair|2.0 – 2.1 | 5 – 7|	October 26, 2009| no |
+|Froyo|2.2 – 2.2.3 | 8|	May 20, 2010| no |
+|Gingerbread|2.3 – 2.3.7 | 9 – 10|	December 6, 2010| no |
+|Honeycomb|3.0 – 3.2.6 | 11 – 13|	February 22, 2011| no |
+|Ice Cream Sandwich|4.0 – 4.0.4 | 14 – 15|	October 18, 2011| no |
+|Jelly Bean|4.1 – 4.3.1 | 16 – 18|	July 9, 2012| no |
+|KitKat	| 4.4 – 4.4.4 | 19 – 20|	October 31, 2013| no |
+|Lollipop|5.0 – 5.1.1 | 21- 22|	November 12, 2014| no |
+|Marshmallow|6.0 – 6.0.1 | 23|	October 5, 2015| no |
+|Nougat|7.0	| 24|	August 22, 2016| yes |
+|Nougat|7.1.0 – 7.1.2 | 25|	October 4, 2016| yes |
+|Oreo|8.0 | 26|	August 21, 2017| yes |
+|Oreo|8.1 | 27|	December 5, 2017| yes |
+|Pie|9.0 | 28|	August 6, 2018| yes |
+|Android 10 (Q)	| 10.0 | 29|	September 3, 2019| yes |
+|Android 11 (R)	| 11.0 | 30|	September 8, 2020| yes |
+|Android 12 (S)	| 12.0 | 31|	expected to launch later this year| probably |
