@@ -29,6 +29,7 @@ Here are the goals achieved so far:
 | 13. | Added various templates | #142 | 3. August 2021 |
 | 14. | Added docs | #146 | 5. August 2021 |
 
+
 ## Compatibility
 The app is compatible on all Android devices which have a minimum of Android 7.0 installed.
 The app is actually being compiled in SDK version 30, which is the equivalent of Android version 11, this would be the best option to use the app at its fullest.
