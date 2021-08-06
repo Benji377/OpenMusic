@@ -1,17 +1,20 @@
-# Welcome to MkDocs
-
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
-
-## Commands
-
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+# Welcome to SocyMusic!
+## Index:
+- [Information](./information/)
+    - [How it started](./information/#how-it-started)
+    - [Concept](./information/#concept)
+    - [Compatibility](./information/#compatibility)
+- [Downloads](./downloads/)
+    - [Release download](./downloads/#release-download)
+    - [Source code](./downloads/#source-download)
+- [Contributing](./contributing/)
+    - [Pull requests](./contributing/#pull-requests)
+    - [Issues](./contributing/#issues)
+    - [Discussions](./contributing/#discussions)
+    - [Translations](./contributing/#translations)
+    - [Design](./contributing/#design)
+- [Other](./other/)
+    - [Policy](./other/#policy)
+    - [License](./other/#license)
+    - [Conventions](./other/#conventions)
+    - [Contact](./other/#contact)
