@@ -11,8 +11,9 @@ PS: You will need to zoom a lot to see something here, sorry.
 ## Concept
 With concept we mean the idea behind the app. And the idea behind SocyMusic is not tooo complicated. SocyMusic has been created with the idea of having a completely offline and open source app based entirely on Java. Another cool feature that we want to implement somewhere in the future is the file sharing feature. You will then be able to share songs with eachother and meanwhile still keep the app 100% offline because the sharing of files would take place over Bluetooth.
 Here are the goals achieved so far:
+
 | Goal | Description | Tag | Reached | 
-|-------------|-----------------|-----------|--|
+|------|-------------|-----|---------|
 | 1. | Add project to Github | # | 24. May 2021 |
 | 2. | First release | # | 25. May 2021 |
 | 3. | First contribution to the project | #5 | 27. May 2021 |
