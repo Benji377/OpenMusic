@@ -1,0 +1,8 @@
+site_name: SocyMusic
+nav:
+    - Home: index.md
+    - Information: information.md
+    - Downloads: downloads.md
+    - Contributing: contributing.md
+    - Other: other.md
+theme: readthedocs
