@@ -1,17 +1,14 @@
-# Welcome to MkDocs
+# Other
+This section is for all the things that didn't make it in other sections, but that could still be useful. Especially check out the bottom of the page where you will find a way to contact us in case you encounter any issues along the way or need a way of direct communication.
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+## Policy
+(coming soon)
 
-## Commands
+## License
+(coming soon)
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## Conventions
+(coming soon)
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Contact
+(coming soon)
