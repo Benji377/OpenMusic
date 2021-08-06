@@ -1,8 +1,9 @@
 # Welcome to SocyMusic!
+This is the documentation for the Android music player SocyMusic. Check us out on [Github](https://github.com/Benji377/SocyMusic)
 ## Index:
 - [Information](./information/)
     - [How it started](./information/#how-it-started)
-    - [Concept](./information/#concept)
+    - [Concept](./information/#concept-and-goals)
     - [Compatibility](./information/#compatibility)
 - [Downloads](./downloads/)
     - [Release download](./downloads/#release-download)
