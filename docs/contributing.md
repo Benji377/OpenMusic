@@ -53,7 +53,16 @@ Here is a list of currently existing categories and their purpose:
 **Note:** In the Discussions tab, the same labels as the Issues apply!
 
 ## Translations
-(coming soon)
+Translations are a very important part of SocyMusic. It helps in making the project available globally. Let's get straight to the point: There are two types of translations, the one in the app and the one in the docs/github repo.
+
+- **App translations:**
+All the texts in the app are in a file called [strings.xml](https://github.com/Benji377/SocyMusic/blob/main/app/src/main/res/values/strings.xml). There you will find all the strings you need and you can translate thsóse in whatever language you want. Please do look into the [Translations](https://github.com/Benji377/SocyMusic/discussions/categories/translations) discussion to avoid duplicate translations submissions. You can obviously also suggest changes to existing translations in the discusions
+
+- **Docs/Github translations:**
+Again, before you submit any translation, check if the language you want to translate into alrey exists or not by looking in the assigend Translations discussion category. 
+As for the Github repository, you can find all the files you need [here](https://github.com/Benji377/SocyMusic), just look for .md files and start translating. For the docs you can find everything in this [folder](https://github.com/Benji377/SocyMusic/tree/main/docs).
+To make it easier for you you can use this [great free online tool](https://dillinger.io/) to visualize your text in Markdown in real time. You can obviously also customize it with emojis and custom formatting, but please add those changes separately so that we can add them to the other versions as well.
+
 
 ## Design
-(coming soon)
+Now you might be thinking, why does a music player need designers? And the answer is: customization. The app is completely open-source, created by the comunity for the comunity. Therefore the designs are custom to. At the moment if you look at the backgrounds, they where made by one of our designers. If you have any suggestions for new logo, new backgrounds, new colors etc, you can just submit your great artwork at the [Design discussions](https://github.com/Benji377/SocyMusic/discussions/categories/designs). We will carefully look at each and every submission and add them if possible. If you would like to remain anonymous, ypu can always mail us the design by email following the [Contact](./other/#contact) section.
