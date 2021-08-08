@@ -19,10 +19,23 @@ Here is a step by step guide to submit a pull request successfully:
 8. If you navigate to the [repository](https://github.com/Benji377/SocyMusic/pulls) you can open a new pull request and submit your code
 9. Try to be as detailed as possible when describing your change, also try to include external sources you used as reference if possible.
 
-This was a very brief tutorial on how to create a pull request, for a more detailed an beginner friendly tutorial please visit the [Github tutorial](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) directly.
+This was a very brief tutorial on how to create a pull request, for a more detailed and beginner friendly tutorial please visit the [Github tutorial](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) directly.
 
 ## Issues
-(coming soon)
+Issues are a very important part of the project. Issues are not just bugs, but also suggestions and improvements.
+If you find something odd in the app, would like to suggest an improvement or think there is a security vulnerability, you can just use one of the [Issue templates](https://github.com/Benji377/SocyMusic/issues/new/choose) and submit your thoughts.
+One important thing you need to do before submitting your issue is to take a look at the past open and closed issues to avoid creating a duplicate issue. If you find that your issue has already been submitted but you want to add some more detail to it you can always do that, even if the issue is closed. We normaly don't lock conversations and therefore everyone has the possibility to submit his thoughts and request more detailed explanation if needed.
+While exploring issues you might be wondering what some labels mean. We usually use the standard Github labels, we don't have custom ones yet.
+Here is a short list:
+- [Bug](https://github.com/Benji377/SocyMusic/issues?q=is%3Aopen+is%3Aissue+label%3Abug): Bugs are errors in the app where the app doesn't behave like it should. When this label is applied it means that the issue is realted to some sort of malfunctioning of the app.
+- [Enhancement](https://github.com/Benji377/SocyMusic/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement): Enhancements are essentially improvements and suggestions to the app. When this label is applied it means that the person opening the issue would like to request a change in the issue, the issue might or might not have a pull-request assigned where the person already implemented the new feature he/she requested.
+- [Documentation](https://github.com/Benji377/SocyMusic/issues?q=is%3Aopen+is%3Aissue+label%3Adocumentation): This label refers to everything that is not directly related to the app, but has to do with the docs. If you want to contribute to this type of issue, you might find the section about [Translations](#translations) below if your interest.
+- [Duplicate](https://github.com/Benji377/SocyMusic/issues?q=is%3Aopen+is%3Aissue+label%3Aduplicate): This label basically means that the issue already exists. When an issue already exists, the existing issue will be mentioned in the issue discussions section and then closed immediately.
+- [Good first issue](https://github.com/Benji377/SocyMusic/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22): This type of issue is great for new contributors. It is mostly an easy to do task and therefore great for new people who would like to be part of the contributors of the project.
+- [Help wanted](https://github.com/Benji377/SocyMusic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22): This label is generally added to an issue that is harder to fix. We are a small team and we can't do everything, sometimes we struggle a lot and if you see an issue like this and know how to fix it you are very welcome to do so.
+- [Question](https://github.com/Benji377/SocyMusic/issues?q=is%3Aopen+is%3Aissue+label%3Aquestion): Do not confuse this labelwith the one above! This label means that we don't understand your issue and need more information on how to fix it. When we apply this label we also provide some questions in the issue. If you have answers to those questions you can obviously answer them.
+- [Invalid](https://github.com/Benji377/SocyMusic/issues?q=is%3Aopen+is%3Aissue+label%3Ainvalid): If we think that the issue is not related to the SocyMusic project or nobody is able to clarify the issue it will be flagged as invalid and closed after some time. To avoid this, please try to be as detailed as possible while writing issues and remain open for questions we might have.
+- [Wontfix](https://github.com/Benji377/SocyMusic/issues?q=is%3Aopen+is%3Aissue+label%3Awontfix): This is the only label that immediately blocks any development on the issue. It means that whatever got reported or suggested will not be fixed or coded. This happens very rarely, but it might be the case if it somehow breaks the [Concept](./information/#concept-and-goals) of the app.
 
 ## Discussions
 (coming soon)
