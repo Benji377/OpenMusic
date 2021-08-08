@@ -20,6 +20,7 @@ Here is a step by step guide to submit a pull request successfully:
 9. Try to be as detailed as possible when describing your change, also try to include external sources you used as reference if possible.
 
 This was a very brief tutorial on how to create a pull request, for a more detailed and beginner friendly tutorial please visit the [Github tutorial](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) directly.
+**Note:** The pull requests can have the same labels as issues, refer to them in the section below!
 
 ## Issues
 Issues are a very important part of the project. Issues are not just bugs, but also suggestions and improvements.
@@ -38,7 +39,18 @@ Here is a short list:
 - [Wontfix](https://github.com/Benji377/SocyMusic/issues?q=is%3Aopen+is%3Aissue+label%3Awontfix): This is the only label that immediately blocks any development on the issue. It means that whatever got reported or suggested will not be fixed or coded. This happens very rarely, but it might be the case if it somehow breaks the [Concept](./information/#concept-and-goals) of the app.
 
 ## Discussions
-(coming soon)
+Discussions are the best way to communicate on Github. Especially if you are unsure to open an issue about it or not, it's a great place to discuss it. Discussion are also a great place to submit translations or designs. Check out the respective sections below for that. 
+Some categories are locked, which means only administrators or mainatiners can create discussions in that category, but people are still able to comment on them. Some categories are completely open, which means everyone can open their own discussion in there and comment as they like. And the last type of categories is the question and answer one. It's like the completely open onw, but the difference is that people will only be able to ask questions and provide answers. There is also the possibility to vote for the best answer.
+Here is a list of currently existing categories and their purpose:
+- [Announcements](https://github.com/Benji377/SocyMusic/discussions/categories/announcements): This category is all about telling whoever is reading what has been done. For example when there is a new release, a discussion for it gets created automatically to allow people to discuss on it. It is also used to announce special events or goals that have been reached.
+- [Design](https://github.com/Benji377/SocyMusic/discussions/categories/designs): This category is all about your design suggestiosn. We want to avoid the need for the designers to create issues for their design creations. This also allows us to organize submissions better and for oher people to discuss on it. Please refer to the section below on how to contribute properly.
+- [General](https://github.com/Benji377/SocyMusic/discussions/categories/general): As the name already suggests, there is no strict rule here. If you think your discussion doesn't fit any of the other categories you are free to submit it here. We mostly use it to communicate with eachother about new changes, suggestions and more.
+- [Ideas](https://github.com/Benji377/SocyMusic/discussions/categories/ideas): This category is specific for new suggestions which need approval fromthe community or further development. The difference between this and creating an issue is that when creating an issue you need to submit as much detail as possible, but in a discussion you can also just write down your tthoughts.
+- [Q&A](https://github.com/Benji377/SocyMusic/discussions/categories/q-a): Questions and Answer is a special category which should help in solving simple questions which don't require to open an issue. You should only ask questions here and they will be answered with answers that people can vote on. Once the question ahs been answerde, please mark the answer that solve it.
+- [Show and tell](https://github.com/Benji377/SocyMusic/discussions/categories/show-and-tell): Whe you made something great you are proud of and would like to share it with the others of the SocyMusic community, this is the place for you.
+- [Translations](https://github.com/Benji377/SocyMusic/discussions/categories/translations): If you know any other language than English and would like to submit your translations of the docs or app, this is the place to do it. Please refer to the section below on how to create translation contributions properly.
+ 
+**Note:** In the Discussions tab, the same labels as the Issues apply!
 
 ## Translations
 (coming soon)
