@@ -52,6 +52,7 @@
         <item>Purple - Aqua</item>
     </string-array>
 
+<!-- Do not change the name of these, they are used in code -->
     <string-array name="themeValues">
         <item>White_theme</item>
         <item>Red_theme</item>
