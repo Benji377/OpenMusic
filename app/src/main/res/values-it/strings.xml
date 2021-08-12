@@ -1,0 +1,68 @@
+<resources>
+<string name="all_app_name">SocyMusic</string>
+    <string name="all_coming_soon">Prossimamente!</string>
+
+    <string name="main_song_list_empty">Nessun brano trovato...</string>
+    <string name="main_err_file_gone">File spostato o eliminato.</string>
+    <string name="main_err_file_corrupted">Saltato %d canzoni. File corrotti o illeggibili.</string>
+
+    <string name="main_menu_item_about">Informazioni</string>
+    <string name="main_menu_item_playlist">Playlist</string>
+    <string name="main_menu_item_settings">Impostazioni</string>
+
+    <string name="about_description">SocyMusic è un lettore musicale Android open source scritto in Java a cui tutti possono contribuire.</string>
+    <string name="about_version">Versione %s</string>
+
+    <string name="notif_channel_media_name">Canale multimediale</string>
+    <string name="notif_channel_media_description">Canale multimediale per la riproduzione audio</string>
+    <string name="notif_previous">Precedente</string>
+    <string name="notif_pause">Pausa</string>
+    <string name="notif_play">Play</string>
+    <string name="notif_next">Prossimo</string>
+
+    <string name="queue_title">Coda di riproduzione</string>
+    <string name="player_title">Ora in riproduzione</string>
+
+    <string name="dir_browser_title">Seleziona cartella</string>
+    <string name="dir_browser_internal_storage">Memoria interna</string>
+    <string name="dir_browser_sd_card">SD scheda (%s)</string>
+    <string name="dir_browser_folder_list_empty">La cartella è vuota</string>
+    <string name="dir_browser_folder_unreadable">Impossibile accedere alla cartella</string>.
+
+    <string name="dir_browser_menu_item_save">Salva</string>
+
+    <string name="prefs_title_lib_paths">Cartelle della libreria</string>
+    <string name="prefs_summery_lib_paths">Configura dove cercare i brani sul tuo dispositivo.</string>
+    <string name="prefs_summery_theme">Scegli i colori primari della tua app</string>
+    <string name="prefs_title_theme">Tema</string>
+
+    <string name="fragment_player_imageview_player_album_art">Miniatura della canzone</string>
+
+    <string-array name="themeOptions">
+        <item>Bianca</item>
+        <item>Rosso</item>
+        <item>Blu</item>
+        <item>Verde</item>
+        <item>Arancione</item>
+        <item>Giallo</item>
+        <item>Acqua</item>
+        <item>Viola</item>
+        <item>Viola - Blu</item>
+        <item>Arancione - Verde</item>
+        <item>Viola - Acqua</item>
+    </string-array>
+
+    <string-array name="themeValues">
+        <item>White_theme</item>
+        <item>Red_theme</item>
+        <item>Blue_theme</item>
+        <item>Green_theme</item>
+        <item>Orange_theme</item>
+        <item>Yellow_theme</item>
+        <item>Aqua_theme</item>
+        <item>Purple_theme</item>
+        <item>Purpleblue_theme</item>
+        <item>Orangegreen_theme</item>
+        <item>Purpleaqua_theme</item>
+    </string-array>
+</resources>

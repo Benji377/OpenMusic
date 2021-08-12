@@ -1,0 +1,69 @@
+<resources>
+<string name="all_app_name">SocyMusic</string>
+    <string name="all_coming_soon">Demnächst!</string>
+
+    <string name="main_song_list_empty">Keine Lieder gefunden…</string>
+    <string name="main_err_file_gone">Datei verschoben oder gelöscht.</string>
+    <string name="main_err_file_corrupted">%d Lieder übersprungen. Datei(en) beschädigt oder unlesbar.</string>
+
+    <string name="main_menu_item_about">Über uns</string>
+    <string name="main_menu_item_playlist">Playlist</string>
+    <string name="main_menu_item_settings">Einstellungen</string>
+
+    <string name="about_description">SocyMusic ist ein in Java geschriebener Open-Source Android Musikplayer, zu dem jeder beitragen kann.</string>
+    <string name="about_version">Version %s</string>
+
+    <string name="notif_channel_media_name">Medienkanal</string>
+    <string name="notif_channel_media_description">Medienkanal für Audiowiedergabe</string>
+    <string name="notif_previous">Vorherige</string>
+    <string name="notif_pause">Pause</string>
+    <string name="notif_play">Spielen</string>
+    <string name="notif_next">Nächste</string>
+
+    <string name="queue_title">Warteschlange abspielen</string>
+    <string name="player_title">Läuft gerade</string>
+
+    <string name="dir_browser_title">Verzeichnisse auswählen</string>
+    <string name="dir_browser_internal_storage">Interne Speicher</string>
+    <string name="dir_browser_sd_card">SD Karte (%s)</string>
+    <string name="dir_browser_folder_list_empty">Der Ordner ist leer</string>
+    <string name="dir_browser_folder_unreadable">Kein Zugriff auf Ordner</string>.
+
+    <string name="dir_browser_menu_item_save">Speichern</string>
+
+    <string name="prefs_title_lib_paths">Bibliotheksordner</string>
+    <string name="prefs_summery_lib_paths">Konfigurieren Sie, wo auf Ihrem Gerät nach Songs gesucht werden soll.</string>
+    <string name="prefs_summery_theme">Wählen Sie die Primärfarben Ihrer App</string>
+    <string name="prefs_title_theme">Thema</string>
+
+    <string name="fragment_player_imageview_player_album_art">Song-Miniaturansicht</string>
+
+    <string-array name="themeOptions">
+        <item>Weiß</item>
+        <item>rot</item>
+        <item>Blau</item>
+        <item>Grün</item>
+        <item>Orange</item>
+        <item>Gelb</item>
+        <item>Aqua</item>
+        <item>Lila</item>
+        <item>Lila-blau</item>
+        <item>Orange - Grün</item>
+        <item>Lila - Aqua</item>
+    </string-array>
+
+
+    <string-array name="themeValues">
+        <item>White_theme</item>
+        <item>Red_theme</item>
+        <item>Blue_theme</item>
+        <item>Green_theme</item>
+        <item>Orange_theme</item>
+        <item>Yellow_theme</item>
+        <item>Aqua_theme</item>
+        <item>Purple_theme</item>
+        <item>Purpleblue_theme</item>
+        <item>Orangegreen_theme</item>
+        <item>Purpleaqua_theme</item>
+    </string-array>
+</resources>
