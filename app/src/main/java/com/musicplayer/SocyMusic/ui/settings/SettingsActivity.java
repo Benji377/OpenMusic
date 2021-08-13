@@ -21,7 +21,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String theme = prefs.getString(SocyMusicApp.PREFS_KEY_THEME, "Red_theme");
         switch (theme) {
@@ -81,5 +80,6 @@ public class SettingsActivity extends AppCompatActivity {
                     .commit();
         } else
             settingsFragment = (SettingsFragment) fragment;
+
     }
 }
