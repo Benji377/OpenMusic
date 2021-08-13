@@ -1,7 +1,6 @@
 package com.musicplayer.SocyMusic.ui.player;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -16,18 +15,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 import com.musicplayer.SocyMusic.MediaPlayerUtil;
-import com.musicplayer.SocyMusic.Playlist;
 import com.musicplayer.SocyMusic.Song;
 import com.musicplayer.SocyMusic.SongsData;
 import com.musicplayer.SocyMusic.ui.main.MainActivity;
-import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
+import com.musicplayer.SocyMusic.ui.playlist.Playlist;
 import com.musicplayer.musicplayer.R;
 
 import java.util.Objects;
@@ -272,11 +268,15 @@ public class PlayerFragment extends Fragment {
         });
 
         favoriteCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // TODO: Fix playlists
             songsData.setFavorited(isChecked);
+            Playlist playlist = new Playlist(requireContext(), "favorite");
             if (songsData.isInFavorite()) {
                 Toast.makeText(getContext(), "Song added to Favorites", Toast.LENGTH_SHORT).show();
+                playlist.addSong(songPlaying.getFile());
             } else {
                 Toast.makeText(getContext(), "Song removed from Favorites", Toast.LENGTH_SHORT).show();
+                playlist.removeSong(songPlaying.getFile());
             }
         });
 
@@ -367,6 +367,7 @@ public class PlayerFragment extends Fragment {
     public void updatePlayerUI() {
         // Retrieves the song playing right now
         songPlaying = songsData.getSongPlaying();
+        favoriteCheckBox.setChecked(songsData.isInFavorite());
 
         // Sets all properties again
         if (songPager.getCurrentItem() != songsData.getPlayingIndex()) {
@@ -381,7 +382,7 @@ public class PlayerFragment extends Fragment {
         // Sets the time of the song
         songEndTimeTextview.setText(createTime(duration));
         songStartTimeTextview.setText(createTime(position));
-        //initializeVisualizer();
+        initializeVisualizer();
         // If paused or playing
         updatePlayButton();
     }
@@ -404,6 +405,7 @@ public class PlayerFragment extends Fragment {
         // Plays the next song
         MediaPlayerUtil.playNext(getContext());
         hostCallBack.onSongUpdate();
+        favoriteCheckBox.setChecked(songsData.isInFavorite());
     }
 
     /**
@@ -413,6 +415,7 @@ public class PlayerFragment extends Fragment {
         // Plays the previous song
         MediaPlayerUtil.playPrev(getContext());
         hostCallBack.onSongUpdate();
+        favoriteCheckBox.setChecked(songsData.isInFavorite());
     }
 
     /**

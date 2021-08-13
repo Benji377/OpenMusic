@@ -1,4 +1,7 @@
-package com.musicplayer.SocyMusic;
+package com.musicplayer.SocyMusic.ui.playlist;
+
+import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
-For devs, this is the M§U file structure, please follow this carefully to avoid issues:
+For devs, this is the M3U file structure, please follow this carefully to avoid issues:
 - The first line defines the type of file
 - The next line pairs are as follow:
     - The keyword #EXTINF: followed by the information about a song
@@ -33,6 +36,7 @@ public class Playlist {
     private File playlistFile;
     List<String> songPathList;
     private int songCount;
+    private String path;
 
     public String getPlaylistName() {
         return playlistName;
@@ -55,55 +59,62 @@ public class Playlist {
     public int getSongCount() {
         return songCount;
     }
-
     public void setSongCount(int songCount) {
         this.songCount = songCount;
     }
+    public String getPath() {
+        return path;
+    }
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-    public Playlist(String playlistName) {
-        File file = new File(getPlaylistName());
+    public Playlist(Context context, String playlistName) {
+        setPlaylistName(playlistName + ".m3u");
+        setPath(context.getFilesDir().getAbsolutePath());
+        File file = new File(getPath(), getPlaylistName());
         try {
             if(file.createNewFile()) {
-                System.out.println("File created at:" + file.getPath());
-                FileWriter writer = new FileWriter(getPlaylistName());
+                Log.e("Playlist", "File created at:" + file.getPath());
+                FileWriter writer = new FileWriter(file);
                 writer.write("#EXTM3U\n");
                 writer.write("\n");
                 writer.close();
-                setPlaylistName(playlistName);
-                setPlaylistFile(file);
-                setSongCount(0);
-                setSongPathList(new ArrayList<String>());
             } else {
-                System.out.println("File already exists");
+                Log.e("Playlist", "File already exists at "+file.getAbsolutePath());
             }
+            setPlaylistName(playlistName);
+            setPlaylistFile(file);
+            setSongCount(0);
+            setSongPathList(new ArrayList<String>());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Error", "Exception="+e);
         }
     }
 
     public boolean addSong(File songFile) {
         try {
-            FileWriter writer = new FileWriter(getPlaylistName(), true);
+            FileWriter writer = new FileWriter(getPlaylistFile(), true);
             writer.write("#EXTINF:"+songFile.getName() + "\n");
             writer.write(songFile.getPath() + "\n");
             writer.write("\n");
             writer.close();
-            System.out.println("Wrote to file!");
+            Log.e("Playlist", "Wrote to file!");
             setSongCount(getSongCount()+1);
             getSongPathList().add(songFile.getPath());
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Error", "Exception="+e);
             return false;
         }
     }
 
     public boolean removeSong(File songFile) {
         String currentLine;
-        File tempFile = new File("temp_file.m3u");
+        File tempFile = new File(getPath(),"temp_file.m3u");
         File playlistFile = getPlaylistFile();
-        BufferedReader reader = null;
-        BufferedWriter writer = null;
+        BufferedReader reader;
+        BufferedWriter writer;
         try {
             reader = new BufferedReader(new FileReader(playlistFile));
             writer = new BufferedWriter(new FileWriter(tempFile));
@@ -129,7 +140,7 @@ public class Playlist {
                 return false;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Error", "Exception="+e);
             return false;
         }
     }
