@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="Library" android:layout="@layout/preferences_category">
+    <PreferenceCategory android:title="Library">
         <Preference
             app:key="lib_paths"
             app:summary="@string/prefs_summery_lib_paths"
@@ -11,7 +11,6 @@
 
     <PreferenceCategory
         android:title="Appearance"
-        android:layout="@layout/preferences_category"
         app:key="appearance_category">
         <ListPreference
             app:key="theme"
