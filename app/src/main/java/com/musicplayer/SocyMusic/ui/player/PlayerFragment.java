@@ -26,8 +26,11 @@ import com.musicplayer.SocyMusic.MediaPlayerUtil;
 import com.musicplayer.SocyMusic.Playlist;
 import com.musicplayer.SocyMusic.Song;
 import com.musicplayer.SocyMusic.SongsData;
+import com.musicplayer.SocyMusic.ui.main.MainActivity;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.musicplayer.R;
+
+import java.util.Objects;
 
 
 public class PlayerFragment extends Fragment {
@@ -154,18 +157,7 @@ public class PlayerFragment extends Fragment {
         favoriteCheckBox.setChecked(songsData.isInFavorite());
 
         queueButton.setOnClickListener(v -> {
-            // TODO: Fix this. Opens the quequefragment, but generates errors when trying to close it.
-            /*
-            QueueFragment queueFragment = new QueueFragment();
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            releaseVisualizer();
-            View playerFragmentView = getView().findViewById(R.id.layout_player_holder);
-            playerFragmentView.setVisibility(View.INVISIBLE);
-            transaction.replace(R.id.layout_main_queue_container, queueFragment); // give your fragment container id in first parameter
-            transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-            transaction.commit();
-             */
-            Toast.makeText(getContext(), "Coming soon", Toast.LENGTH_SHORT).show();
+            ((MainActivity) requireActivity()).showQueue();
         });
 
         playlistButton.setOnClickListener(v -> {
@@ -389,7 +381,7 @@ public class PlayerFragment extends Fragment {
         // Sets the time of the song
         songEndTimeTextview.setText(createTime(duration));
         songStartTimeTextview.setText(createTime(position));
-        initializeVisualizer();
+        //initializeVisualizer();
         // If paused or playing
         updatePlayButton();
     }
