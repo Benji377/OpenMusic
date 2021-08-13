@@ -367,6 +367,7 @@ public class PlayerFragment extends Fragment {
     public void updatePlayerUI() {
         // Retrieves the song playing right now
         songPlaying = songsData.getSongPlaying();
+        favoriteCheckBox.setChecked(songsData.isInFavorite());
 
         // Sets all properties again
         if (songPager.getCurrentItem() != songsData.getPlayingIndex()) {
@@ -404,6 +405,7 @@ public class PlayerFragment extends Fragment {
         // Plays the next song
         MediaPlayerUtil.playNext(getContext());
         hostCallBack.onSongUpdate();
+        favoriteCheckBox.setChecked(songsData.isInFavorite());
     }
 
     /**
@@ -413,6 +415,7 @@ public class PlayerFragment extends Fragment {
         // Plays the previous song
         MediaPlayerUtil.playPrev(getContext());
         hostCallBack.onSongUpdate();
+        favoriteCheckBox.setChecked(songsData.isInFavorite());
     }
 
     /**
