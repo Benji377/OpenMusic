@@ -278,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         return super.onOptionsItemSelected(item);
     }
 
-    private void hideQueue() {
+    public void hideQueue() {
         if (queueFragment == null)
             return;
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         invalidateOptionsMenu();
     }
 
-    private void showQueue() {
+    public void showQueue() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         View playerFragmentView = findViewById(R.id.layout_player_holder);
         queueFragment = new QueueFragment();
