@@ -31,6 +31,7 @@
 
         <activity android:name="com.musicplayer.SocyMusic.ui.settings.SettingsActivity"/>
         <activity android:name="com.musicplayer.SocyMusic.ui.dir_browser.DirBrowserActivity"/>
+        <activity android:name="com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity"/>
 
         <service
             android:name="com.musicplayer.SocyMusic.MediaPlayerService"
