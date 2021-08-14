@@ -6,13 +6,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.musicplayer.R;
 
-public class PlaylistActivity extends AppCompatActivity {
+public class PlaylistActivity extends AppCompatActivity implements ActivityResultCallback<ActivityResult> {
     private PlaylistData playlistData;
     private CustomRecyclerView playlistRecyclerView;
 
@@ -24,6 +26,12 @@ public class PlaylistActivity extends AppCompatActivity {
         playlistRecyclerView = findViewById(R.id.recyclerview_main_all_playlists);
         playlistData.reloadPlaylists();
         displayPlaylists();
+    }
+
+    @Override
+    public void onActivityResult(ActivityResult result) {
+        playlistData.reloadPlaylists();
+        invalidatePlaylistList();
     }
 
     void displayPlaylists() {
