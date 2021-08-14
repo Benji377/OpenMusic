@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class Song implements Serializable {
     private File songFile;
     private final String songTitle;
+    private boolean favorited;
 
     /**
      * First custom constructor for the Song class. Creates a Song with file only.
@@ -52,4 +53,11 @@ public class Song implements Serializable {
         return songTitle;
     }
 
+    public boolean isFavorited() {
+        return favorited;
+    }
+
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
+    }
 }
