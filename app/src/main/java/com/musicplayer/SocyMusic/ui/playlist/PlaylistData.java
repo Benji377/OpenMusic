@@ -142,4 +142,13 @@ public class PlaylistData {
             // Error
         }
     }
+
+    public void removePlaylist(Playlist playlist) {
+        File todelete = playlist.getPlaylistFile();
+        if(todelete.delete()) {
+            // File deleted
+        } else {
+            // Error
+        }
+    }
 }

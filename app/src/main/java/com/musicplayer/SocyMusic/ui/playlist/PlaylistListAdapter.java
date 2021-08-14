@@ -10,9 +10,6 @@ import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 
-/**
- * Custom adapter for SongsData related actions
- */
 public class PlaylistListAdapter extends RecyclerView.Adapter<PlaylistHolder> {
     private final Context context;
     private List<Playlist> allPlaylist;
