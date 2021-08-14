@@ -2,7 +2,8 @@
 <string name="all_app_name">SocyMusic</string>
     <string name="all_coming_soon">Prossimamente!</string>
 
-    <string name="main_song_list_empty">Nessun brano trovato...</string>
+    <string name="main_song_list_empty">Nessun brano trovato…</string>
+    <string name="playlist_playlist_list_empty">Nessuna playlist trovata</string>
     <string name="main_err_file_gone">File spostato o eliminato.</string>
     <string name="main_err_file_corrupted">Saltato %d canzoni. File corrotti o illeggibili.</string>
 

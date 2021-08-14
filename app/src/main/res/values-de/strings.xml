@@ -3,6 +3,7 @@
     <string name="all_coming_soon">Demnächst!</string>
 
     <string name="main_song_list_empty">Keine Lieder gefunden…</string>
+    <string name="playlist_playlist_list_empty">Keine playlist gefunden</string>
     <string name="main_err_file_gone">Datei verschoben oder gelöscht.</string>
     <string name="main_err_file_corrupted">%d Lieder übersprungen. Datei(en) beschädigt oder unlesbar.</string>
 

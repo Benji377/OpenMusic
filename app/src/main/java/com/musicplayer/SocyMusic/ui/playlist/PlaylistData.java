@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PlaylistData {
+    public static PlaylistData data;
     private ArrayList<Playlist> playlistList;
     private final String playlistDir;
 
@@ -19,6 +20,13 @@ public class PlaylistData {
     public PlaylistData(Context context) {
         playlistDir = context.getFilesDir().getAbsolutePath();
         reloadPlaylists();
+    }
+
+    public static PlaylistData getInstance(Context context) {
+        if (data == null) {
+            data = new PlaylistData(context);
+        }
+        return data;
     }
 
     public ArrayList<Playlist> getPlaylistList() {
@@ -31,6 +39,14 @@ public class PlaylistData {
 
     public String getPlaylistDir() {
         return playlistDir;
+    }
+
+    public boolean playlistExists(int position) {
+        try {
+            return playlistList.get(position).getPlaylistFile().exists();
+        } catch (IndexOutOfBoundsException ex) {
+            return false;
+        }
     }
 
     public void reloadPlaylists() {
