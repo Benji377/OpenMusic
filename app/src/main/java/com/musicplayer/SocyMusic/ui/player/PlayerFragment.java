@@ -269,6 +269,7 @@ public class PlayerFragment extends Fragment {
 
         favoriteCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // TODO: Fix playlists
+            /*
             songPlaying.setFavorited(isChecked);
             Playlist playlist = new Playlist(requireContext(), "favorite");
             if (songPlaying.isFavorited()) {
@@ -278,6 +279,7 @@ public class PlayerFragment extends Fragment {
                 Toast.makeText(getContext(), "Song removed from Favorites", Toast.LENGTH_SHORT).show();
                 playlist.removeSong(songPlaying.getFile());
             }
+             */
         });
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

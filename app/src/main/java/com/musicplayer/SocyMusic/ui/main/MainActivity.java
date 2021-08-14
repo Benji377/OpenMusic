@@ -50,6 +50,7 @@ import com.musicplayer.SocyMusic.Song;
 import com.musicplayer.SocyMusic.SongsData;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
+import com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsActivity;
 import com.musicplayer.musicplayer.BuildConfig;
@@ -261,8 +262,8 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         if (item.getItemId() == R.id.main_menu_about) {
             showPopupWindow(songsRecyclerView);
         } else if (item.getItemId() == R.id.main_menu_playlist) {
-            // TODO: Add Playlist fragment call here
-            Toast.makeText(this, getText(R.string.all_coming_soon), Toast.LENGTH_SHORT).show();
+            Intent playlistIntent = new Intent(this, PlaylistActivity.class);
+            resultLauncher.launch(playlistIntent);
         } else if (item.getItemId() == R.id.main_menu_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             resultLauncher.launch(settingsIntent);
