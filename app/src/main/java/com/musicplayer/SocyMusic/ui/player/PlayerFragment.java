@@ -150,7 +150,7 @@ public class PlayerFragment extends Fragment {
         // The option to shuffle the queue
         shuffleCheckBox.setChecked(songsData.isShuffle());
         // The option to set the song in the favorite playlist
-        favoriteCheckBox.setChecked(songsData.isInFavorite());
+        favoriteCheckBox.setChecked(songPlaying.isFavorited());
 
         queueButton.setOnClickListener(v -> {
             ((MainActivity) requireActivity()).showQueue();
@@ -269,9 +269,9 @@ public class PlayerFragment extends Fragment {
 
         favoriteCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             // TODO: Fix playlists
-            songsData.setFavorited(isChecked);
+            songPlaying.setFavorited(isChecked);
             Playlist playlist = new Playlist(requireContext(), "favorite");
-            if (songsData.isInFavorite()) {
+            if (songPlaying.isFavorited()) {
                 Toast.makeText(getContext(), "Song added to Favorites", Toast.LENGTH_SHORT).show();
                 playlist.addSong(songPlaying.getFile());
             } else {
@@ -367,7 +367,7 @@ public class PlayerFragment extends Fragment {
     public void updatePlayerUI() {
         // Retrieves the song playing right now
         songPlaying = songsData.getSongPlaying();
-        favoriteCheckBox.setChecked(songsData.isInFavorite());
+        favoriteCheckBox.setChecked(songPlaying.isFavorited());
 
         // Sets all properties again
         if (songPager.getCurrentItem() != songsData.getPlayingIndex()) {
@@ -405,7 +405,7 @@ public class PlayerFragment extends Fragment {
         // Plays the next song
         MediaPlayerUtil.playNext(getContext());
         hostCallBack.onSongUpdate();
-        favoriteCheckBox.setChecked(songsData.isInFavorite());
+        favoriteCheckBox.setChecked(songPlaying.isFavorited());
     }
 
     /**
@@ -415,7 +415,7 @@ public class PlayerFragment extends Fragment {
         // Plays the previous song
         MediaPlayerUtil.playPrev(getContext());
         hostCallBack.onSongUpdate();
-        favoriteCheckBox.setChecked(songsData.isInFavorite());
+        favoriteCheckBox.setChecked(songPlaying.isFavorited());
     }
 
     /**
