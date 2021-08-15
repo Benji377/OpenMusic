@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.musicplayer.R;
 
-public class PlaylistActivity extends AppCompatActivity implements ActivityResultCallback<ActivityResult> {
+public class PlaylistActivity extends AppCompatActivity {
     private PlaylistData playlistData;
     private CustomRecyclerView playlistRecyclerView;
 
@@ -26,12 +26,6 @@ public class PlaylistActivity extends AppCompatActivity implements ActivityResul
         playlistRecyclerView = findViewById(R.id.recyclerview_main_all_playlists);
         playlistData.reloadPlaylists();
         displayPlaylists();
-    }
-
-    @Override
-    public void onActivityResult(ActivityResult result) {
-        playlistData.reloadPlaylists();
-        invalidatePlaylistList();
     }
 
     void displayPlaylists() {
@@ -48,7 +42,6 @@ public class PlaylistActivity extends AppCompatActivity implements ActivityResul
                     Toast.makeText(PlaylistActivity.this, getText(R.string.main_err_file_gone), Toast.LENGTH_LONG).show();
                     playlistData.reloadPlaylists();
                     customAdapter.notifyDataSetChanged();
-                    return;
                 }
                 // Open Playlistdata or somethings
 
@@ -62,13 +55,5 @@ public class PlaylistActivity extends AppCompatActivity implements ActivityResul
         TextView emptyText = findViewById(R.id.textview_playlist_list_empty);
         playlistRecyclerView.setEmptyView(emptyText);
 
-    }
-
-    private void invalidatePlaylistList() {
-        PlaylistListAdapter adapter = (PlaylistListAdapter) playlistRecyclerView.getAdapter();
-        if (adapter != null) {
-            adapter.setAllPlaylist(playlistData.getPlaylistList());
-            adapter.notifyDataSetChanged();
-        }
     }
 }

@@ -23,10 +23,7 @@ import com.musicplayer.SocyMusic.MediaPlayerUtil;
 import com.musicplayer.SocyMusic.Song;
 import com.musicplayer.SocyMusic.SongsData;
 import com.musicplayer.SocyMusic.ui.main.MainActivity;
-import com.musicplayer.SocyMusic.ui.playlist.Playlist;
 import com.musicplayer.musicplayer.R;
-
-import java.util.Objects;
 
 
 public class PlayerFragment extends Fragment {
