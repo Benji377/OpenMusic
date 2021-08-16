@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic.ui.playlist;
+package com.musicplayer.SocyMusic;
 
 /*
 For devs, this is the M3U file structure, please follow this carefully to avoid issues:

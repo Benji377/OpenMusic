@@ -1,6 +1,8 @@
-//package com.musicplayer.SocyMusic.ui.playlist;
+//package com.musicplayer.SocyMusic.ui.playlists_tab;
 //
 //import android.content.Context;
+//
+//import com.musicplayer.SocyMusic.Playlist;
 //import com.musicplayer.SocyMusic.Song;
 //
 //import java.io.BufferedReader;
@@ -75,10 +77,10 @@
 //    }
 //
 //    public Playlist createPlaylist(String playlistName) {
-//        String pName = playlistName+".m3u";
+//        String pName = playlistName + ".m3u";
 //        File file = new File(playlistDir, pName);
 //        try {
-//            if(file.createNewFile()) {
+//            if (file.createNewFile()) {
 //                FileWriter writer = new FileWriter(file);
 //                writer.write("#EXTM3U\n");
 //                writer.write("\n");
@@ -86,7 +88,7 @@
 //            } else {
 //                // Playlist exists
 //            }
-//            return new Playlist(file);
+//            return new Playlist(file, playlistName);
 //        } catch (IOException e) {
 //            // Error
 //            return null;
@@ -97,11 +99,11 @@
 //    public void addSong(Playlist playlist, Song song) {
 //        try {
 //            FileWriter writer = new FileWriter(playlist.getFile(), true);
-//            writer.write("#EXTINF:"+song.getTitle() + "\n");
+//            writer.write("#EXTINF:" + song.getTitle() + "\n");
 //            writer.write(song.getFile().getPath() + "\n");
 //            writer.write("\n");
 //            writer.close();
-//            playlist.setSongCount(playlist.getSongCount()+1);
+//            playlist.setSongCount(playlist.getSongCount() + 1);
 //            playlist.getSongList().add(song);
 //        } catch (IOException e) {
 //            // Error
@@ -111,7 +113,7 @@
 //    // Needs to do a copy of the current file, delete the content there ans replace the original file
 //    public void removeSong(Playlist playlist, Song song) {
 //        String currentLine;
-//        File tempFile = new File(playlistDir,"temp_file.m3u");
+//        File tempFile = new File(playlistDir, "temp_file.m3u");
 //        File playlistFile = playlist.getFile();
 //        BufferedReader reader;
 //        BufferedWriter writer;
@@ -119,7 +121,7 @@
 //            reader = new BufferedReader(new FileReader(playlistFile));
 //            writer = new BufferedWriter(new FileWriter(tempFile));
 //            while ((currentLine = reader.readLine()) != null) {
-//                if (currentLine.equals("#EXTINF:"+ song.getFile().getName())) {
+//                if (currentLine.equals("#EXTINF:" + song.getFile().getName())) {
 //                    // Skips the next two lines too
 //                    reader.readLine();
 //                    reader.readLine();
@@ -131,7 +133,7 @@
 //            reader.close();
 //            playlistFile.delete();
 //            if (tempFile.renameTo(playlistFile)) {
-//                playlist.setSongCount(playlist.getSongCount()-1);
+//                playlist.setSongCount(playlist.getSongCount() - 1);
 //                ArrayList<Song> temp_list = playlist.getSongList();
 //                temp_list.remove(song);
 //                playlist.setSongList(temp_list);
@@ -145,7 +147,7 @@
 //
 //    public void removePlaylist(Playlist playlist) {
 //        File todelete = playlist.getFile();
-//        if(todelete.delete()) {
+//        if (todelete.delete()) {
 //            // File deleted
 //        } else {
 //            // Error

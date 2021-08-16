@@ -8,8 +8,9 @@
     tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
 
     <LinearLayout
+        android:id="@+id/layout_main_tabs_holder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <!--TODO: add these to TabLayout after all tabs are added and change width to wrap_content

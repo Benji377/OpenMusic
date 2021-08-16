@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic.ui.allsongs;
+package com.musicplayer.SocyMusic.ui.all_songs;
 
 import android.content.Context;
 import android.view.LayoutInflater;

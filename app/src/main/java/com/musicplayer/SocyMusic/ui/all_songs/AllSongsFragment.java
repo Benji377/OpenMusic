@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic.ui.allsongs;
+package com.musicplayer.SocyMusic.ui.all_songs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

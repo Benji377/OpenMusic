@@ -47,7 +47,7 @@ import com.musicplayer.SocyMusic.MediaPlayerUtil;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.Song;
 import com.musicplayer.SocyMusic.SongsData;
-import com.musicplayer.SocyMusic.ui.allsongs.AllSongsFragment;
+import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsActivity;
@@ -174,12 +174,12 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     invalidateOptionsMenu();
                     actionBar.setTitle(R.string.all_app_name);
-                    ((ViewGroup.MarginLayoutParams) tabsPager.getLayoutParams()).bottomMargin = dpToPixel(50);
+                    ((ViewGroup.MarginLayoutParams) findViewById(R.id.layout_main_tabs_holder).getLayoutParams()).bottomMargin = dpToPixel(50);
                     songInfoPager.setUserInputEnabled(true);
 //                    songInfoPager.findViewWithTag(songInfoPager.getCurrentItem()).setClickable(true);
                     hideQueue();
                 } else if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    ((ViewGroup.MarginLayoutParams) tabsPager.getLayoutParams()).bottomMargin = 0;
+                    ((ViewGroup.MarginLayoutParams) findViewById(R.id.layout_main_tabs_holder).getLayoutParams()).bottomMargin = 0;
                 }
             }
 
@@ -471,7 +471,7 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
     @Override
     public void onActivityResult(ActivityResult result) {
         songsData.reloadSongs(this);
-        tabsPager.getAdapter().notifyDataSetChanged();
+        tabsPager.setAdapter(new TabsPagerAdapter(this));
     }
 
     @Override
