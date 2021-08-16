@@ -26,43 +26,34 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Playlist implements Serializable {
-    private File playlistFile;
-    private String playlistName;
-    private int songCount;
+    private File file;
+    private String name;
     private ArrayList<Song> songList;
 
-    public Playlist(File file) {
-        this(file, file.getName().replaceAll("(?<!^)[.][^.]*$", ""));
-    }
     public Playlist(File file, String name) {
-        this.playlistFile = file;
-        this.playlistName = name;
+        this.file = file;
+        this.name = name;
     }
 
-    public File getPlaylistFile() {
-        return playlistFile;
+    public File getFile() {
+        return file;
     }
 
-    public void setPlaylistFile(File playlistFile) {
-        this.playlistFile = playlistFile;
+    public void setFile(File file) {
+        this.file = file;
     }
 
-    public String getPlaylistName() {
-        return playlistName;
+    public String getName() {
+        return name;
     }
 
-    public void setPlaylistName(String playlistName) {
-        this.playlistName = playlistName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getSongCount() {
-        return songCount;
+        return songList.size();
     }
-
-    public void setSongCount(int songCount) {
-        this.songCount = songCount;
-    }
-
     public ArrayList<Song> getSongList() {
         return songList;
     }

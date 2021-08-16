@@ -20,8 +20,6 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -33,7 +31,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -48,9 +45,8 @@ import com.musicplayer.SocyMusic.MediaPlayerUtil;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.Song;
 import com.musicplayer.SocyMusic.SongsData;
-import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
+import com.musicplayer.SocyMusic.ui.allsongs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
-import com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsActivity;
 import com.musicplayer.musicplayer.BuildConfig;
@@ -61,14 +57,14 @@ import java.util.List;
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 
-public class MainActivity extends AppCompatActivity implements PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
+public class MainActivity extends AppCompatActivity implements AllSongsFragment.AllSongsFragmentHost, PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
 
-    private CustomRecyclerView songsRecyclerView;
     private BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
     private ViewPager2 songInfoPager;
 
     // Private components
     private ActivityResultLauncher<Intent> resultLauncher;
+    private AllSongsFragment allSongsFragment;
     private PlayerFragment playerFragment;
     private QueueFragment queueFragment;
     private MediaPlayerService mediaPlayerService;
@@ -142,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
         actionBar.setTitle(getString(R.string.all_app_name));
 
         // Sets all components
-        songsRecyclerView = findViewById(R.id.recyclerview_main_all_songs);
         songInfoPager = findViewById(R.id.viewpager_main_info_panes);
         bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet_main_player));
 
@@ -173,12 +168,13 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     invalidateOptionsMenu();
                     actionBar.setTitle(R.string.all_app_name);
-                    ((ViewGroup.MarginLayoutParams) songsRecyclerView.getLayoutParams()).bottomMargin = dpToPixel(50);
+                    ((ViewGroup.MarginLayoutParams) findViewById(R.id.layout_main_all_songs_container).getLayoutParams()).bottomMargin = dpToPixel(50);
                     songInfoPager.setUserInputEnabled(true);
 //                    songInfoPager.findViewWithTag(songInfoPager.getCurrentItem()).setClickable(true);
                     hideQueue();
-                } else if (newState == BottomSheetBehavior.STATE_HIDDEN)
-                    ((ViewGroup.MarginLayoutParams) songsRecyclerView.getLayoutParams()).bottomMargin = dpToPixel(0);
+                } else if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    ((ViewGroup.MarginLayoutParams) findViewById(R.id.layout_main_all_songs_container).getLayoutParams()).bottomMargin = 0;
+                }
             }
 
             @Override
@@ -260,10 +256,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
 
         // To add an item to the menu, add it to menu/main.xml first!
         if (item.getItemId() == R.id.main_menu_about) {
-            showPopupWindow(songsRecyclerView);
-        } else if (item.getItemId() == R.id.main_menu_playlist) {
-            Intent playlistIntent = new Intent(this, PlaylistActivity.class);
-            resultLauncher.launch(playlistIntent);
+            showPopupWindow(songInfoPager);
         } else if (item.getItemId() == R.id.main_menu_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             resultLauncher.launch(settingsIntent);
@@ -330,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                         // Display all the songs
                         songsData.reloadSongs(MainActivity.this);
-                        displaySongs();
+                        loadAllSongsList();
                     }
 
                     @Override
@@ -341,61 +334,17 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 }).check();
     }
 
-    /**
-     * This method searches for all songs it can find on the phone's storage and shows them as a list
-     */
-    void displaySongs() {
-        SongListAdapter customAdapter = new SongListAdapter(this, songsData.getAllSongs());
-        songsRecyclerView.setAdapter(customAdapter);
-        songsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // If you click on an tem in the list, the player fragment opens
-        customAdapter.setOnItemClickListener(new SongListAdapter.ItemClickListener() {
-            @Override
-            public void onItemClick(int position, View view) {
-                // Error occured
-                if (!songsData.songExists(position)) {
-                    Toast.makeText(MainActivity.this, getText(R.string.main_err_file_gone), Toast.LENGTH_LONG).show();
-                    songsData.reloadSongs(MainActivity.this);
-                    customAdapter.notifyDataSetChanged();
-                    return;
-                }
-                // Adds all the songs to the queue from that position onward
-                songsData.playAllFrom(position);
-                // Plays the selected song
-                Song songClicked = songsData.getSongPlaying();
-
-                // Opens the player fragment
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                Fragment fragment = fragmentManager.findFragmentById(R.id.layout_main_player_container);
-                if (fragment == null) {
-                    playerFragment = PlayerFragment.newInstance();
-                    fragmentManager.beginTransaction().add(R.id.layout_main_player_container, playerFragment).commit();
-
-                    Intent serviceIntent = new Intent(MainActivity.this, MediaPlayerService.class);
-                    serviceIntent.putExtra(MediaPlayerService.EXTRA_SONG, songClicked);
-                    startService(serviceIntent);
-                    bindService(serviceIntent, MainActivity.this, Context.BIND_AUTO_CREATE);
-                } else {
-                    playerFragment = (PlayerFragment) fragment;
-                    playerFragment.invalidatePager();
-                    MediaPlayerUtil.startPlaying(MainActivity.this, songClicked);
-                    onSongUpdate();
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    hideQueue();
-                }
-
-            }
-
-            @Override
-            public boolean onItemLongClick(int position, View view) {
-                return true;
-            }
-        });
-        // Error occurs --> song not found
-        TextView emptyText = findViewById(R.id.textview_main_list_empty);
-        songsRecyclerView.setEmptyView(emptyText);
+    private void loadAllSongsList() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.layout_main_all_songs_container);
+        if (fragment == null) {
+            allSongsFragment = new AllSongsFragment();
+            fragmentManager.beginTransaction().add(R.id.layout_main_all_songs_container, allSongsFragment).commit();
+        } else {
+            allSongsFragment = (AllSongsFragment) fragment;
+        }
     }
+
 
     /**
      * When the player fragment finishes loading
@@ -524,16 +473,37 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
     @Override
     public void onActivityResult(ActivityResult result) {
         songsData.reloadSongs(this);
-        invalidateSongList();
+        allSongsFragment.invalidateSongList();
     }
 
-    private void invalidateSongList() {
-        SongListAdapter adapter = (SongListAdapter) songsRecyclerView.getAdapter();
-        if (adapter != null) {
-            adapter.setAllSongs(songsData.getAllSongs());
-            adapter.notifyDataSetChanged();
+    @Override
+    public void onSongClick(int position) {
+        // Adds all the songs to the queue from that position onward
+        songsData.playAllFrom(position);
+        // Plays the selected song
+        Song songClicked = songsData.getSongPlaying();
+
+        // Opens the player fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.layout_main_player_container);
+        if (fragment == null) {
+            playerFragment = PlayerFragment.newInstance();
+            fragmentManager.beginTransaction().add(R.id.layout_main_player_container, playerFragment).commit();
+
+            Intent serviceIntent = new Intent(MainActivity.this, MediaPlayerService.class);
+            serviceIntent.putExtra(MediaPlayerService.EXTRA_SONG, songClicked);
+            startService(serviceIntent);
+            bindService(serviceIntent, MainActivity.this, Context.BIND_AUTO_CREATE);
+        } else {
+            playerFragment = (PlayerFragment) fragment;
+            playerFragment.invalidatePager();
+            MediaPlayerUtil.startPlaying(MainActivity.this, songClicked);
+            onSongUpdate();
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            hideQueue();
         }
     }
+
 
     /**
      * Extends the standard Broadcastreceiver to create a new receiver for the mediaplayer
@@ -646,4 +616,6 @@ public class MainActivity extends AppCompatActivity implements PlayerFragment.Pl
                 dp,
                 getResources().getDisplayMetrics());
     }
+
+
 }

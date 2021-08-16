@@ -7,24 +7,10 @@
     android:background="@color/black"
     tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
 
-
-    <com.musicplayer.SocyMusic.custom_views.CustomRecyclerView
-        android:id="@+id/recyclerview_main_all_songs"
+    <FrameLayout
+        android:id="@+id/layout_main_all_songs_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
-        android:padding="8dp"/>
-
-    <TextView
-        android:id="@+id/textview_main_list_empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/main_song_list_empty"
-        android:textColor="?colorPrimary"
-        android:textSize="24sp" />
-
+        android:layout_height="match_parent" />
 
     <FrameLayout
         android:id="@+id/bottom_sheet_main_player"
@@ -49,8 +35,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_main_info_panes"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            />
+            android:layout_height="50dp" />
 
 
     </FrameLayout>

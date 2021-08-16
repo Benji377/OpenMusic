@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic.ui.main;
+package com.musicplayer.SocyMusic.ui.allsongs;
 
 import android.view.View;
 import android.widget.TextView;

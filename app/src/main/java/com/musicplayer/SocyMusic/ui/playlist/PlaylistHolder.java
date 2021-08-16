@@ -19,7 +19,7 @@ public class PlaylistHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Playlist playlist) {
-        playlistTitleTextView.setText(playlist.getPlaylistName());
+        playlistTitleTextView.setText(playlist.getName());
     }
 
 }
