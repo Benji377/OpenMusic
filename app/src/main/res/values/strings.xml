@@ -2,10 +2,15 @@
     <string name="all_app_name">SocyMusic</string>
     <string name="all_coming_soon">Coming Soon!</string>
 
-    <string name="all_songs_list_empty">No songs found…</string>
+    <string-array name="main_tabs">
+        <item>All Songs</item>
+        <item>Playlists</item>
+    </string-array>
     <string name="playlist_playlist_list_empty">No playlist found</string>
     <string name="main_err_file_gone">File moved or deleted.</string>
     <string name="main_err_file_corrupted">Skipped %d songs. File(s) corrupted or unreadable.</string>
+
+    <string name="all_songs_list_empty">No songs found…</string>
 
     <string name="main_menu_item_about">About</string>
     <string name="main_menu_item_playlist">Playlist</string>
@@ -53,7 +58,7 @@
         <item>Purple - Aqua</item>
     </string-array>
 
-<!-- Do not change the name of these, they are used in code -->
+    <!-- Do not change the name of these, they are used in code -->
     <string-array name="themeValues">
         <item>White_theme</item>
         <item>Red_theme</item>

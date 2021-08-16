@@ -35,6 +35,8 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -58,13 +60,13 @@ import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 
 public class MainActivity extends AppCompatActivity implements AllSongsFragment.AllSongsFragmentHost, PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
-
+    private ViewPager2 tabsPager;
+    private TabLayout tabsLayout;
     private BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
     private ViewPager2 songInfoPager;
 
     // Private components
     private ActivityResultLauncher<Intent> resultLauncher;
-    private AllSongsFragment allSongsFragment;
     private PlayerFragment playerFragment;
     private QueueFragment queueFragment;
     private MediaPlayerService mediaPlayerService;
@@ -135,7 +137,11 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
         setContentView(R.layout.activity_main);
 
         actionBar = getSupportActionBar();
+        actionBar.setElevation(0);
         actionBar.setTitle(getString(R.string.all_app_name));
+
+        tabsPager = findViewById(R.id.viewpager_main_tabs);
+        tabsLayout = findViewById(R.id.tab_layout_main);
 
         // Sets all components
         songInfoPager = findViewById(R.id.viewpager_main_info_panes);
@@ -168,12 +174,12 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     invalidateOptionsMenu();
                     actionBar.setTitle(R.string.all_app_name);
-                    ((ViewGroup.MarginLayoutParams) findViewById(R.id.layout_main_all_songs_container).getLayoutParams()).bottomMargin = dpToPixel(50);
+                    ((ViewGroup.MarginLayoutParams) tabsPager.getLayoutParams()).bottomMargin = dpToPixel(50);
                     songInfoPager.setUserInputEnabled(true);
 //                    songInfoPager.findViewWithTag(songInfoPager.getCurrentItem()).setClickable(true);
                     hideQueue();
                 } else if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-                    ((ViewGroup.MarginLayoutParams) findViewById(R.id.layout_main_all_songs_container).getLayoutParams()).bottomMargin = 0;
+                    ((ViewGroup.MarginLayoutParams) tabsPager.getLayoutParams()).bottomMargin = 0;
                 }
             }
 
@@ -323,7 +329,11 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                         // Display all the songs
                         songsData.reloadSongs(MainActivity.this);
-                        loadAllSongsList();
+                        tabsPager.setAdapter(new TabsPagerAdapter(MainActivity.this));
+                        new TabLayoutMediator(tabsLayout,
+                                tabsPager,
+                                (tab, position) -> tab.setText(getResources().getStringArray(R.array.main_tabs)[position]))
+                                .attach();
                     }
 
                     @Override
@@ -333,18 +343,6 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
                     }
                 }).check();
     }
-
-    private void loadAllSongsList() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.layout_main_all_songs_container);
-        if (fragment == null) {
-            allSongsFragment = new AllSongsFragment();
-            fragmentManager.beginTransaction().add(R.id.layout_main_all_songs_container, allSongsFragment).commit();
-        } else {
-            allSongsFragment = (AllSongsFragment) fragment;
-        }
-    }
-
 
     /**
      * When the player fragment finishes loading
@@ -473,7 +471,7 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
     @Override
     public void onActivityResult(ActivityResult result) {
         songsData.reloadSongs(this);
-        allSongsFragment.invalidateSongList();
+        tabsPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override
