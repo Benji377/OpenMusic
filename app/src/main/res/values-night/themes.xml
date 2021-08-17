@@ -10,7 +10,10 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <!-- Themes for every background so far. Changes the colors of the app! -->
@@ -22,7 +25,10 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="BlueTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -33,7 +39,10 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="WhiteTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -44,7 +53,10 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="OrangeTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -56,7 +68,10 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="YellowTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -68,7 +83,10 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="AquaTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -80,7 +98,10 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="PurpleTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -92,7 +113,10 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="PurpleblueTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -104,7 +128,10 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="OrangegreenTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -116,7 +143,10 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="PurpleaquaTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -128,7 +158,10 @@
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
 </resources>
