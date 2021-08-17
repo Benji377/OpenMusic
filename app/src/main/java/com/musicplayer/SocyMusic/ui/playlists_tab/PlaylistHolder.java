@@ -1,16 +1,18 @@
-package com.musicplayer.SocyMusic.ui.playlist;
+package com.musicplayer.SocyMusic.ui.playlists_tab;
 
 import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.musicplayer.SocyMusic.Playlist;
 import com.musicplayer.musicplayer.R;
 
 public class PlaylistHolder extends RecyclerView.ViewHolder {
     private final TextView playlistTitleTextView;
-    private final PlaylistListAdapter.ItemClickListener clickListener;
+    private final PlaylistsAdapter.ItemClickListener clickListener;
 
-    public PlaylistHolder(@NonNull View itemView, PlaylistListAdapter.ItemClickListener clickListeners) {
+    public PlaylistHolder(@NonNull View itemView, PlaylistsAdapter.ItemClickListener clickListeners) {
         super(itemView);
         playlistTitleTextView = itemView.findViewById(R.id.textview_main_item_song_title);
         this.clickListener = clickListeners;
@@ -19,7 +21,7 @@ public class PlaylistHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Playlist playlist) {
-        playlistTitleTextView.setText(playlist.getPlaylistName());
+        playlistTitleTextView.setText(playlist.getName());
     }
 
 }

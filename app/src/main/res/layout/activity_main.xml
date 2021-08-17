@@ -7,24 +7,27 @@
     android:background="@color/black"
     tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
 
-
-    <com.musicplayer.SocyMusic.custom_views.CustomRecyclerView
-        android:id="@+id/recyclerview_main_all_songs"
+    <LinearLayout
+        android:id="@+id/layout_main_tabs_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
-        android:padding="8dp"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textview_main_list_empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/main_song_list_empty"
-        android:textColor="?colorPrimary"
-        android:textSize="24sp" />
+        <!--TODO: add these to TabLayout after all tabs are added and change width to wrap_content
+            android:layout_gravity="center_horizontal"
+            app:tabMode="scrollable"-->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?colorPrimary"
+            app:tabTextColor="?colorOnPrimary"/>
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager_main_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/bottom_sheet_main_player"
@@ -49,8 +52,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_main_info_panes"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            />
+            android:layout_height="50dp" />
 
 
     </FrameLayout>

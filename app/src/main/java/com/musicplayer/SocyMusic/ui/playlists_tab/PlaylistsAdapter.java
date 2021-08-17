@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic.ui.playlist;
+package com.musicplayer.SocyMusic.ui.playlists_tab;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,16 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.musicplayer.SocyMusic.Playlist;
 import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 
-public class PlaylistListAdapter extends RecyclerView.Adapter<PlaylistHolder> {
+public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistHolder> {
     private final Context context;
     private List<Playlist> allPlaylist;
     private ItemClickListener clickListener;
 
-    public PlaylistListAdapter(Context context, List<Playlist> allPlaylist) {
+    public PlaylistsAdapter(Context context, List<Playlist> allPlaylist) {
         super();
         this.allPlaylist = allPlaylist;
         this.context = context;

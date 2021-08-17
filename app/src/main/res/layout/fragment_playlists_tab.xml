@@ -3,20 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    tools:context="com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity">
+    android:background="@color/black">
 
 
     <com.musicplayer.SocyMusic.custom_views.CustomRecyclerView
-        android:id="@+id/recyclerview_main_all_playlists"
+        android:id="@+id/recyclerview_playlists_tab_playlists"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
-        android:padding="8dp"/>
+        android:padding="8dp" />
 
     <TextView
-        android:id="@+id/textview_playlist_list_empty"
+        android:id="@+id/textview_playlists_tab_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
