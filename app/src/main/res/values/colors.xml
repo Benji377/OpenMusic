@@ -5,6 +5,7 @@
     <color name="appForegroundColor">#FFFFFF</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="grey">#C0C0C0</color>
 
     <!-- Customize the background! -->
     <color name="startGradient">#000000</color>
