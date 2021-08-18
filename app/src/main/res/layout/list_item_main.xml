@@ -38,7 +38,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="Song name"
-            android:textColor="@color/white"
+            android:textColor="?colorOnPrimary"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />
 

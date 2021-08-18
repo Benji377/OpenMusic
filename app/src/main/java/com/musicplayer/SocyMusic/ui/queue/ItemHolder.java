@@ -1,11 +1,16 @@
 package com.musicplayer.SocyMusic.ui.queue;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.IdRes;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
@@ -36,11 +41,18 @@ public class ItemHolder extends DragItemAdapter.ViewHolder {
 
     public void bind(Song song) {
         this.song = song;
+
+        // Gets the correct color from the theme -> Avoid hardcoding colors!
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = context.getTheme();
+        theme.resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
+        @ColorInt int color = typedValue.data;
+
         songTitleTextView.setText(song.getTitle());
         if (getBindingAdapterPosition() < songsData.getPlayingIndex())
             songTitleTextView.setTextColor(Color.GRAY);
         else
-            songTitleTextView.setTextColor(Color.WHITE);
+            songTitleTextView.setTextColor(color);
         visualizer.release();
         if (isPlaying()) {
             visualizer.setBackground(null);
@@ -50,7 +62,7 @@ public class ItemHolder extends DragItemAdapter.ViewHolder {
                 visualizer.setAudioSessionId(audioSessionID);
             visualizer.show();
         } else {
-            visualizer.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_drag_handle, null));
+            visualizer.setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.ic_drag_handle, context.getTheme()));
             visualizer.hide();
         }
     }

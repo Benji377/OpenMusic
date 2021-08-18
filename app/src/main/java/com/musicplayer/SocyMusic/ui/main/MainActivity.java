@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
     private QueueFragment queueFragment;
     private MediaPlayerService mediaPlayerService;
     private MediaPlayerReceiver mediaPlayerReceiver;
-    private ActionBar actionBar;
+    //private ActionBar actionBar;
     private SongsData songsData;
 
     private boolean scrollTriggeredByCode;
@@ -136,9 +136,9 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
 
         setContentView(R.layout.activity_main);
 
-        actionBar = getSupportActionBar();
-        actionBar.setElevation(0);
-        actionBar.setTitle(getString(R.string.all_app_name));
+        //actionBar = getSupportActionBar();
+        //actionBar.setElevation(0);
+        //actionBar.setTitle(getString(R.string.all_app_name));
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
         tabsLayout = findViewById(R.id.tab_layout_main);
@@ -168,12 +168,12 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     invalidateOptionsMenu();
-                    actionBar.setTitle(R.string.player_title);
+                    //actionBar.setTitle(R.string.player_title);
                     songInfoPager.setUserInputEnabled(false);
 //                    songInfoPager.findViewWithTag(songInfoPager.getCurrentItem()).setClickable(false);
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     invalidateOptionsMenu();
-                    actionBar.setTitle(R.string.all_app_name);
+                    //actionBar.setTitle(R.string.all_app_name);
                     ((ViewGroup.MarginLayoutParams) findViewById(R.id.layout_main_tabs_holder).getLayoutParams()).bottomMargin = dpToPixel(50);
                     songInfoPager.setUserInputEnabled(true);
 //                    songInfoPager.findViewWithTag(songInfoPager.getCurrentItem()).setClickable(true);
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
 
         playerFragmentView.setVisibility(View.VISIBLE);
         playerFragment.initializeVisualizer();
-        actionBar.setTitle(R.string.player_title);
+        //actionBar.setTitle(R.string.player_title);
         queueFragment = null;
         invalidateOptionsMenu();
     }
@@ -298,7 +298,7 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
         View playerFragmentView = findViewById(R.id.layout_player_holder);
         queueFragment = new QueueFragment();
         fragmentManager.beginTransaction().add(R.id.layout_main_queue_container, queueFragment).commit();
-        actionBar.setTitle(R.string.queue_title);
+        //actionBar.setTitle(R.string.queue_title);
         playerFragment.releaseVisualizer();
         playerFragmentView.setVisibility(View.INVISIBLE);
         invalidateOptionsMenu();

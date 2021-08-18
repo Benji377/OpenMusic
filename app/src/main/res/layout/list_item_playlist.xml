@@ -38,7 +38,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="Playlist name"
-            android:textColor="@color/white"
+            android:textColor="?colorOnPrimary"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />
 

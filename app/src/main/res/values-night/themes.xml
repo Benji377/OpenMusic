@@ -1,16 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-
     <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryAppColor</item>
         <item name="colorPrimaryVariant">@color/primaryAppColor</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="playerBackground">@drawable/default_background_image</item>
+        <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <!-- Themes for every background so far. Changes the colors of the app! -->
@@ -19,10 +22,14 @@
         <item name="colorPrimaryVariant">#075e07</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="playerBackground">@drawable/background_img_green</item>
+        <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="BlueTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -30,10 +37,14 @@
         <item name="colorPrimaryVariant">#1998D7</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="playerBackground">@drawable/background_img_blue</item>
+        <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="WhiteTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -41,10 +52,14 @@
         <item name="colorPrimaryVariant">#575757</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="playerBackground">@drawable/background_img_white</item>
+        <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="OrangeTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -53,10 +68,14 @@
         <item name="colorPrimaryVariant">#e5741e</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="playerBackground">@drawable/background_img_orange</item>
+        <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="YellowTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -65,10 +84,14 @@
         <item name="colorPrimaryVariant">#E3D029</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="playerBackground">@drawable/background_img_yellow</item>
+        <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="AquaTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -77,10 +100,14 @@
         <item name="colorPrimaryVariant">#20DE9C</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="playerBackground">@drawable/background_img_aqua</item>
+        <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="PurpleTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -89,10 +116,14 @@
         <item name="colorPrimaryVariant">#900FCF</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="playerBackground">@drawable/background_img_purple</item>
+        <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="PurpleblueTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -101,10 +132,14 @@
         <item name="colorPrimaryVariant">#CD15CC</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="playerBackground">@drawable/background_img_purpleblue</item>
+        <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="OrangegreenTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -113,10 +148,14 @@
         <item name="colorPrimaryVariant">#D56D20</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="playerBackground">@drawable/background_img_orangegreen</item>
+        <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
     <style name="PurpleaquaTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -125,10 +164,14 @@
         <item name="colorPrimaryVariant">#CD15CB</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="playerBackground">@drawable/background_img_purpleaqua</item>
+        <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
+
         <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
 </resources>
