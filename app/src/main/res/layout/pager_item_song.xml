@@ -18,7 +18,7 @@
         android:singleLine="true"
         android:text="Song Title"
         android:textAlignment="center"
-        android:textColor="@color/player_fragment_textColor"
+        android:textColor="?colorOnPrimary"
         android:textSize="30sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
