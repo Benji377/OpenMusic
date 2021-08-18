@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/primaryAppColor</item>
         <item name="colorPrimaryVariant">@color/primaryAppColor</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="playerBackground">@drawable/default_background_image</item>
+        <item name="playerBackground">@drawable/default_background_image_light</item>
         <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
@@ -21,7 +21,7 @@
         <item name="colorPrimary">#075e07</item>
         <item name="colorPrimaryVariant">#075e07</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="playerBackground">@drawable/background_img_green</item>
+        <item name="playerBackground">@drawable/background_img_green_light</item>
         <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
@@ -36,7 +36,7 @@
         <item name="colorPrimary">#1998D7</item>
         <item name="colorPrimaryVariant">#1998D7</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="playerBackground">@drawable/background_img_blue</item>
+        <item name="playerBackground">@drawable/background_img_blue_light</item>
         <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
@@ -51,7 +51,7 @@
         <item name="colorPrimary">#575757</item>
         <item name="colorPrimaryVariant">#575757</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="playerBackground">@drawable/background_img_white</item>
+        <item name="playerBackground">@drawable/background_img_white_light</item>
         <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
@@ -67,7 +67,7 @@
         <item name="colorPrimary">#e5741e</item>
         <item name="colorPrimaryVariant">#e5741e</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="playerBackground">@drawable/background_img_orange</item>
+        <item name="playerBackground">@drawable/background_img_orange_light</item>
         <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
@@ -83,7 +83,7 @@
         <item name="colorPrimary">#E3D029</item>
         <item name="colorPrimaryVariant">#E3D029</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="playerBackground">@drawable/background_img_yellow</item>
+        <item name="playerBackground">@drawable/background_img_yellow_light</item>
         <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
@@ -99,7 +99,7 @@
         <item name="colorPrimary">#20DE9C</item>
         <item name="colorPrimaryVariant">#20DE9C</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="playerBackground">@drawable/background_img_aqua</item>
+        <item name="playerBackground">@drawable/background_img_aqua_light</item>
         <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
@@ -115,7 +115,7 @@
         <item name="colorPrimary">#900FCF</item>
         <item name="colorPrimaryVariant">#900FCF</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="playerBackground">@drawable/background_img_purple</item>
+        <item name="playerBackground">@drawable/background_img_purple_light</item>
         <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
@@ -131,7 +131,7 @@
         <item name="colorPrimary">#1799DB</item>
         <item name="colorPrimaryVariant">#CD15CC</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="playerBackground">@drawable/background_img_purpleblue</item>
+        <item name="playerBackground">@drawable/background_img_purpleblue_light</item>
         <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
@@ -147,7 +147,7 @@
         <item name="colorPrimary">#19DE1A</item>
         <item name="colorPrimaryVariant">#D56D20</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="playerBackground">@drawable/background_img_orangegreen</item>
+        <item name="playerBackground">@drawable/background_img_orangegreen_light</item>
         <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
@@ -163,7 +163,7 @@
         <item name="colorPrimary">#1CE29E</item>
         <item name="colorPrimaryVariant">#CD15CB</item>
         <item name="colorOnPrimary">@color/black</item>
-        <item name="playerBackground">@drawable/background_img_purpleaqua</item>
+        <item name="playerBackground">@drawable/background_img_purpleaqua_light</item>
         <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
