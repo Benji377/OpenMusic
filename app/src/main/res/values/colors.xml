@@ -4,8 +4,4 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="grey">#C0C0C0</color>
-
-    <!-- Popup colors NECESSARY!-->
-    <color name="popup_textcolor">#FFFFFF</color>
-    <color name="colorAccent">#FFFFFF</color>
 </resources>

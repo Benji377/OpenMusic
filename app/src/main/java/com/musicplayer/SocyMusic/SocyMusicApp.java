@@ -20,6 +20,7 @@ public class SocyMusicApp extends Application {
     //keys for preferences
     public static final String PREFS_KEY_LIBRARY_PATHS = "lib_paths";
     public static final String PREFS_KEY_THEME = "theme";
+    public static final String PREFS_KEY_VERSION = "versions";
     public static final HashSet<String> defaultPathsSet = new HashSet<>();
 
     /**

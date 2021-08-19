@@ -19,8 +19,6 @@ C:\Music\ExampleMusic.mp3
 To know more about it, check out this link: https://docs.fileformat.com/audio/m3u/#extended-m3u
 */
 
-import com.musicplayer.SocyMusic.Song;
-
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;

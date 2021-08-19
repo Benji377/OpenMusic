@@ -10,24 +10,22 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
@@ -50,14 +48,9 @@ import com.musicplayer.SocyMusic.SongsData;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
-import com.musicplayer.SocyMusic.ui.settings.SettingsActivity;
-import com.musicplayer.musicplayer.BuildConfig;
 import com.musicplayer.musicplayer.R;
 
 import java.util.List;
-
-import mehdi.sakout.aboutpage.AboutPage;
-import mehdi.sakout.aboutpage.Element;
 
 public class MainActivity extends AppCompatActivity implements AllSongsFragment.AllSongsFragmentHost, PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
     private ViewPager2 tabsPager;
@@ -93,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
             case "Red_theme":
                 setTheme(R.style.Theme_MusicPlayer);
                 break;
-            case "White_theme":
-                setTheme(R.style.WhiteTheme);
+            case "Inverted_theme":
+                setTheme(R.style.InvertedTheme);
                 break;
             case "Blue_theme":
                 setTheme(R.style.BlueTheme);
@@ -238,44 +231,38 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             getMenuInflater().inflate(R.menu.main, menu);
-        else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            // Searchbar, refrence: https://stackoverflow.com/questions/41867961/android-add-searchview-on-the-action-bar
+            MenuItem actionMenuItem = menu.findItem(R.id.action_search);
+            final SearchView searchView = (SearchView) actionMenuItem.getActionView();
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if (TextUtils.isEmpty(newText)) {
+                        //adapter.filter("");
+                        //listView.clearTextFilter();
+                    } else {
+                        //adapter.filter(newText);
+                    }
+                    return true;
+                }
+            });
+        } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             getMenuInflater().inflate(R.menu.playing, menu);
+            /*
             MenuItem showQueueButton = menu.findItem(R.id.playing_menu_show_queue);
             if (queueFragment == null)
                 showQueueButton.setIcon(R.drawable.ic_queue);
             else
                 showQueueButton.setIcon(R.drawable.ic_queue_selected);
+             */
         }
         return super.onCreateOptionsMenu(menu);
-    }
-
-    /**
-     * Creates all available options and sets the action to be performed when the suer clicks on them
-     *
-     * @param item Item of the menu
-     * @return Which item has been selected
-     */
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        // To add an item to the menu, add it to menu/main.xml first!
-        if (item.getItemId() == R.id.main_menu_about) {
-            showPopupWindow(songInfoPager);
-        } else if (item.getItemId() == R.id.main_menu_settings) {
-            Intent settingsIntent = new Intent(this, SettingsActivity.class);
-            resultLauncher.launch(settingsIntent);
-        } else if (item.getItemId() == R.id.playing_menu_show_queue) {
-            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_main_queue_container);
-            if (fragment == null)
-                showQueue();
-            else {
-                hideQueue();
-                playerFragment.updatePlayerUI();
-            }
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void hideQueue() {
@@ -566,46 +553,6 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
     @Override
     public void onServiceDisconnected(ComponentName name) {
         mediaPlayerService = null;
-    }
-
-    /**
-     * Creates a popUp window, in this case specifically for the About-menu option
-     *
-     * @param view The view at which the popup should be shown
-     */
-    public void showPopupWindow(View view) {
-        // Reference:
-        // https://blog.fossasia.org/creating-an-awesome-about-us-page-for-the-open-event-organizer-android-app/
-        // https://github.com/medyo/android-about-page
-        View popupView = new AboutPage(MainActivity.this, R.style.Widget_App_AboutPage)
-                .isRTL(false)
-                .setImage(R.mipmap.ic_launcher)
-                .setDescription(getString(R.string.about_description))
-                .addItem(new Element(getString(R.string.about_version, BuildConfig.VERSION_NAME), R.drawable.ic_info))
-                .addGroup("Connect with us")
-                .addWebsite("https://benji377.github.io/SocyMusic/")
-                .addGitHub("Benji377/SocyMusic")
-                .create();
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
-
-        // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window token
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-        // dismiss the popup window when touched
-        /*
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
-            }
-        });
-         */
     }
 
     private int dpToPixel(int dp) {
