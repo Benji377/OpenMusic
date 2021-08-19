@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
@@ -28,6 +29,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
@@ -238,44 +240,38 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             getMenuInflater().inflate(R.menu.main, menu);
-        else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+            // Searchbar, refrence: https://stackoverflow.com/questions/41867961/android-add-searchview-on-the-action-bar
+            MenuItem actionMenuItem = menu.findItem(R.id.action_search);
+            final SearchView searchView = (SearchView) actionMenuItem.getActionView();
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if (TextUtils.isEmpty(newText)) {
+                        //adapter.filter("");
+                        //listView.clearTextFilter();
+                    } else {
+                        //adapter.filter(newText);
+                    }
+                    return true;
+                }
+            });
+        } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             getMenuInflater().inflate(R.menu.playing, menu);
+            /*
             MenuItem showQueueButton = menu.findItem(R.id.playing_menu_show_queue);
             if (queueFragment == null)
                 showQueueButton.setIcon(R.drawable.ic_queue);
             else
                 showQueueButton.setIcon(R.drawable.ic_queue_selected);
+             */
         }
         return super.onCreateOptionsMenu(menu);
-    }
-
-    /**
-     * Creates all available options and sets the action to be performed when the suer clicks on them
-     *
-     * @param item Item of the menu
-     * @return Which item has been selected
-     */
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        // To add an item to the menu, add it to menu/main.xml first!
-        if (item.getItemId() == R.id.main_menu_about) {
-            showPopupWindow(songInfoPager);
-        } else if (item.getItemId() == R.id.main_menu_settings) {
-            Intent settingsIntent = new Intent(this, SettingsActivity.class);
-            resultLauncher.launch(settingsIntent);
-        } else if (item.getItemId() == R.id.playing_menu_show_queue) {
-            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_main_queue_container);
-            if (fragment == null)
-                showQueue();
-            else {
-                hideQueue();
-                playerFragment.updatePlayerUI();
-            }
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void hideQueue() {
