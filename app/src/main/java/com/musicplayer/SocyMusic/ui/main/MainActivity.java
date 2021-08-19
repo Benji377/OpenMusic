@@ -12,22 +12,18 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -52,14 +48,9 @@ import com.musicplayer.SocyMusic.SongsData;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
-import com.musicplayer.SocyMusic.ui.settings.SettingsActivity;
-import com.musicplayer.musicplayer.BuildConfig;
 import com.musicplayer.musicplayer.R;
 
 import java.util.List;
-
-import mehdi.sakout.aboutpage.AboutPage;
-import mehdi.sakout.aboutpage.Element;
 
 public class MainActivity extends AppCompatActivity implements AllSongsFragment.AllSongsFragmentHost, PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
     private ViewPager2 tabsPager;
@@ -562,46 +553,6 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
     @Override
     public void onServiceDisconnected(ComponentName name) {
         mediaPlayerService = null;
-    }
-
-    /**
-     * Creates a popUp window, in this case specifically for the About-menu option
-     *
-     * @param view The view at which the popup should be shown
-     */
-    public void showPopupWindow(View view) {
-        // Reference:
-        // https://blog.fossasia.org/creating-an-awesome-about-us-page-for-the-open-event-organizer-android-app/
-        // https://github.com/medyo/android-about-page
-        View popupView = new AboutPage(MainActivity.this, R.style.Widget_App_AboutPage)
-                .isRTL(false)
-                .setImage(R.mipmap.ic_launcher)
-                .setDescription(getString(R.string.about_description))
-                .addItem(new Element(getString(R.string.about_version, BuildConfig.VERSION_NAME), R.drawable.ic_info))
-                .addGroup("Connect with us")
-                .addWebsite("https://benji377.github.io/SocyMusic/")
-                .addGitHub("Benji377/SocyMusic")
-                .create();
-
-        // create the popup window
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
-
-        // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window token
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-        // dismiss the popup window when touched
-        /*
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return true;
-            }
-        });
-         */
     }
 
     private int dpToPixel(int dp) {

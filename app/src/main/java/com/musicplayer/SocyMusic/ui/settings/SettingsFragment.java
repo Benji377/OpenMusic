@@ -1,7 +1,6 @@
 package com.musicplayer.SocyMusic.ui.settings;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
