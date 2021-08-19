@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
             case "Red_theme":
                 setTheme(R.style.Theme_MusicPlayer);
                 break;
-            case "White_theme":
-                setTheme(R.style.WhiteTheme);
+            case "Inverted_theme":
+                setTheme(R.style.InvertedTheme);
                 break;
             case "Blue_theme":
                 setTheme(R.style.BlueTheme);

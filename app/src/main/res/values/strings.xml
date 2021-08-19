@@ -47,7 +47,7 @@
     <string name="fragment_player_imageview_player_album_art">Song thumbnail</string>
 
     <string-array name="themeOptions">
-        <item>White</item>
+        <item>Inverted</item>
         <item>Red</item>
         <item>Blue</item>
         <item>Green</item>
@@ -62,7 +62,7 @@
 
     <!-- Do not change the name of these, they are used in code -->
     <string-array name="themeValues">
-        <item>White_theme</item>
+        <item>Inverted_theme</item>
         <item>Red_theme</item>
         <item>Blue_theme</item>
         <item>Green_theme</item>

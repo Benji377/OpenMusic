@@ -47,11 +47,11 @@
         <item name="android:textColorSecondary">@color/grey</item>
     </style>
 
-    <style name="WhiteTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">#575757</item>
-        <item name="colorPrimaryVariant">#575757</item>
+    <style name="InvertedTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="playerBackground">@drawable/background_img_white</item>
+        <item name="playerBackground">@drawable/background_img_inverted</item>
         <item name="backgroundColor">@color/black</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>

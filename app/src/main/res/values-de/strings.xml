@@ -40,7 +40,7 @@
     <string name="fragment_player_imageview_player_album_art">Song-Miniaturansicht</string>
 
     <string-array name="themeOptions">
-        <item>Weiß</item>
+        <item>Umgedreht</item>
         <item>rot</item>
         <item>Blau</item>
         <item>Grün</item>
@@ -54,8 +54,9 @@
     </string-array>
 
 
+    <!-- Do not change the name of these, they are used in code -->
     <string-array name="themeValues">
-        <item>White_theme</item>
+        <item>Inverted_theme</item>
         <item>Red_theme</item>
         <item>Blue_theme</item>
         <item>Green_theme</item>
