@@ -42,7 +42,7 @@ public class FolderHolder extends RecyclerView.ViewHolder {
             return;
         }
 
-        dirNameTextView.setTextColor(itemView.getContext().getColor(R.color.white));
+        //dirNameTextView.setTextColor(itemView.getContext().getColor(R.color.white));
         selectedCheckBox.setEnabled(true);
 
         setSelectedCheckBoxState();

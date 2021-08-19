@@ -14,8 +14,6 @@
         android:background="@drawable/main_list_background"
         android:padding="8dp">
 
-
-
             <com.gauravk.audiovisualizer.visualizer.BarVisualizer
                 android:id="@+id/bar_visualizer_queue_item"
                 android:layout_width="40dp"
@@ -55,7 +53,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="Song Title"
-            android:textColor="@color/white"
+            android:textColor="?colorOnPrimary"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />
 

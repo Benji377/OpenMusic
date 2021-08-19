@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
+import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
 
 public class TabsPagerAdapter extends FragmentStateAdapter {
 
@@ -14,7 +15,8 @@ public class TabsPagerAdapter extends FragmentStateAdapter {
     // private static final int ALBUMS_TAB = 1;
     // private static final int ARTISTS_TAB = 2;
     private static final int PLAYLISTS_TAB = 1;
-    private static final int[] TABS = {ALL_SONGS_TAB, PLAYLISTS_TAB};
+    private static final int SETTINGS_TAB = 2;
+    private static final int[] TABS = {ALL_SONGS_TAB, PLAYLISTS_TAB, SETTINGS_TAB};
 
     public TabsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -23,12 +25,16 @@ public class TabsPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public Fragment createFragment(int position) {
-        if (position == ALL_SONGS_TAB)
-            return new AllSongsFragment();
-        else if (position == PLAYLISTS_TAB)
-            return new PlaylistsTabFragment();
-        else
-            return null;
+        switch (position) {
+            case ALL_SONGS_TAB:
+                return new AllSongsFragment();
+            case PLAYLISTS_TAB:
+                return new PlaylistsTabFragment();
+            case SETTINGS_TAB:
+                return new SettingsFragment();
+            default:
+                return null;
+        }
     }
 
     @Override
