@@ -19,5 +19,22 @@
             android:entries="@array/themeOptions"
             android:entryValues="@array/themeValues"/>
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/main_menu_item_about"
+        android:key="about">
+        <Preference
+            android:selectable="false"
+            android:summary="@string/about_description"
+            app:allowDividerBelow="false"
+            />
+        <Preference
+            android:summary="Check out the project on Github"
+            app:allowDividerAbove="false">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="http://www.example.com"
+            />
+        </Preference>
+    </PreferenceCategory>
 
 </PreferenceScreen>
