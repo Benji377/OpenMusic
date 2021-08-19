@@ -2,7 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="Library">
+    <PreferenceCategory
+        android:title="Library"
+        android:icon="@drawable/ic_library">
         <Preference
             app:key="lib_paths"
             app:summary="@string/prefs_summery_lib_paths"
@@ -11,13 +13,48 @@
 
     <PreferenceCategory
         android:title="Appearance"
-        app:key="appearance_category">
+        app:key="appearance_category"
+        android:icon="@drawable/ic_color_lens">
         <ListPreference
             app:key="theme"
             app:summary="@string/prefs_summery_theme"
             app:title="@string/prefs_title_theme"
             android:entries="@array/themeOptions"
             android:entryValues="@array/themeValues"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/main_menu_item_about"
+        app:key="about"
+        android:icon="@drawable/ic_info">
+        <Preference
+            android:selectable="false"
+            android:summary="@string/about_description"
+            />
+        <Preference
+            android:icon="@drawable/about_icon_github"
+            android:summary="Github repository">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://github.com/Benji377/SocyMusic"
+            />
+        </Preference>
+        <Preference
+            android:icon="@drawable/about_icon_link"
+            android:summary="SocyMusic website">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://benji377.github.io/SocyMusic/"
+                />
+        </Preference>
+        <Preference
+            android:icon="@drawable/about_icon_google_play"
+            android:summary="App version"
+            app:key="versions">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/Benji377/SocyMusic/releases/latest"
+                />
+        </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>
