@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic;
+package com.musicplayer.SocyMusic.data;
 
 /*
 For devs, this is the M3U file structure, please follow this carefully to avoid issues:
@@ -19,28 +19,33 @@ C:\Music\ExampleMusic.mp3
 To know more about it, check out this link: https://docs.fileformat.com/audio/m3u/#extended-m3u
 */
 
-import com.musicplayer.SocyMusic.Song;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
-import java.io.File;
+import com.musicplayer.SocyMusic.SocyMusicApp;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
+@Entity
 public class Playlist implements Serializable {
-    private File file;
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "playlist_id")
+    private final UUID id;
+    @ColumnInfo(name = "playlist_name")
     private String name;
+    @Ignore
     private ArrayList<Song> songList;
 
-    public Playlist(File file, String name) {
-        this.file = file;
+    public Playlist(@NonNull UUID id, String name) {
+        this.id = id;
         this.name = name;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
+        songList = new ArrayList<>();
     }
 
     public String getName() {
@@ -54,11 +59,33 @@ public class Playlist implements Serializable {
     public int getSongCount() {
         return songList.size();
     }
+
     public ArrayList<Song> getSongList() {
         return songList;
     }
 
     public void setSongList(ArrayList<Song> songList) {
         this.songList = songList;
+    }
+
+    @NonNull
+    public UUID getId() {
+        return id;
+    }
+
+    public boolean isFavorites() {
+        return id.equals(SongsData.FAVORITES_PLAYLIST_ID);
+    }
+
+    public boolean contains(Song song) {
+        return songList.contains(song);
+    }
+
+    public void addSong(Song song) {
+        songList.add(song);
+    }
+
+    public void removeSong(Song song) {
+        songList.remove(song);
     }
 }

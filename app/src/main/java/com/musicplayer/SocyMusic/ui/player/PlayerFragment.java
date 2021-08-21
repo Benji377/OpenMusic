@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -20,9 +21,9 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 import com.musicplayer.SocyMusic.MediaPlayerUtil;
-import com.musicplayer.SocyMusic.Song;
-import com.musicplayer.SocyMusic.SongsData;
-import com.musicplayer.SocyMusic.ui.main.MainActivity;
+import com.musicplayer.SocyMusic.data.Playlist;
+import com.musicplayer.SocyMusic.data.Song;
+import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.musicplayer.R;
 
 
@@ -146,12 +147,8 @@ public class PlayerFragment extends Fragment {
         repeatCheckBox.setChecked(songsData.isRepeat());
         // The option to shuffle the queue
         shuffleCheckBox.setChecked(songsData.isShuffle());
-        // The option to set the song in the favorite playlist
-        favoriteCheckBox.setChecked(songPlaying.isFavorited());
 
-        queueButton.setOnClickListener(v -> {
-            ((MainActivity) requireActivity()).showQueue();
-        });
+        queueButton.setOnClickListener(v -> hostCallBack.showQueue());
 
         playlistButton.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Coming soon", Toast.LENGTH_SHORT).show();
@@ -264,19 +261,24 @@ public class PlayerFragment extends Fragment {
             hostCallBack.onShuffle();
         });
 
-        favoriteCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // TODO: Fix playlists
-            /*
-            songPlaying.setFavorited(isChecked);
-            Playlist playlist = new Playlist(requireContext(), "favorite");
-            if (songPlaying.isFavorited()) {
-                Toast.makeText(getContext(), "Song added to Favorites", Toast.LENGTH_SHORT).show();
-                playlist.addSong(songPlaying.getFile());
-            } else {
-                Toast.makeText(getContext(), "Song removed from Favorites", Toast.LENGTH_SHORT).show();
-                playlist.removeSong(songPlaying.getFile());
+        favoriteCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = ((CheckBox) v).isChecked();
+                Playlist favorites = songsData.getFavoritesPlaylist();
+                if (isChecked) {
+                    songsData.insertToPlaylist(songsData.getFavoritesPlaylist(), songPlaying);
+                    Toast.makeText(getContext(), "Song added to Favorites", Toast.LENGTH_SHORT).show();
+                } else {
+                    songsData.removeFromPlaylist(songsData.getFavoritesPlaylist(), songPlaying);
+                    Toast.makeText(getContext(), "Song removed from Favorites", Toast.LENGTH_SHORT).show();
+                }
+                hostCallBack.onPlaylistUpdate(favorites);
             }
-             */
+        });
+        favoriteCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+
         });
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -366,7 +368,7 @@ public class PlayerFragment extends Fragment {
     public void updatePlayerUI() {
         // Retrieves the song playing right now
         songPlaying = songsData.getSongPlaying();
-        favoriteCheckBox.setChecked(songPlaying.isFavorited());
+        favoriteCheckBox.setChecked(songsData.isFavorited(songPlaying));
 
         // Sets all properties again
         if (songPager.getCurrentItem() != songsData.getPlayingIndex()) {
@@ -404,7 +406,6 @@ public class PlayerFragment extends Fragment {
         // Plays the next song
         MediaPlayerUtil.playNext(getContext());
         hostCallBack.onSongUpdate();
-        favoriteCheckBox.setChecked(songPlaying.isFavorited());
     }
 
     /**
@@ -414,7 +415,6 @@ public class PlayerFragment extends Fragment {
         // Plays the previous song
         MediaPlayerUtil.playPrev(getContext());
         hostCallBack.onSongUpdate();
-        favoriteCheckBox.setChecked(songPlaying.isFavorited());
     }
 
     /**
@@ -473,5 +473,9 @@ public class PlayerFragment extends Fragment {
         void onSongUpdate();
 
         void onShuffle();
+
+        void onPlaylistUpdate(Playlist playlist);
+
+        void showQueue();
     }
 }

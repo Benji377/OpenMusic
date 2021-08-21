@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.musicplayer.SocyMusic.Playlist;
+import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.musicplayer.R;
 
 import java.util.List;
