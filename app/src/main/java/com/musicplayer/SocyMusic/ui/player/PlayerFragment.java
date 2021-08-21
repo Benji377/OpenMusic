@@ -205,7 +205,7 @@ public class PlayerFragment extends Fragment {
                 // Song needs to start at the set time
                 MediaPlayerUtil.seekTo(seekBar.getProgress());
                 // Time passed needs to be updated
-                songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
+                songStartTimeTextview.setText(MediaPlayerUtil.createTime(MediaPlayerUtil.getPosition()));
                 // User is no longer dragging the seekbar
                 currentlySeeking = false;
             }
@@ -220,7 +220,7 @@ public class PlayerFragment extends Fragment {
             public void run() {
                 // While the player is playing, it gets the actual time and sets it
                 if (!MediaPlayerUtil.isStopped()) {
-                    String currentTime = createTime(MediaPlayerUtil.getPosition());
+                    String currentTime = MediaPlayerUtil.createTime(MediaPlayerUtil.getPosition());
                     songStartTimeTextview.setText(currentTime);
                     // Has a delay of 1000ms == 1s
                     handler.postDelayed(this, delay);
@@ -238,7 +238,7 @@ public class PlayerFragment extends Fragment {
         nextSongButton.setOnLongClickListener(v -> {
             if (MediaPlayerUtil.isPlaying()) {
                 MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() + 10000);
-                songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
+                songStartTimeTextview.setText(MediaPlayerUtil.createTime(MediaPlayerUtil.getPosition()));
             }
             return true;
         });
@@ -248,7 +248,7 @@ public class PlayerFragment extends Fragment {
         previousSongButton.setOnLongClickListener(v -> {
             if (MediaPlayerUtil.isPlaying()) {
                 MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() - 10000);
-                songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
+                songStartTimeTextview.setText(MediaPlayerUtil.createTime(MediaPlayerUtil.getPosition()));
             }
             return true;
         });
@@ -381,8 +381,8 @@ public class PlayerFragment extends Fragment {
         songSeekBar.setProgress(position);
 
         // Sets the time of the song
-        songEndTimeTextview.setText(createTime(duration));
-        songStartTimeTextview.setText(createTime(position));
+        songEndTimeTextview.setText(MediaPlayerUtil.createTime(duration));
+        songStartTimeTextview.setText(MediaPlayerUtil.createTime(position));
         initializeVisualizer();
         // If paused or playing
         updatePlayButton();
@@ -431,29 +431,6 @@ public class PlayerFragment extends Fragment {
         hostCallBack.onPlaybackUpdate();
     }
 
-    /**
-     * Converts the milliseconds in a displayable time-format like this --> min:sec
-     *
-     * @param duration time in milliseconds
-     * @return String with the converted time in minutes and seconds
-     */
-    private String createTime(int duration) {
-        // Placeholder
-        String time = "";
-        // Converts time to minutes
-        int min = duration / 1000 / 60;
-        // Converts time to seconds
-        int sec = duration / 1000 % 60;
-        // Adds to the string
-        time += min + ":";
-        // Adds a zero if the seconds is less than 10: 9 --> 09
-        if (sec < 10) {
-            time += "0";
-        }
-        time += sec;
-        // time = min:sec
-        return time;
-    }
 
     public void initializeVisualizer() {
         int audioSessionId = MediaPlayerUtil.getAudioSessionId();

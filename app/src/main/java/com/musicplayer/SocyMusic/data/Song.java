@@ -1,6 +1,8 @@
 package com.musicplayer.SocyMusic.data;
 
 
+import android.media.MediaMetadataRetriever;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
@@ -10,7 +12,6 @@ import androidx.room.PrimaryKey;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 public class Song implements Serializable {
@@ -39,7 +40,7 @@ public class Song implements Serializable {
      * @param file  File to create a song from
      * @param title Name of the song
      */
-    public Song(File file, String title) {
+    public Song(@NonNull File file, String title) {
         this.file = file;
         this.title = title;
     }
@@ -49,6 +50,7 @@ public class Song implements Serializable {
      *
      * @return The file of the song
      */
+    @NonNull
     public File getFile() {
         return file;
     }
@@ -58,7 +60,7 @@ public class Song implements Serializable {
      *
      * @param file The new file for the song
      */
-    public void setFile(File file) {
+    public void setFile(@NonNull File file) {
         this.file = file;
     }
 
@@ -80,5 +82,11 @@ public class Song implements Serializable {
         if (!(obj instanceof Song))
             return false;
         return ((Song) obj).getPath().equals(this.getPath());
+    }
+
+    public int getDuration() {
+        MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();
+        metadataRetriever.setDataSource(getPath());
+        return Integer.parseInt(metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
     }
 }

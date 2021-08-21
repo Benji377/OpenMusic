@@ -1,5 +1,6 @@
 package com.musicplayer.SocyMusic.ui.playlists_tab;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.SocyMusic.data.SongsData;
+import com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity;
 import com.musicplayer.musicplayer.R;
 
 public class PlaylistsTabFragment extends Fragment {
@@ -39,7 +41,9 @@ public class PlaylistsTabFragment extends Fragment {
         playlistsAdapter.setOnItemClickListener(new PlaylistsAdapter.ItemClickListener() {
             @Override
             public void onItemClick(int position, View view) {
-
+                Intent intent = new Intent(requireContext(), PlaylistActivity.class);
+                intent.putExtra(PlaylistActivity.EXTRA_PLAYLIST, songsData.getAllPlaylists(requireContext()).get(position));
+                startActivity(intent);
             }
 
             @Override

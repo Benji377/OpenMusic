@@ -194,4 +194,28 @@ public class MediaPlayerUtil {
             return 0;
         return mediaPlayer.getAudioSessionId();
     }
+
+    /**
+     * Converts the milliseconds in a displayable time-format like this --> min:sec
+     *
+     * @param duration time in milliseconds
+     * @return String with the converted time in minutes and seconds
+     */
+    public static String createTime(int duration) {
+        // Placeholder
+        String time = "";
+        // Converts time to minutes
+        int min = duration / 1000 / 60;
+        // Converts time to seconds
+        int sec = duration / 1000 % 60;
+        // Adds to the string
+        time += min + ":";
+        // Adds a zero if the seconds is less than 10: 9 --> 09
+        if (sec < 10) {
+            time += "0";
+        }
+        time += sec;
+        // time = min:sec
+        return time;
+    }
 }

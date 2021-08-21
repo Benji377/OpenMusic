@@ -1,31 +1,14 @@
 package com.musicplayer.SocyMusic.data;
 
-/*
-For devs, this is the M3U file structure, please follow this carefully to avoid issues:
-- The first line defines the type of file
-- The next line pairs are as follow:
-    - The keyword #EXTINF: followed by the information about a song
-    - The path to the song
-Here is an example:
-
-#EXTM3U
-
-#EXTINF:111, Sample artist name - Sample track title
-C:\Music\SampleMusic.mp3
-
-#EXTINF:222,Example Artist name - Example track title
-C:\Music\ExampleMusic.mp3
-
-To know more about it, check out this link: https://docs.fileformat.com/audio/m3u/#extended-m3u
-*/
+import android.content.Context;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
-import com.musicplayer.SocyMusic.SocyMusicApp;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -88,4 +71,15 @@ public class Playlist implements Serializable {
     public void removeSong(Song song) {
         songList.remove(song);
     }
+
+    public int calculateTotalDuration() {
+        MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();
+        int totalDuration = 0;
+        for (Song song : songList) {
+            metadataRetriever.setDataSource(song.getPath());
+            totalDuration += Integer.parseInt(metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+        }
+        return totalDuration;
+    }
+
 }

@@ -369,7 +369,7 @@ public class SongsData {
 
     public Playlist getFavoritesPlaylist() {
         for (Playlist playlist : allPlaylists)
-            if (playlist.getId().equals(FAVORITES_PLAYLIST_ID))
+            if (playlist.isFavorites())
                 return playlist;
         return null;
     }

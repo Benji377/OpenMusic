@@ -31,7 +31,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongHolder> {
     @Override
     public SongHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = inflater.inflate(R.layout.list_item_main, parent, false);
+        View itemView = inflater.inflate(R.layout.list_item_all_songs, parent, false);
         return new SongHolder(itemView, clickListener);
     }
 
