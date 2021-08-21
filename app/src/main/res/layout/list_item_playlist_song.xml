@@ -13,51 +13,39 @@
         android:background="@drawable/main_list_background"
         android:padding="8dp">
 
-        <ImageView
-            android:id="@+id/imageview_playlist_item_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/main_list_background"
-            android:src="@drawable/ic_playlist" />
 
         <TextView
-            android:id="@+id/textview_playlist_item_name"
+            android:id="@+id/textview_playlist_song_item_title"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_toEndOf="@+id/imageview_playlist_item_icon"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/textview_playlist_song_item_length"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
             android:padding="6dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:text="Playlist name"
+            android:text="Song name"
             android:textColor="?colorOnPrimary"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />
 
         <TextView
-            android:id="@+id/textview_playlist_item_songcount"
+            android:id="@+id/textview_playlist_song_item_length"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_toEndOf="@+id/imageview_playlist_item_icon"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
-            android:paddingTop="20dp"
-            android:paddingLeft="6dp"
+            android:padding="6dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
-            android:text="Songcount"
-            android:textColor="@color/white"
+            android:text="00:00"
+            android:textColor="?colorOnPrimary"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />
 

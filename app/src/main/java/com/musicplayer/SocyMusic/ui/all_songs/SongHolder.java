@@ -6,7 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.musicplayer.SocyMusic.Song;
+import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.musicplayer.R;
 
 public class SongHolder extends RecyclerView.ViewHolder {

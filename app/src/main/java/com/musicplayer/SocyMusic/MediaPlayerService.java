@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.media.app.NotificationCompat.MediaStyle;
 
+import com.musicplayer.SocyMusic.data.Song;
+import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.main.MainActivity;
 import com.musicplayer.musicplayer.R;
 

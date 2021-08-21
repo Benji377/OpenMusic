@@ -9,8 +9,8 @@ import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 
-import com.musicplayer.SocyMusic.Song;
-import com.musicplayer.SocyMusic.SongsData;
+import com.musicplayer.SocyMusic.data.Song;
+import com.musicplayer.SocyMusic.data.SongsData;
 import com.woxthebox.draglistview.DragItemAdapter;
 
 import java.util.List;

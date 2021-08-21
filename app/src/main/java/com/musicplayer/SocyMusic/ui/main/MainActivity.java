@@ -43,10 +43,12 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.musicplayer.SocyMusic.MediaPlayerService;
 import com.musicplayer.SocyMusic.MediaPlayerUtil;
 import com.musicplayer.SocyMusic.SocyMusicApp;
-import com.musicplayer.SocyMusic.Song;
-import com.musicplayer.SocyMusic.SongsData;
+import com.musicplayer.SocyMusic.data.Playlist;
+import com.musicplayer.SocyMusic.data.Song;
+import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
+import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.musicplayer.R;
 
@@ -412,6 +414,14 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
         pagerAdapter.setQueue(songsData.getPlayingQueue());
         pagerAdapter.notifyDataSetChanged();
         playerFragment.invalidatePager();
+    }
+
+    @Override
+    public void onPlaylistUpdate(Playlist playlist) {
+        int index = songsData.getAllPlaylists(this).indexOf(playlist);
+        PlaylistsTabFragment playlistFragment = (PlaylistsTabFragment) getSupportFragmentManager().findFragmentByTag("f" + TabsPagerAdapter.PLAYLISTS_TAB);
+        if (playlistFragment != null)
+            playlistFragment.updatePlaylistAt(index);
     }
 
     /**
