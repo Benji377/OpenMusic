@@ -1,18 +1,22 @@
 package com.musicplayer.SocyMusic.ui.player;
 
+import static android.view.ViewGroup.*;
+
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,9 +28,13 @@ import com.musicplayer.SocyMusic.MediaPlayerUtil;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.data.SongsData;
+import com.musicplayer.SocyMusic.ui.AlertUtils;
 import com.musicplayer.musicplayer.R;
 
+import java.util.List;
+import java.util.UUID;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class PlayerFragment extends Fragment {
     private Button playSongButton;
     private Button nextSongButton;
@@ -150,12 +158,8 @@ public class PlayerFragment extends Fragment {
 
         queueButton.setOnClickListener(v -> hostCallBack.showQueue());
 
-        playlistButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Coming soon", Toast.LENGTH_SHORT).show();
-            //Playlist playlist = new Playlist("favorites");
-            // Testing the playlist -> FAILED
-        });
-
+        playlistButton.setOnClickListener(v -> AlertUtils.showAddToPlaylistDialog(requireContext(),
+                songPlaying, hostCallBack::onNewPlaylist, hostCallBack::onPlaylistUpdate));
 
         // Starts the seekbar thread
         //mediaPlayer.getCurrentPosition();
@@ -261,20 +265,14 @@ public class PlayerFragment extends Fragment {
             hostCallBack.onShuffle();
         });
 
-        favoriteCheckBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isChecked = ((CheckBox) v).isChecked();
-                Playlist favorites = songsData.getFavoritesPlaylist();
-                if (isChecked) {
-                    songsData.insertToPlaylist(songsData.getFavoritesPlaylist(), songPlaying);
-                    Toast.makeText(getContext(), "Song added to Favorites", Toast.LENGTH_SHORT).show();
-                } else {
-                    songsData.removeFromPlaylist(songsData.getFavoritesPlaylist(), songPlaying);
-                    Toast.makeText(getContext(), "Song removed from Favorites", Toast.LENGTH_SHORT).show();
-                }
-                hostCallBack.onPlaylistUpdate(favorites);
-            }
+        favoriteCheckBox.setOnClickListener(v -> {
+            boolean isChecked = ((CheckBox) v).isChecked();
+            Playlist favorites = songsData.getFavoritesPlaylist();
+            if (isChecked)
+                songsData.insertToPlaylist(songsData.getFavoritesPlaylist(), songPlaying);
+            else
+                songsData.removeFromPlaylist(songsData.getFavoritesPlaylist(), songPlaying);
+            hostCallBack.onPlaylistUpdate(favorites);
         });
         favoriteCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
@@ -340,6 +338,7 @@ public class PlayerFragment extends Fragment {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void invalidatePager() {
         SongPagerAdapter adapter = (SongPagerAdapter) songPager.getAdapter();
         if (adapter != null) {
@@ -454,5 +453,7 @@ public class PlayerFragment extends Fragment {
         void onPlaylistUpdate(Playlist playlist);
 
         void showQueue();
+
+        void onNewPlaylist();
     }
 }

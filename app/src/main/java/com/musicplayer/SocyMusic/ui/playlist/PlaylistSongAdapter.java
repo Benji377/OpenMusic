@@ -16,6 +16,7 @@ import java.util.List;
 public class PlaylistSongAdapter extends RecyclerView.Adapter<PlaylistSongHolder> {
     private Context context;
     private List<Song> songs;
+    private ItemClickListener clickListener;
 
     public PlaylistSongAdapter(Context context, List<Song> songs) {
         this.context = context;
@@ -27,7 +28,7 @@ public class PlaylistSongAdapter extends RecyclerView.Adapter<PlaylistSongHolder
     public PlaylistSongHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.list_item_playlist_song, parent, false);
-        return new PlaylistSongHolder(itemView);
+        return new PlaylistSongHolder(itemView, clickListener);
     }
 
     @Override
@@ -39,4 +40,16 @@ public class PlaylistSongAdapter extends RecyclerView.Adapter<PlaylistSongHolder
     public int getItemCount() {
         return songs.size();
     }
+
+    public void setOnItemClickListener(ItemClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+
+    public interface ItemClickListener {
+        void onItemClick(int position, View view);
+
+        boolean onItemLongClick(int position, View view);
+    }
+
 }

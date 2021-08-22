@@ -2,28 +2,28 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "701801e1c823d2d9e59874c2eff904f3",
+    "identityHash": "3378721108eb991ab1d1b2a6e2794550",
     "entities": [
       {
         "tableName": "Song",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`song_path` TEXT NOT NULL, `song_title` TEXT, PRIMARY KEY(`song_path`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`song_id` TEXT NOT NULL, `song_path` TEXT NOT NULL, PRIMARY KEY(`song_id`))",
         "fields": [
+          {
+            "fieldPath": "songId",
+            "columnName": "song_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
           {
             "fieldPath": "file",
             "columnName": "song_path",
             "affinity": "TEXT",
             "notNull": true
-          },
-          {
-            "fieldPath": "title",
-            "columnName": "song_title",
-            "affinity": "TEXT",
-            "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "song_path"
+            "song_id"
           ],
           "autoGenerate": false
         },
@@ -58,7 +58,7 @@
       },
       {
         "tableName": "Playlist_Song",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`playlist_id` TEXT NOT NULL, `song_path` TEXT NOT NULL, `song_index` INTEGER NOT NULL, PRIMARY KEY(`playlist_id`, `song_path`, `song_index`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`playlist_id` TEXT NOT NULL, `song_id` TEXT NOT NULL, `song_index` INTEGER NOT NULL, PRIMARY KEY(`playlist_id`, `song_id`, `song_index`))",
         "fields": [
           {
             "fieldPath": "playlistID",
@@ -68,7 +68,7 @@
           },
           {
             "fieldPath": "songID",
-            "columnName": "song_path",
+            "columnName": "song_id",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -82,7 +82,7 @@
         "primaryKey": {
           "columnNames": [
             "playlist_id",
-            "song_path",
+            "song_id",
             "song_index"
           ],
           "autoGenerate": false
@@ -94,7 +94,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '701801e1c823d2d9e59874c2eff904f3')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3378721108eb991ab1d1b2a6e2794550')"
     ]
   }
 }

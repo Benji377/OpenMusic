@@ -12,35 +12,42 @@ import androidx.room.PrimaryKey;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 public class Song implements Serializable {
     @PrimaryKey
+    @ColumnInfo(name = "song_id")
+    @NonNull
+    private UUID songId;
     @ColumnInfo(name = "song_path")
     @NonNull
     private File file;
-    @ColumnInfo(name = "song_title")
+    @Ignore
     private final String title;
 
     /**
      * First custom constructor for the Song class. Creates a Song with file only.
      *
-     * @param file File to create a song from
+     * @param file   File to create a song from
+     * @param songId
      */
-    @Ignore
-    public Song(File file) {
+    public Song(@NonNull UUID songId, File file) {
         // removes invalid characters from the filename before creating a song out of it
-        this(file, file.getName().replaceAll("(?<!^)[.][^.]*$", ""));
+        this(songId, file, file.getName().replaceAll("(?<!^)[.][^.]*$", ""));
 
     }
 
     /**
      * Second custom constructor for the Song class. Creates a Song with file and title.
      *
-     * @param file  File to create a song from
-     * @param title Name of the song
+     * @param songId
+     * @param file   File to create a song from
+     * @param title  Name of the song
      */
-    public Song(@NonNull File file, String title) {
+    @Ignore
+    public Song(@NonNull UUID songId, @NonNull File file, String title) {
+        this.songId = songId;
         this.file = file;
         this.title = title;
     }
@@ -81,12 +88,20 @@ public class Song implements Serializable {
     public boolean equals(@Nullable @org.jetbrains.annotations.Nullable Object obj) {
         if (!(obj instanceof Song))
             return false;
-        return ((Song) obj).getPath().equals(this.getPath());
+        return ((Song) obj).getSongId().equals(this.getSongId());
     }
 
     public int getDuration() {
         MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();
         metadataRetriever.setDataSource(getPath());
         return Integer.parseInt(metadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+    }
+
+    public UUID getSongId() {
+        return songId;
+    }
+
+    public void setSongId(@NonNull UUID songId) {
+        this.songId = songId;
     }
 }

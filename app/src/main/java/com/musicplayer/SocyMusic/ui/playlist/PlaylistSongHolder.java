@@ -13,11 +13,15 @@ import com.musicplayer.musicplayer.R;
 public class PlaylistSongHolder extends RecyclerView.ViewHolder {
     private TextView songTitleTextview;
     private TextView songLengthTextview;
+    private final PlaylistSongAdapter.ItemClickListener clickListener;
 
-    public PlaylistSongHolder(@NonNull View itemView) {
+    public PlaylistSongHolder(@NonNull View itemView, PlaylistSongAdapter.ItemClickListener clickListener) {
         super(itemView);
         songTitleTextview = itemView.findViewById(R.id.textview_playlist_song_item_title);
         songLengthTextview = itemView.findViewById(R.id.textview_playlist_song_item_length);
+        itemView.setOnClickListener(view -> clickListener.onItemClick(getBindingAdapterPosition(), view));
+        itemView.setOnLongClickListener(view -> clickListener.onItemLongClick(getBindingAdapterPosition(), view));
+        this.clickListener = clickListener;
     }
 
     public void bind(Song song) {

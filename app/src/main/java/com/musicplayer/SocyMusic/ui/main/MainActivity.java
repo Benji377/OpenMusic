@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -21,11 +23,11 @@ import android.widget.FrameLayout;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
@@ -54,14 +56,12 @@ import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AllSongsFragment.AllSongsFragmentHost, PlayerFragment.PlayerFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
+public class MainActivity extends AppCompatActivity implements AllSongsFragment.AllSongsFragmentHost, PlayerFragment.PlayerFragmentHost, PlaylistsTabFragment.PlaylistsTabFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
     private BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
     private ViewPager2 songInfoPager;
 
-    // Private components
-    private ActivityResultLauncher<Intent> resultLauncher;
     private PlayerFragment playerFragment;
     private QueueFragment queueFragment;
     private MediaPlayerService mediaPlayerService;
@@ -142,7 +142,8 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
         songInfoPager = findViewById(R.id.viewpager_main_info_panes);
         bottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet_main_player));
 
-        resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this);
+        // Private components
+        registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this);
 
         // Creates a connection to the player fragment
         final FrameLayout playerContainer = findViewById(R.id.layout_main_player_container);
@@ -243,6 +244,7 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
                 public boolean onQueryTextSubmit(String query) {
                     return false;
                 }
+
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     if (TextUtils.isEmpty(newText)) {
@@ -312,12 +314,24 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
      * For musicplayer storage permission to find all the songs and record permission for the visualizer
      */
     public void runtimePermission() {
+        if (hasPermissions()) {
+            tabsPager.setAdapter(new TabsPagerAdapter(MainActivity.this));
+            new TabLayoutMediator(tabsLayout,
+                    tabsPager,
+                    (tab, position) -> tab.setText(getResources().getStringArray(R.array.main_tabs)[position]))
+                    .attach();
+            return;
+        }
         Dexter.withContext(this).withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                        // Display all the songs
                         songsData.reloadSongs(MainActivity.this);
+                        (new Handler()).postDelayed(this::finishLoading, 500);
+                    }
+
+                    void finishLoading() {
+                        // Display all the songs
                         tabsPager.setAdapter(new TabsPagerAdapter(MainActivity.this));
                         new TabLayoutMediator(tabsLayout,
                                 tabsPager,
@@ -325,12 +339,18 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
                                 .attach();
                     }
 
+
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
                         // Ask again and again until permissions are accepted
                         permissionToken.continuePermissionRequest();
                     }
                 }).check();
+    }
+
+    private boolean hasPermissions() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
     }
 
     /**
@@ -390,9 +410,10 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
 
         InfoPanePagerAdapter pagerAdapter = (InfoPanePagerAdapter) songInfoPager.getAdapter();
         //determine if queue changed or if simple scroll happened
-        if (pagerAdapter.getQueue() != songsData.getPlayingQueue())
+        if (pagerAdapter.getQueue() != songsData.getPlayingQueue()) {
             pagerAdapter.setQueue(songsData.getPlayingQueue());
-
+            playerFragment.invalidatePager();
+        }
         scrollTriggeredByCode = true;
         songInfoPager.setCurrentItem(songsData.getPlayingIndex());
         songInfoPager.getAdapter().notifyItemChanged(songInfoPager.getCurrentItem(), songsData.getSongPlaying());
@@ -418,10 +439,17 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
 
     @Override
     public void onPlaylistUpdate(Playlist playlist) {
-        int index = songsData.getAllPlaylists(this).indexOf(playlist);
-        PlaylistsTabFragment playlistFragment = (PlaylistsTabFragment) getSupportFragmentManager().findFragmentByTag("f" + TabsPagerAdapter.PLAYLISTS_TAB);
-        if (playlistFragment != null)
-            playlistFragment.updatePlaylistAt(index);
+        int index = songsData.getAllPlaylists().indexOf(playlist);
+        PlaylistsTabFragment playlistsTab = (PlaylistsTabFragment) getSupportFragmentManager().findFragmentByTag("f" + TabsPagerAdapter.PLAYLISTS_TAB);
+        if (playlistsTab != null)
+            playlistsTab.updatePlaylistAt(index);
+    }
+
+
+    @Override
+    public void onNewPlaylist() {
+        PlaylistsTabFragment playlistsTab = (PlaylistsTabFragment) getSupportFragmentManager().findFragmentByTag("f" + TabsPagerAdapter.PLAYLISTS_TAB);
+        playlistsTab.notifyPlaylistInserted();
     }
 
     /**
@@ -496,6 +524,22 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
             onSongUpdate();
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             hideQueue();
+        }
+    }
+
+    @Override
+    public void onQueueChanged() {
+        if (playerFragment != null) {
+            onSongUpdate();
+
+        } else {
+            playerFragment = PlayerFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().add(R.id.layout_main_player_container, playerFragment).commit();
+
+            Intent serviceIntent = new Intent(MainActivity.this, MediaPlayerService.class);
+            serviceIntent.putExtra(MediaPlayerService.EXTRA_SONG, songsData.getSongPlaying());
+            startService(serviceIntent);
+            bindService(serviceIntent, MainActivity.this, Context.BIND_AUTO_CREATE);
         }
     }
 

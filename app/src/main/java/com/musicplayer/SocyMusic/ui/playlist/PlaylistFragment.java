@@ -1,5 +1,6 @@
 package com.musicplayer.SocyMusic.ui.playlist;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +18,22 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.musicplayer.SocyMusic.MediaPlayerUtil;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.SocyMusic.data.Playlist;
+import com.musicplayer.SocyMusic.data.Song;
+import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.musicplayer.R;
 
 public class PlaylistFragment extends Fragment {
     private static final String KEY_PLAYLIST = "com.musicplayer.SocyMusic.ui.playlist.PlaylistFragment.playlist";
     private Playlist playlist;
     private CustomRecyclerView songsRecyclerView;
+    private SongsData songsData;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
             playlist = (Playlist) getArguments().getSerializable(KEY_PLAYLIST);
+        songsData = SongsData.getInstance(requireContext());
     }
 
     @Nullable
@@ -75,6 +80,22 @@ public class PlaylistFragment extends Fragment {
         totalDurationTextview.setText(MediaPlayerUtil.createTime(playlist.calculateTotalDuration()));
 
         PlaylistSongAdapter adapter = new PlaylistSongAdapter(requireContext(), playlist.getSongList());
+        adapter.setOnItemClickListener(new PlaylistSongAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(int position, View view) {
+                songsData.playPlaylistFrom(playlist, position);
+                MediaPlayerUtil.playCurrent(getContext());
+                //TODO: host another playlist fragment and pop it up instead of going back
+                requireActivity().setResult(Activity.RESULT_OK);
+                requireActivity().finish();
+            }
+
+            @Override
+            public boolean onItemLongClick(int position, View view) {
+                return false;
+            }
+        });
+
         songsRecyclerView = view.findViewById(R.id.recyclerview_playlist_songs);
         songsRecyclerView.setAdapter(adapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));

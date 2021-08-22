@@ -25,6 +25,12 @@ public class Playlist implements Serializable {
     @Ignore
     private ArrayList<Song> songList;
 
+    public Playlist(@NonNull UUID id, String name, ArrayList<Song> songList) {
+        this.id = id;
+        this.name = name;
+        this.songList = songList;
+    }
+
     public Playlist(@NonNull UUID id, String name) {
         this.id = id;
         this.name = name;

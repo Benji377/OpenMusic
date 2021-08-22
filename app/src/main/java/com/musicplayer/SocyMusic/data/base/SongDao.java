@@ -20,10 +20,12 @@ public interface SongDao {
     @Insert
     void insertAll(List<Song> song);
 
-    @Query("SELECT * FROM Song")
-    LiveData<List<Song>> getAll();
+    @Query("SELECT * FROM Song ORDER BY song_path")
+    List<Song> getAll();
 
     @Query("DELETE FROM Song")
     void clearAll();
 
+    @Delete
+    void delete(Song song);
 }

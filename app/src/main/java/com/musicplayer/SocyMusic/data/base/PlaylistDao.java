@@ -21,11 +21,11 @@ public interface PlaylistDao {
     @Insert
     void insert(Playlist playlist);
 
-    @Query("SELECT song_title, song_path FROM Song NATURAL JOIN Playlist_Song WHERE Playlist_Song.playlist_id = :playlist_id ORDER BY song_index")
+    @Query("SELECT song_id,song_path FROM Song NATURAL JOIN Playlist_Song WHERE Playlist_Song.playlist_id = :playlist_id ORDER BY song_index")
     List<Song> getSongs(String playlist_id);
 
     @Query("SELECT * FROM Playlist WHERE playlist_id=:playlist_id")
-    LiveData<Playlist> get(String playlist_id);
+    Playlist get(String playlist_id);
 
     @Update
     void update(Playlist playlist);
