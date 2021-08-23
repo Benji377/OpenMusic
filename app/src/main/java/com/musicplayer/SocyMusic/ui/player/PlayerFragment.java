@@ -1,6 +1,11 @@
 package com.musicplayer.SocyMusic.ui.player;
 
+import static android.view.ViewGroup.*;
+
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -9,9 +14,9 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,12 +25,16 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 import com.musicplayer.SocyMusic.MediaPlayerUtil;
-import com.musicplayer.SocyMusic.Song;
-import com.musicplayer.SocyMusic.SongsData;
-import com.musicplayer.SocyMusic.ui.main.MainActivity;
+import com.musicplayer.SocyMusic.data.Playlist;
+import com.musicplayer.SocyMusic.data.Song;
+import com.musicplayer.SocyMusic.data.SongsData;
+import com.musicplayer.SocyMusic.ui.AlertUtils;
 import com.musicplayer.musicplayer.R;
 
+import java.util.List;
+import java.util.UUID;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class PlayerFragment extends Fragment {
     private Button playSongButton;
     private Button nextSongButton;
@@ -146,19 +155,11 @@ public class PlayerFragment extends Fragment {
         repeatCheckBox.setChecked(songsData.isRepeat());
         // The option to shuffle the queue
         shuffleCheckBox.setChecked(songsData.isShuffle());
-        // The option to set the song in the favorite playlist
-        favoriteCheckBox.setChecked(songPlaying.isFavorited());
 
-        queueButton.setOnClickListener(v -> {
-            ((MainActivity) requireActivity()).showQueue();
-        });
+        queueButton.setOnClickListener(v -> hostCallBack.showQueue());
 
-        playlistButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Coming soon", Toast.LENGTH_SHORT).show();
-            //Playlist playlist = new Playlist("favorites");
-            // Testing the playlist -> FAILED
-        });
-
+        playlistButton.setOnClickListener(v -> AlertUtils.showAddToPlaylistDialog(requireContext(),
+                songPlaying, hostCallBack::onNewPlaylist, hostCallBack::onPlaylistUpdate));
 
         // Starts the seekbar thread
         //mediaPlayer.getCurrentPosition();
@@ -208,7 +209,7 @@ public class PlayerFragment extends Fragment {
                 // Song needs to start at the set time
                 MediaPlayerUtil.seekTo(seekBar.getProgress());
                 // Time passed needs to be updated
-                songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
+                songStartTimeTextview.setText(MediaPlayerUtil.createTime(MediaPlayerUtil.getPosition()));
                 // User is no longer dragging the seekbar
                 currentlySeeking = false;
             }
@@ -223,7 +224,7 @@ public class PlayerFragment extends Fragment {
             public void run() {
                 // While the player is playing, it gets the actual time and sets it
                 if (!MediaPlayerUtil.isStopped()) {
-                    String currentTime = createTime(MediaPlayerUtil.getPosition());
+                    String currentTime = MediaPlayerUtil.createTime(MediaPlayerUtil.getPosition());
                     songStartTimeTextview.setText(currentTime);
                     // Has a delay of 1000ms == 1s
                     handler.postDelayed(this, delay);
@@ -241,7 +242,7 @@ public class PlayerFragment extends Fragment {
         nextSongButton.setOnLongClickListener(v -> {
             if (MediaPlayerUtil.isPlaying()) {
                 MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() + 10000);
-                songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
+                songStartTimeTextview.setText(MediaPlayerUtil.createTime(MediaPlayerUtil.getPosition()));
             }
             return true;
         });
@@ -251,7 +252,7 @@ public class PlayerFragment extends Fragment {
         previousSongButton.setOnLongClickListener(v -> {
             if (MediaPlayerUtil.isPlaying()) {
                 MediaPlayerUtil.seekTo(MediaPlayerUtil.getPosition() - 10000);
-                songStartTimeTextview.setText(createTime(MediaPlayerUtil.getPosition()));
+                songStartTimeTextview.setText(MediaPlayerUtil.createTime(MediaPlayerUtil.getPosition()));
             }
             return true;
         });
@@ -264,19 +265,18 @@ public class PlayerFragment extends Fragment {
             hostCallBack.onShuffle();
         });
 
+        favoriteCheckBox.setOnClickListener(v -> {
+            boolean isChecked = ((CheckBox) v).isChecked();
+            Playlist favorites = songsData.getFavoritesPlaylist();
+            if (isChecked)
+                songsData.insertToPlaylist(songsData.getFavoritesPlaylist(), songPlaying);
+            else
+                songsData.removeFromPlaylist(songsData.getFavoritesPlaylist(), songPlaying);
+            hostCallBack.onPlaylistUpdate(favorites);
+        });
         favoriteCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // TODO: Fix playlists
-            /*
-            songPlaying.setFavorited(isChecked);
-            Playlist playlist = new Playlist(requireContext(), "favorite");
-            if (songPlaying.isFavorited()) {
-                Toast.makeText(getContext(), "Song added to Favorites", Toast.LENGTH_SHORT).show();
-                playlist.addSong(songPlaying.getFile());
-            } else {
-                Toast.makeText(getContext(), "Song removed from Favorites", Toast.LENGTH_SHORT).show();
-                playlist.removeSong(songPlaying.getFile());
-            }
-             */
+
+
         });
 
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -338,6 +338,7 @@ public class PlayerFragment extends Fragment {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void invalidatePager() {
         SongPagerAdapter adapter = (SongPagerAdapter) songPager.getAdapter();
         if (adapter != null) {
@@ -366,7 +367,7 @@ public class PlayerFragment extends Fragment {
     public void updatePlayerUI() {
         // Retrieves the song playing right now
         songPlaying = songsData.getSongPlaying();
-        favoriteCheckBox.setChecked(songPlaying.isFavorited());
+        favoriteCheckBox.setChecked(songsData.isFavorited(songPlaying));
 
         // Sets all properties again
         if (songPager.getCurrentItem() != songsData.getPlayingIndex()) {
@@ -379,8 +380,8 @@ public class PlayerFragment extends Fragment {
         songSeekBar.setProgress(position);
 
         // Sets the time of the song
-        songEndTimeTextview.setText(createTime(duration));
-        songStartTimeTextview.setText(createTime(position));
+        songEndTimeTextview.setText(MediaPlayerUtil.createTime(duration));
+        songStartTimeTextview.setText(MediaPlayerUtil.createTime(position));
         initializeVisualizer();
         // If paused or playing
         updatePlayButton();
@@ -404,7 +405,6 @@ public class PlayerFragment extends Fragment {
         // Plays the next song
         MediaPlayerUtil.playNext(getContext());
         hostCallBack.onSongUpdate();
-        favoriteCheckBox.setChecked(songPlaying.isFavorited());
     }
 
     /**
@@ -414,7 +414,6 @@ public class PlayerFragment extends Fragment {
         // Plays the previous song
         MediaPlayerUtil.playPrev(getContext());
         hostCallBack.onSongUpdate();
-        favoriteCheckBox.setChecked(songPlaying.isFavorited());
     }
 
     /**
@@ -431,29 +430,6 @@ public class PlayerFragment extends Fragment {
         hostCallBack.onPlaybackUpdate();
     }
 
-    /**
-     * Converts the milliseconds in a displayable time-format like this --> min:sec
-     *
-     * @param duration time in milliseconds
-     * @return String with the converted time in minutes and seconds
-     */
-    private String createTime(int duration) {
-        // Placeholder
-        String time = "";
-        // Converts time to minutes
-        int min = duration / 1000 / 60;
-        // Converts time to seconds
-        int sec = duration / 1000 % 60;
-        // Adds to the string
-        time += min + ":";
-        // Adds a zero if the seconds is less than 10: 9 --> 09
-        if (sec < 10) {
-            time += "0";
-        }
-        time += sec;
-        // time = min:sec
-        return time;
-    }
 
     public void initializeVisualizer() {
         int audioSessionId = MediaPlayerUtil.getAudioSessionId();
@@ -473,5 +449,11 @@ public class PlayerFragment extends Fragment {
         void onSongUpdate();
 
         void onShuffle();
+
+        void onPlaylistUpdate(Playlist playlist);
+
+        void showQueue();
+
+        void onNewPlaylist();
     }
 }

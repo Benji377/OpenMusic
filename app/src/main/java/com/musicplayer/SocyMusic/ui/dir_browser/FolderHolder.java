@@ -57,9 +57,9 @@ public class FolderHolder extends RecyclerView.ViewHolder {
     }
 
     private void setSelectedCheckBoxState() {
-        if (folderCallBack.folderSelected(folder))
+        if (folderCallBack.isFolderSelected(folder))
             selectedCheckBox.setChecked(true, false);   //checked
-        else if (folderCallBack.subFolderSelected(folder))
+        else if (folderCallBack.isSubFolderSelected(folder))
             selectedCheckBox.setChecked(!selectedCheckBox.isChecked(), true);    //indeterminate
         else
             selectedCheckBox.setChecked(false, false);  //unchecked
@@ -74,9 +74,9 @@ public class FolderHolder extends RecyclerView.ViewHolder {
     }
 
     interface FolderCallBack {
-        boolean folderSelected(File folder);
+        boolean isFolderSelected(File folder);
 
-        boolean subFolderSelected(File folder);
+        boolean isSubFolderSelected(File folder);
 
         boolean isAtRoot();
     }

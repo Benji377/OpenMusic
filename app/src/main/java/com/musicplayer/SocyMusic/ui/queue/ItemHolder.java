@@ -13,8 +13,8 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 import com.musicplayer.SocyMusic.MediaPlayerUtil;
-import com.musicplayer.SocyMusic.Song;
-import com.musicplayer.SocyMusic.SongsData;
+import com.musicplayer.SocyMusic.data.Song;
+import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.musicplayer.R;
 import com.woxthebox.draglistview.DragItemAdapter;
 

@@ -14,7 +14,7 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.musicplayer.SocyMusic.SocyMusicApp;
-import com.musicplayer.SocyMusic.SongsData;
+import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.musicplayer.R;
 
@@ -60,7 +60,7 @@ public class DirBrowserFragment extends Fragment {
         FolderAdapter adapter = new FolderAdapter(requireContext(), rootDirs);
         adapter.setFolderCallBack(new FolderHolder.FolderCallBack() {
             @Override
-            public boolean folderSelected(File folder) {
+            public boolean isFolderSelected(File folder) {
                 //if folder itself is in the saved paths
                 if (savedPaths.contains(folder.getAbsolutePath()))
                     return true;
@@ -73,7 +73,7 @@ public class DirBrowserFragment extends Fragment {
             }
 
             @Override
-            public boolean subFolderSelected(File folder) {
+            public boolean isSubFolderSelected(File folder) {
                 //if any of the folder's subfolders is in the saved paths
                 for (String path : savedPaths) {
                     if (isSubDir(path, folder.getAbsolutePath()))

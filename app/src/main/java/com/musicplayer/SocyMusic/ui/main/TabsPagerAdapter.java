@@ -5,18 +5,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.google.android.material.tabs.TabLayout;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class TabsPagerAdapter extends FragmentStateAdapter {
 
-    private static final int ALL_SONGS_TAB = 0;
+    public static final long ALL_SONGS_TAB = 720290723;
     // private static final int ALBUMS_TAB = 1;
     // private static final int ARTISTS_TAB = 2;
-    private static final int PLAYLISTS_TAB = 1;
-    private static final int SETTINGS_TAB = 2;
-    private static final int[] TABS = {ALL_SONGS_TAB, PLAYLISTS_TAB, SETTINGS_TAB};
+    public static final long PLAYLISTS_TAB = 851211671;
+    public static final long SETTINGS_TAB = 736239367;
+    public static final long[] TABS = {ALL_SONGS_TAB, PLAYLISTS_TAB, SETTINGS_TAB};
 
     public TabsPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -25,21 +30,25 @@ public class TabsPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
-            case ALL_SONGS_TAB:
-                return new AllSongsFragment();
-            case PLAYLISTS_TAB:
-                return new PlaylistsTabFragment();
-            case SETTINGS_TAB:
-                return new SettingsFragment();
-            default:
-                return null;
-        }
+        long id = getItemId(position);
+        if (id == ALL_SONGS_TAB)
+            return new AllSongsFragment();
+        else if (id == PLAYLISTS_TAB)
+            return new PlaylistsTabFragment();
+        else if (id == SETTINGS_TAB)
+            return new SettingsFragment();
+        else
+            return null;
     }
+
 
     @Override
     public int getItemCount() {
         return TABS.length;
     }
 
+    @Override
+    public long getItemId(int position) {
+        return TABS[position];
+    }
 }

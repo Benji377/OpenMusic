@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.musicplayer.SocyMusic.MediaPlayerUtil;
-import com.musicplayer.SocyMusic.SongsData;
+import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.musicplayer.R;
 import com.woxthebox.draglistview.DragListView;
 

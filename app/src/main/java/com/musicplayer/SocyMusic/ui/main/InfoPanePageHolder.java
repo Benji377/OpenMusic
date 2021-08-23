@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.musicplayer.SocyMusic.MediaPlayerUtil;
-import com.musicplayer.SocyMusic.Song;
+import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.musicplayer.R;
 
 class InfoPanePageHolder extends RecyclerView.ViewHolder {

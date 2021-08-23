@@ -1,5 +1,10 @@
 <resources>
     <string name="all_app_name">SocyMusic</string>
+    <string name="all_coming_soon">Coming Soon!</string>
+    <string name="all_playlist_favorites_name">Favorites</string>
+    <string name="all_create">Create</string>
+    <string name="all_yes">Yes</string>
+    <string name="all_no">No</string>
 
     <string-array name="main_tabs">
         <item>All Songs</item>
@@ -7,7 +12,7 @@
         <item>Settings</item>
         <item>Information</item>
     </string-array>
-    <string name="playlist_playlist_list_empty">No playlist found</string>
+    <string name="playlist_tab_list_empty">No playlist found</string>
     <string name="main_err_file_gone">File moved or deleted.</string>
 
     <string name="all_songs_list_empty">No songs found…</string>
@@ -37,6 +42,15 @@
     <string name="prefs_title_theme">Theme</string>
 
     <string name="fragment_player_imageview_player_album_art">Song thumbnail</string>
+    <string name="playlist_song_count">%d Songs</string>
+
+    <string name="player_select_playlist">Select Playlist:</string>
+    <string name="player_create_name_playlist">Create New Playlist…</string>
+    <string name="new_playlist">New Playlist</string>
+
+    <string name="new_playlist_enter_name">Enter Playlist Name…</string>
+    <string name="playlist_dialog_already_in_playlist">Song is already in playlist</string>
+    <string name="playlist_dialog_add_anyway">Do you want to add it anyway?</string>
 
     <string-array name="themeOptions">
         <item>Inverted</item>

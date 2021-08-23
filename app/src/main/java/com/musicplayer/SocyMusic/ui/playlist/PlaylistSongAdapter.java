@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic.ui.all_songs;
+package com.musicplayer.SocyMusic.ui.playlist;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,46 +13,38 @@ import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 
-/**
- * Custom adapter for SongsData related actions
- */
-public class SongListAdapter extends RecyclerView.Adapter<SongHolder> {
-    private final Context context;
-    private List<Song> allSongs;
+public class PlaylistSongAdapter extends RecyclerView.Adapter<PlaylistSongHolder> {
+    private Context context;
+    private List<Song> songs;
     private ItemClickListener clickListener;
 
-    public SongListAdapter(Context context, List<Song> allSongs) {
-        super();
-        this.allSongs = allSongs;
+    public PlaylistSongAdapter(Context context, List<Song> songs) {
         this.context = context;
+        this.songs = songs;
     }
 
     @NonNull
     @Override
-    public SongHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PlaylistSongHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = inflater.inflate(R.layout.list_item_all_songs, parent, false);
-        return new SongHolder(itemView, clickListener);
+        View itemView = inflater.inflate(R.layout.list_item_playlist_song, parent, false);
+        return new PlaylistSongHolder(itemView, clickListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SongHolder holder, int position) {
-        Song song = allSongs.get(position);
-        holder.bind(song);
+    public void onBindViewHolder(@NonNull PlaylistSongHolder holder, int position) {
+        holder.bind(songs.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return allSongs.size();
+        return songs.size();
     }
 
     public void setOnItemClickListener(ItemClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
-    public void setAllSongs(List<Song> allSongs) {
-        this.allSongs = allSongs;
-    }
 
     public interface ItemClickListener {
         void onItemClick(int position, View view);

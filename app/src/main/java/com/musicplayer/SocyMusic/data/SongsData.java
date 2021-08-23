@@ -1,34 +1,48 @@
-package com.musicplayer.SocyMusic;
+package com.musicplayer.SocyMusic.data;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
+import androidx.room.Room;
+
+import com.musicplayer.SocyMusic.SocyMusicApp;
+import com.musicplayer.SocyMusic.data.base.AppDatabase;
+import com.musicplayer.SocyMusic.data.base.PlaylistSong;
+import com.musicplayer.musicplayer.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 
 
 public class SongsData {
     public static SongsData data;
-    private ArrayList<Song> allSongs;
+    private AppDatabase database;
+    private volatile ArrayList<Song> allSongs;
+    private List<Playlist> allPlaylists;
     private ArrayList<Song> playingQueue;
     private ArrayList<Song> originalQueue;
     private int playingQueueIndex;
     private boolean repeat;
     private boolean shuffle;
 
+    public static final UUID FAVORITES_PLAYLIST_ID = UUID.fromString("3a47e9a7-7cb6-4b47-8b98-7ee7d4b865f0");
+
     /**
      * SongsData custom constructor.
      * When created automatically reloads all songs and creates the playingQueue
      */
     private SongsData(@NonNull Context context) {
-        reloadSongs(context);
         playingQueue = new ArrayList<>();
+        database = Room.databaseBuilder(context, AppDatabase.class, AppDatabase.DATABASE_NAME).build();
+        reloadSongs(context);
     }
 
     /**
@@ -80,8 +94,16 @@ public class SongsData {
      * @param position the index from where the player should start playing
      */
     public void playAllFrom(int position) {
+        setPlayingQueue(allSongs, position);
+    }
+
+    public void playPlaylistFrom(Playlist playlist, int position) {
+        setPlayingQueue(playlist.getSongList(), position);
+    }
+
+    private void setPlayingQueue(ArrayList<Song> newPlayingQueue, int position) {
         playingQueue = new ArrayList<>();
-        playingQueue.addAll(allSongs);
+        playingQueue.addAll(newPlayingQueue);
 
         playingQueueIndex = position;
         originalQueue = playingQueue;
@@ -120,18 +142,51 @@ public class SongsData {
      * Loads all songs from the internal memory of the phone and overwrites/creates the allSongs list
      * This excludes SD-cards, USB, etc...
      */
-    public void reloadSongs(@NonNull Context context) {
+    public void reloadSongs(Context context) {
+        new Thread(() -> {
+            allSongs = (ArrayList<Song>) database.songDao().getAll();
+            for (int i = 0; i < allSongs.size(); i++) {
+                Song song = allSongs.get(i);
+                if (!song.getFile().exists() || !song.getFile().canRead()) {
+                    allSongs.remove(song);
+                    database.songDao().delete(song);
+                    database.playlistSongDao().deleteSong(song.getSongId().toString());
+                }
+            }
+            HashSet<String> paths = new HashSet<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, SocyMusicApp.defaultPathsSet));
+            for (String path : paths) {
+                File file = new File(path);
+                if (!file.exists() || !file.canRead())
+                    continue;
+                ArrayList<Song> songsLoaded = loadSongs(file);
+                boolean isInDatabase = false;
+                for (Song newSong : songsLoaded) {
+                    for (Song song : allSongs) {
+                        if (newSong.getPath().equals(song.getPath())) {
+                            isInDatabase = true;
+                            break;
+                        }
+                    }
+                    if (!isInDatabase) {
+                        database.songDao().insert(newSong);
+                        allSongs.add(newSong);
+                    }
+                }
+            }
+            allPlaylists = database.playlistDao().getAll();
+            //lazy solution to querying into songList
+            for (Playlist playlist : allPlaylists)
+                playlist.setSongList((ArrayList<Song>) database.playlistDao().getSongs(playlist.getId().toString()));
 
-        HashSet<String> paths = new HashSet<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, SocyMusicApp.defaultPathsSet));
-        allSongs = new ArrayList<>();
-        for (String path : paths) {
-            File file = new File(path);
-            if (!file.exists() || !file.canRead())
-                continue;
-            allSongs.addAll(loadSongs(file));
-        }
+            if (allPlaylists.size() == 0) {
+                Playlist favorites = new Playlist(FAVORITES_PLAYLIST_ID, context.getString(R.string.all_playlist_favorites_name));
+                allPlaylists.add(favorites);
+                database.playlistDao().insert(favorites);
+            }
+
+        }, "reloadSongs thread").start();
+
     }
-
 
     /**
      * Searches for .mp3 and .wav files in the given directory. If it finds directories on its way
@@ -155,7 +210,7 @@ public class SongsData {
                 } else {
                     // Convert file to song and add it to the array
                     if (singlefile.getName().endsWith(".mp3") || singlefile.getName().endsWith(".wav")) {
-                        songsFound.add(new Song(singlefile));
+                        songsFound.add(new Song(UUID.randomUUID(), singlefile));
                     }
                 }
             }
@@ -163,7 +218,6 @@ public class SongsData {
 
         return songsFound;
     }
-
 
     public int getPlayingQueueCount() {
         return playingQueue.size();
@@ -330,7 +384,39 @@ public class SongsData {
     }
 
     public List<Song> getAllSongs() {
-        //return read-only list of all songs
+        //return list of all songs
         return allSongs;
+    }
+
+    public List<Playlist> getAllPlaylists() {
+        return allPlaylists;
+    }
+
+    public Playlist getFavoritesPlaylist() {
+        for (Playlist playlist : allPlaylists)
+            if (playlist.isFavorites())
+                return playlist;
+        return null;
+    }
+
+    public boolean isFavorited(Song song) {
+        return getFavoritesPlaylist().contains(song);
+    }
+
+    public void insertToPlaylist(Playlist playlist, Song song) {
+        playlist.addSong(song);
+        new Thread(() -> database.playlistSongDao().insert(new PlaylistSong(playlist.getId(), song.getSongId().toString(), playlist.getSongCount()))).start();
+    }
+
+    public void removeFromPlaylist(Playlist playlist, Song song) {
+        if (!playlist.contains(song))
+            return;
+        playlist.removeSong(song);
+        new Thread(() -> database.playlistSongDao().delete(new PlaylistSong(playlist.getId(), song.getSongId().toString()))).start();
+    }
+
+    public void insertPlaylist(Playlist newPlaylist) {
+        allPlaylists.add(newPlaylist);
+        new Thread(() -> database.playlistDao().insert(newPlaylist)).start();
     }
 }
