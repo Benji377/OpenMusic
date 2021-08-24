@@ -1,6 +1,7 @@
 package com.musicplayer.SocyMusic.ui.main;
 
 import android.Manifest;
+import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -203,34 +204,16 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             getMenuInflater().inflate(R.menu.main, menu);
             // Searchbar, refrence: https://stackoverflow.com/questions/41867961/android-add-searchview-on-the-action-bar
-            MenuItem actionMenuItem = menu.findItem(R.id.action_search);
-            final SearchView searchView = (SearchView) actionMenuItem.getActionView();
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    if (TextUtils.isEmpty(newText)) {
-                        //adapter.filter("");
-                        //listView.clearTextFilter();
-                    } else {
-                        //adapter.filter(newText);
-                    }
-                    return true;
-                }
-            });
+            // Associate searchable configuration with the SearchView
+            SearchManager searchManager =
+                    (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            SearchView searchView =
+                    (SearchView) menu.findItem(R.id.action_search).getActionView();
+            searchView.setSearchableInfo(
+                    searchManager.getSearchableInfo(getComponentName()));
+            return true;
         } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             getMenuInflater().inflate(R.menu.playing, menu);
-            /*
-            MenuItem showQueueButton = menu.findItem(R.id.playing_menu_show_queue);
-            if (queueFragment == null)
-                showQueueButton.setIcon(R.drawable.ic_queue);
-            else
-                showQueueButton.setIcon(R.drawable.ic_queue_selected);
-             */
         }
         return super.onCreateOptionsMenu(menu);
     }
