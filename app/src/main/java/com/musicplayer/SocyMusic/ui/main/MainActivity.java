@@ -52,6 +52,7 @@ import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
+import com.musicplayer.SocyMusic.utils.ThemeChanger;
 import com.musicplayer.musicplayer.R;
 
 import java.util.List;
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
     private SongsData songsData;
 
     private boolean scrollTriggeredByCode;
-    SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     /**
      * Gets executed every time the app starts
@@ -83,46 +83,11 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
         songsData = SongsData.getInstance(this);
         // Sets the theme!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String theme = prefs.getString(SocyMusicApp.PREFS_KEY_THEME, "Red_theme");
-        switch (theme) {
-            case "Red_theme":
-                setTheme(R.style.Theme_MusicPlayer);
-                break;
-            case "Inverted_theme":
-                setTheme(R.style.InvertedTheme);
-                break;
-            case "Blue_theme":
-                setTheme(R.style.BlueTheme);
-                break;
-            case "Green_theme":
-                setTheme(R.style.GreenTheme);
-                break;
-            case "Orange_theme":
-                setTheme(R.style.OrangeTheme);
-                break;
-            case "Yellow_theme":
-                setTheme(R.style.YellowTheme);
-                break;
-            case "Aqua_theme":
-                setTheme(R.style.AquaTheme);
-                break;
-            case "Purple_theme":
-                setTheme(R.style.PurpleTheme);
-                break;
-            case "Purpleblue_theme":
-                setTheme(R.style.PurpleblueTheme);
-                break;
-            case "Orangegreen_theme":
-                setTheme(R.style.OrangegreenTheme);
-                break;
-            case "Purpleaqua_theme":
-                setTheme(R.style.PurpleaquaTheme);
-                break;
-        }
+        setTheme(ThemeChanger.getTheme(getApplicationContext()));
         // Settings listener to update theme in realtime
         // Use instance field for listener
         // It will not be gc'd as long as this instance is kept referenced
-        listener = (prefs1, key) -> {
+        SharedPreferences.OnSharedPreferenceChangeListener listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();
             }

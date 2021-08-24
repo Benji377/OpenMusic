@@ -6,6 +6,12 @@ import androidx.preference.PreferenceManager;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.musicplayer.R;
 
+/*
+Class that holds all themes in a simple switch case.
+Doing so simplifies the future management of themes
+PS: Might change this later in a full Utils class instead of
+"wasting" a whole class for one function
+ */
 public class ThemeChanger {
 
     public static int getTheme(Context context) {

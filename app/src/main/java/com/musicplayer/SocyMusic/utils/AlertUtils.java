@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic.ui;
+package com.musicplayer.SocyMusic.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;

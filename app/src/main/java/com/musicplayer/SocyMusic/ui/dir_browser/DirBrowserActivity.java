@@ -16,17 +16,15 @@ import com.musicplayer.musicplayer.R;
 
 public class DirBrowserActivity extends AppCompatActivity {
     private DirBrowserFragment dirBrowserFragment;
-    SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         setTheme(ThemeChanger.getTheme(getApplicationContext()));
-
         // Settings listener to update theme in realtime
         // Use instance field for listener
         // It will not be gc'd as long as this instance is kept referenced
-        listener = (prefs1, key) -> {
+        SharedPreferences.OnSharedPreferenceChangeListener listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();
             }

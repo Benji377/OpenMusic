@@ -1,11 +1,7 @@
 package com.musicplayer.SocyMusic.ui.player;
 
-import static android.view.ViewGroup.*;
-
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -14,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -28,11 +23,8 @@ import com.musicplayer.SocyMusic.MediaPlayerUtil;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.data.SongsData;
-import com.musicplayer.SocyMusic.ui.AlertUtils;
+import com.musicplayer.SocyMusic.utils.AlertUtils;
 import com.musicplayer.musicplayer.R;
-
-import java.util.List;
-import java.util.UUID;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class PlayerFragment extends Fragment {
