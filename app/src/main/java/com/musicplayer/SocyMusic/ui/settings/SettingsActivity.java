@@ -14,23 +14,29 @@ import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.utils.ThemeChanger;
 import com.musicplayer.musicplayer.R;
 
+import timber.log.Timber;
+
 
 public class SettingsActivity extends AppCompatActivity {
+
     private SettingsFragment settingsFragment;
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        // Sets the theme!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(ThemeChanger.getTheme(getApplicationContext()));
-        // Settings listener to update theme in realtime
-        // Use instance field for listener
-        // It will not be gc'd as long as this instance is kept referenced
-        SharedPreferences.OnSharedPreferenceChangeListener listener = (prefs1, key) -> {
+        setTheme(ThemeChanger.getThemeID(this));
+        Timber.e("SETTING: Function out = %s", ThemeChanger.getThemeID(this));
+        listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();
+                Timber.e("SETTING: Recreation done!");
             }
         };
+        Timber.e("SETTING: Listener set");
         prefs.registerOnSharedPreferenceChangeListener(listener);
+        Timber.e("SETTING: Listener registered");
 
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(R.string.main_menu_item_settings);

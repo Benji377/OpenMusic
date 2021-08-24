@@ -57,6 +57,8 @@ import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 public class MainActivity extends AppCompatActivity implements AllSongsFragment.AllSongsFragmentHost, PlayerFragment.PlayerFragmentHost, PlaylistsTabFragment.PlaylistsTabFragmentHost, QueueFragment.QueueFragmentHost, ServiceConnection, ActivityResultCallback<ActivityResult> {
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
     private SongsData songsData;
 
     private boolean scrollTriggeredByCode;
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     /**
      * Gets executed every time the app starts
@@ -79,20 +82,22 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        songsData = SongsData.getInstance(this);
         // Sets the theme!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(ThemeChanger.getTheme(getApplicationContext()));
-        // Settings listener to update theme in realtime
-        // Use instance field for listener
-        // It will not be gc'd as long as this instance is kept referenced
-        SharedPreferences.OnSharedPreferenceChangeListener listener = (prefs1, key) -> {
+        setTheme(ThemeChanger.getThemeID(this));
+        Timber.e("MAIN: Function out = %s", ThemeChanger.getThemeID(this));
+        listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();
+                Timber.e("MAIN: Recreation done!");
             }
         };
+        Timber.e("MAIN: Listener set");
         prefs.registerOnSharedPreferenceChangeListener(listener);
+        Timber.e("MAIN: Listener registered");
+
+        super.onCreate(savedInstanceState);
+        songsData = SongsData.getInstance(this);
 
         setContentView(R.layout.activity_main);
 

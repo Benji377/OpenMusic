@@ -2,6 +2,7 @@ package com.musicplayer.SocyMusic.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import androidx.preference.PreferenceManager;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.musicplayer.R;
@@ -14,7 +15,7 @@ PS: Might change this later in a full Utils class instead of
  */
 public class ThemeChanger {
 
-    public static int getTheme(Context context) {
+    public static int getThemeID(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String theme = prefs.getString(SocyMusicApp.PREFS_KEY_THEME, "Red_theme");
         switch (theme) {
