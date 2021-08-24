@@ -11,6 +11,8 @@ import com.musicplayer.musicplayer.R;
 import java.util.HashSet;
 import java.util.UUID;
 
+import timber.log.Timber;
+
 /**
  * This class is necessary to create notifications according to different Android versions
  */
@@ -30,6 +32,8 @@ public class SocyMusicApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // Init Timber for debugging
+        Timber.plant(new Timber.DebugTree());
         createNotificationChannels();
         defaultPathsSet.add(Environment.getExternalStorageDirectory().getAbsolutePath());
     }
