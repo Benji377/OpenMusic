@@ -27,16 +27,12 @@ public class SettingsActivity extends AppCompatActivity {
         // Sets the theme!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         setTheme(ThemeChanger.getThemeID(this));
-        Timber.e("SETTING: Function out = %s", ThemeChanger.getThemeID(this));
         listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();
-                Timber.e("SETTING: Recreation done!");
             }
         };
-        Timber.e("SETTING: Listener set");
         prefs.registerOnSharedPreferenceChangeListener(listener);
-        Timber.e("SETTING: Listener registered");
 
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(R.string.main_menu_item_settings);

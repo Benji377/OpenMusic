@@ -25,16 +25,12 @@ public class DirBrowserActivity extends AppCompatActivity {
         // Sets the theme!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         setTheme(ThemeChanger.getThemeID(this));
-        Timber.e("DIR: Function out = %s", ThemeChanger.getThemeID(this));
         listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();
-                Timber.e("DIR: Recreation done!");
             }
         };
-        Timber.e("DIR: Listener set");
         prefs.registerOnSharedPreferenceChangeListener(listener);
-        Timber.e("DIR: Listener registered");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dir_browser);

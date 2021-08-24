@@ -85,16 +85,12 @@ public class MainActivity extends AppCompatActivity implements AllSongsFragment.
         // Sets the theme!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         setTheme(ThemeChanger.getThemeID(this));
-        Timber.e("MAIN: Function out = %s", ThemeChanger.getThemeID(this));
         listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();
-                Timber.e("MAIN: Recreation done!");
             }
         };
-        Timber.e("MAIN: Listener set");
         prefs.registerOnSharedPreferenceChangeListener(listener);
-        Timber.e("MAIN: Listener registered");
 
         super.onCreate(savedInstanceState);
         songsData = SongsData.getInstance(this);

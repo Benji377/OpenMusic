@@ -27,16 +27,12 @@ public class PlaylistActivity extends AppCompatActivity {
         // Sets the theme!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         setTheme(ThemeChanger.getThemeID(this));
-        Timber.e("PLAY: Function out = %s", ThemeChanger.getThemeID(this));
         listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();
-                Timber.e("PLAY: Recreation done!");
             }
         };
-        Timber.e("PLAY: Listener set");
         prefs.registerOnSharedPreferenceChangeListener(listener);
-        Timber.e("PLAY: Listener registered");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlist);
