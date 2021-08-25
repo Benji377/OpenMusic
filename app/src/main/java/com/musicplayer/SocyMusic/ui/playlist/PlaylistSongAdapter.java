@@ -15,6 +15,7 @@ import java.util.List;
 
 public class PlaylistSongAdapter extends RecyclerView.Adapter<PlaylistSongHolder> {
     private Context context;
+
     private List<Song> songs;
     private ItemClickListener clickListener;
 
@@ -39,6 +40,10 @@ public class PlaylistSongAdapter extends RecyclerView.Adapter<PlaylistSongHolder
     @Override
     public int getItemCount() {
         return songs.size();
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
     }
 
     public void setOnItemClickListener(ItemClickListener clickListener) {

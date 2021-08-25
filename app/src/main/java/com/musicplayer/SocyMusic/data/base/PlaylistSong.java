@@ -11,20 +11,20 @@ import java.util.UUID;
 public class PlaylistSong {
     @NonNull
     @ColumnInfo(name = "playlist_id")
-    public UUID playlistID;
+    public final UUID playlistID;
     @NonNull
     @ColumnInfo(name = "song_id")
-    public String songID;
+    public final UUID songID;
     @ColumnInfo(name = "song_index")
     public int index;
 
     @Ignore
-    public PlaylistSong(@NonNull UUID playlistID, @NonNull String songID) {
+    public PlaylistSong(@NonNull UUID playlistID, @NonNull UUID songID) {
         this.playlistID = playlistID;
         this.songID = songID;
     }
 
-    public PlaylistSong(@NonNull UUID playlistID, @NonNull String songID, int index) {
+    public PlaylistSong(@NonNull UUID playlistID, @NonNull UUID songID, int index) {
         this(playlistID, songID);
         this.index = index;
     }

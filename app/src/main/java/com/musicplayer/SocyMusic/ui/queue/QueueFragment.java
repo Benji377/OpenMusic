@@ -19,7 +19,7 @@ import com.woxthebox.draglistview.DragListView;
 public class QueueFragment extends Fragment {
     private DragListView listView;
     private ItemAdapter adapter;
-    private QueueFragmentHost hostCallBack;
+    private Host hostCallBack;
     private SongsData songsData;
 
     @Override
@@ -81,9 +81,9 @@ public class QueueFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            this.hostCallBack = (QueueFragment.QueueFragmentHost) context;
+            this.hostCallBack = (Host) context;
         } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement QueueFragmentHost");
+            throw new ClassCastException(context.toString() + " must implement QueueFragment.Host");
         }
     }
 
@@ -92,7 +92,7 @@ public class QueueFragment extends Fragment {
     }
 
 
-    public interface QueueFragmentHost {
+    public interface Host {
         void onSongUpdate();
 
         void onQueueReordered();

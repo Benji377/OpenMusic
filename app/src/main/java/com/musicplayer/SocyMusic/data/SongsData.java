@@ -13,18 +13,17 @@ import com.musicplayer.musicplayer.R;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.BlockingQueue;
 
 
 public class SongsData {
     public static SongsData data;
-    private AppDatabase database;
+    private final AppDatabase database;
     private volatile ArrayList<Song> allSongs;
     private List<Playlist> allPlaylists;
     private ArrayList<Song> playingQueue;
@@ -142,15 +141,15 @@ public class SongsData {
      * Loads all songs from the internal memory of the phone and overwrites/creates the allSongs list
      * This excludes SD-cards, USB, etc...
      */
-    public void reloadSongs(Context context) {
-        new Thread(() -> {
+    public Thread reloadSongs(Context context) {
+        Thread reloadThread = new Thread(() -> {
             allSongs = (ArrayList<Song>) database.songDao().getAll();
             for (int i = 0; i < allSongs.size(); i++) {
                 Song song = allSongs.get(i);
                 if (!song.getFile().exists() || !song.getFile().canRead()) {
                     allSongs.remove(song);
                     database.songDao().delete(song);
-                    database.playlistSongDao().deleteSong(song.getSongId().toString());
+                    database.playlistSongDao().removeAllSongRefs(song.getSongId().toString());
                 }
             }
             HashSet<String> paths = new HashSet<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, SocyMusicApp.defaultPathsSet));
@@ -184,7 +183,9 @@ public class SongsData {
                 database.playlistDao().insert(favorites);
             }
 
-        }, "reloadSongs thread").start();
+        }, "reloadThread");
+        reloadThread.start();
+        return reloadThread;
 
     }
 
@@ -405,14 +406,19 @@ public class SongsData {
 
     public void insertToPlaylist(Playlist playlist, Song song) {
         playlist.addSong(song);
-        new Thread(() -> database.playlistSongDao().insert(new PlaylistSong(playlist.getId(), song.getSongId().toString(), playlist.getSongCount()))).start();
+        new Thread(() -> database.playlistSongDao().insert(new PlaylistSong(playlist.getId(), song.getSongId(), playlist.getSongCount() - 1))).start();
     }
 
-    public void removeFromPlaylist(Playlist playlist, Song song) {
+    public void removeFromPlaylist(Playlist playlist, Song song, int index, boolean all) {
         if (!playlist.contains(song))
             return;
-        playlist.removeSong(song);
-        new Thread(() -> database.playlistSongDao().delete(new PlaylistSong(playlist.getId(), song.getSongId().toString()))).start();
+        if (!all)
+            playlist.removeSongAt(index);
+        else {
+            while (playlist.contains(song))
+                playlist.removeSong(song);
+        }
+        new Thread(() -> database.playlistSongDao().removeSongFromPlaylist(playlist.getId().toString(), song.getSongId().toString(), index, all)).start();
     }
 
     public void insertPlaylist(Playlist newPlaylist) {

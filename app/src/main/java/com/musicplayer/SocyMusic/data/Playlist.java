@@ -5,6 +5,7 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -57,6 +58,10 @@ public class Playlist implements Serializable {
         this.songList = songList;
     }
 
+    public Song getSongAt(int index) {
+        return songList.get(index);
+    }
+
     @NonNull
     public UUID getId() {
         return id;
@@ -78,6 +83,10 @@ public class Playlist implements Serializable {
         songList.remove(song);
     }
 
+    public void removeSongAt(int index) {
+        songList.remove(index);
+    }
+
     public int calculateTotalDuration() {
         MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();
         int totalDuration = 0;
@@ -88,4 +97,10 @@ public class Playlist implements Serializable {
         return totalDuration;
     }
 
+    @Override
+    public boolean equals(@Nullable @org.jetbrains.annotations.Nullable Object obj) {
+        if (!(obj instanceof Playlist))
+            return false;
+        return ((Playlist) obj).id.equals(this.id);
+    }
 }

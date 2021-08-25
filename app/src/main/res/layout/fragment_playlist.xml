@@ -65,26 +65,16 @@
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textview_playlist_total_duration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginEnd="2dp"
-                            android:src="@drawable/ic_runtime" />
-
-                        <TextView
-                            android:id="@+id/textview_playlist_total_duration"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="00:00"
-                            android:textColor="?colorOnPrimarySurface"
-                            android:textSize="20sp"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
+                        android:text="00:00"
+                        android:textColor="?colorOnPrimarySurface"
+                        android:textSize="20sp"
+                        app:drawableLeftCompat="@drawable/ic_runtime"
+                        android:drawablePadding="5dp"
+                        tools:ignore="HardcodedText" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -103,4 +93,5 @@
         android:layout_height="match_parent"
         app:layout_anchorGravity="bottom|end"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
