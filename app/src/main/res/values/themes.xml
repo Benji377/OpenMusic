@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primaryAppColor</item>
-        <item name="colorPrimaryVariant">@color/primaryAppColor</item>
+        <item name="colorPrimary">#FF362E</item>
+        <item name="colorPrimaryVariant">#FF362E</item>
         <item name="colorOnPrimary">@color/black</item>
         <item name="playerBackground">@drawable/default_background_image_light</item>
         <item name="backgroundColor">@color/white</item>
