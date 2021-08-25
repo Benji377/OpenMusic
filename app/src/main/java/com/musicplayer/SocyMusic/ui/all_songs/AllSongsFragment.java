@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.musicplayer.R;
@@ -21,7 +22,7 @@ import com.musicplayer.musicplayer.R;
 public class AllSongsFragment extends Fragment {
 
     private CustomRecyclerView songsRecyclerView;
-    private AllSongsFragmentHost hostCallBack;
+    private Host hostCallBack;
     private SongsData songsData;
 
     @Override
@@ -51,11 +52,16 @@ public class AllSongsFragment extends Fragment {
                 // Error occured
                 if (!songsData.songExists(position)) {
                     Toast.makeText(requireContext(), getText(R.string.main_err_file_gone), Toast.LENGTH_LONG).show();
-                    songsData.reloadSongs(requireContext());
+                    try {
+                        songsData.reloadSongs(requireContext()).join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     customAdapter.notifyDataSetChanged();
                     return;
                 }
-                hostCallBack.onSongClick(position);
+                songsData.playAllFrom(position);
+                hostCallBack.onSongClick(songsData.getSongAt(position));
             }
 
             @Override
@@ -85,15 +91,15 @@ public class AllSongsFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            this.hostCallBack = (AllSongsFragmentHost) context;
+            this.hostCallBack = (Host) context;
             // If implementation is missing
         } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement AllSongsFragmentHost");
+            throw new ClassCastException(context.toString() + " must implement AllSongsFragment.Host");
         }
     }
 
-    public interface AllSongsFragmentHost {
-        void onSongClick(int position);
+    public interface Host {
+        void onSongClick(Song songClicked);
     }
 
 }

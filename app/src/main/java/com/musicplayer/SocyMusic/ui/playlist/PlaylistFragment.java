@@ -1,6 +1,6 @@
 package com.musicplayer.SocyMusic.ui.playlist;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +27,10 @@ public class PlaylistFragment extends Fragment {
     private Playlist playlist;
     private CustomRecyclerView songsRecyclerView;
     private SongsData songsData;
+    private Host hostCallback;
+    private TextView playlistNameTextview;
+    private TextView songCountTextview;
+    private TextView totalDurationTextview;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -70,13 +74,13 @@ public class PlaylistFragment extends Fragment {
             }
         });
 
-        TextView playlistNameTextview = view.findViewById(R.id.textview_playlist_name);
+        playlistNameTextview = view.findViewById(R.id.textview_playlist_name);
         playlistNameTextview.setText(playlist.getName());
 
-        TextView songCountTextview = view.findViewById(R.id.textview_playlist_song_count);
+        songCountTextview = view.findViewById(R.id.textview_playlist_song_count);
         songCountTextview.setText(requireContext().getString(R.string.playlist_song_count, playlist.getSongCount()));
 
-        TextView totalDurationTextview = view.findViewById(R.id.textview_playlist_total_duration);
+        totalDurationTextview = view.findViewById(R.id.textview_playlist_total_duration);
         totalDurationTextview.setText(MediaPlayerUtil.createTime(playlist.calculateTotalDuration()));
 
         PlaylistSongAdapter adapter = new PlaylistSongAdapter(requireContext(), playlist.getSongList());
@@ -84,10 +88,7 @@ public class PlaylistFragment extends Fragment {
             @Override
             public void onItemClick(int position, View view) {
                 songsData.playPlaylistFrom(playlist, position);
-                MediaPlayerUtil.playCurrent(getContext());
-                //TODO: host another playlist fragment and pop it up instead of going back
-                requireActivity().setResult(Activity.RESULT_OK);
-                requireActivity().finish();
+                hostCallback.onSongClick(playlist.getSongAt(position));
             }
 
             @Override
@@ -99,7 +100,20 @@ public class PlaylistFragment extends Fragment {
         songsRecyclerView = view.findViewById(R.id.recyclerview_playlist_songs);
         songsRecyclerView.setAdapter(adapter);
         songsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        //TODO: get this empty textview to work with the collapsing toolbar layout
+//        TextView listEmptyTextview = view.findViewById(R.id.textview_playlist_empty);
+//        songsRecyclerView.setEmptyView(listEmptyTextview);
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            this.hostCallback = (Host) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement PlaylistFragment.Host");
+        }
     }
 
     public static PlaylistFragment newInstance(Playlist playlist) {
@@ -108,5 +122,18 @@ public class PlaylistFragment extends Fragment {
         PlaylistFragment fragment = new PlaylistFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void onPlaylistUpdate(Playlist newPlaylist) {
+        playlist = newPlaylist;
+        ((PlaylistSongAdapter) songsRecyclerView.getAdapter()).setSongs(playlist.getSongList());
+        songsRecyclerView.getAdapter().notifyDataSetChanged();
+        songCountTextview.setText(requireContext().getString(R.string.playlist_song_count, playlist.getSongCount()));
+        totalDurationTextview.setText(MediaPlayerUtil.createTime(playlist.calculateTotalDuration()));
+
+    }
+
+    interface Host {
+        void onSongClick(Song song);
     }
 }
