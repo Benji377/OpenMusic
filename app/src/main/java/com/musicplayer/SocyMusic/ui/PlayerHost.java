@@ -33,7 +33,7 @@ import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.musicplayer.R;
 
 public abstract class PlayerHost extends AppCompatActivity implements PlayerFragment.Host, QueueFragment.Host, ServiceConnection {
-    private SongsData songsData;
+    protected SongsData songsData;
 
     private PlayerFragment playerFragment;
     private QueueFragment queueFragment;

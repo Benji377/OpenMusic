@@ -26,7 +26,6 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.data.Playlist;
-import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.PlayerHost;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
@@ -43,7 +42,6 @@ public class MainActivity extends PlayerHost implements AllSongsFragment.Host, P
     private TabLayout tabsLayout;
 
     //private ActionBar actionBar;
-    private SongsData songsData;
 
     SharedPreferences.OnSharedPreferenceChangeListener listener;
 
