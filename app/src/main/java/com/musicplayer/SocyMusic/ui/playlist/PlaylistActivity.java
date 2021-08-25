@@ -2,18 +2,23 @@ package com.musicplayer.SocyMusic.ui.playlist;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.ui.PlayerHost;
 import com.musicplayer.musicplayer.R;
+
+import timber.log.Timber;
 
 public class PlaylistActivity extends PlayerHost implements PlaylistFragment.Host {
     public static final String EXTRA_PLAYLIST = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYLIST";
@@ -21,9 +26,20 @@ public class PlaylistActivity extends PlayerHost implements PlaylistFragment.Hos
     public static final String RESULT_EXTRA_QUEUE_CHANGED = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYING";
     private PlaylistFragment playlistFragment;
     private Playlist playlist;
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        // Sets the theme!
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        setTheme(ThemeChanger.getThemeID(this));
+        listener = (prefs1, key) -> {
+            if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
+                recreate();
+            }
+        };
+        prefs.registerOnSharedPreferenceChangeListener(listener);
+
         super.onCreate(savedInstanceState);
         View childView = getLayoutInflater().inflate(R.layout.content_playlist,
                 (ViewGroup) findViewById(R.id.layout_playlist_content), false);

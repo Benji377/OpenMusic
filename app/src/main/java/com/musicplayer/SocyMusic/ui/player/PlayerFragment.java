@@ -24,7 +24,7 @@ import com.musicplayer.SocyMusic.custom_views.CustomViewPager2;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.data.SongsData;
-import com.musicplayer.SocyMusic.ui.AlertUtils;
+import com.musicplayer.SocyMusic.utils.AlertUtils;
 import com.musicplayer.musicplayer.R;
 
 @SuppressWarnings("FieldCanBeLocal")
