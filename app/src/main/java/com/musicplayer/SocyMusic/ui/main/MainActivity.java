@@ -35,8 +35,6 @@ import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 
-import timber.log.Timber;
-
 public class MainActivity extends PlayerHost implements AllSongsFragment.Host, PlaylistsTabFragment.Host, ActivityResultCallback<ActivityResult> {
 
 
@@ -56,6 +54,7 @@ public class MainActivity extends PlayerHost implements AllSongsFragment.Host, P
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         // Sets the theme!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         setTheme(ThemeChanger.getThemeID(this));
