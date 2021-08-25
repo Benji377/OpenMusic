@@ -27,8 +27,6 @@ public class PlaylistActivity extends PlayerFragmentHost implements PlaylistFrag
     public static final String RESULT_EXTRA_QUEUE_CHANGED = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYING";
     private PlaylistFragment playlistFragment;
     private Playlist playlist;
-    private FloatingActionButton fabMain, fabDelete, fabCreate;
-    private boolean areSubfabsVisible;
     SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     @Override
@@ -62,31 +60,6 @@ public class PlaylistActivity extends PlayerFragmentHost implements PlaylistFrag
                     .commit();
         } else
             playlistFragment = (PlaylistFragment) fragment;
-
-
-        // Manages the floating action button (fab)
-        fabMain = findViewById(R.id.main_fab);
-        fabCreate = findViewById(R.id.child_fab_add);
-        fabDelete = findViewById(R.id.child_fab_remove);
-
-        fabCreate.setVisibility(View.GONE);
-        fabDelete.setVisibility(View.GONE);
-        areSubfabsVisible = false;
-
-        // FAB click listener
-        fabMain.setOnClickListener(v -> {
-            if (!areSubfabsVisible) {
-                fabCreate.show();
-                fabDelete.show();
-                areSubfabsVisible = true;
-            } else {
-                fabCreate.hide();
-                fabDelete.hide();
-                areSubfabsVisible = false;
-            }
-        });
-        fabCreate.setOnClickListener(v -> Toast.makeText(PlaylistActivity.this, "Create playlist", Toast.LENGTH_SHORT).show());
-        fabDelete.setOnClickListener(v -> Toast.makeText(PlaylistActivity.this, "Delete playlist", Toast.LENGTH_SHORT).show());
     }
 
     @Override
