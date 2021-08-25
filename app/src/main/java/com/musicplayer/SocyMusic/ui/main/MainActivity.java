@@ -26,7 +26,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.data.Playlist;
-import com.musicplayer.SocyMusic.ui.PlayerHost;
+import com.musicplayer.SocyMusic.ui.PlayerFragmentHost;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
 import com.musicplayer.SocyMusic.utils.ThemeChanger;
@@ -34,7 +34,7 @@ import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 
-public class MainActivity extends PlayerHost implements AllSongsFragment.Host, PlaylistsTabFragment.Host, ActivityResultCallback<ActivityResult> {
+public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, PlaylistsTabFragment.Host, ActivityResultCallback<ActivityResult> {
 
 
 

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
@@ -16,13 +15,11 @@ import androidx.preference.PreferenceManager;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
-import com.musicplayer.SocyMusic.ui.PlayerHost;
+import com.musicplayer.SocyMusic.ui.PlayerFragmentHost;
 import com.musicplayer.SocyMusic.utils.ThemeChanger;
 import com.musicplayer.musicplayer.R;
 
-import timber.log.Timber;
-
-public class PlaylistActivity extends PlayerHost implements PlaylistFragment.Host {
+public class PlaylistActivity extends PlayerFragmentHost implements PlaylistFragment.Host {
     public static final String EXTRA_PLAYLIST = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYLIST";
     public static final String EXTRA_SHOW_PLAYER = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYING";
     public static final String RESULT_EXTRA_QUEUE_CHANGED = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYING";

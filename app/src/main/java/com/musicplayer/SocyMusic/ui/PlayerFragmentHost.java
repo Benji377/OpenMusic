@@ -32,7 +32,7 @@ import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.musicplayer.R;
 
-public abstract class PlayerHost extends AppCompatActivity implements PlayerFragment.Host, QueueFragment.Host, ServiceConnection {
+public abstract class PlayerFragmentHost extends AppCompatActivity implements PlayerFragment.Host, QueueFragment.Host, ServiceConnection {
     protected SongsData songsData;
 
     private PlayerFragment playerFragment;
@@ -77,7 +77,7 @@ public abstract class PlayerHost extends AppCompatActivity implements PlayerFrag
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     invalidateOptionsMenu();
                     //actionBar.setTitle(R.string.all_app_name);
-                    ((ViewGroup.MarginLayoutParams) contentView.getLayoutParams()).bottomMargin = UiUtils.dpToPixel(PlayerHost.this, 50);
+                    ((ViewGroup.MarginLayoutParams) contentView.getLayoutParams()).bottomMargin = UiUtils.dpToPixel(PlayerFragmentHost.this, 50);
                     songInfoPager.get().setUserInputEnabled(true);
 //                    songInfoPager.findViewWithTag(songInfoPager.getCurrentItem()).setClickable(true);
                     hideQueue();
@@ -99,7 +99,7 @@ public abstract class PlayerHost extends AppCompatActivity implements PlayerFrag
                 super.onPageScrollStateChanged(state);
                 int position = songInfoPager.get().getCurrentItem();
                 songsData.setPlayingIndex(position);
-                MediaPlayerUtil.playCurrent(PlayerHost.this);
+                MediaPlayerUtil.playCurrent(PlayerFragmentHost.this);
                 onSongUpdate();
             }
         });
@@ -340,7 +340,7 @@ public abstract class PlayerHost extends AppCompatActivity implements PlayerFrag
             // Checks for different actions
             switch (action) {
                 case MediaPlayerService.ACTION_PREV:
-                    MediaPlayerUtil.playPrev(PlayerHost.this);
+                    MediaPlayerUtil.playPrev(PlayerFragmentHost.this);
                     onSongUpdate();
                     break;
                 case MediaPlayerService.ACTION_PLAY:
@@ -356,7 +356,7 @@ public abstract class PlayerHost extends AppCompatActivity implements PlayerFrag
                     onPlaybackUpdate();
                     break;
                 case MediaPlayerService.ACTION_NEXT:
-                    MediaPlayerUtil.playNext(PlayerHost.this);
+                    MediaPlayerUtil.playNext(PlayerFragmentHost.this);
                     onSongUpdate();
                     break;
                 case MediaPlayerService.ACTION_CANCEL:
