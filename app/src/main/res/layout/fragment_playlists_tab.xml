@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?backgroundColor">
@@ -21,4 +23,16 @@
         android:text="@string/playlist_tab_list_empty"
         android:textColor="?colorPrimary"
         android:textSize="24sp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_edit_pencil"
+        android:contentDescription="NONE"
+        android:layout_margin="16dp"
+        tools:ignore="HardcodedText" />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

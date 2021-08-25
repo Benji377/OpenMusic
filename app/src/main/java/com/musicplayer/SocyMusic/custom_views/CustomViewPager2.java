@@ -3,7 +3,6 @@ package com.musicplayer.SocyMusic.custom_views;
 
 import android.os.Handler;
 
-import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 /**

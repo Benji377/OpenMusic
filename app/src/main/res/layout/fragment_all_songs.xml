@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/all_songs_list_empty"
-        android:textColor="?colorOnPrimary"
+        android:textColor="?colorPrimary"
         android:textSize="24sp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

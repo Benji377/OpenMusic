@@ -2,11 +2,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/music_second_layer"
+        android:drawable="@drawable/filled_circle"
         android:gravity="center"/>
 
     <item
-        android:drawable="@drawable/music_first_layer"
+        android:drawable="@drawable/ic_music"
         android:width="18dp"
         android:height="18dp"
         android:gravity="center"/>
