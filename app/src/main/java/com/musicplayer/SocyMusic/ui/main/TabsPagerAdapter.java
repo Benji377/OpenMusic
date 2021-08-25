@@ -5,14 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.google.android.material.tabs.TabLayout;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class TabsPagerAdapter extends FragmentStateAdapter {
 

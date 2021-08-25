@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity;
@@ -26,6 +28,8 @@ public class PlaylistsTabFragment extends Fragment {
     private CustomRecyclerView playlistsRecyclerView;
     private PlaylistsAdapter playlistsAdapter;
     private Host hostCallback;
+    private FloatingActionButton fabMain, fabDelete, fabCreate;
+    private boolean areSubfabsVisible;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -64,6 +68,31 @@ public class PlaylistsTabFragment extends Fragment {
         playlistsRecyclerView.setAdapter(playlistsAdapter);
         TextView emptyTextView = view.findViewById(R.id.textview_playlists_tab_empty);
         playlistsRecyclerView.setEmptyView(emptyTextView);
+
+        // Manages the floating action button (fab)
+        fabMain = view.findViewById(R.id.main_fab);
+        fabCreate = view.findViewById(R.id.child_fab_add);
+        fabDelete = view.findViewById(R.id.child_fab_remove);
+
+        fabCreate.setVisibility(View.GONE);
+        fabDelete.setVisibility(View.GONE);
+        areSubfabsVisible = false;
+
+        // FAB click listener
+        fabMain.setOnClickListener(v -> {
+            if (!areSubfabsVisible) {
+                fabCreate.show();
+                fabDelete.show();
+                areSubfabsVisible = true;
+            } else {
+                fabCreate.hide();
+                fabDelete.hide();
+                areSubfabsVisible = false;
+            }
+        });
+        fabCreate.setOnClickListener(v -> Toast.makeText(getContext(), "Create playlist", Toast.LENGTH_SHORT).show());
+        fabDelete.setOnClickListener(v -> Toast.makeText(getContext(), "Delete playlist", Toast.LENGTH_SHORT).show());
+
         return view;
     }
 

@@ -50,7 +50,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Playlist title"
-                            android:textColor="?colorOnPrimarySurface"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="24sp"
                             tools:ignore="HardcodedText" />
 
@@ -60,7 +60,7 @@
                             android:layout_height="wrap_content"
                             android:paddingBottom="10dp"
                             android:text="0 Songs"
-                            android:textColor="?colorOnPrimarySurface"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="20sp"
                             tools:ignore="HardcodedText" />
                     </LinearLayout>
@@ -70,7 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="00:00"
-                        android:textColor="?colorOnPrimarySurface"
+                        android:textColor="?colorOnPrimary"
                         android:textSize="20sp"
                         app:drawableLeftCompat="@drawable/ic_runtime"
                         android:drawablePadding="5dp"

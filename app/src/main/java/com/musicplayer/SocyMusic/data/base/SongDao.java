@@ -1,7 +1,5 @@
 package com.musicplayer.SocyMusic.data.base;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -9,7 +7,6 @@ import androidx.room.Query;
 
 import com.musicplayer.SocyMusic.data.Song;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Dao

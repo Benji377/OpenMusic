@@ -57,7 +57,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="Songcount"
-            android:textColor="@color/white"
+            android:textColor="?colorOnPrimary"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />
 

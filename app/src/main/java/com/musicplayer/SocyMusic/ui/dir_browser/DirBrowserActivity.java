@@ -13,8 +13,6 @@ import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.utils.ThemeChanger;
 import com.musicplayer.musicplayer.R;
 
-import timber.log.Timber;
-
 
 public class DirBrowserActivity extends AppCompatActivity {
     private DirBrowserFragment dirBrowserFragment;
