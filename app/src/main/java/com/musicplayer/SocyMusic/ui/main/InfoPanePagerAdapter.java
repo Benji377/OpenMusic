@@ -55,7 +55,7 @@ public class InfoPanePagerAdapter extends RecyclerView.Adapter<InfoPanePageHolde
         this.listeners = listeners;
     }
 
-    interface PaneListeners {
+    public interface PaneListeners {
         void onPaneClick();
 
         void onPauseButtonClick();

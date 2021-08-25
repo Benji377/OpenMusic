@@ -51,6 +51,7 @@
     <string name="new_playlist_enter_name">Enter Playlist Name…</string>
     <string name="playlist_dialog_already_in_playlist">Song is already in playlist</string>
     <string name="playlist_dialog_add_anyway">Do you want to add it anyway?</string>
+    <string name="playlist_empty">Playlist is empty...</string>
 
     <string-array name="themeOptions">
         <item>Inverted</item>

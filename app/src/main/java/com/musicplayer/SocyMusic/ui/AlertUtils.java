@@ -35,6 +35,7 @@ public class AlertUtils {
                 ViewGroup dialogView = (ViewGroup) inflater.inflate(R.layout.dialog_custom, null, false);
                 EditText playlistNameEditText = new EditText(context);
                 playlistNameEditText.setHint(R.string.new_playlist_enter_name);
+                playlistNameEditText.setSingleLine();
                 playlistNameEditText.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                         , ViewGroup.LayoutParams.MATCH_PARENT));
                 dialogView.addView(playlistNameEditText);

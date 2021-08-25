@@ -1,11 +1,7 @@
 package com.musicplayer.SocyMusic.ui.player;
 
-import static android.view.ViewGroup.*;
-
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -14,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -25,14 +20,12 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer;
 import com.musicplayer.SocyMusic.MediaPlayerUtil;
+import com.musicplayer.SocyMusic.custom_views.CustomViewPager2;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.AlertUtils;
 import com.musicplayer.musicplayer.R;
-
-import java.util.List;
-import java.util.UUID;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class PlayerFragment extends Fragment {
@@ -45,20 +38,18 @@ public class PlayerFragment extends Fragment {
     private CheckBox shuffleCheckBox;
     private CheckBox favoriteCheckBox;
 
-    private ViewPager2 songPager;
+    private CustomViewPager2 songPager;
     private TextView songStartTimeTextview;
     private TextView songEndTimeTextview;
 
     private SeekBar songSeekBar;
     private BarVisualizer visualizer;
 
-    private PlayerFragmentHost hostCallBack;
+    private Host hostCallBack;
     private SongsData songsData;
     private Song songPlaying;
     private boolean startPlaying;
     private boolean currentlySeeking;
-    private boolean scrollTriggeredByCode;
-
 
     /**
      * Gets automatically executed when the Player gets created
@@ -90,7 +81,7 @@ public class PlayerFragment extends Fragment {
         // Creates a view by inflating its layout
         View view = inflater.inflate(R.layout.fragment_player, container, false);
 
-        songPager = view.findViewById(R.id.viewpager_player_song);
+        songPager = new CustomViewPager2(view.findViewById(R.id.viewpager_player_song));
 
         // Adds all buttons previously declared above
         previousSongButton = view.findViewById(R.id.button_player_prev);
@@ -114,37 +105,17 @@ public class PlayerFragment extends Fragment {
         if (startPlaying)
             MediaPlayerUtil.startPlaying(requireContext(), songPlaying);
 
-        songPager.setAdapter(new SongPagerAdapter(requireContext(), songsData.getPlayingQueue()));
-        songPager.setCurrentItem(songsData.getPlayingIndex(), false);
+        songPager.get().setAdapter(new SongPagerAdapter(requireContext(), songsData.getPlayingQueue()));
+        songPager.get().setCurrentItem(songsData.getPlayingIndex(), false);
 
-        songPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            private boolean newPageSelected;
-            private int previousPosition = songPager.getCurrentItem();
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                newPageSelected = position != previousPosition;
-                previousPosition = position;
-            }
+        songPager.setOnPageChange(new ViewPager2.OnPageChangeCallback() {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (state == ViewPager2.SCROLL_STATE_IDLE && newPageSelected && !scrollTriggeredByCode) {
-                    newPageSelected = false;
-                    songsData.setPlayingIndex(songPager.getCurrentItem());
-                    MediaPlayerUtil.playCurrent(getContext());
-                    hostCallBack.onSongUpdate();
-                }
-                if (scrollTriggeredByCode && state == ViewPager2.SCROLL_STATE_IDLE) {
-                    scrollTriggeredByCode = false;
-                    newPageSelected = false;
-                }
+                songsData.setPlayingIndex(songPager.get().getCurrentItem());
+                MediaPlayerUtil.playCurrent(getContext());
+                hostCallBack.onSongUpdate();
+
             }
         });
 
@@ -159,7 +130,11 @@ public class PlayerFragment extends Fragment {
         queueButton.setOnClickListener(v -> hostCallBack.showQueue());
 
         playlistButton.setOnClickListener(v -> AlertUtils.showAddToPlaylistDialog(requireContext(),
-                songPlaying, hostCallBack::onNewPlaylist, hostCallBack::onPlaylistUpdate));
+                songPlaying, hostCallBack::onNewPlaylist, playlist -> {
+                    if (playlist.equals(songsData.getFavoritesPlaylist()))
+                        favoriteCheckBox.setChecked(songsData.isFavorited(songPlaying));
+                    hostCallBack.onPlaylistUpdate(playlist);
+                }));
 
         // Starts the seekbar thread
         //mediaPlayer.getCurrentPosition();
@@ -269,9 +244,9 @@ public class PlayerFragment extends Fragment {
             boolean isChecked = ((CheckBox) v).isChecked();
             Playlist favorites = songsData.getFavoritesPlaylist();
             if (isChecked)
-                songsData.insertToPlaylist(songsData.getFavoritesPlaylist(), songPlaying);
+                songsData.insertToPlaylist(favorites, songPlaying);
             else
-                songsData.removeFromPlaylist(songsData.getFavoritesPlaylist(), songPlaying);
+                songsData.removeFromPlaylist(favorites, songPlaying, favorites.getSongList().indexOf(songPlaying), true);
             hostCallBack.onPlaylistUpdate(favorites);
         });
         favoriteCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -299,10 +274,10 @@ public class PlayerFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            this.hostCallBack = (PlayerFragmentHost) context;
+            this.hostCallBack = (Host) context;
             // If implementation is missing
         } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement PlayerFragmentHost");
+            throw new ClassCastException(context.toString() + " must implement PlayerFragment.Host");
         }
     }
 
@@ -310,6 +285,7 @@ public class PlayerFragment extends Fragment {
     public void onPause() {
         super.onPause();
         startPlaying = false;
+        releaseVisualizer();
     }
 
     /**
@@ -319,6 +295,7 @@ public class PlayerFragment extends Fragment {
     public void onResume() {
         // Updates the app
         updatePlayerUI();
+        initializeVisualizer();
         super.onResume();
     }
 
@@ -340,11 +317,11 @@ public class PlayerFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     public void invalidatePager() {
-        SongPagerAdapter adapter = (SongPagerAdapter) songPager.getAdapter();
+        SongPagerAdapter adapter = (SongPagerAdapter) songPager.get().getAdapter();
         if (adapter != null) {
             adapter.setQueue(songsData.getPlayingQueue());
-            songPager.getAdapter().notifyDataSetChanged();
-            songPager.setCurrentItem(songsData.getPlayingIndex(), false);
+            songPager.get().getAdapter().notifyDataSetChanged();
+            songPager.get().setCurrentItem(songsData.getPlayingIndex(), false);
         }
     }
 
@@ -354,9 +331,9 @@ public class PlayerFragment extends Fragment {
      *
      * @return The fragment as a class
      */
-    public static PlayerFragment newInstance() {
+    public static PlayerFragment newInstance(boolean startPlaying) {
         PlayerFragment instance = new PlayerFragment();
-        instance.startPlaying = true;
+        instance.startPlaying = startPlaying;
         return instance;
     }
 
@@ -370,10 +347,9 @@ public class PlayerFragment extends Fragment {
         favoriteCheckBox.setChecked(songsData.isFavorited(songPlaying));
 
         // Sets all properties again
-        if (songPager.getCurrentItem() != songsData.getPlayingIndex()) {
-            scrollTriggeredByCode = true;
-            songPager.setCurrentItem(songsData.getPlayingIndex());
-        }
+        if (songPager.get().getCurrentItem() != songsData.getPlayingIndex())
+            songPager.scrollByCode(songsData.getPlayingIndex(), false);
+
         int position = MediaPlayerUtil.getPosition();
         int duration = MediaPlayerUtil.getDuration();
         songSeekBar.setMax(duration);
@@ -401,7 +377,7 @@ public class PlayerFragment extends Fragment {
     /**
      * Plays the next song in the queue, if it is the last song then it will play the first
      */
-    protected void playNextSong() {
+    private void playNextSong() {
         // Plays the next song
         MediaPlayerUtil.playNext(getContext());
         hostCallBack.onSongUpdate();
@@ -410,7 +386,7 @@ public class PlayerFragment extends Fragment {
     /**
      * Plays the previous song in queue, if it is the first song then it will play the last one
      */
-    protected void playPrevSong() {
+    private void playPrevSong() {
         // Plays the previous song
         MediaPlayerUtil.playPrev(getContext());
         hostCallBack.onSongUpdate();
@@ -440,7 +416,7 @@ public class PlayerFragment extends Fragment {
     /**
      * Interface, needed for detecting specific states of the fragment
      */
-    public interface PlayerFragmentHost {
+    public interface Host {
         //callback methods
         void onLoadComplete();
 

@@ -3,17 +3,12 @@ package com.musicplayer.SocyMusic.ui.playlists_tab;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.session.MediaController;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -30,7 +25,7 @@ public class PlaylistsTabFragment extends Fragment {
     private SongsData songsData;
     private CustomRecyclerView playlistsRecyclerView;
     private PlaylistsAdapter playlistsAdapter;
-    private PlaylistsTabFragmentHost hostCallback;
+    private Host hostCallback;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -47,17 +42,17 @@ public class PlaylistsTabFragment extends Fragment {
         playlistsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         playlistsAdapter = new PlaylistsAdapter(requireContext(), songsData.getAllPlaylists());
 
-        //TODO: remove all this code and make PlaylistActivity host another PlayerFragment
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() != Activity.RESULT_CANCELED)
                 hostCallback.onQueueChanged();
         });
-
         playlistsAdapter.setOnItemClickListener(new PlaylistsAdapter.ItemClickListener() {
             @Override
             public void onItemClick(int position, View view) {
                 Intent intent = new Intent(requireContext(), PlaylistActivity.class);
                 intent.putExtra(PlaylistActivity.EXTRA_PLAYLIST, songsData.getAllPlaylists().get(position));
+                intent.putExtra(PlaylistActivity.EXTRA_SHOW_PLAYER, hostCallback.isShowingPlayer());
+                hostCallback.onPlaylistClick();
                 launcher.launch(intent);
             }
 
@@ -83,14 +78,19 @@ public class PlaylistsTabFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         try {
-            hostCallback = (PlaylistsTabFragmentHost) context;
+            hostCallback = (Host) context;
         } catch (ClassCastException exception) {
-            throw new ClassCastException(context.toString() + " must implement PlaylistsTabFragmentHost");
+            throw new ClassCastException(context.toString() + " must implement PlaylistsTabFragment.Host");
         }
         super.onAttach(context);
     }
 
-    public interface PlaylistsTabFragmentHost {
+    public interface Host {
+        boolean isShowingPlayer();
+
         void onQueueChanged();
+
+        void onPlaylistClick();
+
     }
 }

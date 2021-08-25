@@ -1,15 +1,23 @@
 package com.musicplayer.SocyMusic;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
+import android.Manifest;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
+
+import androidx.core.content.ContextCompat;
 
 import com.musicplayer.musicplayer.R;
 
 import java.util.HashSet;
-import java.util.UUID;
 
 /**
  * This class is necessary to create notifications according to different Android versions
@@ -23,6 +31,8 @@ public class SocyMusicApp extends Application {
     public static final String PREFS_KEY_THEME = "theme";
     public static final String PREFS_KEY_VERSION = "versions";
     public static final HashSet<String> defaultPathsSet = new HashSet<>();
+
+    public static final String[] PERMISSIONS_NEEDED = {READ_EXTERNAL_STORAGE, RECORD_AUDIO};
 
     /**
      * When this class gets invoked, this method gets called
@@ -51,6 +61,13 @@ public class SocyMusicApp extends Application {
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel1);
         }
+    }
+
+    public static boolean hasPermissions(Context context) {
+        boolean allGranted = true;
+        for (String permission : PERMISSIONS_NEEDED)
+            allGranted = allGranted && ContextCompat.checkSelfPermission(context, permission) == PERMISSION_GRANTED;
+        return allGranted;
     }
 
 }
