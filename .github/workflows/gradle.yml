@@ -10,10 +10,8 @@ on:
     branches: [ main ]
 
 jobs:
-  gradle:
-
+  test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -27,17 +25,29 @@ jobs:
       run: bash ./gradlew test --stacktrace
     - name: Run Tests
       run: ./gradlew test
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
     - name: Build Project
       run: ./gradlew assemble
     - name: Build Debug APK
       run: bash ./gradlew :app:assembleDebug
     - name: build release
       run: ./gradlew assembleRelease
+  upload:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
     - name: Upload APK
       uses: actions/upload-artifact@v2
       with:
         name: SocyMusic
-        path: /app/build/outputs/apk/app-debug.apk
+        path: /app/build/outputs/apk/
+  cache:
+    needs: upload
+    runs-on: ubuntu-latest
+    steps:
     - name: Cache Gradle packages
       uses: actions/cache@v2
       with:
@@ -47,8 +57,6 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
-    - name: Build with Gradle
-      run: ./gradlew build
     - name: Cleanup Gradle Cache
       # Remove some files from the Gradle cache, so they aren't cached by GitHub Actions.
       # Restoring these files from a GitHub Actions cache might cause problems for future builds.
