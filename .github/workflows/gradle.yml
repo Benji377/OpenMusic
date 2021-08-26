@@ -37,4 +37,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: SocyMusic
-        path: app/build/outputs/apk/release/SocyMusic.apk     
+        path: build/libs
