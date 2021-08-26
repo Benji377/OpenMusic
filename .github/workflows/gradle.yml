@@ -21,7 +21,18 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build debug-apk
-      run: ./gradlew assembleDebug
+    - name: Unit tests
+      run: bash ./gradlew test --stacktrace
+    - name: Run Tests
+      run: ./gradlew test
+    - name: Build Project
+      run: ./gradlew assemble
+    - name: Build Debug APK
+      run: bash ./gradlew :app:assembleDebug
+    - name: build release
+      run: ./gradlew assembleRelease
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: SocyMusic
+        path: ${{ github.workspace}} /app/build/outputs/apk/release/SocyMusic.apk     
