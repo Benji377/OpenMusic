@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.google.android.material.tabs.TabLayout;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
@@ -45,5 +46,13 @@ public class TabsPagerAdapter extends FragmentStateAdapter {
     @Override
     public long getItemId(int position) {
         return TABS[position];
+    }
+
+    @Override
+    public boolean containsItem(long itemId) {
+        for (long id : TABS)
+            if (id == itemId)
+                return true;
+        return false;
     }
 }
