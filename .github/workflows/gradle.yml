@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -25,27 +25,22 @@ jobs:
       run: bash ./gradlew test --stacktrace
     - name: Run Tests
       run: ./gradlew test
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
+      
     - name: Build Project
       run: ./gradlew assemble
     - name: Build Debug APK
       run: bash ./gradlew :app:assembleDebug
     - name: build release
       run: ./gradlew assembleRelease
-  upload:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
+
     - name: Upload APK
       uses: actions/upload-artifact@v2
       with:
         name: SocyMusic
-        path: /app/build/outputs/apk/
+        path: ~/app/build/outputs/apk/
+        
   cache:
-    needs: upload
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - name: Cache Gradle packages
