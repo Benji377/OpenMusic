@@ -51,12 +51,8 @@ jobs:
   test:
     runs-on: macos-latest
     needs: build
-    strategy:
-      matrix:
-        api-level: [21, 23, 29]
-        target: [default]
 
-    steps:
+    steps:      
       - name: Checkout the code
         uses: actions/checkout@v2
         
@@ -76,20 +72,11 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      - name: Run detekt
-        run: ./gradlew detektCheck
-
-      - name: Run unit tests
-        run: ./gradlew test --stacktrace
-
-      - name: Instrumentation Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          target: ${{ matrix.target }}
-          arch: x86
-          profile: Nexus 6
-          script: ./gradlew connectedCheck --stacktrace
+      - name: Unit tests
+        run: bash ./gradlew test --stacktrace
+      
+      - name: Run Tests
+        run: ./gradlew test
 
       - name: Upload Reports
         uses: actions/upload-artifact@v2
