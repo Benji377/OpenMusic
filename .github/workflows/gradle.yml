@@ -37,7 +37,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: SocyMusic
-        path: build/libs/
+        path: /app/build/outputs/apk/app-debug.apk
     - name: Cache Gradle packages
       uses: actions/cache@v2
       with:
