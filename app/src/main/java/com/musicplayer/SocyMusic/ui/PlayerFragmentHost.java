@@ -310,6 +310,7 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
 
     protected void attachContentView(View contentView) {
         this.contentView = contentView;
+        contentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         getRootView().addView(contentView, 0);
     }
 
