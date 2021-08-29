@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.SocyMusic.data.SongsData;
+import com.musicplayer.SocyMusic.utils.PathUtils;
 import com.musicplayer.musicplayer.R;
 
 import java.io.File;
@@ -43,7 +44,7 @@ public class DirBrowserFragment extends Fragment {
         super.onCreate(savedInstanceState);
         songsData = SongsData.getInstance(getContext());
         rootDirs = getRootDirs();
-        currentAbsolutePath = getUpPath(rootDirs[0].getAbsolutePath());
+        currentAbsolutePath = PathUtils.getPathUp(rootDirs[0].getAbsolutePath());
         isAtRoot = true;
         savedPaths = new HashSet<>(PreferenceManager.getDefaultSharedPreferences(requireContext()).getStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, SocyMusicApp.defaultPathsSet));
     }
@@ -66,7 +67,7 @@ public class DirBrowserFragment extends Fragment {
                     return true;
                 // or if folder's parent is in the saved paths
                 for (String path : savedPaths) {
-                    if (isSubDir(folder.getAbsolutePath(), path))
+                    if (PathUtils.isSubDir(folder.getAbsolutePath(), path))
                         return true;
                 }
                 return false;
@@ -76,7 +77,7 @@ public class DirBrowserFragment extends Fragment {
             public boolean isSubFolderSelected(File folder) {
                 //if any of the folder's subfolders is in the saved paths
                 for (String path : savedPaths) {
-                    if (isSubDir(path, folder.getAbsolutePath()))
+                    if (PathUtils.isSubDir(path, folder.getAbsolutePath()))
                         return true;
                 }
                 return false;
@@ -101,7 +102,7 @@ public class DirBrowserFragment extends Fragment {
                 //remove sub-dirs (whether this dir was added or removed)
                 ArrayList<String> pathsToRemove = new ArrayList<>();
                 for (String savedPath : savedPaths) {
-                    if (isSubDir(savedPath, folder.getAbsolutePath()))
+                    if (PathUtils.isSubDir(savedPath, folder.getAbsolutePath()))
                         pathsToRemove.add(savedPath);
                 }
                 savedPaths.removeAll(pathsToRemove);
@@ -118,7 +119,7 @@ public class DirBrowserFragment extends Fragment {
                 }
                 adapter.setDirectories(subDirectories);
                 adapter.notifyDataSetChanged();
-                symPathTextView.setText(getDownPath((String) symPathTextView.getText(), folder.getName().equals("0") ? getString(R.string.dir_browser_internal_storage) : folder.getName()));
+                symPathTextView.setText(PathUtils.getPathDown((String) symPathTextView.getText(), folder.getName().equals("0") ? getString(R.string.dir_browser_internal_storage) : folder.getName()));
                 currentAbsolutePath = folder.getAbsolutePath();
                 isAtRoot = false;
             }
@@ -144,8 +145,8 @@ public class DirBrowserFragment extends Fragment {
         if (isAtRoot)
             requireActivity().finish();
         else {
-            symPathTextView.setText(getUpPath((String) symPathTextView.getText()));
-            currentAbsolutePath = getUpPath(currentAbsolutePath);
+            symPathTextView.setText(PathUtils.getPathUp((String) symPathTextView.getText()));
+            currentAbsolutePath = PathUtils.getPathUp(currentAbsolutePath);
             isAtRoot = symPathTextView.getText().equals("/");
             File current = new File(currentAbsolutePath);
             File[] subDirectories;
@@ -162,17 +163,8 @@ public class DirBrowserFragment extends Fragment {
         }
     }
 
-    private String getUpPath(String path) {
-        String[] dirs = path.substring(1).split("/");
-        StringBuilder upPath = new StringBuilder("/");
-        for (int i = 0; i < dirs.length - 1; i++)
-            upPath.append(dirs[i]).append("/");
-        return upPath.toString();
-    }
 
-    private String getDownPath(String path, String folder) {
-        return path + folder + "/";
-    }
+
 
     private File[] getRootDirs() {
         String[] rootPaths = getRootPaths();
@@ -201,26 +193,8 @@ public class DirBrowserFragment extends Fragment {
                 .edit()
                 .putStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, savedPaths)
                 .apply();
-        songsData.reloadSongs(requireContext());
     }
 
-    /**
-     * Tests if the path1 is a valid a subdirectory of path2
-     *
-     * @param path1 path of the subdirectory (to be tested)
-     * @param path2 path of the parent directory (to be tested)
-     * @return true if path1 is a valid a subdirectory of path2, false otherwise
-     */
-    public static boolean isSubDir(String path1, String path2) {
-        String[] dirs1 = path1.split("/");
-        String[] dirs2 = path2.split("/");
-        if (dirs1.length <= dirs2.length)
-            return false;
-        for (int i = 0; i < dirs2.length; i++) {
-            if (!dirs1[i].equals(dirs2[i]))
-                return false;
-        }
-        return true;
-    }
+
 
 }

@@ -18,6 +18,9 @@ public abstract class PlaylistSongDao {
     @Query("DELETE FROM Playlist_Song WHERE song_id=:songId AND playlist_id=:playlistId AND song_index=:songIndex")
     protected abstract void deleteSong(String playlistId, String songId, int songIndex);
 
+    @Query("DELETE FROM Playlist_Song WHERE playlist_id=:playlistId")
+    public abstract void deletePlaylist(String playlistId);
+
     @Query("SELECT * FROM Playlist_Song WHERE playlist_id=:playlistId ORDER BY song_index")
     protected abstract List<PlaylistSong> getPlaylistSongs(String playlistId);
 
@@ -47,7 +50,6 @@ public abstract class PlaylistSongDao {
             PlaylistSong p = playlistsContainingSong.get(i);
             removeSongFromPlaylist(p.playlistID.toString(), songId, p.index, true);
         }
-
     }
 
 }

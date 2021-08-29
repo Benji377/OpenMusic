@@ -42,16 +42,19 @@
     <string name="prefs_title_theme">Theme</string>
 
     <string name="fragment_player_imageview_player_album_art">Song thumbnail</string>
+
     <string name="playlist_song_count">%d Songs</string>
-
-    <string name="player_select_playlist">Select Playlist:</string>
-    <string name="player_create_name_playlist">Create New Playlist…</string>
-    <string name="new_playlist">New Playlist</string>
-
-    <string name="new_playlist_enter_name">Enter Playlist Name…</string>
-    <string name="playlist_dialog_already_in_playlist">Song is already in playlist</string>
-    <string name="playlist_dialog_add_anyway">Do you want to add it anyway?</string>
     <string name="playlist_empty">Playlist is empty...</string>
+
+    <string name="add_to_playlist_dialog_title">Select Playlist:</string>
+    <string name="add_to_playlist_dialog_new">Create New Playlist…</string>
+    <string name="add_to_playlist_dialog_already_in_playlist">Song is already in playlist</string>
+    <string name="add_to_playlist_dialog_add_anyway">Do you want to add it anyway?</string>
+    <string name="new_playlist_dialog_enter_name">Enter Playlist Name…</string>
+    <string name="new_playlist_dialog_title">New Playlist</string>
+    <string name="delete_playlist_dialog_title">Delete Playlist</string>
+    <string name="delete_playlist_dialog_confirm">Are you sure you want to delete this playlist?</string>
+
 
     <string-array name="themeOptions">
         <item>Inverted</item>

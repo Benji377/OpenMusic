@@ -41,7 +41,7 @@ public class QueueFragment extends Fragment {
         adapter.setOnItemClickListener(position -> {
             songsData.setPlayingIndex(position);
             MediaPlayerUtil.playCurrent(requireContext());
-            hostCallBack.onSongUpdate();
+            hostCallBack.onSongPlayingUpdate();
         });
         listView.setAdapter(adapter, false);
         listView.setDragListListener(new DragListView.DragListListener() {
@@ -93,7 +93,7 @@ public class QueueFragment extends Fragment {
 
 
     public interface Host {
-        void onSongUpdate();
+        void onSongPlayingUpdate();
 
         void onQueueReordered();
     }

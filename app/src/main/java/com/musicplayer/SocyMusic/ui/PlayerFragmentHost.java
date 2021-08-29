@@ -30,6 +30,7 @@ import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.main.InfoPanePagerAdapter;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
+import com.musicplayer.SocyMusic.utils.UiUtils;
 import com.musicplayer.musicplayer.R;
 
 public abstract class PlayerFragmentHost extends AppCompatActivity implements PlayerFragment.Host, QueueFragment.Host, ServiceConnection {
@@ -100,7 +101,7 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
                 int position = songInfoPager.get().getCurrentItem();
                 songsData.setPlayingIndex(position);
                 MediaPlayerUtil.playCurrent(PlayerFragmentHost.this);
-                onSongUpdate();
+                onSongPlayingUpdate();
             }
         });
 
@@ -179,7 +180,7 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onSongUpdate() {
+    public void onSongPlayingUpdate() {
         if (mediaPlayerService != null)
             mediaPlayerService.refreshNotification();
         if (queueFragment != null)
@@ -232,7 +233,7 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
             playerFragment = (PlayerFragment) fragment;
             playerFragment.invalidatePager();
             MediaPlayerUtil.startPlaying(this, songClicked);
-            onSongUpdate();
+            onSongPlayingUpdate();
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             hideQueue();
         }
@@ -265,7 +266,7 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
         super.onResume();
         registerMediaReceiver();
         if (playerLoadComplete && isShowingPlayer())
-            onSongUpdate();
+            onSongPlayingUpdate();
 
     }
 
@@ -342,7 +343,7 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
             switch (action) {
                 case MediaPlayerService.ACTION_PREV:
                     MediaPlayerUtil.playPrev(PlayerFragmentHost.this);
-                    onSongUpdate();
+                    onSongPlayingUpdate();
                     break;
                 case MediaPlayerService.ACTION_PLAY:
                 case MediaPlayerService.ACTION_PAUSE:
@@ -358,7 +359,7 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
                     break;
                 case MediaPlayerService.ACTION_NEXT:
                     MediaPlayerUtil.playNext(PlayerFragmentHost.this);
-                    onSongUpdate();
+                    onSongPlayingUpdate();
                     break;
                 case MediaPlayerService.ACTION_CANCEL:
                     mediaPlayerService.stopSelf();

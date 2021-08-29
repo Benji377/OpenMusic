@@ -24,7 +24,7 @@ import com.musicplayer.SocyMusic.custom_views.CustomViewPager2;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.data.SongsData;
-import com.musicplayer.SocyMusic.utils.AlertUtils;
+import com.musicplayer.SocyMusic.utils.DialogUtils;
 import com.musicplayer.musicplayer.R;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -114,7 +114,7 @@ public class PlayerFragment extends Fragment {
             public void onPageScrollStateChanged(int state) {
                 songsData.setPlayingIndex(songPager.get().getCurrentItem());
                 MediaPlayerUtil.playCurrent(getContext());
-                hostCallBack.onSongUpdate();
+                hostCallBack.onSongPlayingUpdate();
 
             }
         });
@@ -129,7 +129,7 @@ public class PlayerFragment extends Fragment {
 
         queueButton.setOnClickListener(v -> hostCallBack.showQueue());
 
-        playlistButton.setOnClickListener(v -> AlertUtils.showAddToPlaylistDialog(requireContext(),
+        playlistButton.setOnClickListener(v -> DialogUtils.showAddToPlaylistDialog(requireContext(),
                 songPlaying, hostCallBack::onNewPlaylist, playlist -> {
                     if (playlist.equals(songsData.getFavoritesPlaylist()))
                         favoriteCheckBox.setChecked(songsData.isFavorited(songPlaying));
@@ -380,7 +380,7 @@ public class PlayerFragment extends Fragment {
     private void playNextSong() {
         // Plays the next song
         MediaPlayerUtil.playNext(getContext());
-        hostCallBack.onSongUpdate();
+        hostCallBack.onSongPlayingUpdate();
     }
 
     /**
@@ -389,7 +389,7 @@ public class PlayerFragment extends Fragment {
     private void playPrevSong() {
         // Plays the previous song
         MediaPlayerUtil.playPrev(getContext());
-        hostCallBack.onSongUpdate();
+        hostCallBack.onSongPlayingUpdate();
     }
 
     /**
@@ -422,7 +422,7 @@ public class PlayerFragment extends Fragment {
 
         void onPlaybackUpdate();
 
-        void onSongUpdate();
+        void onSongPlayingUpdate();
 
         void onShuffle();
 
@@ -430,6 +430,6 @@ public class PlayerFragment extends Fragment {
 
         void showQueue();
 
-        void onNewPlaylist();
+        void onNewPlaylist(Playlist newPlaylist);
     }
 }
