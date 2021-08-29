@@ -24,7 +24,7 @@ import com.musicplayer.SocyMusic.custom_views.CustomViewPager2;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.data.SongsData;
-import com.musicplayer.SocyMusic.utils.AlertUtils;
+import com.musicplayer.SocyMusic.utils.DialogUtils;
 import com.musicplayer.musicplayer.R;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -129,7 +129,7 @@ public class PlayerFragment extends Fragment {
 
         queueButton.setOnClickListener(v -> hostCallBack.showQueue());
 
-        playlistButton.setOnClickListener(v -> AlertUtils.showAddToPlaylistDialog(requireContext(),
+        playlistButton.setOnClickListener(v -> DialogUtils.showAddToPlaylistDialog(requireContext(),
                 songPlaying, hostCallBack::onNewPlaylist, playlist -> {
                     if (playlist.equals(songsData.getFavoritesPlaylist()))
                         favoriteCheckBox.setChecked(songsData.isFavorited(songPlaying));
@@ -430,6 +430,6 @@ public class PlayerFragment extends Fragment {
 
         void showQueue();
 
-        void onNewPlaylist();
+        void onNewPlaylist(Playlist newPlaylist);
     }
 }

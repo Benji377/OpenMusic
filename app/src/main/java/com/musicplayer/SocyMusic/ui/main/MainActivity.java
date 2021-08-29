@@ -170,7 +170,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
 
 
     @Override
-    public void onNewPlaylist() {
+    public void onNewPlaylist(Playlist newPlaylist) {
         PlaylistsTabFragment playlistsTab = (PlaylistsTabFragment) getTabFragment(TabsPagerAdapter.PLAYLISTS_TAB);
         if (playlistsTab != null)
             playlistsTab.notifyPlaylistInserted();

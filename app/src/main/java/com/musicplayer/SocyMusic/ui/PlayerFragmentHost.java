@@ -30,6 +30,7 @@ import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.main.InfoPanePagerAdapter;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
+import com.musicplayer.SocyMusic.utils.UiUtils;
 import com.musicplayer.musicplayer.R;
 
 public abstract class PlayerFragmentHost extends AppCompatActivity implements PlayerFragment.Host, QueueFragment.Host, ServiceConnection {

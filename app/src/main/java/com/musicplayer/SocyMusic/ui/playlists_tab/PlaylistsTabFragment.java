@@ -21,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity;
+import com.musicplayer.SocyMusic.utils.DialogUtils;
 import com.musicplayer.musicplayer.R;
 
 public class PlaylistsTabFragment extends Fragment {
@@ -90,8 +91,8 @@ public class PlaylistsTabFragment extends Fragment {
                 areSubfabsVisible = false;
             }
         });
-        fabCreate.setOnClickListener(v -> Toast.makeText(getContext(), "Create playlist", Toast.LENGTH_SHORT).show());
-        fabDelete.setOnClickListener(v -> Toast.makeText(getContext(), "Delete playlist", Toast.LENGTH_SHORT).show());
+        fabCreate.setOnClickListener(v -> DialogUtils.showNewPlaylistDialog(requireContext(), newPlaylist -> notifyPlaylistInserted()));
+        fabDelete.setOnClickListener(v -> DialogUtils.showDeletePlaylistDialog(requireContext(), this::notifyPlaylistDeleted));
 
         return view;
     }
@@ -102,6 +103,10 @@ public class PlaylistsTabFragment extends Fragment {
 
     public void notifyPlaylistInserted() {
         playlistsAdapter.notifyItemInserted(playlistsAdapter.getItemCount());
+    }
+
+    public void notifyPlaylistDeleted(int index) {
+        playlistsAdapter.notifyItemRemoved(index);
     }
 
     @Override

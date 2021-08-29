@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic.ui;
+package com.musicplayer.SocyMusic.utils;
 
 import android.content.Context;
 import android.util.TypedValue;

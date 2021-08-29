@@ -436,4 +436,16 @@ public class SongsData {
         allPlaylists.add(newPlaylist);
         new Thread(() -> database.playlistDao().insert(newPlaylist)).start();
     }
+
+    public void deletePlaylist(int index) {
+        if (index >= allPlaylists.size())
+            return;
+        Playlist playlistToDelete = allPlaylists.remove(index);
+        new Thread(() -> {
+            database.playlistDao().delete(playlistToDelete);
+            database.playlistSongDao().deletePlaylist(playlistToDelete.getId().toString());
+        }).start();
+
+
+    }
 }
