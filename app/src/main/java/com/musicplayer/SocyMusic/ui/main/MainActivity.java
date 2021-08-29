@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -29,15 +30,13 @@ import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.ui.PlayerFragmentHost;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
+import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
 import com.musicplayer.SocyMusic.utils.ThemeChanger;
 import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 
-public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, PlaylistsTabFragment.Host, ActivityResultCallback<ActivityResult> {
-
-
-
+public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult> {
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
 
@@ -129,14 +128,6 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
      * For musicplayer storage permission to find all the songs and record permission for the visualizer
      */
     public void runtimePermission() {
-        if (SocyMusicApp.hasPermissions(this)) {
-            tabsPager.setAdapter(new TabsPagerAdapter(MainActivity.this));
-            new TabLayoutMediator(tabsLayout,
-                    tabsPager,
-                    (tab, position) -> tab.setText(getResources().getStringArray(R.array.main_tabs)[position]))
-                    .attach();
-            return;
-        }
         Dexter.withContext(this).withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
@@ -147,8 +138,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-//                        (new Handler()).postDelayed(this::finishLoading, 500);
-
+//                        (new Handler()).postDelayed(this::finishLoading, 500);\
                     }
 
                     void finishLoading() {
@@ -173,7 +163,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     @Override
     public void onPlaylistUpdate(Playlist playlist) {
         int index = songsData.getAllPlaylists().indexOf(playlist);
-        PlaylistsTabFragment playlistsTab = (PlaylistsTabFragment) getSupportFragmentManager().findFragmentByTag("f" + TabsPagerAdapter.PLAYLISTS_TAB);
+        PlaylistsTabFragment playlistsTab = (PlaylistsTabFragment) getTabFragment(TabsPagerAdapter.PLAYLISTS_TAB);
         if (playlistsTab != null)
             playlistsTab.updatePlaylistAt(index);
     }
@@ -181,7 +171,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
 
     @Override
     public void onNewPlaylist() {
-        PlaylistsTabFragment playlistsTab = (PlaylistsTabFragment) getSupportFragmentManager().findFragmentByTag("f" + TabsPagerAdapter.PLAYLISTS_TAB);
+        PlaylistsTabFragment playlistsTab = (PlaylistsTabFragment) getTabFragment(TabsPagerAdapter.PLAYLISTS_TAB);
         if (playlistsTab != null)
             playlistsTab.notifyPlaylistInserted();
     }
@@ -199,5 +189,21 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     @Override
     public void onPlaylistClick() {
         super.unregisterMediaReceiver();
+    }
+
+    @Override
+    public void onLibraryDirsChanged() {
+        try {
+            songsData.reloadSongs(this).join();
+            AllSongsFragment allSongsTab = (AllSongsFragment) getTabFragment(TabsPagerAdapter.ALL_SONGS_TAB);
+            if(allSongsTab!=null)
+                allSongsTab.invalidateSongList();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Fragment getTabFragment(long tabId) {
+        return getSupportFragmentManager().findFragmentByTag("f" + tabId);
     }
 }

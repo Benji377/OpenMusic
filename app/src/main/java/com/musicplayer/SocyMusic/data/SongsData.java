@@ -9,6 +9,7 @@ import androidx.room.Room;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.data.base.AppDatabase;
 import com.musicplayer.SocyMusic.data.base.PlaylistSong;
+import com.musicplayer.SocyMusic.utils.PathUtils;
 import com.musicplayer.musicplayer.R;
 
 import java.io.File;
@@ -142,20 +143,28 @@ public class SongsData {
      */
     public Thread reloadSongs(Context context) {
         Thread reloadThread = new Thread(() -> {
+            //get the saved paths from prefs
+            HashSet<String> savedPaths = new HashSet<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, SocyMusicApp.defaultPathsSet));
+            //get all songs from database
             allSongs = (ArrayList<Song>) database.songDao().getAll();
+            //remove any missing songs or songs no longer in the library paths
             for (int i = 0; i < allSongs.size(); i++) {
                 Song song = allSongs.get(i);
-                if (!song.getFile().exists() || !song.getFile().canRead()) {
+                File file = song.getFile();
+                if (!file.exists() || !file.canRead() || !PathUtils.isSubDirOfAny(file.getAbsolutePath(), savedPaths)) {
                     allSongs.remove(song);
                     database.songDao().delete(song);
                     database.playlistSongDao().removeAllSongRefs(song.getSongId().toString());
+                    i--;
                 }
             }
-            HashSet<String> paths = new HashSet<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, SocyMusicApp.defaultPathsSet));
-            for (String path : paths) {
+
+            //find all songs in storage
+            for (String path : savedPaths) {
                 File file = new File(path);
                 if (!file.exists() || !file.canRead())
                     continue;
+                //check if song is already in the database
                 ArrayList<Song> songsLoaded = loadSongs(file);
                 boolean isInDatabase = false;
                 for (Song newSong : songsLoaded) {
@@ -165,14 +174,17 @@ public class SongsData {
                             break;
                         }
                     }
+                    //if not, add it
                     if (!isInDatabase) {
                         database.songDao().insert(newSong);
                         allSongs.add(newSong);
                     }
                 }
             }
+            //get all playlists from database
             allPlaylists = database.playlistDao().getAll();
-            //lazy solution to querying into songList
+
+            //lazy solution to querying into songList problem
             for (Playlist playlist : allPlaylists)
                 playlist.setSongList((ArrayList<Song>) database.playlistDao().getSongs(playlist.getId().toString()));
 

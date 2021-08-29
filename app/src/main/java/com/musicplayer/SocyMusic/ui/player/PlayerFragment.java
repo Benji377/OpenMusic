@@ -114,7 +114,7 @@ public class PlayerFragment extends Fragment {
             public void onPageScrollStateChanged(int state) {
                 songsData.setPlayingIndex(songPager.get().getCurrentItem());
                 MediaPlayerUtil.playCurrent(getContext());
-                hostCallBack.onSongUpdate();
+                hostCallBack.onSongPlayingUpdate();
 
             }
         });
@@ -380,7 +380,7 @@ public class PlayerFragment extends Fragment {
     private void playNextSong() {
         // Plays the next song
         MediaPlayerUtil.playNext(getContext());
-        hostCallBack.onSongUpdate();
+        hostCallBack.onSongPlayingUpdate();
     }
 
     /**
@@ -389,7 +389,7 @@ public class PlayerFragment extends Fragment {
     private void playPrevSong() {
         // Plays the previous song
         MediaPlayerUtil.playPrev(getContext());
-        hostCallBack.onSongUpdate();
+        hostCallBack.onSongPlayingUpdate();
     }
 
     /**
@@ -422,7 +422,7 @@ public class PlayerFragment extends Fragment {
 
         void onPlaybackUpdate();
 
-        void onSongUpdate();
+        void onSongPlayingUpdate();
 
         void onShuffle();
 
