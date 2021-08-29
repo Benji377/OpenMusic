@@ -19,6 +19,8 @@ import com.musicplayer.SocyMusic.ui.PlayerFragmentHost;
 import com.musicplayer.SocyMusic.utils.ThemeChanger;
 import com.musicplayer.musicplayer.R;
 
+import java.util.Objects;
+
 public class PlaylistActivity extends PlayerFragmentHost implements PlaylistFragment.Host {
     public static final String EXTRA_PLAYLIST = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYLIST";
     public static final String EXTRA_SHOW_PLAYER = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYING";
@@ -38,6 +40,8 @@ public class PlaylistActivity extends PlayerFragmentHost implements PlaylistFrag
             }
         };
         prefs.registerOnSharedPreferenceChangeListener(listener);
+
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         super.onCreate(savedInstanceState);
         View childView = getLayoutInflater().inflate(R.layout.content_playlist,
