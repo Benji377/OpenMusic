@@ -2,16 +2,22 @@ package com.musicplayer.SocyMusic.ui.main;
 
 import android.Manifest;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
@@ -40,8 +46,6 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
 
-    //private ActionBar actionBar;
-
     SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     /**
@@ -66,10 +70,24 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                 (ViewGroup) findViewById(R.id.layout_main_tabs_holder), false);
         super.attachContentView(childView);
 
+        // START OF ACTIONBAR AND STATUSBAR COLOR FIX
+        // Gets the primaryColor from the current Theme
+        final TypedValue value = new TypedValue();
+        getTheme().resolveAttribute(R.attr.colorPrimary, value, true);
+        // Transforms color to Hex -> Avoids ResourceNotFound issue
+        String hexColor = String.format("#%06X", (0xFFFFFF & value.data));
 
-        //actionBar = getSupportActionBar();
-        //actionBar.setElevation(0);
-        //actionBar.setTitle(getString(R.string.all_app_name));
+        // Gets the actionbar and forces it to use the retrieved color
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setElevation(0);
+        actionBar.setTitle(getString(R.string.all_app_name));
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(hexColor)));
+
+        // Gets the window and forces the statusbar to use the retrieved color
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor(hexColor));
+        // END OF FIX
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
         tabsLayout = findViewById(R.id.tab_layout_main);
