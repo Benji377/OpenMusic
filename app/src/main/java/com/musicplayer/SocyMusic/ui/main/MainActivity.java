@@ -2,9 +2,12 @@ package com.musicplayer.SocyMusic.ui.main;
 
 import android.Manifest;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +38,8 @@ import com.musicplayer.SocyMusic.utils.ThemeChanger;
 import com.musicplayer.musicplayer.R;
 
 import java.util.List;
+
+import timber.log.Timber;
 
 public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, PlaylistsTabFragment.Host, ActivityResultCallback<ActivityResult> {
 
@@ -67,11 +72,15 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                 (ViewGroup) findViewById(R.id.layout_main_tabs_holder), false);
         super.attachContentView(childView);
 
+        final TypedValue value = new TypedValue();
+        getTheme().resolveAttribute(R.attr.colorPrimary, value, true);
+        String hexColor = String.format("#%06X", (0xFFFFFF & value.data));
+        Timber.e(hexColor);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setElevation(0);
         actionBar.setTitle(getString(R.string.all_app_name));
-        //actionBar.setBackgroundDrawable();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(hexColor)));
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
         tabsLayout = findViewById(R.id.tab_layout_main);
