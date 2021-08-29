@@ -185,9 +185,4 @@
         <item name="colorSurface">?attr/colorPrimary</item>
     </style>
 
-    <style name="Theme.MusicPlayer.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
 </resources>

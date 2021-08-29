@@ -30,7 +30,7 @@
         </activity>
 
         <activity android:name="com.musicplayer.SocyMusic.ui.settings.SettingsActivity"/>
-        <activity android:name="com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity"  android:theme="@style/Theme.MusicPlayer.NoActionBar"/>
+        <activity android:name="com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity"/>
         <activity android:name="com.musicplayer.SocyMusic.ui.dir_browser.DirBrowserActivity"/>
 
         <service
