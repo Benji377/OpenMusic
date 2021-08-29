@@ -2,6 +2,7 @@ package com.musicplayer.SocyMusic.ui.main;
 
 import android.Manifest;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -41,8 +43,6 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
 
-    //private ActionBar actionBar;
-
     SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     /**
@@ -68,9 +68,10 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         super.attachContentView(childView);
 
 
-        //actionBar = getSupportActionBar();
-        //actionBar.setElevation(0);
-        //actionBar.setTitle(getString(R.string.all_app_name));
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setElevation(0);
+        actionBar.setTitle(getString(R.string.all_app_name));
+        //actionBar.setBackgroundDrawable();
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
         tabsLayout = findViewById(R.id.tab_layout_main);

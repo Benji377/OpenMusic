@@ -3,4 +3,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="grey">#C0C0C0</color>
+    <color name="colorPrimary">?colorPrimary</color>
+    <color name="colorPrimaryVariant">?colorPrimaryVariant</color>
+    <color name="colorOnPrimary">?colorOnPrimary</color>
 </resources>
