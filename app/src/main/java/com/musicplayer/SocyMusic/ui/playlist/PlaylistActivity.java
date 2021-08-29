@@ -81,7 +81,7 @@ public class PlaylistActivity extends PlayerFragmentHost implements PlaylistFrag
     }
 
     @Override
-    public void onNewPlaylist() {
+    public void onNewPlaylist(Playlist newPlaylist) {
 
     }
 
