@@ -41,8 +41,6 @@ public class PlaylistActivity extends PlayerFragmentHost implements PlaylistFrag
         };
         prefs.registerOnSharedPreferenceChangeListener(listener);
 
-        Objects.requireNonNull(getSupportActionBar()).hide();
-
         super.onCreate(savedInstanceState);
         View childView = getLayoutInflater().inflate(R.layout.content_playlist,
                 (ViewGroup) findViewById(R.id.layout_playlist_content), false);

@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- This needs to be implemented everywhere where a toolbar is needed -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?colorSurface"
+        android:titleTextColor="?colorOnSurface"
+        android:subtitleTextColor="?colorOnSurface"
+        android:elevation="4dp"/>
+
     <!--TODO: add these to TabLayout after all tabs are added and change width to wrap_content
         android:layout_gravity="center_horizontal"
         app:tabMode="scrollable"-->
