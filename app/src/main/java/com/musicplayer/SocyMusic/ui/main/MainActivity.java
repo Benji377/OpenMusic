@@ -69,7 +69,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                 (ViewGroup) findViewById(R.id.layout_main_tabs_holder), false);
         super.attachContentView(childView);
 
-        // START OF ACTIONBAR AND STATUSBAR COLOR FIX
+
         // Gets the primaryColor from the current Theme
         final TypedValue value = new TypedValue();
         getTheme().resolveAttribute(R.attr.colorSurface, value, true);
@@ -83,9 +83,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         // Instead of an actionbar, we use toolbar to simplify customisation
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.app_name);
-
-        // END OF FIX
+        toolbar.setTitle(R.string.all_app_name);
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
         tabsLayout = findViewById(R.id.tab_layout_main);
