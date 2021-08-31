@@ -93,15 +93,20 @@
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/drawable/ic_runtime.xml" value="0.2635416666666667" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/activity_main.xml" value="0.2296195652173913" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/activity_playlist.xml" value="0.2223731884057971" />
+        <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/card_item_album.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/content_playlist.xml" value="0.2033514492753623" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/dialog_new_playlist.xml" value="0.20871327254305977" />
+        <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/fragment_albums_tab.xml" value="0.1933876811594203" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/fragment_all_songs.xml" value="0.2223731884057971" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/fragment_player.xml" value="0.2296195652173913" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/fragment_playlist.xml" value="0.2151268115942029" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/fragment_playlists_tab.xml" value="0.20871327254305977" />
+        <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/list_item_all_songs.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/list_item_main.xml" value="0.20425724637681159" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/list_item_playlist.xml" value="0.20871327254305977" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/list_item_playlist_song.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/pager_item_song.xml" value="0.1933876811594203" />
+        <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/layout/pager_item_song_pane.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/menu/main.xml" value="0.24739583333333334" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/menu/playlist.xml" value="0.24375" />
         <entry key="..\:/Users/Ordem/AndroidStudioProjects/SocyMusic/app/src/main/res/xml/preferences.xml" value="0.20153985507246377" />

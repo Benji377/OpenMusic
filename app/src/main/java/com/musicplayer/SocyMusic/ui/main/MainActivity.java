@@ -151,7 +151,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                         try {
-                            songsData.reloadSongs(MainActivity.this).join();
+                            songsData.reload(MainActivity.this).join();
                             finishLoading();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -197,7 +197,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     @Override
     public void onActivityResult(ActivityResult result) {
         try {
-            songsData.reloadSongs(this).join();
+            songsData.reload(this).join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -212,7 +212,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     @Override
     public void onLibraryDirsChanged() {
         try {
-            songsData.reloadSongs(this).join();
+            songsData.reload(this).join();
             AllSongsFragment allSongsTab = (AllSongsFragment) getTabFragment(TabsPagerAdapter.ALL_SONGS_TAB);
             if(allSongsTab!=null)
                 allSongsTab.invalidateSongList();

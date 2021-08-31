@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.musicplayer.SocyMusic.custom_views.CustomRecyclerView
+        android:id="@+id/recyclerview_albums_tab_all"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp" />
+
+    <TextView
+        android:id="@+id/textview_albums_tab_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/albums_tab_list_empty"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

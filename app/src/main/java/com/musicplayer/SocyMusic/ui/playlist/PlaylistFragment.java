@@ -78,7 +78,7 @@ public class PlaylistFragment extends Fragment {
         playlistNameTextview.setText(playlist.getName());
 
         songCountTextview = view.findViewById(R.id.textview_playlist_song_count);
-        songCountTextview.setText(requireContext().getString(R.string.playlist_song_count, playlist.getSongCount()));
+        songCountTextview.setText(requireContext().getString(R.string.all_song_count, playlist.getSongCount()));
 
         totalDurationTextview = view.findViewById(R.id.textview_playlist_total_duration);
         totalDurationTextview.setText(MediaPlayerUtil.createTime(playlist.calculateTotalDuration()));
@@ -128,7 +128,7 @@ public class PlaylistFragment extends Fragment {
         playlist = newPlaylist;
         ((PlaylistSongAdapter) songsRecyclerView.getAdapter()).setSongs(playlist.getSongList());
         songsRecyclerView.getAdapter().notifyDataSetChanged();
-        songCountTextview.setText(requireContext().getString(R.string.playlist_song_count, playlist.getSongCount()));
+        songCountTextview.setText(requireContext().getString(R.string.all_song_count, playlist.getSongCount()));
         totalDurationTextview.setText(MediaPlayerUtil.createTime(playlist.calculateTotalDuration()));
 
     }

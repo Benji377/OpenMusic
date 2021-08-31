@@ -26,6 +26,7 @@ public class SongsData {
     private final AppDatabase database;
     private volatile ArrayList<Song> allSongs;
     private List<Playlist> allPlaylists;
+    private List<Album> allAlbums;
     private ArrayList<Song> playingQueue;
     private ArrayList<Song> originalQueue;
     private int playingQueueIndex;
@@ -41,7 +42,6 @@ public class SongsData {
     private SongsData(@NonNull Context context) {
         playingQueue = new ArrayList<>();
         database = Room.databaseBuilder(context, AppDatabase.class, AppDatabase.DATABASE_NAME).build();
-        reloadSongs(context);
     }
 
     /**
@@ -141,7 +141,7 @@ public class SongsData {
      * Loads all songs from the internal memory of the phone and overwrites/creates the allSongs list
      * This excludes SD-cards, USB, etc...
      */
-    public Thread reloadSongs(Context context) {
+    public Thread reload(Context context) {
         Thread reloadThread = new Thread(() -> {
             //get the saved paths from prefs
             HashSet<String> savedPaths = new HashSet<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, SocyMusicApp.defaultPathsSet));
@@ -166,8 +166,8 @@ public class SongsData {
                     continue;
                 //check if song is already in the database
                 ArrayList<Song> songsLoaded = loadSongs(file);
-                boolean isInDatabase = false;
                 for (Song newSong : songsLoaded) {
+                    boolean isInDatabase = false;
                     for (Song song : allSongs) {
                         if (newSong.getPath().equals(song.getPath())) {
                             isInDatabase = true;
@@ -181,6 +181,25 @@ public class SongsData {
                     }
                 }
             }
+            allAlbums = new ArrayList<>();
+            for (Song song : allSongs) {
+                String albumTitle = song.getAlbumTitle();
+                if (albumTitle == null)
+                    albumTitle = song.getFolderName();
+                Album album = null;
+                for (Album a : allAlbums) {
+                    if (a.getTitle().equals(albumTitle)) {
+                        album = a;
+                        break;
+                    }
+                }
+                if (album == null) {
+                    album = new Album(albumTitle, song.getAlbumArt());
+                    allAlbums.add(album);
+                }
+                album.addSong(song);
+            }
+
             //get all playlists from database
             allPlaylists = database.playlistDao().getAll();
 
@@ -447,5 +466,9 @@ public class SongsData {
         }).start();
 
 
+    }
+
+    public List<Album> getAllAlbums() {
+        return allAlbums;
     }
 }

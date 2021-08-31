@@ -5,14 +5,17 @@
     <string name="all_create">Create</string>
     <string name="all_yes">Yes</string>
     <string name="all_no">No</string>
+    <string name="all_song_count">%d Song(s)</string>
 
     <string-array name="main_tabs">
         <item>All Songs</item>
+        <item>Albums</item>
         <item>Playlists</item>
         <item>Settings</item>
         <item>Information</item>
     </string-array>
     <string name="playlist_tab_list_empty">No playlist found</string>
+    <string name="albums_tab_list_empty">No albums found</string>
     <string name="main_err_file_gone">File moved or deleted.</string>
 
     <string name="all_songs_list_empty">No songs found…</string>
@@ -43,7 +46,6 @@
 
     <string name="fragment_player_imageview_player_album_art">Song thumbnail</string>
 
-    <string name="playlist_song_count">%d Songs</string>
     <string name="playlist_empty">Playlist is empty...</string>
 
     <string name="add_to_playlist_dialog_title">Select Playlist:</string>
