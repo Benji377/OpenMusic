@@ -12,8 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?colorSurface"
-        android:titleTextColor="?colorOnSurface"
-        android:subtitleTextColor="?colorOnSurface"
+        app:titleTextColor="?colorOnSurface"
         android:elevation="4dp"/>
 
     <!--TODO: add these to TabLayout after all tabs are added and change width to wrap_content
@@ -23,8 +22,8 @@
         android:id="@+id/tab_layout_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?colorPrimary"
-        app:tabTextColor="?colorOnPrimary" />
+        android:background="?colorSurface"
+        app:tabTextColor="?colorOnSurface" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_main_tabs"

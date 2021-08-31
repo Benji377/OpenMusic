@@ -81,8 +81,10 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         window.setStatusBarColor(Color.parseColor(hexColor));
 
         // Instead of an actionbar, we use toolbar to simplify customisation
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.app_name);
+
         // END OF FIX
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);

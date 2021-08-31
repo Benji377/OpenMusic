@@ -54,11 +54,11 @@
     </style>
 
     <style name="InvertedTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
         <item name="playerBackground">@drawable/background_img_inverted_white</item>
-        <item name="backgroundColor">@color/black</item>
+        <item name="backgroundColor">@color/white</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
