@@ -3,16 +3,16 @@ package com.musicplayer.SocyMusic.data;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class Album {
+public class Album implements Serializable {
     @PrimaryKey
     @ColumnInfo(name = "album_id")
     @NonNull
@@ -22,7 +22,7 @@ public class Album {
     @ColumnInfo(name = "album_art_path")
     private String artPath;
     @Ignore
-    private List<Song> songList;
+    private ArrayList<Song> songList;
 
     public Album(@NonNull UUID id, String title, String artPath) {
         this.id = id;
@@ -64,7 +64,7 @@ public class Album {
         this.id = id;
     }
 
-    public void setSongList(List<Song> songList) {
+    public void setSongList(ArrayList<Song> songList) {
         this.songList = songList;
     }
 
@@ -76,7 +76,11 @@ public class Album {
         return songList.isEmpty();
     }
 
-    public List<Song> getSongList() {
+    public ArrayList<Song> getSongList() {
         return songList;
+    }
+
+    public Song getSongAt(int position) {
+        return songList.get(position);
     }
 }

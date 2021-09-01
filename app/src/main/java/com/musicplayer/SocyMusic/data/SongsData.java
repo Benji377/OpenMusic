@@ -261,9 +261,9 @@ public class SongsData {
                     }
                     allAlbums.add(album);
                     database.albumDao().insert(album);
-                    database.songDao().setAlbum(song.getSongId().toString(), album.getId().toString());
                     addedAlbums = true;
                 }
+                database.songDao().setAlbum(song.getSongId().toString(), album.getId().toString());
                 if (!album.containsSong(song))
                     album.addSong(song);
             }
@@ -553,6 +553,10 @@ public class SongsData {
 
     public boolean isDoneLoading() {
         return doneLoading;
+    }
+
+    public void playAlbumFrom(Album album, int position) {
+        setPlayingQueue(album.getSongList(), position);
     }
 
     public interface LoadListener {

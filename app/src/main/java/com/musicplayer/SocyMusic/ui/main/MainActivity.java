@@ -45,7 +45,7 @@ import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 
-public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
+public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
 
@@ -216,7 +216,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     }
 
     @Override
-    public void onPlaylistClick() {
+    public void onSongListClick() {
         super.unregisterMediaReceiver();
     }
 
