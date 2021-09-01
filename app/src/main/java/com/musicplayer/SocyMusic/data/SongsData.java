@@ -148,6 +148,7 @@ public class SongsData {
             //get all songs from database
             allSongs = (ArrayList<Song>) database.songDao().getAll();
             //remove any missing songs or songs no longer in the library paths
+            HashSet<String> songPaths = new HashSet<>();
             for (int i = 0; i < allSongs.size(); i++) {
                 Song song = allSongs.get(i);
                 File file = song.getFile();
@@ -157,6 +158,7 @@ public class SongsData {
                     database.playlistSongDao().removeAllSongRefs(song.getSongId().toString());
                     i--;
                 }
+                songPaths.add(song.getPath());
             }
 
             //find all songs in storage
@@ -167,15 +169,8 @@ public class SongsData {
                 //check if song is already in the database
                 ArrayList<Song> songsLoaded = loadSongs(file);
                 for (Song newSong : songsLoaded) {
-                    boolean isInDatabase = false;
-                    for (Song song : allSongs) {
-                        if (newSong.getPath().equals(song.getPath())) {
-                            isInDatabase = true;
-                            break;
-                        }
-                    }
-                    //if not, add it
-                    if (!isInDatabase) {
+                    if(!songPaths.contains(newSong.getPath()))
+                    {
                         database.songDao().insert(newSong);
                         allSongs.add(newSong);
                     }
