@@ -33,6 +33,7 @@ public class SocyMusicApp extends Application {
     public static final HashSet<String> defaultPathsSet = new HashSet<>();
 
     public static final String[] PERMISSIONS_NEEDED = {READ_EXTERNAL_STORAGE, RECORD_AUDIO};
+    public static final String APP_FOLDER_ALBUMS_ART = "albumart";
 
     /**
      * When this class gets invoked, this method gets called

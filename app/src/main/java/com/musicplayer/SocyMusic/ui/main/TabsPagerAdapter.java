@@ -13,7 +13,7 @@ import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
 public class TabsPagerAdapter extends FragmentStateAdapter {
 
     public static final long ALL_SONGS_TAB = 720290723;
-    private static final int ALBUMS_TAB = 885532984;
+    public static final int ALBUMS_TAB = 885532984;
     // private static final int ARTISTS_TAB = 2;
     public static final long PLAYLISTS_TAB = 851211671;
     public static final long SETTINGS_TAB = 736239367;

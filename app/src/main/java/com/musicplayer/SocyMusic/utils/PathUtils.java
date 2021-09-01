@@ -11,8 +11,12 @@ public class PathUtils {
         return upPath.toString();
     }
 
-    public static String getPathDown(String path, String folder) {
-        return path + folder + "/";
+    public static String getPathDown(String... paths) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(paths[0]);
+        for (int i = 1; i < paths.length; i++)
+            builder.append(paths[i]).append('/');
+        return builder.toString();
     }
 
     /**

@@ -41,4 +41,8 @@ public class AlbumsTabFragment extends Fragment {
         albumsRecyclerView.setEmptyView(emptyTextview);
         return view;
     }
+
+    public void invalidateAlbumList() {
+        albumsRecyclerView.getAdapter().notifyDataSetChanged();
+    }
 }

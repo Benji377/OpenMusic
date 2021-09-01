@@ -24,6 +24,7 @@ import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.karumi.dexter.Dexter;
@@ -33,7 +34,9 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.data.Playlist;
+import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.PlayerFragmentHost;
+import com.musicplayer.SocyMusic.ui.albums_tab.AlbumsTabFragment;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
@@ -42,11 +45,12 @@ import com.musicplayer.musicplayer.R;
 
 import java.util.List;
 
-public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult> {
+public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
 
     SharedPreferences.OnSharedPreferenceChangeListener listener;
+    private Snackbar loadingSnackbar;
 
     /**
      * Gets executed every time the app starts
@@ -146,17 +150,24 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
      * For musicplayer storage permission to find all the songs and record permission for the visualizer
      */
     public void runtimePermission() {
+        if (!SocyMusicApp.hasPermissions(MainActivity.this)) {
+            loadingSnackbar = Snackbar.make((View) getRootView(),
+                    R.string.all_loading_library,
+                    Snackbar.LENGTH_INDEFINITE);
+        }
         Dexter.withContext(this).withPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                         try {
-                            songsData.reload(MainActivity.this).join();
+                            songsData.loadFromDatabase(MainActivity.this).join();
+                            if (loadingSnackbar != null)
+                                loadingSnackbar.show();
+                            songsData.loadFromFiles(MainActivity.this);
                             finishLoading();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-//                        (new Handler()).postDelayed(this::finishLoading, 500);\
                     }
 
                     void finishLoading() {
@@ -197,7 +208,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     @Override
     public void onActivityResult(ActivityResult result) {
         try {
-            songsData.reload(this).join();
+            songsData.loadFromDatabase(this).join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -211,17 +222,48 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
 
     @Override
     public void onLibraryDirsChanged() {
-        try {
-            songsData.reload(this).join();
-            AllSongsFragment allSongsTab = (AllSongsFragment) getTabFragment(TabsPagerAdapter.ALL_SONGS_TAB);
-            if(allSongsTab!=null)
-                allSongsTab.invalidateSongList();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        loadingSnackbar = Snackbar.make((View) getRootView(),
+                R.string.all_loading_library,
+                Snackbar.LENGTH_INDEFINITE);
+        loadingSnackbar.show();
+        songsData.loadFromFiles(this);
     }
 
     private Fragment getTabFragment(long tabId) {
         return getSupportFragmentManager().findFragmentByTag("f" + tabId);
+    }
+
+    @Override
+    public void onRemovedSongs() {
+        AllSongsFragment allSongsTab = ((AllSongsFragment) getTabFragment(TabsPagerAdapter.ALL_SONGS_TAB));
+        if (allSongsTab != null)
+            allSongsTab.invalidateSongList();
+    }
+
+    @Override
+    public void onAddedSongs() {
+        AllSongsFragment allSongsTab = ((AllSongsFragment) getTabFragment(TabsPagerAdapter.ALL_SONGS_TAB));
+        if (allSongsTab != null)
+            allSongsTab.invalidateSongList();
+    }
+
+    @Override
+    public void onAddedAlbums() {
+        AlbumsTabFragment albumsTab = ((AlbumsTabFragment) getTabFragment(TabsPagerAdapter.ALBUMS_TAB));
+        if (albumsTab != null)
+            albumsTab.invalidateAlbumList();
+    }
+
+    @Override
+    public void onRemovedAlbums() {
+        AlbumsTabFragment albumsTab = ((AlbumsTabFragment) getTabFragment(TabsPagerAdapter.ALBUMS_TAB));
+        if (albumsTab != null)
+            albumsTab.invalidateAlbumList();
+    }
+
+    @Override
+    public void onLoadComplete() {
+        if (loadingSnackbar != null)
+            loadingSnackbar.dismiss();
     }
 }

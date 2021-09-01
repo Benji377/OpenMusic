@@ -1,5 +1,6 @@
 package com.musicplayer.SocyMusic.data.base;
 
+import androidx.annotation.Nullable;
 import androidx.room.TypeConverter;
 
 import java.util.UUID;
@@ -7,12 +8,14 @@ import java.util.UUID;
 public class UUIDConverter {
 
     @TypeConverter
-    public static String fromUUID(UUID uuid) {
-        return uuid.toString();
+    @Nullable
+    public static String fromUUID(@Nullable UUID uuid) {
+        return uuid == null ? null : uuid.toString();
     }
 
     @TypeConverter
-    public static UUID uuidFromString(String string) {
-        return UUID.fromString(string);
+    @Nullable
+    public static UUID uuidFromString(@Nullable String string) {
+        return string == null ? null : UUID.fromString(string);
     }
 }

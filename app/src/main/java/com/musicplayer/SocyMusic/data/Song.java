@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
@@ -16,7 +17,11 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.UUID;
 
-@Entity
+@Entity(foreignKeys = {@ForeignKey(entity = Album.class,
+        parentColumns = "album_id",
+        childColumns = "album_id",
+        onDelete = ForeignKey.SET_NULL)
+})
 public class Song implements Serializable {
     @PrimaryKey
     @ColumnInfo(name = "song_id")
@@ -25,6 +30,9 @@ public class Song implements Serializable {
     @ColumnInfo(name = "song_path")
     @NonNull
     private File file;
+    @ColumnInfo(name = "album_id")
+    @Nullable
+    private UUID albumID;
     @Ignore
     private final String title;
 
@@ -110,11 +118,11 @@ public class Song implements Serializable {
         return folders[folders.length - 2];
     }
 
-    public String getAlbumTitle() {
+    public String extractAlbumTitle() {
         return getMetaDataReciever().extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM);
     }
 
-    public Bitmap getAlbumArt() {
+    public Bitmap extractAlbumArt() {
         byte[] art = getMetaDataReciever().getEmbeddedPicture();
         if (art != null)
             return BitmapFactory.decodeByteArray(art, 0, art.length);
@@ -125,5 +133,14 @@ public class Song implements Serializable {
         MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();
         metadataRetriever.setDataSource(getPath());
         return metadataRetriever;
+    }
+
+    @Nullable
+    public UUID getAlbumID() {
+        return albumID;
+    }
+
+    public void setAlbumID(@Nullable UUID albumID) {
+        this.albumID = albumID;
     }
 }

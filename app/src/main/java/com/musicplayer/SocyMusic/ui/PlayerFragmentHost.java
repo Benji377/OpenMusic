@@ -142,7 +142,7 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
     }
 
     @Override
-    public void onLoadComplete() {
+    public void onPlayerLoadComplete() {
         InfoPanePagerAdapter customAdapter = new InfoPanePagerAdapter(this, songsData.getPlayingQueue());
         customAdapter.setPaneListeners(new InfoPanePagerAdapter.PaneListeners() {
             @Override

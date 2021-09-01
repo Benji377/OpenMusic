@@ -16,6 +16,8 @@
         <item name="android:textColorSecondary">@color/grey</item>
         <item name="colorSurface">?attr/colorPrimary</item>
         <item name="colorOnSurface">?attr/colorOnPrimary</item>
+        <item name="snackbarStyle">@style/MySnackBarStyle</item>
+        <item name="snackbarTextViewStyle">@style/MySnackBarTextStyle</item>
     </style>
 
     <!-- Themes for every background so far. Changes the colors of the app! -->
@@ -194,6 +196,14 @@
         <item name="android:textColorSecondary">@color/grey</item>
         <item name="colorSurface">?attr/colorPrimary</item>
         <item name="colorOnSurface">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="MySnackBarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <style name="MySnackBarTextStyle" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">?attr/colorAccent</item>
     </style>
 
 </resources>
