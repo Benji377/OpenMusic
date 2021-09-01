@@ -1,5 +1,6 @@
 # SocyMusic
 [![GitHub issues](https://img.shields.io/github/issues/Benji377/SocyMusic)](https://github.com/Benji377/SocyMusic/issues) [![GitHub forks](https://img.shields.io/github/forks/Benji377/SocyMusic)](https://github.com/Benji377/SocyMusic/network) [![GitHub stars](https://img.shields.io/github/stars/Benji377/SocyMusic)](https://github.com/Benji377/SocyMusic/stargazers) [![GitHub license](https://img.shields.io/github/license/Benji377/SocyMusic)](https://github.com/Benji377/SocyMusic/blob/main/LICENSE)
+![GitHub all releases](https://img.shields.io/github/downloads/Benji377/SocyMusic/total)
 
 
 SocyMusic is an open-source Android music player written entirely in Java. It's objectives are to provide top-quality music to everyone for free without any ads. It will also offer a great way to exchange music from device to device all by staying completely offline. 

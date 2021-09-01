@@ -32,7 +32,7 @@
     <string name="fragment_player_imageview_player_album_art">Miniatura della canzone</string>
 
     <string-array name="themeOptions">
-        <item>Inverso</item>
+        <item>Inverso (Esperimentale)</item>
         <item>Rosso</item>
         <item>Blu</item>
         <item>Verde</item>

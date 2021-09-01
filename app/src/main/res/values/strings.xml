@@ -62,7 +62,7 @@
     <string name="all_reloading_library">Reloading Songs...</string>
 
     <string-array name="themeOptions">
-        <item>Inverted</item>
+        <item>Inverted (Experimental)</item>
         <item>Red</item>
         <item>Blue</item>
         <item>Green</item>
