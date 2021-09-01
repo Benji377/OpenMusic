@@ -1,8 +1,10 @@
 package com.musicplayer.SocyMusic.ui.settings;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -37,17 +39,19 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         libPathPreference = findPreference(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS);
         themePreference = findPreference(SocyMusicApp.PREFS_KEY_THEME);
         versions = findPreference(SocyMusicApp.PREFS_KEY_VERSION);
+
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            hostCallBack.onLibraryDirsChanged();
+            if (result.getResultCode() == Activity.RESULT_OK)
+                hostCallBack.onLibraryDirsChanged();
         });
-        libPathPreference.setIntent(new Intent(getContext(), DirBrowserActivity.class));
-        libPathPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent(getContext(), DirBrowserActivity.class);
-                launcher.launch(intent);
-                return true;
+        libPathPreference.setOnPreferenceClickListener(preference -> {
+            if (!songsData.isDoneLoading()) {
+                Toast.makeText(requireContext(), R.string.settings_cannot_change_lib, Toast.LENGTH_SHORT).show();
+                return false;
             }
+            Intent intent = new Intent(getContext(), DirBrowserActivity.class);
+            launcher.launch(intent);
+            return true;
         });
         versions.setSummary(getString(R.string.about_version, BuildConfig.VERSION_NAME));
     }

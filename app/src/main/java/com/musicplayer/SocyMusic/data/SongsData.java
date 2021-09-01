@@ -39,6 +39,7 @@ public class SongsData {
     private int playingQueueIndex;
     private boolean repeat;
     private boolean shuffle;
+    private boolean doneLoading;
 
     public static final UUID FAVORITES_PLAYLIST_ID = UUID.fromString("3a47e9a7-7cb6-4b47-8b98-7ee7d4b865f0");
 
@@ -180,6 +181,7 @@ public class SongsData {
     }
 
     public <T extends Activity & LoadListener> Thread loadFromFiles(T activity) {
+        doneLoading = false;
         Thread loadThread = new Thread(() -> {
             HashSet<Integer> removedSongIndices = new HashSet<>();
             boolean removedSongs, addedSongs, addedAlbums, changedAlbums, removedAlbums;
@@ -543,6 +545,14 @@ public class SongsData {
 
     public List<Album> getAllAlbums() {
         return allAlbums;
+    }
+
+    public void setDoneLoading(boolean doneLoading) {
+        this.doneLoading = doneLoading;
+    }
+
+    public boolean isDoneLoading() {
+        return doneLoading;
     }
 
     public interface LoadListener {

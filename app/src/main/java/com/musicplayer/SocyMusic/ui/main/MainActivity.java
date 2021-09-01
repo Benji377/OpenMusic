@@ -223,7 +223,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     @Override
     public void onLibraryDirsChanged() {
         loadingSnackbar = Snackbar.make((View) getRootView(),
-                R.string.all_loading_library,
+                R.string.all_reloading_library,
                 Snackbar.LENGTH_INDEFINITE);
         loadingSnackbar.show();
         songsData.loadFromFiles(this);
@@ -265,5 +265,6 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     public void onLoadComplete() {
         if (loadingSnackbar != null)
             loadingSnackbar.dismiss();
+        songsData.setDoneLoading(true);
     }
 }
