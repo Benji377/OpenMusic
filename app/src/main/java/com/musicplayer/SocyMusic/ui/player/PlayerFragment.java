@@ -82,7 +82,7 @@ public class PlayerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_player, container, false);
 
         songPager = new CustomViewPager2(view.findViewById(R.id.viewpager_player_song));
-
+        songPager.disableNestedScrolling();
         // Adds all buttons previously declared above
         previousSongButton = view.findViewById(R.id.button_player_prev);
         nextSongButton = view.findViewById(R.id.button_player_next);

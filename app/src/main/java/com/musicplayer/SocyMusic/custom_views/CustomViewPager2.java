@@ -2,16 +2,19 @@ package com.musicplayer.SocyMusic.custom_views;
 
 
 import android.os.Handler;
+import android.view.View;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
+
 /**
  * A custom ViewPager2 class that can scroll without triggering ViewPager2.OnPageChangeCallBack
  * with the method scrollByCode(). This is to distinguish between when the user changes page
  * a page change happens programmatically.
  * Does not extend ViewPager2 because it's final.
  * Thanks, Google :(
- * */
+ */
 public class CustomViewPager2 {
     private final ViewPager2 viewPager2;
     private ViewPager2.OnPageChangeCallback onPageChange;
@@ -63,5 +66,13 @@ public class CustomViewPager2 {
 
     public void setOnPageChange(ViewPager2.OnPageChangeCallback onPageChange) {
         this.onPageChange = onPageChange;
+    }
+
+    public void disableNestedScrolling() {
+        RecyclerView innerRecyclerView = (RecyclerView) this.viewPager2.getChildAt(0);
+        if (innerRecyclerView != null) {
+            innerRecyclerView.setNestedScrollingEnabled(false);
+            innerRecyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        }
     }
 }
