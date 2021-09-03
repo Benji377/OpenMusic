@@ -48,7 +48,7 @@
 
     <!-- Do not change the name of these, they are used in code -->
     <string-array name="themeValues">
-        <item>Inverted_theme</item>
+        <item>Inverted_theme (Experimentell)</item>
         <item>Red_theme</item>
         <item>Blue_theme</item>
         <item>Green_theme</item>

@@ -19,3 +19,4 @@ This is the documentation for the Android music player SocyMusic. Check us out o
     - [License](./other/#license)
     - [Conventions](./other/#conventions)
     - [Contact](./other/#contact)
+- [FAQ](./faq)
