@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -57,7 +56,7 @@ public class PlaylistsTabFragment extends Fragment {
                 Intent intent = new Intent(requireContext(), PlaylistActivity.class);
                 intent.putExtra(PlaylistActivity.EXTRA_PLAYLIST, songsData.getAllPlaylists().get(position));
                 intent.putExtra(PlaylistActivity.EXTRA_SHOW_PLAYER, hostCallback.isShowingPlayer());
-                hostCallback.onPlaylistClick();
+                hostCallback.onSongListClick();
                 launcher.launch(intent);
             }
 
@@ -124,7 +123,7 @@ public class PlaylistsTabFragment extends Fragment {
 
         void onQueueChanged();
 
-        void onPlaylistClick();
+        void onSongListClick();
 
     }
 }

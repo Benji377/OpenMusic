@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3378721108eb991ab1d1b2a6e2794550",
+    "identityHash": "e2f5a5ae56f66080244a176a1a223339",
     "entities": [
       {
         "tableName": "Song",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`song_id` TEXT NOT NULL, `song_path` TEXT NOT NULL, PRIMARY KEY(`song_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`song_id` TEXT NOT NULL, `song_path` TEXT NOT NULL, `album_id` TEXT, PRIMARY KEY(`song_id`), FOREIGN KEY(`album_id`) REFERENCES `Album`(`album_id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
         "fields": [
           {
             "fieldPath": "songId",
@@ -19,6 +19,12 @@
             "columnName": "song_path",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "albumID",
+            "columnName": "album_id",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -28,7 +34,19 @@
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "Album",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "album_id"
+            ],
+            "referencedColumns": [
+              "album_id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "Playlist",
@@ -57,8 +75,40 @@
         "foreignKeys": []
       },
       {
+        "tableName": "Album",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album_id` TEXT NOT NULL, `album_title` TEXT, `album_art_path` TEXT, PRIMARY KEY(`album_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "album_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "album_title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "artPath",
+            "columnName": "album_art_path",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "album_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
         "tableName": "Playlist_Song",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`playlist_id` TEXT NOT NULL, `song_id` TEXT NOT NULL, `song_index` INTEGER NOT NULL, PRIMARY KEY(`playlist_id`, `song_id`, `song_index`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`playlist_id` TEXT NOT NULL, `song_id` TEXT NOT NULL, `song_index` INTEGER NOT NULL, PRIMARY KEY(`playlist_id`, `song_id`, `song_index`), FOREIGN KEY(`playlist_id`) REFERENCES `Playlist`(`playlist_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`song_id`) REFERENCES `Song`(`song_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "playlistID",
@@ -88,13 +138,36 @@
           "autoGenerate": false
         },
         "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "Playlist",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "playlist_id"
+            ],
+            "referencedColumns": [
+              "playlist_id"
+            ]
+          },
+          {
+            "table": "Song",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "song_id"
+            ],
+            "referencedColumns": [
+              "song_id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3378721108eb991ab1d1b2a6e2794550')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e2f5a5ae56f66080244a176a1a223339')"
     ]
   }
 }

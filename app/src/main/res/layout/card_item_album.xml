@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/main_list_background"
+    android:orientation="vertical"
+    android:paddingVertical="8dp"
+    tools:ignore="UseCompoundDrawables">
+
+    <ImageView
+        android:id="@+id/imageview_album_card_art"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/music_combined" />
+
+    <TextView
+        android:id="@+id/textview_album_card_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:text="Album Title"
+        android:textAlignment="center"
+        android:textColor="?colorOnPrimary"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textview_album_card_song_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:singleLine="true"
+        android:text="0 Song(s)"
+        android:textAlignment="center"
+        android:textColor="?colorOnPrimary"
+        android:textSize="12sp"
+        tools:ignore="HardcodedText" />
+
+</LinearLayout>

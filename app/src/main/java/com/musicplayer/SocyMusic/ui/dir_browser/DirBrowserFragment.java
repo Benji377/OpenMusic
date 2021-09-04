@@ -1,5 +1,6 @@
 package com.musicplayer.SocyMusic.ui.dir_browser;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,16 +38,16 @@ public class DirBrowserFragment extends Fragment {
     private String currentAbsolutePath;
     private boolean isAtRoot;
     private Set<String> savedPaths;
-    private SongsData songsData;
+    private Set<String> initialSavedPaths;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        songsData = SongsData.getInstance(getContext());
         rootDirs = getRootDirs();
         currentAbsolutePath = PathUtils.getPathUp(rootDirs[0].getAbsolutePath());
         isAtRoot = true;
         savedPaths = new HashSet<>(PreferenceManager.getDefaultSharedPreferences(requireContext()).getStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, SocyMusicApp.defaultPathsSet));
+        initialSavedPaths = new HashSet<>(savedPaths);
     }
 
     @Nullable
@@ -142,9 +143,11 @@ public class DirBrowserFragment extends Fragment {
     }
 
     protected void onBackPressed() {
-        if (isAtRoot)
-            requireActivity().finish();
-        else {
+        if (isAtRoot) {
+            Activity hostActivity=requireActivity();
+            hostActivity.setResult(hasChangedLibrary() ? Activity.RESULT_OK : Activity.RESULT_CANCELED);
+            hostActivity.finish();
+        } else {
             symPathTextView.setText(PathUtils.getPathUp((String) symPathTextView.getText()));
             currentAbsolutePath = PathUtils.getPathUp(currentAbsolutePath);
             isAtRoot = symPathTextView.getText().equals("/");
@@ -162,8 +165,6 @@ public class DirBrowserFragment extends Fragment {
             adapter.notifyDataSetChanged();
         }
     }
-
-
 
 
     private File[] getRootDirs() {
@@ -195,6 +196,7 @@ public class DirBrowserFragment extends Fragment {
                 .apply();
     }
 
-
-
+    public boolean hasChangedLibrary() {
+        return !savedPaths.equals(initialSavedPaths);
+    }
 }

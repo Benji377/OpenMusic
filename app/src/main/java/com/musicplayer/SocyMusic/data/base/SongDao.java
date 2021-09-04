@@ -25,4 +25,7 @@ public interface SongDao {
 
     @Delete
     void delete(Song song);
+
+    @Query("UPDATE Song SET album_id=:albumId WHERE song_id=:songID")
+    void setAlbum(String songID, String albumId);
 }

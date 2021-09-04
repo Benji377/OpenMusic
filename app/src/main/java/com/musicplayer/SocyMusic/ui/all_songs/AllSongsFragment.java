@@ -53,7 +53,7 @@ public class AllSongsFragment extends Fragment {
                 if (!songsData.songExists(position)) {
                     Toast.makeText(requireContext(), getText(R.string.main_err_file_gone), Toast.LENGTH_LONG).show();
                     try {
-                        songsData.reloadSongs(requireContext()).join();
+                        songsData.loadFromDatabase(requireContext()).join();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

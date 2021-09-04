@@ -1,6 +1,9 @@
 package com.musicplayer.SocyMusic.data;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
@@ -13,6 +16,8 @@ import com.musicplayer.SocyMusic.utils.PathUtils;
 import com.musicplayer.musicplayer.R;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,17 +25,21 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
+import timber.log.Timber;
+
 
 public class SongsData {
     public static SongsData data;
     private final AppDatabase database;
     private volatile ArrayList<Song> allSongs;
     private List<Playlist> allPlaylists;
+    private List<Album> allAlbums;
     private ArrayList<Song> playingQueue;
     private ArrayList<Song> originalQueue;
     private int playingQueueIndex;
     private boolean repeat;
     private boolean shuffle;
+    private boolean doneLoading;
 
     public static final UUID FAVORITES_PLAYLIST_ID = UUID.fromString("3a47e9a7-7cb6-4b47-8b98-7ee7d4b865f0");
 
@@ -41,7 +50,6 @@ public class SongsData {
     private SongsData(@NonNull Context context) {
         playingQueue = new ArrayList<>();
         database = Room.databaseBuilder(context, AppDatabase.class, AppDatabase.DATABASE_NAME).build();
-        reloadSongs(context);
     }
 
     /**
@@ -141,46 +149,18 @@ public class SongsData {
      * Loads all songs from the internal memory of the phone and overwrites/creates the allSongs list
      * This excludes SD-cards, USB, etc...
      */
-    public Thread reloadSongs(Context context) {
-        Thread reloadThread = new Thread(() -> {
-            //get the saved paths from prefs
-            HashSet<String> savedPaths = new HashSet<>(PreferenceManager.getDefaultSharedPreferences(context).getStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS, SocyMusicApp.defaultPathsSet));
+    public Thread loadFromDatabase(Context context) {
+        Thread loadThread = new Thread(() -> {
+
             //get all songs from database
             allSongs = (ArrayList<Song>) database.songDao().getAll();
-            //remove any missing songs or songs no longer in the library paths
-            for (int i = 0; i < allSongs.size(); i++) {
-                Song song = allSongs.get(i);
-                File file = song.getFile();
-                if (!file.exists() || !file.canRead() || !PathUtils.isSubDirOfAny(file.getAbsolutePath(), savedPaths)) {
-                    allSongs.remove(song);
-                    database.songDao().delete(song);
-                    database.playlistSongDao().removeAllSongRefs(song.getSongId().toString());
-                    i--;
-                }
-            }
 
-            //find all songs in storage
-            for (String path : savedPaths) {
-                File file = new File(path);
-                if (!file.exists() || !file.canRead())
-                    continue;
-                //check if song is already in the database
-                ArrayList<Song> songsLoaded = loadSongs(file);
-                boolean isInDatabase = false;
-                for (Song newSong : songsLoaded) {
-                    for (Song song : allSongs) {
-                        if (newSong.getPath().equals(song.getPath())) {
-                            isInDatabase = true;
-                            break;
-                        }
-                    }
-                    //if not, add it
-                    if (!isInDatabase) {
-                        database.songDao().insert(newSong);
-                        allSongs.add(newSong);
-                    }
-                }
-            }
+            allAlbums = database.albumDao().getAll();
+
+            //lazy solution to querying into songList problem
+            for (Album album : allAlbums)
+                album.setSongList((ArrayList<Song>) database.albumDao().getSongs(album.getId().toString()));
+
             //get all playlists from database
             allPlaylists = database.playlistDao().getAll();
 
@@ -194,10 +174,126 @@ public class SongsData {
                 database.playlistDao().insert(favorites);
             }
 
-        }, "reloadThread");
-        reloadThread.start();
-        return reloadThread;
+        }, "loadFromDatabaseThread");
+        loadThread.start();
+        return loadThread;
 
+    }
+
+    public <T extends Activity & LoadListener> Thread loadFromFiles(T activity) {
+        doneLoading = false;
+        Thread loadThread = new Thread(() -> {
+            HashSet<Integer> removedSongIndices = new HashSet<>();
+            boolean removedSongs, addedSongs, addedAlbums, changedAlbums, removedAlbums;
+            removedSongs = addedSongs = addedAlbums = changedAlbums = removedAlbums = false;
+            //get the saved paths from prefs
+            HashSet<String> savedPaths = new HashSet<>(
+                    PreferenceManager.getDefaultSharedPreferences(activity)
+                            .getStringSet(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS,
+                                    SocyMusicApp.defaultPathsSet));
+
+            HashSet<String> songPaths = new HashSet<>();
+            //remove any missing songs or songs no longer in the library paths
+            for (int i = 0; i < allSongs.size(); i++) {
+                Song song = allSongs.get(i);
+                File file = song.getFile();
+                if (!file.exists() || !file.canRead() || !PathUtils.isSubDirOfAny(file.getAbsolutePath(), savedPaths)) {
+                    allSongs.remove(song);
+                    database.songDao().delete(song);
+                    database.playlistSongDao().removeAllSongRefs(song.getSongId().toString());
+                    i--;
+                    removedSongs = true;
+                } else
+                    songPaths.add(song.getPath());
+            }
+            if (removedSongs)
+                activity.runOnUiThread(activity::onRemovedSongs);
+            //find all songs in storage
+            for (String path : savedPaths) {
+                File file = new File(path);
+                if (!file.exists() || !file.canRead())
+                    continue;
+                //check if song is already in the database
+                ArrayList<Song> songsLoaded = loadSongs(file);
+                for (Song newSong : songsLoaded) {
+                    if (!songPaths.contains(newSong.getPath())) {
+                        database.songDao().insert(newSong);
+                        allSongs.add(newSong);
+                        addedSongs = true;
+                    }
+                }
+            }
+
+            if (addedSongs)
+                activity.runOnUiThread(activity::onAddedSongs);
+
+            File artFolder = new File(PathUtils.getPathDown(
+                    activity.getFilesDir().getAbsolutePath(),
+                    SocyMusicApp.APP_FOLDER_ALBUMS_ART));
+            if (!artFolder.exists())
+                artFolder.mkdir();
+            //add all albums from songs found
+            for (Song song : allSongs) {
+                String albumTitle = song.extractAlbumTitle();
+                if (albumTitle == null)
+                    albumTitle = song.getFolderName();
+                Album album = null;
+                for (Album a : allAlbums) {
+                    if (a.getTitle().equals(albumTitle)) {
+                        album = a;
+                        break;
+                    }
+                }
+                if (album == null) {
+                    album = new Album(UUID.randomUUID(), albumTitle, null);
+                    //save album art
+                    String artPath = PathUtils.getPathDown(
+                            artFolder.getAbsolutePath(),
+                            album.getId().toString());
+                    try (FileOutputStream out = new FileOutputStream(artPath)) {
+                        Bitmap albumArt = song.extractAlbumArt();
+                        if (albumArt != null) {
+                            albumArt.compress(Bitmap.CompressFormat.PNG, 100, out);
+                            album.setArtPath(artPath);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    allAlbums.add(album);
+                    database.albumDao().insert(album);
+                    addedAlbums = true;
+                }
+                database.songDao().setAlbum(song.getSongId().toString(), album.getId().toString());
+                if (!album.containsSong(song))
+                    album.addSong(song);
+            }
+            if (addedAlbums)
+                activity.runOnUiThread(activity::onAddedAlbums);
+            for (int i = 0; i < allAlbums.size(); i++) {
+                Album album = allAlbums.get(i);
+                for (int j = 0; j < album.getSongList().size(); j++) {
+                    Song song = album.getSongList().get(j);
+                    if (!song.getFile().exists() || !song.getFile().canRead() || !PathUtils.isSubDirOfAny(song.getPath(), savedPaths)) {
+                        album.getSongList().remove(j);
+                        j--;
+                        changedAlbums = true;
+                    }
+                }
+                if (album.isEmpty()) {
+                    database.albumDao().delete(album);
+                    allAlbums.remove(i);
+                    i--;
+                    removedAlbums = true;
+                }
+            }
+            if (changedAlbums || removedAlbums)
+                activity.runOnUiThread(activity::onRemovedAlbums);
+            Timber.i("Done loading from files - removedSongs:%s, addedSongs: %s, addedAlbums: %s, changedAlbums: %s, removedAlbums: %s",
+                    removedSongs, addedSongs, addedAlbums, changedAlbums, removedAlbums);
+            activity.runOnUiThread(activity::onLoadComplete);
+        }, "loadFromDatabaseThread");
+        loadThread.start();
+        return loadThread;
     }
 
     /**
@@ -445,7 +541,33 @@ public class SongsData {
             database.playlistDao().delete(playlistToDelete);
             database.playlistSongDao().deletePlaylist(playlistToDelete.getId().toString());
         }).start();
+    }
 
+    public List<Album> getAllAlbums() {
+        return allAlbums;
+    }
 
+    public void setDoneLoading(boolean doneLoading) {
+        this.doneLoading = doneLoading;
+    }
+
+    public boolean isDoneLoading() {
+        return doneLoading;
+    }
+
+    public void playAlbumFrom(Album album, int position) {
+        setPlayingQueue(album.getSongList(), position);
+    }
+
+    public interface LoadListener {
+        void onRemovedSongs();
+
+        void onAddedSongs();
+
+        void onAddedAlbums();
+
+        void onRemovedAlbums();
+
+        void onLoadComplete();
     }
 }

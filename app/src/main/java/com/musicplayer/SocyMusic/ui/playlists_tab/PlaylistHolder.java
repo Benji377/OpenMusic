@@ -25,7 +25,7 @@ public class PlaylistHolder extends RecyclerView.ViewHolder {
 
     public void bind(Playlist playlist) {
         playlistTitleTextView.setText(playlist.getName());
-        songCountTextView.setText(itemView.getContext().getString(R.string.playlist_song_count, playlist.getSongCount()));
+        songCountTextView.setText(itemView.getContext().getString(R.string.all_song_count, playlist.getSongCount()));
     }
 
 }

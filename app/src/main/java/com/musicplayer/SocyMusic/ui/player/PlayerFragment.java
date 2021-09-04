@@ -259,7 +259,7 @@ public class PlayerFragment extends Fragment {
             public void onGlobalLayout() {
                 view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 // Notify hosting activity that load is complete
-                hostCallBack.onLoadComplete();
+                hostCallBack.onPlayerLoadComplete();
             }
         });
         return view;
@@ -418,7 +418,7 @@ public class PlayerFragment extends Fragment {
      */
     public interface Host {
         //callback methods
-        void onLoadComplete();
+        void onPlayerLoadComplete();
 
         void onPlaybackUpdate();
 
