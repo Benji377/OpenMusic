@@ -117,9 +117,12 @@
         <entry key="..\:/Users/tech.assistant2/Desktop/Benji/git/SocyMusic/app/src/main/res/layout/preferences.xml" value="0.15104166666666666" />
         <entry key="..\:/Users/tech.assistant2/Desktop/Benji/git/SocyMusic/app/src/main/res/layout/preferences_category.xml" value="0.15104166666666666" />
         <entry key="..\:/Users/tech.assistant2/Desktop/Benji/git/SocyMusic/app/src/main/res/xml/preferences.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.19427083333333334" />
+        <entry key="app/src/main/res/xml/preferences.xml" value="0.19427083333333334" />
       </map>
     </option>
   </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="org.jetbrains.annotations.Nullable" />
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />

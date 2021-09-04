@@ -21,6 +21,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private Preference themePreference;
     private Preference libPathPreference;
     private Preference versions;
+    private Preference logging;
 
     private SongsData songsData;
     private Host hostCallBack;
@@ -37,6 +38,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         libPathPreference = findPreference(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS);
         themePreference = findPreference(SocyMusicApp.PREFS_KEY_THEME);
         versions = findPreference(SocyMusicApp.PREFS_KEY_VERSION);
+        logging = findPreference(SocyMusicApp.PREFS_KEY_LOGGING);
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             hostCallBack.onLibraryDirsChanged();
         });
