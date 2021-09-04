@@ -22,6 +22,18 @@
             android:entries="@array/themeOptions"
             android:entryValues="@array/themeValues"/>
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Debugging"
+        app:key="logging_category"
+        android:icon="@drawable/ic_queue">
+        <SwitchPreference
+            app:key="logging"
+            app:summary="Enable saving log files for debugging"
+            app:title="Logs"
+            app:defaultValue="true"/>
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/main_menu_item_about"
         app:key="about"
