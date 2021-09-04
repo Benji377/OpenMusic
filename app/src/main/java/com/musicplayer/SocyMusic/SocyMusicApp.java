@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat;
 
 import com.musicplayer.musicplayer.R;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 
 import timber.log.Timber;
@@ -44,6 +46,35 @@ public class SocyMusicApp extends Application {
         Timber.plant(new Timber.DebugTree());
         createNotificationChannels();
         defaultPathsSet.add(Environment.getExternalStorageDirectory().getAbsolutePath());
+
+        // Saves logcat output to a textfile!
+        if (isExternalStorageWritable()) {
+            File appDirectory = new File( Environment.getExternalStorageDirectory() + "/SocyMusic" );
+            File logDirectory = new File( appDirectory + "/logs" );
+            File logFile = new File(logDirectory, "logcat_" + System.currentTimeMillis() + ".txt" );
+
+            // create app folder
+            if (!appDirectory.exists() ) {
+                appDirectory.mkdir();
+            }
+
+            // create log folder
+            if (!logDirectory.exists() ) {
+                logDirectory.mkdir();
+            }
+
+            // clear the previous logcat and then write the new one to the file
+            try {
+                Process process = Runtime.getRuntime().exec("logcat -c");
+                process = Runtime.getRuntime().exec("logcat -f " + logFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if ( isExternalStorageReadable() ) {
+            Timber.e("Storage only readable");
+        } else {
+            Timber.e("Storage not accessible");
+        }
     }
 
     /**
@@ -70,6 +101,19 @@ public class SocyMusicApp extends Application {
         for (String permission : PERMISSIONS_NEEDED)
             allGranted = allGranted && ContextCompat.checkSelfPermission(context, permission) == PERMISSION_GRANTED;
         return allGranted;
+    }
+
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 
 }
