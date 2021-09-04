@@ -26,7 +26,7 @@
     <PreferenceCategory
         android:title="Debugging"
         app:key="logging_category"
-        android:icon="@drawable/ic_queue">
+        android:icon="@drawable/ic_bug_report">
         <SwitchPreference
             app:key="logging"
             app:summary="Enable saving log files for debugging"

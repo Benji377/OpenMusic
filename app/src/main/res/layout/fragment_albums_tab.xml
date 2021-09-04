@@ -16,6 +16,7 @@
         android:layout_gravity="center"
         android:text="@string/albums_tab_list_empty"
         android:textAlignment="center"
+        android:textColor="?colorPrimary"
         android:textSize="24sp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
