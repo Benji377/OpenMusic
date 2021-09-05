@@ -24,6 +24,6 @@ public class AlbumSongHolder extends RecyclerView.ViewHolder {
 
     public void bind(Song song) {
         songTitleTextView.setText(song.getTitle());
-        songLengthTextView.setText(MediaPlayerUtil.createTime(song.getDuration()));
+        songLengthTextView.setText(MediaPlayerUtil.createTime(song.extractDuration()));
     }
 }

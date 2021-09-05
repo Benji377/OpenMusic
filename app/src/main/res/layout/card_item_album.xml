@@ -7,7 +7,7 @@
     android:layout_margin="5dp"
     android:background="@drawable/main_list_background"
     android:orientation="vertical"
-    android:paddingVertical="8dp"
+    android:paddingBottom="8dp"
     tools:ignore="UseCompoundDrawables">
 
     <ImageView
@@ -15,7 +15,8 @@
         android:layout_width="175dp"
         android:layout_height="175dp"
         android:layout_gravity="center"
-        app:srcCompat="@drawable/music_combined" />
+        app:srcCompat="@drawable/music_combined"
+        android:contentDescription="@string/all_album_art_desc" />
 
     <TextView
         android:id="@+id/textview_album_card_title"

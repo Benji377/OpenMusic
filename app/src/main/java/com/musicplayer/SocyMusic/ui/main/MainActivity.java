@@ -49,7 +49,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     private TabLayout tabsLayout;
 
     SharedPreferences.OnSharedPreferenceChangeListener listener;
-    private Snackbar loadingSnackbar;
+    private Snackbar loadingSnackBar;
 
     /**
      * Gets executed every time the app starts
@@ -70,9 +70,8 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         prefs.registerOnSharedPreferenceChangeListener(listener);
 
         View childView = getLayoutInflater().inflate(R.layout.content_main,
-                (ViewGroup) findViewById(R.id.layout_main_tabs_holder), false);
+                findViewById(R.id.layout_main_tabs_holder), false);
         super.attachContentView(childView);
-
 
         // Gets the primaryColor from the current Theme
         final TypedValue value = new TypedValue();
@@ -85,9 +84,10 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         window.setStatusBarColor(Color.parseColor(hexColor));
 
         // Instead of an actionbar, we use toolbar to simplify customisation
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.all_app_name);
+        toolbar.setElevation(0);
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
         tabsLayout = findViewById(R.id.tab_layout_main);
@@ -147,7 +147,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
      */
     public void runtimePermission() {
         if (!SocyMusicApp.hasPermissions(MainActivity.this)) {
-            loadingSnackbar = Snackbar.make((View) getRootView(),
+            loadingSnackBar = Snackbar.make(getRootView(),
                     R.string.all_loading_library,
                     Snackbar.LENGTH_INDEFINITE);
         }
@@ -157,8 +157,8 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                     public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                         try {
                             songsData.loadFromDatabase(MainActivity.this).join();
-                            if (loadingSnackbar != null)
-                                loadingSnackbar.show();
+                            if (loadingSnackBar != null)
+                                loadingSnackBar.show();
                             songsData.loadFromFiles(MainActivity.this);
                             finishLoading();
                         } catch (InterruptedException e) {
@@ -218,10 +218,10 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
 
     @Override
     public void onLibraryDirsChanged() {
-        loadingSnackbar = Snackbar.make((View) getRootView(),
+        loadingSnackBar = Snackbar.make(getRootView(),
                 R.string.all_reloading_library,
                 Snackbar.LENGTH_INDEFINITE);
-        loadingSnackbar.show();
+        loadingSnackBar.show();
         songsData.loadFromFiles(this);
     }
 
@@ -259,8 +259,8 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
 
     @Override
     public void onLoadComplete() {
-        if (loadingSnackbar != null)
-            loadingSnackbar.dismiss();
+        if (loadingSnackBar != null)
+            loadingSnackBar.dismiss();
         songsData.setDoneLoading(true);
     }
 }
