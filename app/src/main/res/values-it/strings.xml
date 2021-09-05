@@ -29,7 +29,7 @@
     <string name="prefs_summery_theme">Scegli i colori primari della tua app</string>
     <string name="prefs_title_theme">Tema</string>
 
-    <string name="fragment_player_imageview_player_album_art">Miniatura della canzone</string>
+    <string name="all_album_art_desc">Miniatura della canzone</string>
 
     <string-array name="themeOptions">
         <item>Inverso (Esperimentale)</item>

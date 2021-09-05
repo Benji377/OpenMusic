@@ -42,10 +42,9 @@ public class AlbumActivity extends PlayerFragmentHost implements AlbumFragment.H
         };
         prefs.registerOnSharedPreferenceChangeListener(listener);
 
-        Objects.requireNonNull(getSupportActionBar()).hide();
         super.onCreate(savedInstanceState);
         View childView = getLayoutInflater().inflate(R.layout.content_album,
-                (ViewGroup) findViewById(R.id.layout_album_content), false);
+                findViewById(R.id.layout_album_content), false);
         super.attachContentView(childView);
         album = (Album) getIntent().getExtras().getSerializable(EXTRA_ALBUM);
         boolean showPlayer = getIntent().getExtras().getBoolean(EXTRA_SHOW_PLAYER);

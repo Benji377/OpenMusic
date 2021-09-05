@@ -101,10 +101,11 @@ public class Song implements Serializable {
         return ((Song) obj).getSongId().equals(this.getSongId());
     }
 
-    public int getDuration() {
+    public int extractDuration() {
         return Integer.parseInt(getMetaDataReciever().extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
     }
 
+    @NonNull
     public UUID getSongId() {
         return songId;
     }

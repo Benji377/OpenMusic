@@ -29,7 +29,7 @@
     <string name="prefs_summery_theme">Wählen Sie die Primärfarben Ihrer App</string>
     <string name="prefs_title_theme">Thema</string>
 
-    <string name="fragment_player_imageview_player_album_art">Song-Miniaturansicht</string>
+    <string name="all_album_art_desc">Song-Miniaturansicht</string>
 
     <string-array name="themeOptions">
         <item>Umgedreht</item>

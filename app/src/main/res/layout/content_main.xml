@@ -4,7 +4,8 @@
     android:id="@+id/layout_main_tabs_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <!-- This needs to be implemented everywhere where a toolbar is needed -->
     <androidx.appcompat.widget.Toolbar
@@ -15,15 +16,16 @@
         app:titleTextColor="?colorOnSurface"
         android:elevation="4dp"/>
 
-    <!--TODO: add these to TabLayout after all tabs are added and change width to wrap_content
-        android:layout_gravity="center_horizontal"
-        app:tabMode="scrollable"-->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_main"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?colorSurface"
-        app:tabTextColor="?colorOnSurface" />
+        android:layout_gravity="center_horizontal"
+        app:tabMode="scrollable"
+        app:tabTextColor="?colorOnSurface"
+        app:tabIndicatorColor="?colorPrimaryDark"
+        />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_main_tabs"
