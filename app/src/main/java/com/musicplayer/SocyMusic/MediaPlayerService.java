@@ -128,21 +128,22 @@ public class MediaPlayerService extends Service {
      */
     private Notification buildNotification() {
         Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, SERVICE_REQUEST_CODE, notificationIntent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, SERVICE_REQUEST_CODE,
+                notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         Bitmap artwork = BitmapFactory.decodeResource(getResources(), R.drawable.music_combined);
 
         PendingIntent prevIntent = PendingIntent.getBroadcast(this, SERVICE_REQUEST_CODE,
-                new Intent().setAction(ACTION_PREV), 0);
+                new Intent().setAction(ACTION_PREV),
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         PendingIntent playPauseIntent = PendingIntent.getBroadcast(this, SERVICE_REQUEST_CODE,
-                new Intent().setAction(ACTION_TOGGLE_PLAY_PAUSE), 0);
+                new Intent().setAction(ACTION_TOGGLE_PLAY_PAUSE),
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         PendingIntent nextIntent = PendingIntent.getBroadcast(this, SERVICE_REQUEST_CODE,
-                new Intent().setAction(ACTION_NEXT), 0);
-
-        PendingIntent cancelIntent = PendingIntent.getBroadcast(this, SERVICE_REQUEST_CODE,
-                new Intent().setAction(ACTION_CANCEL), 0);
+                new Intent().setAction(ACTION_NEXT),
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         mediaSession.setMediaButtonReceiver(playPauseIntent);
 
@@ -159,7 +160,7 @@ public class MediaPlayerService extends Service {
                 )
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setOnlyAlertOnce(true)
-                .setContentIntent(pendingIntent)
+                .setContentIntent(contentIntent)
                 .build();
     }
 
