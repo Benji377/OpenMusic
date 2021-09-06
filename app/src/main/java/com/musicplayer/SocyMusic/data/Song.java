@@ -33,6 +33,9 @@ public class Song implements Serializable {
     @ColumnInfo(name = "album_id")
     @Nullable
     private UUID albumID;
+    @Nullable
+    @Ignore
+    private Album album;
     @Ignore
     private final String title;
 
@@ -143,5 +146,14 @@ public class Song implements Serializable {
 
     public void setAlbumID(@Nullable UUID albumID) {
         this.albumID = albumID;
+    }
+
+    public void setAlbum(@Nullable Album album) {
+        this.album = album;
+    }
+
+    @Nullable
+    public Album getAlbum() {
+        return this.album;
     }
 }

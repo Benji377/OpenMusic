@@ -45,6 +45,7 @@ public class Album implements Serializable {
 
     public void addSong(Song song) {
         songList.add(song);
+        song.setAlbum(this);
     }
 
     public String getArtPath() {
@@ -66,6 +67,10 @@ public class Album implements Serializable {
 
     public void setSongList(ArrayList<Song> songList) {
         this.songList = songList;
+        if (songList != null) {
+            for (Song song : songList)
+                song.setAlbum(this);
+        }
     }
 
     public boolean containsSong(Song song) {

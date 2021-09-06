@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.musicplayer.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +40,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongHolder> {
     public void onBindViewHolder(@NonNull SongHolder holder, int position) {
         Song song = allSongs.get(position);
         holder.bind(song);
+        RecyclerView.LayoutManager lm;
     }
 
     @Override

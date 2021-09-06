@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic.ui.main;
+package com.musicplayer.SocyMusic.ui.player_fragment_host;
 
 import android.content.Context;
 import android.view.LayoutInflater;
