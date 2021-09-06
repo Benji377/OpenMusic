@@ -15,11 +15,9 @@ import androidx.preference.PreferenceManager;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
-import com.musicplayer.SocyMusic.ui.PlayerFragmentHost;
+import com.musicplayer.SocyMusic.ui.player_fragment_host.PlayerFragmentHost;
 import com.musicplayer.SocyMusic.utils.ThemeChanger;
 import com.musicplayer.musicplayer.R;
-
-import java.util.Objects;
 
 public class PlaylistActivity extends PlayerFragmentHost implements PlaylistFragment.Host {
     public static final String EXTRA_PLAYLIST = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYLIST";

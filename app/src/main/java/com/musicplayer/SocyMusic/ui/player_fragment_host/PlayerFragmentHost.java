@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic.ui;
+package com.musicplayer.SocyMusic.ui.player_fragment_host;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -27,7 +27,6 @@ import com.musicplayer.SocyMusic.MediaPlayerUtil;
 import com.musicplayer.SocyMusic.custom_views.CustomViewPager2;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.data.SongsData;
-import com.musicplayer.SocyMusic.ui.main.InfoPanePagerAdapter;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.SocyMusic.utils.UiUtils;

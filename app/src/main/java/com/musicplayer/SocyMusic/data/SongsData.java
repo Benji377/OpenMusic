@@ -183,7 +183,6 @@ public class SongsData {
     public <T extends Activity & LoadListener> Thread loadFromFiles(T activity) {
         doneLoading = false;
         Thread loadThread = new Thread(() -> {
-            HashSet<Integer> removedSongIndices = new HashSet<>();
             boolean removedSongs, addedSongs, addedAlbums, changedAlbums, removedAlbums;
             removedSongs = addedSongs = addedAlbums = changedAlbums = removedAlbums = false;
             //get the saved paths from prefs
@@ -266,6 +265,8 @@ public class SongsData {
                 database.songDao().setAlbum(song.getSongId().toString(), album.getId().toString());
                 if (!album.containsSong(song))
                     album.addSong(song);
+                else
+                    song.setAlbum(album);
             }
             if (addedAlbums)
                 activity.runOnUiThread(activity::onAddedAlbums);
@@ -275,6 +276,7 @@ public class SongsData {
                     Song song = album.getSongList().get(j);
                     if (!song.getFile().exists() || !song.getFile().canRead() || !PathUtils.isSubDirOfAny(song.getPath(), savedPaths)) {
                         album.getSongList().remove(j);
+                        song.setAlbum(null);
                         j--;
                         changedAlbums = true;
                     }

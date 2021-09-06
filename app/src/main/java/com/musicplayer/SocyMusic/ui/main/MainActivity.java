@@ -9,7 +9,6 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -34,9 +33,9 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.SongsData;
-import com.musicplayer.SocyMusic.ui.PlayerFragmentHost;
 import com.musicplayer.SocyMusic.ui.albums_tab.AlbumsTabFragment;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
+import com.musicplayer.SocyMusic.ui.player_fragment_host.PlayerFragmentHost;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
 import com.musicplayer.SocyMusic.utils.ThemeChanger;

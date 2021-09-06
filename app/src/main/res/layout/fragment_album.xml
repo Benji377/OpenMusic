@@ -30,8 +30,9 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/music_combined"
-                    android:background="@drawable/main_list_background"/>
+                    android:background="@drawable/main_list_background"
+                    android:contentDescription="@string/all_album_art_desc"
+                    android:src="@drawable/music_combined" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -41,27 +42,32 @@
                     android:layout_toEndOf="@+id/imageview_album_art"
                     android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/textview_album_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Album title"
-                            android:textColor="?colorOnPrimary"
-                            android:textSize="28sp"
-                            tools:ignore="HardcodedText" />
+                    <TextView
+                        android:id="@+id/textview_album_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Album title"
+                        android:textColor="?colorOnPrimary"
+                        android:textSize="28sp"
+                        tools:ignore="HardcodedText" />
 
-                        <TextView
-                            android:id="@+id/textview_album_song_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingBottom="10dp"
-                            android:text="0 Songs"
-                            android:textColor="?colorOnPrimary"
-                            android:textSize="20sp"
-                            tools:ignore="HardcodedText" />
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/textview_album_song_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:text="0 Songs"
+                        android:textColor="?colorOnPrimary"
+                        android:textSize="20sp"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
 
             </RelativeLayout>
+
+            <Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
