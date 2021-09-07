@@ -23,10 +23,11 @@ import timber.log.Timber;
  */
 public class ImportExportUtils {
 
-    // Use it to export files to a given path
+    // Use it to export and import files to a given path
     // Example: socyMusic.sqlite3, preferences.xml, etc...
+    // WARNING! Replaces existing files
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void exportFile(Path source, Path destination) {
+    public void exportImportFile(Path source, Path destination) {
         try {
             // create stream for `source`
             Stream<Path> files = Files.walk(source);
@@ -81,7 +82,7 @@ public class ImportExportUtils {
         File temporary = new File(Environment.getDataDirectory()+"/data/com.musicplayer.socymusic/files", "temporary.m3u");
         temporary = m3uConverter(temporary,playlist_id,playlist_name);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            exportFile(temporary.toPath(), export_location);
+            exportImportFile(temporary.toPath(), export_location);
         } else {
             Timber.e("Version too low for export");
         }
