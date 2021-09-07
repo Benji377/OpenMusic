@@ -114,7 +114,7 @@ public class ImportExportUtils {
      * @param os OutputStream to write to
      * @return True if successful
      */
-    public boolean serialize(final @NonNull OutputStream os) {
+    public boolean exportSettings(final @NonNull OutputStream os) {
         ObjectOutputStream oos = null;
         try {
             oos = new ObjectOutputStream(os);
@@ -136,7 +136,7 @@ public class ImportExportUtils {
      * @return True if the new values were successfully written to persistent storage
      * @throws IllegalArgumentException
      */
-    public boolean deserialize(final @NonNull InputStream is) {
+    public boolean importSettings(final @NonNull InputStream is) {
         ObjectInputStream ois;
         Map<String, Object> map;
         try {
@@ -169,5 +169,6 @@ public class ImportExportUtils {
         }
         return editor.commit();
     }
+
 
 }
