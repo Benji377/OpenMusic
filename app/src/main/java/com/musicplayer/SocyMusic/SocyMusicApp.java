@@ -100,7 +100,7 @@ public class SocyMusicApp extends Application {
             // clear the previous logcat and then write the new one to the file
             try {
                 Runtime.getRuntime().exec("logcat -c");
-                Runtime.getRuntime().exec("logcat -f " + logFile);
+                Runtime.getRuntime().exec("logcat -f " + logFile.getPath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
