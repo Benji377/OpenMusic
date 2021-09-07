@@ -2,16 +2,26 @@ package com.musicplayer.SocyMusic.utils;
 
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
+import com.musicplayer.musicplayer.BuildConfig;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
+
+import androidx.annotation.NonNull;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -21,11 +31,16 @@ import timber.log.Timber;
  * settings, playlistDB, etc...
  */
 public class ImportExportUtils {
-    Context context;
+    public Context context;
     public String database_path = context.getFilesDir().getPath()+"/databases/socyMusic.sqlite3";
+    private SharedPreferences _settings;
 
     public ImportExportUtils(Context context) {
         this.context = context;
+    }
+
+    public ImportExportUtils(SharedPreferences preferences) {
+        this._settings = preferences;
     }
 
     // Exports the whole app database
@@ -93,4 +108,66 @@ public class ImportExportUtils {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Serialize all preferences into an output stream
+     * @param os OutputStream to write to
+     * @return True if successful
+     */
+    public boolean serialize(final @NonNull OutputStream os) {
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(os);
+            oos.writeObject(_settings.getAll());
+            oos.close();
+        } catch (IOException e) {
+            Timber.e("Error serializing preferences %s", BuildConfig.DEBUG ? e : null);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Read all preferences from an input stream.
+     * Schedules a full preference clean, then deserializes the options present in the given stream.
+     * If the given object contains an unknown class, the deserialization is aborted and the underlying
+     * preferences are not changed by this method
+     * @param is Input stream to load the preferences from
+     * @return True if the new values were successfully written to persistent storage
+     * @throws IllegalArgumentException
+     */
+    public boolean deserialize(final @NonNull InputStream is) {
+        ObjectInputStream ois;
+        Map<String, Object> map;
+        try {
+            ois = new ObjectInputStream(is);
+            map = (Map) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            Timber.e("Error deserializing preferences %s", BuildConfig.DEBUG ? e : null);
+            return false;
+        }
+
+        SharedPreferences.Editor editor = _settings.edit();
+        editor.clear();
+
+        for (Map.Entry<String, Object> e : map.entrySet()) {
+            if (e.getValue() instanceof Boolean) {
+                editor.putBoolean(e.getKey(), (Boolean)e.getValue());
+            } else if (e.getValue() instanceof String) {
+                editor.putString(e.getKey(), (String)e.getValue());
+            } else if (e.getValue() instanceof Integer) {
+                editor.putInt(e.getKey(), (int)e.getValue());
+            } else if (e.getValue() instanceof Float) {
+                editor.putFloat(e.getKey(), (float)e.getValue());
+            } else if (e.getValue() instanceof Long) {
+                editor.putLong(e.getKey(), (Long) e.getValue());
+            } else if (e.getValue() instanceof Set) {
+                editor.putStringSet(e.getKey(), (Set<String>) e.getValue());
+            } else {
+                throw new IllegalArgumentException("Type " + e.getValue().getClass().getName() + " is unknown");
+            }
+        }
+        return editor.commit();
+    }
+
 }
