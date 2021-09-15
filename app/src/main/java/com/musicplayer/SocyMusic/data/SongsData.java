@@ -42,7 +42,10 @@ public class SongsData {
     private boolean shuffle;
     private boolean doneLoading;
 
-    public static final String[] SUPPORTED_FORMATS = {".mp3", ".wav"};
+    // Contains a list of all supported extensions.
+    // Especially concerned about .ts as it is not seekable and might break the app
+    public static final String[] SUPPORTED_FORMATS = {".mp3", ".wav", ".ogg", ".3gp", ".mp4", ".m4a",
+            ".aac", ".ts", ".amr", ".flac", ".mid", ".xmf", ".mxmf", ".rtttl", ".rtx", ".ota", ".imy", ".mkv"};
     public static final UUID FAVORITES_PLAYLIST_ID = UUID.fromString("3a47e9a7-7cb6-4b47-8b98-7ee7d4b865f0");
 
     /**
@@ -323,6 +326,7 @@ public class SongsData {
                     // Convert file to song and add it to the array
                     // Arrays.stream(items).anyMatch(inputString::contains)
                     // singlefile.getName().endsWith(".mp3") || singlefile.getName().endsWith(".wav")
+                    // Checks if the file extension is one of the supported file formats
                     if (Arrays.stream(SUPPORTED_FORMATS).parallel().anyMatch(getFileExtension(singlefile)::contains)) {
                         songsFound.add(new Song(UUID.randomUUID(), singlefile));
                     }
