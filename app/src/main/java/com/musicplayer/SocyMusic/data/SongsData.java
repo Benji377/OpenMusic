@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -41,6 +42,10 @@ public class SongsData {
     private boolean shuffle;
     private boolean doneLoading;
 
+    // Contains a list of all supported extensions.
+    // Especially concerned about .ts as it is not seekable and might break the app
+    public static final String[] SUPPORTED_FORMATS = {".mp3", ".wav", ".ogg", ".3gp", ".mp4", ".m4a",
+            ".aac", ".ts", ".amr", ".flac", ".mid", ".xmf", ".mxmf", ".rtttl", ".rtx", ".ota", ".imy", ".mkv"};
     public static final UUID FAVORITES_PLAYLIST_ID = UUID.fromString("3a47e9a7-7cb6-4b47-8b98-7ee7d4b865f0");
 
     /**
@@ -319,14 +324,32 @@ public class SongsData {
                     songsFound.addAll(loadSongs(singlefile));
                 } else {
                     // Convert file to song and add it to the array
-                    if (singlefile.getName().endsWith(".mp3") || singlefile.getName().endsWith(".wav")) {
+                    // Arrays.stream(items).anyMatch(inputString::contains)
+                    // singlefile.getName().endsWith(".mp3") || singlefile.getName().endsWith(".wav")
+                    // Checks if the file extension is one of the supported file formats
+                    if (Arrays.stream(SUPPORTED_FORMATS).parallel().anyMatch(getFileExtension(singlefile)::contains)) {
                         songsFound.add(new Song(UUID.randomUUID(), singlefile));
                     }
                 }
             }
         }
-
         return songsFound;
+    }
+
+    /**
+     * This method is needed in the loadSong method to get only the
+     * File extension and therefore identify the type of songs
+     * accurately
+     * @param file File to check
+     * @return Nothing if it has no extension, else the whole extension (with dot)
+     */
+    private String getFileExtension(File file) {
+        String name = file.getName();
+        int lastIndexOf = name.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return ""; // empty extension
+        }
+        return name.substring(lastIndexOf);
     }
 
     public int getPlayingQueueCount() {
