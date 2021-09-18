@@ -62,6 +62,7 @@
     <string name="all_reloading_library">Reloading Songs…</string>
     <string name="activate_sleeptime_function">Activate SleepTime function:</string>
     <string name="sleepTimeDescription">The SleepTime functionality allows you to set a time at which the app will stop playing music and close itself. To allow this functionality you need to switch the below switch to ON and set a time above.</string>
+    <string name="timepicker_button">Save selected settings</string>
 
     <string-array name="themeOptions">
         <item>Inverted (Experimental)</item>

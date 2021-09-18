@@ -19,6 +19,9 @@ import com.musicplayer.musicplayer.R;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 
 import timber.log.Timber;
@@ -37,7 +40,7 @@ public class SocyMusicApp extends Application {
     public static final String PREFS_KEY_LOGGING = "logging";
     public static final String PREFS_KEY_SLEEPTIME = "sleeptime";
     public static final String PREFS_KEY_TIMEPICKER = "timepicker";
-    public static final String PREFS_KEY_TIMEPICKER_SWITCh = "timepicker_switch";
+    public static final String PREFS_KEY_TIMEPICKER_SWITCH = "timepicker_switch";
     public static final HashSet<String> defaultPathsSet = new HashSet<>();
 
     public static final String[] PERMISSIONS_NEEDED = {READ_EXTERNAL_STORAGE, RECORD_AUDIO};
@@ -55,9 +58,30 @@ public class SocyMusicApp extends Application {
         defaultPathsSet.add(Environment.getExternalStorageDirectory().getAbsolutePath());
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        boolean loggingMode = prefs.getBoolean(PREFS_KEY_LOGGING, true);
-        if(loggingMode) {
+        if(prefs.getBoolean(PREFS_KEY_LOGGING, true)) {
             enableLogging();
+        }
+        // Retrieves the time set in the Timepicker
+        int settime = prefs.getInt(PREFS_KEY_TIMEPICKER, 36480);
+        Calendar calendar = Calendar.getInstance();
+        // Retrieves current time and converts it to seconds
+        int currentTimes = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
+        Timber.e("current: %s and set: %s", currentTimes, settime);
+        Timber.e("Active: %s", prefs.getBoolean(PREFS_KEY_TIMEPICKER_SWITCH, false));
+        // Starts a thread to check for the sleep time to go off
+        if (settime > currentTimes && prefs.getBoolean(PREFS_KEY_TIMEPICKER_SWITCH, false)) {
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    // If the current time becomes the time set in the preference it exits the loop
+                    int currentTime = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
+                    while (settime > currentTime)
+                        currentTime = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
+                    // Exit the app and shutdown
+                    System.exit(0);
+                }
+            };
+            thread.start();
         }
     }
 
