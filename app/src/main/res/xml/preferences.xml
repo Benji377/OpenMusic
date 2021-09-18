@@ -73,4 +73,14 @@
         </Preference>
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:enabled="false">
+        <Preference
+            app:key="timepicker"
+            android:defaultValue="10:08:PM"/>
+        <Preference
+            app:key="timepicker_switch"
+            android:defaultValue="false"/>
+    </PreferenceCategory>
+
 </PreferenceScreen>

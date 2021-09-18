@@ -36,6 +36,8 @@ public class SocyMusicApp extends Application {
     public static final String PREFS_KEY_VERSION = "versions";
     public static final String PREFS_KEY_LOGGING = "logging";
     public static final String PREFS_KEY_SLEEPTIME = "sleeptime";
+    public static final String PREFS_KEY_TIMEPICKER = "timepicker";
+    public static final String PREFS_KEY_TIMEPICKER_SWITCh = "timepicker_switch";
     public static final HashSet<String> defaultPathsSet = new HashSet<>();
 
     public static final String[] PERMISSIONS_NEEDED = {READ_EXTERNAL_STORAGE, RECORD_AUDIO};
