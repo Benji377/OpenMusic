@@ -38,7 +38,7 @@ import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.player_fragment_host.PlayerFragmentHost;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
-import com.musicplayer.SocyMusic.utils.ThemeChanger;
+import com.musicplayer.SocyMusic.utils.PreferenceUtils;
 import com.musicplayer.musicplayer.R;
 
 import java.util.List;
@@ -60,7 +60,8 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         super.onCreate(savedInstanceState);
         // Sets the theme!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(ThemeChanger.getThemeID(this));
+        PreferenceUtils pUtils = new PreferenceUtils(this);
+        setTheme(pUtils.getThemeID());
         listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();

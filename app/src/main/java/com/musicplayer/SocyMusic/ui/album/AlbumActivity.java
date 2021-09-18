@@ -16,7 +16,7 @@ import com.musicplayer.SocyMusic.data.Album;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.ui.player_fragment_host.PlayerFragmentHost;
-import com.musicplayer.SocyMusic.utils.ThemeChanger;
+import com.musicplayer.SocyMusic.utils.PreferenceUtils;
 import com.musicplayer.musicplayer.R;
 
 public class AlbumActivity extends PlayerFragmentHost implements AlbumFragment.Host {
@@ -31,7 +31,9 @@ public class AlbumActivity extends PlayerFragmentHost implements AlbumFragment.H
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         // Sets the theme!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(ThemeChanger.getThemeID(this));
+        PreferenceUtils pUtils = new PreferenceUtils(this);
+        setTheme(pUtils.getThemeID());
+        setTheme(pUtils.getThemeID());
         listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();

@@ -16,6 +16,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.dir_browser.DirBrowserActivity;
+import com.musicplayer.SocyMusic.ui.sleeptime.SleepTimeActivity;
 import com.musicplayer.musicplayer.BuildConfig;
 import com.musicplayer.musicplayer.R;
 
@@ -24,6 +25,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     private Preference libPathPreference;
     private Preference versions;
     private Preference logging;
+    private Preference sleeptime;
 
     private SongsData songsData;
     private Host hostCallBack;
@@ -41,6 +43,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         themePreference = findPreference(SocyMusicApp.PREFS_KEY_THEME);
         versions = findPreference(SocyMusicApp.PREFS_KEY_VERSION);
         logging = findPreference(SocyMusicApp.PREFS_KEY_LOGGING);
+        sleeptime = findPreference(SocyMusicApp.PREFS_KEY_SLEEPTIME);
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK)
                 hostCallBack.onLibraryDirsChanged();
@@ -51,6 +54,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return false;
             }
             Intent intent = new Intent(getContext(), DirBrowserActivity.class);
+            launcher.launch(intent);
+            return true;
+        });
+        sleeptime.setOnPreferenceClickListener(preference -> {
+            Intent intent = new Intent(getContext(), SleepTimeActivity.class);
             launcher.launch(intent);
             return true;
         });

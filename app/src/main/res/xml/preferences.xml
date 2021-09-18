@@ -12,7 +12,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Appearance"
+        android:title="Customisation"
         app:key="appearance_category"
         android:icon="@drawable/ic_color_lens">
         <ListPreference
@@ -21,6 +21,10 @@
             app:title="@string/prefs_title_theme"
             android:entries="@array/themeOptions"
             android:entryValues="@array/themeValues"/>
+        <Preference
+            app:key="sleeptime"
+            app:title="Sleep Timer"
+            app:summary="Put the app to sleep at a given time"/>
     </PreferenceCategory>
 
     <PreferenceCategory

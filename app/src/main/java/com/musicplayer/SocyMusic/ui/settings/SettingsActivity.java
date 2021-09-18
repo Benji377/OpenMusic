@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
 import com.musicplayer.SocyMusic.SocyMusicApp;
-import com.musicplayer.SocyMusic.utils.ThemeChanger;
+import com.musicplayer.SocyMusic.utils.PreferenceUtils;
 import com.musicplayer.musicplayer.R;
 
 
@@ -24,7 +24,9 @@ public class SettingsActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         // Sets the theme!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(ThemeChanger.getThemeID(this));
+        PreferenceUtils pUtils = new PreferenceUtils(this);
+        setTheme(pUtils.getThemeID());
+        setTheme(pUtils.getThemeID());
         listener = (prefs1, key) -> {
             if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
                 recreate();

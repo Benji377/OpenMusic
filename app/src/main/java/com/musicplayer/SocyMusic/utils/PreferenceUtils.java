@@ -3,6 +3,8 @@ package com.musicplayer.SocyMusic.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
 import com.musicplayer.SocyMusic.SocyMusicApp;
@@ -14,10 +16,15 @@ Doing so simplifies the future management of themes
 PS: Might change this later in a full Utils class instead of
 "wasting" a whole class for one function
  */
-public class ThemeChanger {
+public class PreferenceUtils {
+    public static SharedPreferences prefs;
 
-    public static int getThemeID(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    public PreferenceUtils(Context context) {
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+
+    public int getThemeID() {
         String theme = prefs.getString(SocyMusicApp.PREFS_KEY_THEME, "Red_theme");
         switch (theme) {
             case "Red_theme":
