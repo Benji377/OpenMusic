@@ -29,6 +29,7 @@ import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
+import com.musicplayer.SocyMusic.utils.BluetoothUtil;
 import com.musicplayer.SocyMusic.utils.UiUtils;
 import com.musicplayer.musicplayer.R;
 
@@ -41,6 +42,8 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
 
     private static MediaPlayerService mediaPlayerService;
     private static MediaPlayerReceiver mediaPlayerReceiver;
+
+    private static BluetoothUtil bluetoothReceiver;
 
     private CustomViewPager2 songInfoPager;
     protected BottomSheetBehavior<FrameLayout> bottomSheetBehavior;

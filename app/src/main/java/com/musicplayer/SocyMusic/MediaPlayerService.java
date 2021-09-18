@@ -44,7 +44,7 @@ public class MediaPlayerService extends Service {
     private static final int NOTIFICATION_ID = 181;
 
     /**
-     * Gets executed when the class gets created
+     * Controls Bluetooth key-pressing and assigns them their corresponding actions
      */
     @Override
     public void onCreate() {
