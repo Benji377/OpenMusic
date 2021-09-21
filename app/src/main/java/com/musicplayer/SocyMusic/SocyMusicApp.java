@@ -11,19 +11,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Environment;
-
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
-
 import com.musicplayer.musicplayer.R;
-
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
-
 import timber.log.Timber;
 
 /**
@@ -61,28 +54,6 @@ public class SocyMusicApp extends Application {
         if(prefs.getBoolean(PREFS_KEY_LOGGING, true)) {
             enableLogging();
         }
-        // Retrieves the time set in the Timepicker
-        int settime = prefs.getInt(PREFS_KEY_TIMEPICKER, 36480);
-        Calendar calendar = Calendar.getInstance();
-        // Retrieves current time and converts it to seconds
-        int currentTimes = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
-        Timber.e("current: %s and set: %s", currentTimes, settime);
-        Timber.e("Active: %s", prefs.getBoolean(PREFS_KEY_TIMEPICKER_SWITCH, false));
-        // Starts a thread to check for the sleep time to go off
-        if (settime > currentTimes && prefs.getBoolean(PREFS_KEY_TIMEPICKER_SWITCH, false)) {
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    // If the current time becomes the time set in the preference it exits the loop
-                    int currentTime = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
-                    while (settime > currentTime)
-                        currentTime = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
-                    // Exit the app and shutdown
-                    System.exit(0);
-                }
-            };
-            thread.start();
-        }
     }
 
     /**
@@ -116,8 +87,6 @@ public class SocyMusicApp extends Application {
         if (isExternalStorageWritable()) {
             File logDirectory = new File(getApplicationContext().getExternalFilesDir(null).getParentFile() + "/logs" );
             File logFile = new File(logDirectory, "logcat_" + System.currentTimeMillis() + ".txt" );
-            Timber.e("LOG: %s", logDirectory.getPath());
-            Timber.e("FILE: %s", logFile.getPath());
 
             // create log folder
             if (!logDirectory.exists()) {

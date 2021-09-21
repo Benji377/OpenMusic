@@ -1,6 +1,8 @@
 package com.musicplayer.SocyMusic.ui.main;
 
 import android.Manifest;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -41,7 +43,10 @@ import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
 import com.musicplayer.SocyMusic.utils.PreferenceUtils;
 import com.musicplayer.musicplayer.R;
 
+import java.util.Calendar;
 import java.util.List;
+
+import timber.log.Timber;
 
 public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
     private ViewPager2 tabsPager;
@@ -96,6 +101,38 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
 
         // Checks for all the required permissions
         runtimePermission();
+
+        // Retrieves the time set in the Timepicker
+        int settime = prefs.getInt(SocyMusicApp.PREFS_KEY_TIMEPICKER, 36480);
+        Calendar calendar = Calendar.getInstance();
+        // Retrieves current time and converts it to seconds
+        int currentTimes = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
+        // Starts a thread to check for the sleep time to go off
+        if (settime > currentTimes && prefs.getBoolean(SocyMusicApp.PREFS_KEY_TIMEPICKER_SWITCH, false)) {
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    // If the current time becomes the time set in the preference it exits the loop
+                    while (true) {
+                        Calendar calendar = Calendar.getInstance();
+                        int currentTime = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
+                        if (settime - currentTime <= 0)
+                            break;
+                    }
+                    // Exit the app and shutdown
+                    ActivityManager manager =
+                            (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+
+                    for (ActivityManager.AppTask task : manager.getAppTasks()) {
+                        task.finishAndRemoveTask();
+                        System.exit(0);
+                    }
+                }
+            };
+            thread.start();
+        } else {
+            Timber.e("Thread not started :/");
+        }
     }
 
     /**
