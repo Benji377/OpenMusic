@@ -1,21 +1,18 @@
-package com.musicplayer.SocyMusic.ui.dir_browser;
+package com.musicplayer.SocyMusic.ui.sleeptime;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
-
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.utils.PreferenceUtils;
 import com.musicplayer.musicplayer.R;
 
-
-public class DirBrowserActivity extends AppCompatActivity {
-    private DirBrowserFragment dirBrowserFragment;
+public class SleepTimeActivity extends AppCompatActivity {
+    private SleepTimeFragment sleepTimeFragment;
     SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     @Override
@@ -31,24 +28,20 @@ public class DirBrowserActivity extends AppCompatActivity {
             }
         };
         prefs.registerOnSharedPreferenceChangeListener(listener);
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dir_browser);
-        setTitle(R.string.dir_browser_title);
+        setContentView(R.layout.activity_sleeptime);
+        setTitle("Select Sleeptime");
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.layout_settings_container);
         if (fragment == null) {
-            dirBrowserFragment = new DirBrowserFragment();
+            sleepTimeFragment = new SleepTimeFragment();
             fragmentManager.beginTransaction()
-                    .add(R.id.layout_dir_browser_container, dirBrowserFragment)
+                    .add(R.id.layout_sleeptime_container, sleepTimeFragment)
                     .commit();
-        } else
-            dirBrowserFragment = (DirBrowserFragment) fragment;
-    }
-
-    @Override
-    public void onBackPressed() {
-        dirBrowserFragment.onBackPressed();
+        } else {
+            sleepTimeFragment = (SleepTimeFragment) fragment;
+        }
     }
 }
+

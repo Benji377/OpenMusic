@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?backgroundColor">
+
+    <TimePicker
+        android:id="@+id/simpleTimePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="clock"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/timePickerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/simpleTimePicker"
+        android:padding="20dp"
+        android:text="@string/sleepTimeDescription"
+        android:textAlignment="center"
+        android:textColor="?colorOnPrimary"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/timePickerSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/timePickerText"
+        android:text="@string/activate_sleeptime_function"
+        android:textColor="?colorOnPrimary"/>
+
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/timePickerSwitch"
+        android:padding="15dp"
+        android:layout_margin="50dp"
+        android:text="@string/timepicker_button"
+        android:textColor="?colorOnPrimary"/>
+
+
+</RelativeLayout>

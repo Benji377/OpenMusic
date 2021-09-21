@@ -11,16 +11,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Environment;
-
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
-
 import com.musicplayer.musicplayer.R;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
-
 import timber.log.Timber;
 
 /**
@@ -35,6 +31,9 @@ public class SocyMusicApp extends Application {
     public static final String PREFS_KEY_THEME = "theme";
     public static final String PREFS_KEY_VERSION = "versions";
     public static final String PREFS_KEY_LOGGING = "logging";
+    public static final String PREFS_KEY_SLEEPTIME = "sleeptime";
+    public static final String PREFS_KEY_TIMEPICKER = "timepicker";
+    public static final String PREFS_KEY_TIMEPICKER_SWITCH = "timepicker_switch";
     public static final HashSet<String> defaultPathsSet = new HashSet<>();
 
     public static final String[] PERMISSIONS_NEEDED = {READ_EXTERNAL_STORAGE, RECORD_AUDIO};
@@ -52,8 +51,7 @@ public class SocyMusicApp extends Application {
         defaultPathsSet.add(Environment.getExternalStorageDirectory().getAbsolutePath());
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        boolean loggingMode = prefs.getBoolean(PREFS_KEY_LOGGING, true);
-        if(loggingMode) {
+        if(prefs.getBoolean(PREFS_KEY_LOGGING, true)) {
             enableLogging();
         }
     }
@@ -89,8 +87,6 @@ public class SocyMusicApp extends Application {
         if (isExternalStorageWritable()) {
             File logDirectory = new File(getApplicationContext().getExternalFilesDir(null).getParentFile() + "/logs" );
             File logFile = new File(logDirectory, "logcat_" + System.currentTimeMillis() + ".txt" );
-            Timber.e("LOG: %s", logDirectory.getPath());
-            Timber.e("FILE: %s", logFile.getPath());
 
             // create log folder
             if (!logDirectory.exists()) {
