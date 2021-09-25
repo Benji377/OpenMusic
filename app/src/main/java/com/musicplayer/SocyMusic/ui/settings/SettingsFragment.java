@@ -21,7 +21,6 @@ import com.musicplayer.musicplayer.BuildConfig;
 import com.musicplayer.musicplayer.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
-    private Preference themePreference;
     private Preference libPathPreference;
     private Preference versions;
     private Preference logging;
@@ -40,7 +39,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
         libPathPreference = findPreference(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS);
-        themePreference = findPreference(SocyMusicApp.PREFS_KEY_THEME);
         versions = findPreference(SocyMusicApp.PREFS_KEY_VERSION);
         logging = findPreference(SocyMusicApp.PREFS_KEY_LOGGING);
         sleeptime = findPreference(SocyMusicApp.PREFS_KEY_SLEEPTIME);

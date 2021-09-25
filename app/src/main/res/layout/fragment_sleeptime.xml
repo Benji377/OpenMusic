@@ -30,16 +30,4 @@
         android:text="@string/activate_sleeptime_function"
         android:textColor="?colorOnPrimary"/>
 
-    <Button
-        android:id="@+id/confirm_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/timePickerSwitch"
-        android:padding="15dp"
-        android:layout_margin="50dp"
-        android:text="@string/timepicker_button"
-        android:textColor="?colorOnPrimary"/>
-
-
 </RelativeLayout>

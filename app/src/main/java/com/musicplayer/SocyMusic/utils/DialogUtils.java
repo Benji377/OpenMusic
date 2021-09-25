@@ -2,7 +2,6 @@ package com.musicplayer.SocyMusic.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.EditText;

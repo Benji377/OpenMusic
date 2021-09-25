@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.album.AlbumActivity;
-import com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity;
 import com.musicplayer.musicplayer.R;
 
 public class AlbumsTabFragment extends Fragment {

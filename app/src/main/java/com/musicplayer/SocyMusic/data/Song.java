@@ -15,6 +15,7 @@ import androidx.room.PrimaryKey;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Entity(foreignKeys = {@ForeignKey(entity = Album.class,
@@ -38,6 +39,8 @@ public class Song implements Serializable {
     private Album album;
     @Ignore
     private final String title;
+    @Ignore
+    private ArrayList<String> tags;
 
     /**
      * First custom constructor for the Song class. Creates a Song with file only.
@@ -48,7 +51,6 @@ public class Song implements Serializable {
     public Song(@NonNull UUID songId, File file) {
         // removes invalid characters from the filename before creating a song out of it
         this(songId, file, file.getName().replaceAll("(?<!^)[.][^.]*$", ""));
-
     }
 
     /**
@@ -63,6 +65,7 @@ public class Song implements Serializable {
         this.songId = songId;
         this.file = file;
         this.title = title;
+        tags = new ArrayList<>();
     }
 
     /**
@@ -155,5 +158,16 @@ public class Song implements Serializable {
     @Nullable
     public Album getAlbum() {
         return this.album;
+    }
+
+    // Manage tags for the songs. Users can submit custom tags
+    public ArrayList<String> getTags() {
+        return this.tags;
+    }
+    public void setTags(ArrayList<String> arrayList) {
+        this.tags = arrayList;
+    }
+    public void addTag(String tag) {
+        tags.add(tag);
     }
 }

@@ -14,8 +14,8 @@ import com.musicplayer.musicplayer.R;
 import java.util.List;
 
 public class AlbumSongAdapter extends RecyclerView.Adapter<AlbumSongHolder> {
-    private Context context;
-    private List<Song> albumSongs;
+    private final Context context;
+    private final List<Song> albumSongs;
     private ItemClickListener clickListener;
 
     public AlbumSongAdapter(Context context, List<Song> albumSongs) {

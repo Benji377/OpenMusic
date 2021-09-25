@@ -11,12 +11,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Environment;
+
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
+
 import com.musicplayer.musicplayer.R;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+
 import timber.log.Timber;
 
 /**
@@ -28,7 +32,6 @@ public class SocyMusicApp extends Application {
 
     //keys for preferences
     public static final String PREFS_KEY_LIBRARY_PATHS = "lib_paths";
-    public static final String PREFS_KEY_THEME = "theme";
     public static final String PREFS_KEY_VERSION = "versions";
     public static final String PREFS_KEY_LOGGING = "logging";
     public static final String PREFS_KEY_SLEEPTIME = "sleeptime";

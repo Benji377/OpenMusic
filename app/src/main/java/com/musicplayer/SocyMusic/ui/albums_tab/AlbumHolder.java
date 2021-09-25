@@ -12,9 +12,9 @@ import com.musicplayer.SocyMusic.data.Album;
 import com.musicplayer.musicplayer.R;
 
 public class AlbumHolder extends RecyclerView.ViewHolder {
-    private TextView albumTitleTextview;
-    private TextView songCountTextview;
-    private ImageView albumArtImageView;
+    private final TextView albumTitleTextview;
+    private final TextView songCountTextview;
+    private final ImageView albumArtImageView;
 
     public AlbumHolder(@NonNull View itemView, AlbumsListAdapter.ItemClickListener clickListener) {
         super(itemView);

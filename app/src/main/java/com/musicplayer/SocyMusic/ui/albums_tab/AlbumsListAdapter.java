@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.musicplayer.SocyMusic.data.Album;
-import com.musicplayer.SocyMusic.ui.playlist.PlaylistSongAdapter;
 import com.musicplayer.musicplayer.R;
 
 import java.util.List;
