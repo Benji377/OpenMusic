@@ -12,6 +12,6 @@ SocyMusic is an open-source Android music player written entirely in Java. It's 
 If you find it interesting you might wanna check out our [Website](https://benji377.github.io/SocyMusic/) where you will find a lot more information.
 
 ### Update: SocyMusic is being redesigned
-Since a lot of people suggested to give the app a minimla and cool looking design we are now trying to acomplish this. This will probably require quite some time and till there the development on the app will kind of we put on hold. This is to prevent developers from adding new components to the app which rely on the current design of the app as we will change it in the future. Hopefully this will be our last design change and we will have a consistent layout in the future.
-Thank you for your patience and understanding,
+Since a lot of people suggested to give the app a minimla and cool looking design we are now trying to acomplish this. This will probably require quite some time and till there the development on the app will kind of we put on hold. This is to prevent developers from adding new components to the app which rely on the current design of the app as we will change it in the future. Hopefully this will be our last design change and we will have a consistent layout in the future. \
+Thank you for your patience and understanding, \
 ~ The SocyMusic team
