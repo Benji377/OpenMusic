@@ -1,5 +1,6 @@
 package com.musicplayer.SocyMusic.ui.sleeptime;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,8 +19,6 @@ import androidx.preference.PreferenceManager;
 
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.musicplayer.R;
-
-import timber.log.Timber;
 
 public class SleepTimeFragment extends Fragment {
     private TimePicker timePicker;
@@ -42,13 +41,6 @@ public class SleepTimeFragment extends Fragment {
         timePicker = view.findViewById(R.id.simpleTimePicker);
         timePicker.setIs24HourView(false);
         switchCompat = view.findViewById(R.id.timePickerSwitch);
-        button = view.findViewById(R.id.confirm_button);
-        /*
-        editor = preferences.edit();
-        editor.putInt(SocyMusicApp.PREFS_KEY_TIMEPICKER, 36480);
-        editor.putBoolean(SocyMusicApp.PREFS_KEY_TIMEPICKER_SWITCH, false);
-        editor.apply();
-         */
         updateTimePicker();
         switchCompat.setChecked(preferences.getBoolean(SocyMusicApp.PREFS_KEY_TIMEPICKER_SWITCH, false));
 
@@ -65,16 +57,6 @@ public class SleepTimeFragment extends Fragment {
                 switchCompat.setChecked(b);
             }
         });
-
-        button.setOnClickListener(view12 -> {
-            editor = preferences.edit();
-            editor.putInt(SocyMusicApp.PREFS_KEY_TIMEPICKER, convertInt());
-            editor.putBoolean(SocyMusicApp.PREFS_KEY_TIMEPICKER_SWITCH, switchState());
-            editor.apply();
-        });
-
-
-
         return view;
     }
 
@@ -109,6 +91,15 @@ public class SleepTimeFragment extends Fragment {
     // True if the switch is on, else false
     public boolean switchState() {
         return switchCompat.isChecked();
+    }
+
+    protected void onBackPressed() {
+        Activity hostActivity = requireActivity();
+        editor = preferences.edit();
+        editor.putInt(SocyMusicApp.PREFS_KEY_TIMEPICKER, convertInt());
+        editor.putBoolean(SocyMusicApp.PREFS_KEY_TIMEPICKER_SWITCH, switchState());
+        editor.apply();
+        hostActivity.finish();
     }
 
 }

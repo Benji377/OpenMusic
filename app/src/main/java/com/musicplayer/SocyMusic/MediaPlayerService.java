@@ -158,7 +158,7 @@ public class MediaPlayerService extends Service {
                 .setStyle(new MediaStyle()
                         .setShowActionsInCompactView(0, 1, 2)
                 )
-                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setOnlyAlertOnce(true)
                 .setContentIntent(contentIntent)
                 .build();

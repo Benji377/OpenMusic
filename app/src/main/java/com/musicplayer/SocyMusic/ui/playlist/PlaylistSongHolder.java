@@ -11,8 +11,8 @@ import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.musicplayer.R;
 
 public class PlaylistSongHolder extends RecyclerView.ViewHolder {
-    private TextView songTitleTextview;
-    private TextView songLengthTextview;
+    private final TextView songTitleTextview;
+    private final TextView songLengthTextview;
 
     public PlaylistSongHolder(@NonNull View itemView, PlaylistSongAdapter.ItemClickListener clickListener) {
         super(itemView);

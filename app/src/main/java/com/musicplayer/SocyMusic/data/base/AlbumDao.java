@@ -9,7 +9,6 @@ import com.musicplayer.SocyMusic.data.Album;
 import com.musicplayer.SocyMusic.data.Song;
 
 import java.util.List;
-import java.util.UUID;
 
 @Dao
 public interface AlbumDao {

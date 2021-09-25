@@ -3,8 +3,8 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="grey">#C0C0C0</color>
-    <color name="colorPrimary">?colorPrimary</color>
-    <color name="colorPrimaryVariant">?colorPrimaryVariant</color>
-    <color name="colorOnPrimary">?colorOnPrimary</color>
+    <color name="colorPrimary">#FF362E</color>
+    <color name="colorPrimaryDark">#BF2923</color>
+    <color name="colorPrimaryVariant">#FF362E</color>
     <color name="snackbarColorDark">#323232</color>
 </resources>

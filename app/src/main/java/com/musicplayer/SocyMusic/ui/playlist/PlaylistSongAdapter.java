@@ -14,7 +14,7 @@ import com.musicplayer.musicplayer.R;
 import java.util.List;
 
 public class PlaylistSongAdapter extends RecyclerView.Adapter<PlaylistSongHolder> {
-    private Context context;
+    private final Context context;
 
     private List<Song> songs;
     private ItemClickListener clickListener;

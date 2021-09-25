@@ -4,15 +4,11 @@ import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -40,7 +36,6 @@ import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.player_fragment_host.PlayerFragmentHost;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
-import com.musicplayer.SocyMusic.utils.PreferenceUtils;
 import com.musicplayer.musicplayer.R;
 
 import java.util.Calendar;
@@ -51,9 +46,9 @@ import timber.log.Timber;
 public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
-
-    SharedPreferences.OnSharedPreferenceChangeListener listener;
     private Snackbar loadingSnackBar;
+    private Thread thread;
+    private boolean thread_can_run = true;
 
     /**
      * Gets executed every time the app starts
@@ -63,30 +58,9 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Sets the theme!
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        PreferenceUtils pUtils = new PreferenceUtils(this);
-        setTheme(pUtils.getThemeID());
-        listener = (prefs1, key) -> {
-            if (key.equals(SocyMusicApp.PREFS_KEY_THEME)) {
-                recreate();
-            }
-        };
-        prefs.registerOnSharedPreferenceChangeListener(listener);
-
         View childView = getLayoutInflater().inflate(R.layout.content_main,
                 findViewById(R.id.layout_main_tabs_holder), false);
         super.attachContentView(childView);
-
-        // Gets the primaryColor from the current Theme
-        final TypedValue value = new TypedValue();
-        getTheme().resolveAttribute(R.attr.colorSurface, value, true);
-        // Transforms color to Hex -> Avoids ResourceNotFound issue
-        String hexColor = String.format("#%06X", (0xFFFFFF & value.data));
-        // Gets the window and forces the statusbar to use the retrieved color
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.parseColor(hexColor));
 
         // Instead of an actionbar, we use toolbar to simplify customisation
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -102,37 +76,23 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         // Checks for all the required permissions
         runtimePermission();
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         // Retrieves the time set in the Timepicker
-        int settime = prefs.getInt(SocyMusicApp.PREFS_KEY_TIMEPICKER, 36480);
-        Calendar calendar = Calendar.getInstance();
         // Retrieves current time and converts it to seconds
-        int currentTimes = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
-        // Starts a thread to check for the sleep time to go off
-        if (settime > currentTimes && prefs.getBoolean(SocyMusicApp.PREFS_KEY_TIMEPICKER_SWITCH, false)) {
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    // If the current time becomes the time set in the preference it exits the loop
-                    while (true) {
-                        Calendar calendar = Calendar.getInstance();
-                        int currentTime = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
-                        if (settime - currentTime <= 0)
-                            break;
-                    }
-                    // Exit the app and shutdown
-                    ActivityManager manager =
-                            (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
-
-                    for (ActivityManager.AppTask task : manager.getAppTasks()) {
-                        task.finishAndRemoveTask();
-                        System.exit(0);
-                    }
-                }
-            };
-            thread.start();
-        } else {
-            Timber.e("Thread not started :/");
-        }
+        // Retrieves if the function is enabled
+        SharedPreferences.OnSharedPreferenceChangeListener listener = (prefs1, key) -> {
+            if (key.equals(SocyMusicApp.PREFS_KEY_TIMEPICKER) || key.equals(SocyMusicApp.PREFS_KEY_TIMEPICKER_SWITCH)) {
+                // Retrieves the time set in the Timepicker
+                int settime = prefs.getInt(SocyMusicApp.PREFS_KEY_TIMEPICKER, 36480);
+                Calendar calendar = Calendar.getInstance();
+                // Retrieves current time and converts it to seconds
+                int currentTimes = (calendar.get(Calendar.HOUR_OF_DAY) * 3600) + (calendar.get(Calendar.MINUTE) * 60);
+                // Retrieves if the function is enabled
+                boolean time_switch = prefs.getBoolean(SocyMusicApp.PREFS_KEY_TIMEPICKER_SWITCH, false);
+                timePreferenceUpdater(settime, currentTimes, time_switch);
+            }
+        };
+        prefs.registerOnSharedPreferenceChangeListener(listener);
     }
 
     /**
@@ -299,5 +259,53 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         if (loadingSnackBar != null)
             loadingSnackBar.dismiss();
         songsData.setDoneLoading(true);
+    }
+
+    /**
+     * When there is a change in the sleeptimer, we first stop the thread,
+     * check for the new state of the preferences and then if the conditions are still valid,
+     * start the thread again with the new values.
+     * This removes the need of restarting the app o every change
+     */
+    public void timePreferenceUpdater(int settime, int currentTime, boolean time_switch) {
+        // Stops the thread
+        if (thread != null && thread.isAlive()) {
+            try {
+                thread_can_run = false;
+                thread.interrupt();
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            thread_can_run = true;
+        } else {
+
+            // Starts a thread to check for the sleep time to go off
+            if (settime > currentTime && time_switch) {
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        // If the current time becomes the time set in the preference it exits the loop
+                        while (thread_can_run) {
+                            Calendar calendar = Calendar.getInstance();
+                            int currentTime = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
+                            if (settime - currentTime <= 0)
+                                break;
+                        }
+                        // Exit the app and shutdown
+                        ActivityManager manager =
+                                (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+
+                        for (ActivityManager.AppTask task : manager.getAppTasks()) {
+                            task.finishAndRemoveTask();
+                            System.exit(0);
+                        }
+                    }
+                };
+                thread.start();
+            } else {
+                Timber.e("Thread not started :/");
+            }
+        }
     }
 }

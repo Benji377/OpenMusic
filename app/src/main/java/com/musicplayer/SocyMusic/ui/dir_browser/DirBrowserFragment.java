@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
-import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.utils.PathUtils;
 import com.musicplayer.musicplayer.R;
 
