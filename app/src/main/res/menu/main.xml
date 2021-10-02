@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/settings"
         android:icon="@drawable/ic_settings"
         app:showAsAction="always"
         android:title="Settings" />

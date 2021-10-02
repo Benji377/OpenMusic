@@ -5,23 +5,21 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import androidx.viewpager2.widget.ViewPager2;
 import com.musicplayer.musicplayer.R;
+import timber.log.Timber;
 
 public class SidenavComponent extends RadioGroup {
-    private RadioButton homeItem;
-    private RadioButton songsItem;
-    private RadioButton albumsItem;
-    private RadioButton artistsItem;
-    private RadioButton favoritesItem;
-    private RadioButton folderItem;
-    private RadioButton playlistsItem;
+    public RadioButton homeItem;
+    public RadioButton songsItem;
+    public RadioButton albumsItem;
+    public RadioButton artistsItem;
+    public RadioButton favoritesItem;
+    public RadioButton folderItem;
+    public RadioButton playlistsItem;
 
     public SidenavComponent(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initControl(context);
-    }
-
-    private void initControl(Context context) {
         LayoutInflater inflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -33,10 +31,5 @@ public class SidenavComponent extends RadioGroup {
         favoritesItem = findViewById(R.id.favorites_nav_item);
         folderItem = findViewById(R.id.folders_nav_item);
         playlistsItem = findViewById(R.id.playlist_nav_item);
-    }
-
-    @Override
-    public int getCheckedRadioButtonId() {
-        return super.getCheckedRadioButtonId();
     }
 }

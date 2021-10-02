@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioButton;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -16,6 +17,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -29,6 +32,7 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.musicplayer.SocyMusic.SocyMusicApp;
+import com.musicplayer.SocyMusic.custom_views.SidenavComponent;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.albums_tab.AlbumsTabFragment;
@@ -45,10 +49,19 @@ import timber.log.Timber;
 
 public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
     private ViewPager2 tabsPager;
-    private TabLayout tabsLayout;
+    //private TabLayout tabsLayout;
     private Snackbar loadingSnackBar;
+    private SidenavComponent sidenavComponent;
     private Thread thread;
     private boolean thread_can_run = true;
+
+    public RadioButton homeItem;
+    public RadioButton songsItem;
+    public RadioButton albumsItem;
+    public RadioButton artistsItem;
+    public RadioButton favoritesItem;
+    public RadioButton folderItem;
+    public RadioButton playlistsItem;
 
     /**
      * Gets executed every time the app starts
@@ -69,7 +82,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         toolbar.setElevation(0);
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
-        tabsLayout = findViewById(R.id.tab_layout_main);
+        //tabsLayout = findViewById(R.id.tab_layout_main);
 
         registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this);
 
@@ -93,6 +106,43 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
             }
         };
         prefs.registerOnSharedPreferenceChangeListener(listener);
+        sidenavComponent = new SidenavComponent(this, null);
+
+        homeItem = findViewById(R.id.home_nav_item);
+        homeItem.setOnCheckedChangeListener((compoundButton, b) -> {
+            if(b)
+                tabsPager.setCurrentItem(0, true);
+        });
+        songsItem = findViewById(R.id.songs_nav_item);
+        songsItem.setOnCheckedChangeListener((compoundButton, b) -> {
+            if(b)
+                tabsPager.setCurrentItem(0, true);
+        });
+        albumsItem = findViewById(R.id.albums_nav_item);
+        albumsItem.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b)
+                tabsPager.setCurrentItem(1, true);
+        });
+        artistsItem = findViewById(R.id.artists_nav_item);
+        artistsItem.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b)
+                tabsPager.setCurrentItem(0, true);
+        });
+        favoritesItem = findViewById(R.id.favorites_nav_item);
+        favoritesItem.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b)
+                tabsPager.setCurrentItem(2, true);
+        });
+        folderItem = findViewById(R.id.folders_nav_item);
+        folderItem.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b)
+                tabsPager.setCurrentItem(3, true);
+        });
+        playlistsItem = findViewById(R.id.playlist_nav_item);
+        playlistsItem.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b)
+                tabsPager.setCurrentItem(2, true);
+        });
     }
 
     /**
@@ -105,24 +155,12 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     public boolean onCreateOptionsMenu(Menu menu) {
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             getMenuInflater().inflate(R.menu.main, menu);
-            // Searchbar, refrence: https://stackoverflow.com/questions/41867961/android-add-searchview-on-the-action-bar
-            MenuItem actionMenuItem = menu.findItem(R.id.action_search);
-            final SearchView searchView = (SearchView) actionMenuItem.getActionView();
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            MenuItem settingsItem = menu.findItem(R.id.settings);
+            settingsItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
-                public boolean onQueryTextSubmit(String query) {
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    tabsPager.setCurrentItem(TabsPagerAdapter.TABS.length-1, true);
                     return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    if (TextUtils.isEmpty(newText)) {
-                        //adapter.filter("");
-                        //listView.clearTextFilter();
-                    } else {
-                        //adapter.filter(newText);
-                    }
-                    return true;
                 }
             });
         } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
@@ -166,10 +204,13 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                     void finishLoading() {
                         // Display all the songs
                         tabsPager.setAdapter(new TabsPagerAdapter(MainActivity.this));
+                        /*
                         new TabLayoutMediator(tabsLayout,
                                 tabsPager,
                                 (tab, position) -> tab.setText(getResources().getStringArray(R.array.main_tabs)[position]))
                                 .attach();
+
+                         */
                     }
 
 
