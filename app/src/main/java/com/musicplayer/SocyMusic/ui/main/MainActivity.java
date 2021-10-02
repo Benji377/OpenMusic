@@ -159,7 +159,8 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
             settingsItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem menuItem) {
-                    tabsPager.setCurrentItem(TabsPagerAdapter.TABS.length-1, true);
+                    //tabsPager.setCurrentItem(TabsPagerAdapter.TABS.length-1, true);
+                    folderItem.setChecked(true);
                     return false;
                 }
             });

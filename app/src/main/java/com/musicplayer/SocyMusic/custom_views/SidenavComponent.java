@@ -5,9 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import androidx.viewpager2.widget.ViewPager2;
 import com.musicplayer.musicplayer.R;
-import timber.log.Timber;
 
 public class SidenavComponent extends RadioGroup {
     public RadioButton homeItem;

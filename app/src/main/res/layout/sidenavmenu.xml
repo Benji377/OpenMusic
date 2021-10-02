@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Notes:
+- Searchbar: https://www.tutorialspoint.com/how-to-use-searchview-in-android
+- Toolbar button: https://stackoverflow.com/questions/31231609/creating-a-button-in-android-toolbar
+-->
+
 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/side_nav_menu"
     android:layout_width="wrap_content"
@@ -25,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="81dp"
         android:button="@null"
-        android:drawableTop="@drawable/ic_sidenav_music_note"
+        android:drawableTop="@drawable/sidenav_music_note_selector"
         android:paddingLeft="4dp"
         android:paddingTop="16dp"
         android:paddingRight="4dp"
@@ -38,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="81dp"
         android:button="@null"
-        android:drawableTop="@drawable/ic_sidenav_album"
+        android:drawableTop="@drawable/sidenav_album_selector"
         android:paddingLeft="4dp"
         android:paddingTop="16dp"
         android:paddingRight="4dp"
@@ -51,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="81dp"
         android:button="@null"
-        android:drawableTop="@drawable/ic_sidenav_artist"
+        android:drawableTop="@drawable/sidenav_artist_selector"
         android:paddingLeft="4dp"
         android:paddingTop="16dp"
         android:paddingRight="4dp"
@@ -64,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="81dp"
         android:button="@null"
-        android:drawableTop="@drawable/ic_sidenav_favorite"
+        android:drawableTop="@drawable/sidenav_favorite_selector"
         android:paddingLeft="4dp"
         android:paddingTop="16dp"
         android:paddingRight="4dp"
@@ -77,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="81dp"
         android:button="@null"
-        android:drawableTop="@drawable/ic_sidenav_folder"
+        android:drawableTop="@drawable/sidenav_folder_selector"
         android:paddingLeft="4dp"
         android:paddingTop="16dp"
         android:paddingRight="4dp"
@@ -90,7 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="81dp"
         android:button="@null"
-        android:drawableTop="@drawable/ic_sidenav_playlist"
+        android:drawableTop="@drawable/sidenav_playlist_selector"
         android:paddingLeft="4dp"
         android:paddingTop="16dp"
         android:paddingRight="4dp"
