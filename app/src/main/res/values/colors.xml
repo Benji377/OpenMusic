@@ -7,4 +7,13 @@
     <color name="colorPrimaryDark">#BF2923</color>
     <color name="colorPrimaryVariant">#FF362E</color>
     <color name="snackbarColorDark">#323232</color>
+
+    <!-- New design colors: -->
+    <color name="Greytext">#9E9E9E</color>
+    <color name="Black">#000000</color>
+    <color name="Basecolor">#ECEFF1</color>
+    <color name="White">#FFFFFF</color>
+    <color name="Accent">#EF5350</color>
+    <color name="Darkshade">#F6F6F6</color>
+
 </resources>

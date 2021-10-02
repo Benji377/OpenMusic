@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/side_nav_menu"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@drawable/shape_rounded_background">
+
+    <RadioButton
+        android:id="@+id/home_nav_item"
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:button="@null"
+        android:drawableTop="@drawable/sidenav_home_selector"
+        android:paddingLeft="4dp"
+        android:paddingTop="16dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="16dp"
+        android:text="Home"
+        android:textAlignment="center" />
+
+    <RadioButton
+        android:id="@+id/songs_nav_item"
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:button="@null"
+        android:drawableTop="@drawable/ic_sidenav_music_note"
+        android:paddingLeft="4dp"
+        android:paddingTop="16dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="16dp"
+        android:text="Songs"
+        android:textAlignment="center" />
+
+    <RadioButton
+        android:id="@+id/albums_nav_item"
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:button="@null"
+        android:drawableTop="@drawable/ic_sidenav_album"
+        android:paddingLeft="4dp"
+        android:paddingTop="16dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="16dp"
+        android:text="Albums"
+        android:textAlignment="center" />
+
+    <RadioButton
+        android:id="@+id/artists_nav_item"
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:button="@null"
+        android:drawableTop="@drawable/ic_sidenav_artist"
+        android:paddingLeft="4dp"
+        android:paddingTop="16dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="16dp"
+        android:text="Artists"
+        android:textAlignment="center" />
+
+    <RadioButton
+        android:id="@+id/favorites_nav_item"
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:button="@null"
+        android:drawableTop="@drawable/ic_sidenav_favorite"
+        android:paddingLeft="4dp"
+        android:paddingTop="16dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="16dp"
+        android:text="Favorites"
+        android:textAlignment="center" />
+
+    <RadioButton
+        android:id="@+id/folders_nav_item"
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:button="@null"
+        android:drawableTop="@drawable/ic_sidenav_folder"
+        android:paddingLeft="4dp"
+        android:paddingTop="16dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="16dp"
+        android:text="Folders"
+        android:textAlignment="center" />
+
+    <RadioButton
+        android:id="@+id/playlist_nav_item"
+        android:layout_width="match_parent"
+        android:layout_height="81dp"
+        android:button="@null"
+        android:drawableTop="@drawable/ic_sidenav_playlist"
+        android:paddingLeft="4dp"
+        android:paddingTop="16dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="16dp"
+        android:text="Playlists"
+        android:textAlignment="center" />
+
+</RadioGroup>

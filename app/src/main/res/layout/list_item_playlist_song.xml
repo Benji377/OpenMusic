@@ -10,7 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/main_list_background"
+        android:background="@drawable/shape_rounded_background"
         android:padding="8dp">
 
 

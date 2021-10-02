@@ -5,8 +5,7 @@
     tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
     <item
         android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_settings"
         app:showAsAction="always"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        android:title="Search"/>
+        android:title="Settings" />
 </menu>

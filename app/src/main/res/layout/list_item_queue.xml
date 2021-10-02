@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/main_list_background"
+        android:background="@drawable/shape_rounded_background"
         android:padding="8dp">
 
             <com.gauravk.audiovisualizer.visualizer.BarVisualizer
@@ -36,7 +36,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@+id/bar_visualizer_queue_item"
-            android:background="@drawable/main_list_background"
+            android:background="@drawable/shape_rounded_background"
             android:src="@drawable/ic_music" />
 
         <TextView
