@@ -26,38 +26,9 @@
 
     <string name="prefs_title_lib_paths">Bibliotheksordner</string>
     <string name="prefs_summery_lib_paths">Konfigurieren Sie, wo auf Ihrem Gerät nach Songs gesucht werden soll.</string>
-    <string name="prefs_summery_theme">Wählen Sie die Primärfarben Ihrer App</string>
-    <string name="prefs_title_theme">Thema</string>
 
     <string name="all_album_art_desc">Song-Miniaturansicht</string>
 
-    <string-array name="themeOptions">
-        <item>Umgedreht</item>
-        <item>rot</item>
-        <item>Blau</item>
-        <item>Grün</item>
-        <item>Orange</item>
-        <item>Gelb</item>
-        <item>Aqua</item>
-        <item>Lila</item>
-        <item>Lila-blau</item>
-        <item>Orange - Grün</item>
-        <item>Lila - Aqua</item>
-    </string-array>
-
 
     <!-- Do not change the name of these, they are used in code -->
-    <string-array name="themeValues">
-        <item>Inverted_theme (Experimentell)</item>
-        <item>Red_theme</item>
-        <item>Blue_theme</item>
-        <item>Green_theme</item>
-        <item>Orange_theme</item>
-        <item>Yellow_theme</item>
-        <item>Aqua_theme</item>
-        <item>Purple_theme</item>
-        <item>Purpleblue_theme</item>
-        <item>Orangegreen_theme</item>
-        <item>Purpleaqua_theme</item>
-    </string-array>
 </resources>

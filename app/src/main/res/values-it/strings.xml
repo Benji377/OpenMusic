@@ -26,37 +26,8 @@
 
     <string name="prefs_title_lib_paths">Cartelle della libreria</string>
     <string name="prefs_summery_lib_paths">Configura dove cercare i brani sul tuo dispositivo.</string>
-    <string name="prefs_summery_theme">Scegli i colori primari della tua app</string>
-    <string name="prefs_title_theme">Tema</string>
 
     <string name="all_album_art_desc">Miniatura della canzone</string>
 
-    <string-array name="themeOptions">
-        <item>Inverso (Esperimentale)</item>
-        <item>Rosso</item>
-        <item>Blu</item>
-        <item>Verde</item>
-        <item>Arancione</item>
-        <item>Giallo</item>
-        <item>Acqua</item>
-        <item>Viola</item>
-        <item>Viola - Blu</item>
-        <item>Arancione - Verde</item>
-        <item>Viola - Acqua</item>
-    </string-array>
-
     <!-- Do not change the name of these, they are used in code -->
-    <string-array name="themeValues">
-        <item>Inverted_theme</item>
-        <item>Red_theme</item>
-        <item>Blue_theme</item>
-        <item>Green_theme</item>
-        <item>Orange_theme</item>
-        <item>Yellow_theme</item>
-        <item>Aqua_theme</item>
-        <item>Purple_theme</item>
-        <item>Purpleblue_theme</item>
-        <item>Orangegreen_theme</item>
-        <item>Purpleaqua_theme</item>
-    </string-array>
 </resources>

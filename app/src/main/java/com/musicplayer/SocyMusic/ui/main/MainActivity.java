@@ -2,10 +2,10 @@ package com.musicplayer.SocyMusic.ui.main;
 
 import android.Manifest;
 import android.app.ActivityManager;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,15 +17,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -166,13 +162,6 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
             });
         } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             getMenuInflater().inflate(R.menu.playing, menu);
-            /*
-            MenuItem showQueueButton = menu.findItem(R.id.playing_menu_show_queue);
-            if (queueFragment == null)
-                showQueueButton.setIcon(R.drawable.ic_queue);
-            else
-                showQueueButton.setIcon(R.drawable.ic_queue_selected);
-             */
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -205,13 +194,22 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                     void finishLoading() {
                         // Display all the songs
                         tabsPager.setAdapter(new TabsPagerAdapter(MainActivity.this));
-                        /*
-                        new TabLayoutMediator(tabsLayout,
-                                tabsPager,
-                                (tab, position) -> tab.setText(getResources().getStringArray(R.array.main_tabs)[position]))
-                                .attach();
+                        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+                        // TODO: Implement search functionality
+                        SearchView searchView = findViewById(R.id.search_bar);
+                        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+                        searchView.setSubmitButtonEnabled(true);
+                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                            @Override
+                            public boolean onQueryTextSubmit(String query) {
+                                return false;
+                            }
 
-                         */
+                            @Override
+                            public boolean onQueryTextChange(String newText) {
+                                return false;
+                            }
+                        });
                     }
 
 

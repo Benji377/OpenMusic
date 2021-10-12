@@ -28,7 +28,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager_info_panes"
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="68dp" />
     </FrameLayout>
 
 

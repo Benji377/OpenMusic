@@ -1,6 +1,5 @@
 <resources>
     <string name="all_app_name">SocyMusic</string>
-    <string name="all_coming_soon">Coming Soon!</string>
     <string name="all_playlist_favorites_name">Favorites</string>
     <string name="all_create">Create</string>
     <string name="all_yes">Yes</string>
@@ -9,13 +8,6 @@
     <string name="all_loading_library">Looking for songs on your device…</string>
     <string name="all_album_art_desc">Song thumbnail</string>
 
-    <string-array name="main_tabs">
-        <item>All Songs</item>
-        <item>Albums</item>
-        <item>Playlists</item>
-        <item>Settings</item>
-        <item>Information</item>
-    </string-array>
     <string name="playlist_tab_list_empty">No playlist found</string>
     <string name="albums_tab_list_empty">No albums found</string>
     <string name="main_err_file_gone">File moved or deleted.</string>
@@ -43,11 +35,7 @@
 
     <string name="prefs_title_lib_paths">Library Folders</string>
     <string name="prefs_summery_lib_paths">Configure where to look for songs on your device.</string>
-    <string name="prefs_summery_theme">Choose the primary colors of your app</string>
-    <string name="prefs_title_theme">Theme</string>
 
-
-    <string name="playlist_empty">Playlist is empty…</string>
 
     <string name="add_to_playlist_dialog_title">Select Playlist:</string>
     <string name="add_to_playlist_dialog_new">Create New Playlist…</string>
@@ -62,34 +50,6 @@
     <string name="all_reloading_library">Reloading Songs…</string>
     <string name="activate_sleeptime_function">Activate SleepTime function:</string>
     <string name="sleepTimeDescription">The SleepTime functionality allows you to set a time at which the app will stop playing music and close itself. To allow this functionality you need to switch the below switch to ON and set a time above.</string>
-    <string name="timepicker_button">Save selected settings</string>
-
-    <string-array name="themeOptions">
-        <item>Inverted (Experimental)</item>
-        <item>Red</item>
-        <item>Blue</item>
-        <item>Green</item>
-        <item>Orange</item>
-        <item>Yellow</item>
-        <item>Aqua</item>
-        <item>Purple</item>
-        <item>Purple - Blue</item>
-        <item>Orange - Green</item>
-        <item>Purple - Aqua</item>
-    </string-array>
 
     <!-- Do not change the name of these, they are used in code -->
-    <string-array name="themeValues">
-        <item>Inverted_theme</item>
-        <item>Red_theme</item>
-        <item>Blue_theme</item>
-        <item>Green_theme</item>
-        <item>Orange_theme</item>
-        <item>Yellow_theme</item>
-        <item>Aqua_theme</item>
-        <item>Purple_theme</item>
-        <item>Purpleblue_theme</item>
-        <item>Orangegreen_theme</item>
-        <item>Purpleaqua_theme</item>
-    </string-array>
 </resources>
