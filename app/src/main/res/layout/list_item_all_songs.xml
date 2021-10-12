@@ -2,47 +2,61 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_height="52dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_rounded_background"
-        android:padding="8dp">
+        android:layout_height="52dp"
+        android:background="@drawable/shape_rounded_background">
 
         <ImageView
             android:id="@+id/imageview_all_songs_item_album_art"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:padding="2dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/shape_rounded_background"
+            android:padding="2dp"
             android:src="@drawable/ic_music" />
 
         <TextView
             android:id="@+id/textview_all_songs_item_song_title"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="16dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="83dp"
             android:layout_toEndOf="@+id/imageview_all_songs_item_album_art"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
-            android:padding="6dp"
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:text="Song name"
-            android:textColor="?colorOnPrimary"
-            android:textSize="15sp"
+            android:textColor="@color/Black"
+            tools:ignore="HardcodedText" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="83dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/textview_all_songs_item_song_title"
+            android:layout_toEndOf="@id/imageview_all_songs_item_album_art"
+            android:text="Artists name"
+            android:textColor="@color/Greytext"
             tools:ignore="HardcodedText" />
 
+        <Button
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_three_dots_options"
+            android:foreground="@drawable/ic_three_dots_options" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

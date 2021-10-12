@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="133.5dp"
+    android:layout_height="157.5dp"
     android:layout_margin="5dp"
     android:background="@drawable/shape_rounded_background"
     android:orientation="vertical"
@@ -13,8 +13,8 @@
 
     <ImageView
         android:id="@+id/imageview_album_card_art"
-        android:layout_width="175dp"
-        android:layout_height="175dp"
+        android:layout_width="109.5dp"
+        android:layout_height="105.5dp"
         android:layout_gravity="center"
         android:contentDescription="@string/all_album_art_desc"
         app:srcCompat="@drawable/music_combined" />
@@ -32,7 +32,10 @@
         android:textStyle="italic"
         tools:ignore="HardcodedText" />
 
+    <!-- Is invisible -->
+
     <TextView
+        android:visibility="gone"
         android:id="@+id/textview_album_card_song_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
