@@ -15,12 +15,6 @@
         android:icon="@drawable/ic_color_lens"
         android:title="Customisation"
         app:key="appearance_category">
-        <ListPreference
-            android:entries="@array/themeOptions"
-            android:entryValues="@array/themeValues"
-            app:key="theme"
-            app:summary="@string/prefs_summery_theme"
-            app:title="@string/prefs_title_theme" />
         <Preference
             app:key="sleeptime"
             app:summary="Put the app to sleep at a given time"
