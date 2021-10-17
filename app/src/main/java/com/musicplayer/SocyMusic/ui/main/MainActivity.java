@@ -8,17 +8,24 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -45,12 +52,15 @@ import com.musicplayer.musicplayer.R;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import timber.log.Timber;
 
 public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     SharedPreferences.OnSharedPreferenceChangeListener listener;
     private Snackbar loadingSnackBar;
@@ -74,25 +84,16 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         };
         prefs.registerOnSharedPreferenceChangeListener(listener);
 
-        View childView = getLayoutInflater().inflate(R.layout.content_main,
+        View childView = getLayoutInflater().inflate(R.layout.content_main_drawelayout,
                 findViewById(R.id.layout_main_tabs_holder), false);
         super.attachContentView(childView);
 
-        // Gets the primaryColor from the current Theme
-        final TypedValue value = new TypedValue();
-        getTheme().resolveAttribute(R.attr.colorSurface, value, true);
-        // Transforms color to Hex -> Avoids ResourceNotFound issue
-        String hexColor = String.format("#%06X", (0xFFFFFF & value.data));
-        // Gets the window and forces the statusbar to use the retrieved color
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.parseColor(hexColor));
-
-        // Instead of an actionbar, we use toolbar to simplify customisation
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.all_app_name);
-        toolbar.setElevation(0);
+        drawerLayout = findViewById(R.id.navigation_drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
         tabsLayout = findViewById(R.id.tab_layout_main);
@@ -135,6 +136,18 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.END))
+                drawerLayout.closeDrawer(GravityCompat.END);
+            else
+                drawerLayout.openDrawer(GravityCompat.END);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * Creates the option menu you can see in the upper right corner (three dots)
      *
@@ -145,35 +158,8 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     public boolean onCreateOptionsMenu(Menu menu) {
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             getMenuInflater().inflate(R.menu.main, menu);
-            // Searchbar, refrence: https://stackoverflow.com/questions/41867961/android-add-searchview-on-the-action-bar
-            MenuItem actionMenuItem = menu.findItem(R.id.action_search);
-            final SearchView searchView = (SearchView) actionMenuItem.getActionView();
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    if (TextUtils.isEmpty(newText)) {
-                        //adapter.filter("");
-                        //listView.clearTextFilter();
-                    } else {
-                        //adapter.filter(newText);
-                    }
-                    return true;
-                }
-            });
         } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             getMenuInflater().inflate(R.menu.playing, menu);
-            /*
-            MenuItem showQueueButton = menu.findItem(R.id.playing_menu_show_queue);
-            if (queueFragment == null)
-                showQueueButton.setIcon(R.drawable.ic_queue);
-            else
-                showQueueButton.setIcon(R.drawable.ic_queue_selected);
-             */
         }
         return super.onCreateOptionsMenu(menu);
     }

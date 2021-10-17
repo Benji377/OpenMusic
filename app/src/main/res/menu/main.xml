@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<menu xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
-    <!-- Replace this with a drawer!-->
-    <item
-        android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_search"
-        app:showAsAction="always"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
-        android:title="Search"/>
 </menu>

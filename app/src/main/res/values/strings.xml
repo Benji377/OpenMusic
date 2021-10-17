@@ -92,4 +92,7 @@
         <item>Orangegreen_theme</item>
         <item>Purpleaqua_theme</item>
     </string-array>
+
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
 </resources>
