@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -51,6 +53,8 @@ public class PlayerFragment extends Fragment {
     private boolean startPlaying;
     private boolean currentlySeeking;
 
+    ActionBar actionBar;
+
     /**
      * Creates a new instance of the fragment
      *
@@ -74,6 +78,9 @@ public class PlayerFragment extends Fragment {
         // Gets the song which is actually playing
         // (The one the user clicked on in the list before)
         songPlaying = songsData.getSongPlaying();
+        actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setTitle(songPlaying.getTitle());
 
     }
 
@@ -344,6 +351,7 @@ public class PlayerFragment extends Fragment {
         // Retrieves the song playing right now
         songPlaying = songsData.getSongPlaying();
         favoriteCheckBox.setChecked(songsData.isFavorited(songPlaying));
+        actionBar.setTitle(songPlaying.getTitle());
 
         // Sets all properties again
         if (songPager.get().getCurrentItem() != songsData.getPlayingIndex())
