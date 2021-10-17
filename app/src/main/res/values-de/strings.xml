@@ -30,34 +30,25 @@
     <string name="prefs_title_theme">Thema</string>
 
     <string name="all_album_art_desc">Song-Miniaturansicht</string>
+    <string name="all_playlist_favorites_name">Favoriten</string>
+    <string name="all_create">Erstelle</string>
+    <string name="all_yes">Ja</string>
+    <string name="all_no">Nein</string>
+    <string name="all_song_count">%d Lied(er)</string>
 
-    <string-array name="themeOptions">
-        <item>Umgedreht</item>
-        <item>rot</item>
-        <item>Blau</item>
-        <item>Grün</item>
-        <item>Orange</item>
-        <item>Gelb</item>
-        <item>Aqua</item>
-        <item>Lila</item>
-        <item>Lila-blau</item>
-        <item>Orange - Grün</item>
-        <item>Lila - Aqua</item>
-    </string-array>
-
-
-    <!-- Do not change the name of these, they are used in code -->
-    <string-array name="themeValues">
-        <item>Inverted_theme (Experimentell)</item>
-        <item>Red_theme</item>
-        <item>Blue_theme</item>
-        <item>Green_theme</item>
-        <item>Orange_theme</item>
-        <item>Yellow_theme</item>
-        <item>Aqua_theme</item>
-        <item>Purple_theme</item>
-        <item>Purpleblue_theme</item>
-        <item>Orangegreen_theme</item>
-        <item>Purpleaqua_theme</item>
-    </string-array>
+    <string name="activate_sleeptime_function">Aktiviere SleepTime Funktion:</string>
+    <string name="delete_playlist_dialog_confirm">Bist du sicher dass du diese Playlist löschen möchtest?</string>
+    <string name="add_to_playlist_dialog_new">Erstelle eine neue Playlist…</string>
+    <string name="delete_playlist_dialog_title">Lösche playlist</string>
+    <string name="add_to_playlist_dialog_add_anyway">Willst du es trotzdem hinzufügen?</string>
+    <string name="new_playlist_dialog_enter_name">Gib den Name der Playlist ein…</string>
+    <string name="all_loading_library">Ich suche nach Lieder auf dem Gerät…</string>
+    <string name="new_playlist_dialog_title">Neue playlist</string>
+    <string name="albums_tab_list_empty">Kein Album gefunden</string>
+    <string name="settings_cannot_change_lib">Es wurden noch nicht alle Lieder geladen, bitte warte.</string>
+    <string name="all_reloading_library">Lieder werden neu geladen…</string>
+    <string name="timepicker_button">Speichere die ausgewählten Einstellungen</string>
+    <string name="add_to_playlist_dialog_title">Wähle Playlist aus:</string>
+    <string name="add_to_playlist_dialog_already_in_playlist">Lied existiert bereits in der Playlist</string>
+    <string name="sleepTimeDescription">Mit der SleepTime-Funktion können Sie eine Zeit festlegen, zu der die App die Musikwiedergabe stoppt und sich selbst schließt. Um diese Funktionalität zu ermöglichen, müssen Sie den folgenden Schalter auf ON schalten und eine Zeit oben einstellen.</string>
 </resources>

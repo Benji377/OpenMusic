@@ -1,4 +1,6 @@
 <resources>
+
+    <!-- Strings that need to be translated: -->
     <string name="all_app_name">SocyMusic</string>
     <string name="all_playlist_favorites_name">Favorites</string>
     <string name="all_create">Create</string>
@@ -8,17 +10,9 @@
     <string name="all_loading_library">Looking for songs on your device…</string>
     <string name="all_album_art_desc">Song thumbnail</string>
 
-    <string-array name="main_tabs">
-        <item>All Songs</item>
-        <item>Albums</item>
-        <item>Playlists</item>
-        <item>Settings</item>
-        <item>Information</item>
-    </string-array>
     <string name="playlist_tab_list_empty">No playlist found</string>
     <string name="albums_tab_list_empty">No albums found</string>
     <string name="main_err_file_gone">File moved or deleted.</string>
-
     <string name="all_songs_list_empty">No songs found…</string>
 
     <string name="main_menu_item_about">About</string>
@@ -61,35 +55,16 @@
     <string name="sleepTimeDescription">The SleepTime functionality allows you to set a time at which the app will stop playing music and close itself. To allow this functionality you need to switch the below switch to ON and set a time above.</string>
     <string name="timepicker_button">Save selected settings</string>
 
-    <string-array name="themeOptions">
-        <item>Inverted (Experimental)</item>
-        <item>Red</item>
-        <item>Blue</item>
-        <item>Green</item>
-        <item>Orange</item>
-        <item>Yellow</item>
-        <item>Aqua</item>
-        <item>Purple</item>
-        <item>Purple - Blue</item>
-        <item>Orange - Green</item>
-        <item>Purple - Aqua</item>
+    <string-array name="main_tabs">
+        <item>All Songs</item>
+        <item>Albums</item>
+        <item>Playlists</item>
+        <item>Settings</item>
+        <item>Information</item>
     </string-array>
 
-    <!-- Do not change the name of these, they are used in code -->
-    <string-array name="themeValues">
-        <item>Inverted_theme</item>
-        <item>Red_theme</item>
-        <item>Blue_theme</item>
-        <item>Green_theme</item>
-        <item>Orange_theme</item>
-        <item>Yellow_theme</item>
-        <item>Aqua_theme</item>
-        <item>Purple_theme</item>
-        <item>Purpleblue_theme</item>
-        <item>Orangegreen_theme</item>
-        <item>Purpleaqua_theme</item>
-    </string-array>
 
-    <string name="nav_open">Open</string>
-    <string name="nav_close">Close</string>
+    <!-- Strings that don't need translations! -->
+    <string name="nav_open" translatable="false">Open</string>
+    <string name="nav_close" translatable="false">Close</string>
 </resources>
