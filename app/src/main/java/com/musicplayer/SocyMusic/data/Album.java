@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -65,14 +64,6 @@ public class Album implements Serializable {
         this.id = id;
     }
 
-    public void setSongList(ArrayList<Song> songList) {
-        this.songList = songList;
-        if (songList != null) {
-            for (Song song : songList)
-                song.setAlbum(this);
-        }
-    }
-
     public boolean containsSong(Song song) {
         return songList.contains(song);
     }
@@ -83,6 +74,14 @@ public class Album implements Serializable {
 
     public ArrayList<Song> getSongList() {
         return songList;
+    }
+
+    public void setSongList(ArrayList<Song> songList) {
+        this.songList = songList;
+        if (songList != null) {
+            for (Song song : songList)
+                song.setAlbum(this);
+        }
     }
 
     public Song getSongAt(int position) {

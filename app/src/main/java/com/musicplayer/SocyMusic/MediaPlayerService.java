@@ -30,18 +30,16 @@ public class MediaPlayerService extends Service {
     public static final String ACTION_NEXT = "next";
     public static final String ACTION_CANCEL = "cancel";
     public static final String EXTRA_SONG = "com.musicplayer.SocyMusic.song";
-
+    private static final String MEDIA_SESSION_TAG = "mediaservicetag";
+    private static final int SERVICE_REQUEST_CODE = 9034;
+    private static final int NOTIFICATION_ID = 181;
+    // Declaring constants
+    private final IBinder binder = new LocalBinder();
     // Declaring components
     private Song songPlaying;
     private MediaSessionCompat mediaSession;
     private boolean isPlaying;
     private SongsData songsData;
-
-    // Declaring constants
-    private final IBinder binder = new LocalBinder();
-    private static final String MEDIA_SESSION_TAG = "mediaservicetag";
-    private static final int SERVICE_REQUEST_CODE = 9034;
-    private static final int NOTIFICATION_ID = 181;
 
     /**
      * Controls Bluetooth key-pressing and assigns them their corresponding actions

@@ -3,8 +3,6 @@ package com.musicplayer.SocyMusic.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.preference.EditTextPreference;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
 import com.musicplayer.SocyMusic.SocyMusicApp;

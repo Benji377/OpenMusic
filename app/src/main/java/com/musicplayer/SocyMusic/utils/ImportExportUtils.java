@@ -1,14 +1,17 @@
 package com.musicplayer.SocyMusic.utils;
 
+import android.os.Build;
+import android.os.Environment;
+
+import androidx.annotation.RequiresApi;
+
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;
 
-import android.os.Build;
-import android.os.Environment;
-import androidx.annotation.RequiresApi;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,6 +24,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.stream.Stream;
+
 import timber.log.Timber;
 
 /**
@@ -61,8 +65,9 @@ public class ImportExportUtils {
     /**
      * Extracts data from a given Playlist and writes it to a temporary file for later exportation
      * The data is written in m3u format!
-     * @param m3uFile File to write data to
-     * @param playlist_id UUID of the playlist
+     *
+     * @param m3uFile       File to write data to
+     * @param playlist_id   UUID of the playlist
      * @param playlist_name Name of the playlist
      * @return Filled file
      */
@@ -81,20 +86,21 @@ public class ImportExportUtils {
             }
             writer.close();
         } catch (IOException e) {
-            Timber.e("M3U-Error: %s",e.getMessage());
+            Timber.e("M3U-Error: %s", e.getMessage());
         }
         return m3uFile;
     }
 
     /**
      * Converts a given playlist in M3U format and exports it to a file
+     *
      * @param export_location Where the m3u file should be exported to
-     * @param playlist_id UUID of the playlist
-     * @param playlist_name Name of the playlist
+     * @param playlist_id     UUID of the playlist
+     * @param playlist_name   Name of the playlist
      */
     public void exportM3UPlaylist(Path export_location, UUID playlist_id, String playlist_name) {
-        File temporary = new File(Environment.getDataDirectory()+"/data/com.musicplayer.socymusic/files", "temporary.m3u");
-        temporary = m3uConverter(temporary,playlist_id,playlist_name);
+        File temporary = new File(Environment.getDataDirectory() + "/data/com.musicplayer.socymusic/files", "temporary.m3u");
+        temporary = m3uConverter(temporary, playlist_id, playlist_name);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             exportImportFile(temporary.toPath(), export_location);
         } else {
@@ -105,32 +111,32 @@ public class ImportExportUtils {
 
     /**
      * Converts a file from xml to json and saves it in the destination file
-     * @param xmlFile File to read from
+     *
+     * @param xmlFile  File to read from
      * @param jsonFile File to save XML in
      */
     public void convertXMLtoJSON(File xmlFile, File jsonFile) {
         try {
             InputStream inputStream = new FileInputStream(xmlFile);
-            StringBuilder builder =  new StringBuilder();
+            StringBuilder builder = new StringBuilder();
             int ptr;
-            while ((ptr = inputStream.read()) != -1 ) {
+            while ((ptr = inputStream.read()) != -1) {
                 builder.append((char) ptr);
             }
 
-            String xml  = builder.toString();
+            String xml = builder.toString();
             JSONObject jsonObj = XML.toJSONObject(xml);
             FileWriter fileWriter = new FileWriter(jsonFile);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            for(int i= 0 ;i < jsonObj.toString().split(",").length; i ++) {
+            for (int i = 0; i < jsonObj.toString().split(",").length; i++) {
                 //System.out.println(jsonObj.toString().split(",")[i]);
                 bufferedWriter.write(jsonObj.toString().split(",")[i]);
                 bufferedWriter.write("\n");
             }
 
             bufferedWriter.close();
-        }
-        catch(IOException | JSONException ex) {
+        } catch (IOException | JSONException ex) {
             System.out.println("Error writing to file '" + jsonFile.getName() + "'");
         }
     }

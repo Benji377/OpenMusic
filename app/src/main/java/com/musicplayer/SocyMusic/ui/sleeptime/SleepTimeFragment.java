@@ -19,14 +19,12 @@ import androidx.preference.PreferenceManager;
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.musicplayer.R;
 
-import timber.log.Timber;
-
 public class SleepTimeFragment extends Fragment {
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
     private TimePicker timePicker;
     private SwitchCompat switchCompat;
     private Button button;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -54,7 +52,7 @@ public class SleepTimeFragment extends Fragment {
 
         timePicker.setOnTimeChangedListener((timePicker, hours, minutes) -> {
             // display a toast with changed values of time picker
-            Toast.makeText(requireContext(), "H: "+hours+ " M: "+minutes, Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "H: " + hours + " M: " + minutes, Toast.LENGTH_SHORT).show();
             timePicker.setHour(hours);
             timePicker.setMinute(minutes);
         });
@@ -74,7 +72,6 @@ public class SleepTimeFragment extends Fragment {
         });
 
 
-
         return view;
     }
 
@@ -84,14 +81,14 @@ public class SleepTimeFragment extends Fragment {
     }
 
     public int convertInt() {
-        return timePicker.getHour()*3600 + timePicker.getMinute()*60;
+        return timePicker.getHour() * 3600 + timePicker.getMinute() * 60;
     }
 
     public void updateTimePicker() {
         int timee = preferences.getInt(SocyMusicApp.PREFS_KEY_TIMEPICKER, 36480);
         int sec = timee % 60;
-        int min = (timee / 60)%60;
-        int hours = (timee/60)/60;
+        int min = (timee / 60) % 60;
+        int hours = (timee / 60) / 60;
         timePicker.setHour(hours);
         timePicker.setMinute(min);
     }
@@ -100,9 +97,9 @@ public class SleepTimeFragment extends Fragment {
     public String getCombined() {
         // Time in hh:mm:AA format
         String ret = "";
-        ret+=timePicker.getHour()+":";
-        ret+=timePicker.getMinute()+":";
-        ret+=getAmPm();
+        ret += timePicker.getHour() + ":";
+        ret += timePicker.getMinute() + ":";
+        ret += getAmPm();
         return ret;
     }
 

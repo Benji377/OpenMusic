@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +31,14 @@ public class AlbumFragment extends Fragment {
     private TextView albumTitleTextview;
     private ImageView albumArtImageView;
     private TextView songCountTextview;
+
+    public static AlbumFragment newInstance(Album album) {
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_ALBUM, album);
+        AlbumFragment fragment = new AlbumFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -71,7 +78,7 @@ public class AlbumFragment extends Fragment {
 
         albumTitleTextview = view.findViewById(R.id.textview_album_name);
         albumTitleTextview.setText(album.getTitle());
-        albumArtImageView=view.findViewById(R.id.imageview_album_art);
+        albumArtImageView = view.findViewById(R.id.imageview_album_art);
         Glide.with(requireContext())
                 .load(album.getArtPath())
                 .placeholder(R.drawable.music_combined)
@@ -111,14 +118,6 @@ public class AlbumFragment extends Fragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement AlbumFragment.Host");
         }
-    }
-
-    public static AlbumFragment newInstance(Album album) {
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_ALBUM, album);
-        AlbumFragment fragment = new AlbumFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     interface Host {

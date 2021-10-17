@@ -19,7 +19,7 @@ public class SongHolder extends RecyclerView.ViewHolder {
     public SongHolder(@NonNull View itemView, SongListAdapter.ItemClickListener clickListeners) {
         super(itemView);
         songTitleTextView = itemView.findViewById(R.id.textview_all_songs_item_song_title);
-        songAlbumArtImageView=itemView.findViewById(R.id.imageview_all_songs_item_album_art);
+        songAlbumArtImageView = itemView.findViewById(R.id.imageview_all_songs_item_album_art);
         itemView.setOnClickListener(v -> clickListeners.onItemClick(getBindingAdapterPosition(), v));
         itemView.setOnLongClickListener(v -> clickListeners.onItemLongClick(getBindingAdapterPosition(), v));
     }

@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.musicplayer.SocyMusic.data.Album;
-import com.musicplayer.SocyMusic.ui.playlist.PlaylistSongAdapter;
 import com.musicplayer.musicplayer.R;
 
 import java.util.List;
@@ -48,9 +47,10 @@ public class AlbumsListAdapter extends RecyclerView.Adapter<AlbumHolder> {
     }
 
     public void setOnItemClickListener(ItemClickListener clickListener) {
-        this.clickListener=clickListener;
+        this.clickListener = clickListener;
     }
-    interface ItemClickListener{
+
+    interface ItemClickListener {
         void onItemClick(int position, View view);
 
         boolean onItemLongClick(int position, View view);

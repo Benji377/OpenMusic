@@ -34,20 +34,15 @@ import com.musicplayer.SocyMusic.utils.UiUtils;
 import com.musicplayer.musicplayer.R;
 
 public abstract class PlayerFragmentHost extends AppCompatActivity implements PlayerFragment.Host, QueueFragment.Host, ServiceConnection {
+    private static MediaPlayerService mediaPlayerService;
+    private static MediaPlayerReceiver mediaPlayerReceiver;
+    private static BluetoothUtil bluetoothReceiver;
     protected SongsData songsData;
-
+    protected BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
     private PlayerFragment playerFragment;
     private QueueFragment queueFragment;
     private View contentView;
-
-    private static MediaPlayerService mediaPlayerService;
-    private static MediaPlayerReceiver mediaPlayerReceiver;
-
-    private static BluetoothUtil bluetoothReceiver;
-
     private CustomViewPager2 songInfoPager;
-    protected BottomSheetBehavior<FrameLayout> bottomSheetBehavior;
-
     private boolean startPlaying;
     private boolean playerLoadComplete;
 
@@ -328,6 +323,27 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
     }
 
     /**
+     * Sets what happens if the service connects
+     *
+     * @param name    Name of the service
+     * @param iBinder Binder for the service
+     */
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder iBinder) {
+        mediaPlayerService = ((MediaPlayerService.LocalBinder) iBinder).getService();
+    }
+
+    /**
+     * Sets what happens if the service disconnects
+     *
+     * @param name Name of the service
+     */
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        mediaPlayerService = null;
+    }
+
+    /**
      * Extends the standard Broadcastreceiver to create a new receiver for the mediaplayer
      */
     private class MediaPlayerReceiver extends BroadcastReceiver {
@@ -370,27 +386,6 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
 
         }
 
-    }
-
-    /**
-     * Sets what happens if the service connects
-     *
-     * @param name    Name of the service
-     * @param iBinder Binder for the service
-     */
-    @Override
-    public void onServiceConnected(ComponentName name, IBinder iBinder) {
-        mediaPlayerService = ((MediaPlayerService.LocalBinder) iBinder).getService();
-    }
-
-    /**
-     * Sets what happens if the service disconnects
-     *
-     * @param name Name of the service
-     */
-    @Override
-    public void onServiceDisconnected(ComponentName name) {
-        mediaPlayerService = null;
     }
 
 }

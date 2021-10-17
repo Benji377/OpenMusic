@@ -4,17 +4,10 @@ import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -22,8 +15,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -52,17 +43,14 @@ import com.musicplayer.musicplayer.R;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 
 import timber.log.Timber;
 
 public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
     private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
-
-    SharedPreferences.OnSharedPreferenceChangeListener listener;
     private Snackbar loadingSnackBar;
 
     /**
@@ -89,7 +77,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         super.attachContentView(childView);
 
         drawerLayout = findViewById(R.id.navigation_drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         ActionBar actionBar = getSupportActionBar();
@@ -107,7 +95,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         int settime = prefs.getInt(SocyMusicApp.PREFS_KEY_TIMEPICKER, 36480);
         Calendar calendar = Calendar.getInstance();
         // Retrieves current time and converts it to seconds
-        int currentTimes = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
+        int currentTimes = (calendar.get(Calendar.HOUR_OF_DAY) * 3600) + (calendar.get(Calendar.MINUTE) * 60);
         // Starts a thread to check for the sleep time to go off
         if (settime > currentTimes && prefs.getBoolean(SocyMusicApp.PREFS_KEY_TIMEPICKER_SWITCH, false)) {
             Thread thread = new Thread() {
@@ -116,7 +104,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                     // If the current time becomes the time set in the preference it exits the loop
                     while (true) {
                         Calendar calendar = Calendar.getInstance();
-                        int currentTime = (calendar.get(Calendar.HOUR_OF_DAY)*3600)+(calendar.get(Calendar.MINUTE)*60);
+                        int currentTime = (calendar.get(Calendar.HOUR_OF_DAY) * 3600) + (calendar.get(Calendar.MINUTE) * 60);
                         if (settime - currentTime <= 0)
                             break;
                     }

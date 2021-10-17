@@ -1,5 +1,5 @@
 <resources>
-<string name="all_app_name">SocyMusic</string>
+    <string name="all_app_name">SocyMusic</string>
 
     <string name="all_songs_list_empty">Nessun brano trovato…</string>
     <string name="playlist_tab_list_empty">Nessuna playlist trovata</string>

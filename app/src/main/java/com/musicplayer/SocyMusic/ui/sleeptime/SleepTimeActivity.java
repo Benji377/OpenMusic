@@ -2,18 +2,20 @@ package com.musicplayer.SocyMusic.ui.sleeptime;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
+
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.utils.PreferenceUtils;
 import com.musicplayer.musicplayer.R;
 
 public class SleepTimeActivity extends AppCompatActivity {
-    private SleepTimeFragment sleepTimeFragment;
     SharedPreferences.OnSharedPreferenceChangeListener listener;
+    private SleepTimeFragment sleepTimeFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

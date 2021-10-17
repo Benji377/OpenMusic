@@ -23,9 +23,9 @@ public class PlaylistActivity extends PlayerFragmentHost implements PlaylistFrag
     public static final String EXTRA_PLAYLIST = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYLIST";
     public static final String EXTRA_SHOW_PLAYER = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYING";
     public static final String RESULT_EXTRA_QUEUE_CHANGED = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYING";
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
     private PlaylistFragment playlistFragment;
     private Playlist playlist;
-    SharedPreferences.OnSharedPreferenceChangeListener listener;
 
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {

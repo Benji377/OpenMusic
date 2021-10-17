@@ -3,7 +3,6 @@ package com.musicplayer.SocyMusic.data;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
@@ -30,6 +29,11 @@ import timber.log.Timber;
 
 
 public class SongsData {
+    // Contains a list of all supported extensions.
+    // Especially concerned about .ts as it is not seekable and might break the app
+    public static final String[] SUPPORTED_FORMATS = {".mp3", ".wav", ".ogg", ".3gp", ".mp4", ".m4a",
+            ".aac", ".ts", ".amr", ".flac", ".mid", ".xmf", ".mxmf", ".rtttl", ".rtx", ".ota", ".imy", ".mkv"};
+    public static final UUID FAVORITES_PLAYLIST_ID = UUID.fromString("3a47e9a7-7cb6-4b47-8b98-7ee7d4b865f0");
     public static SongsData data;
     private final AppDatabase database;
     private volatile ArrayList<Song> allSongs;
@@ -42,12 +46,6 @@ public class SongsData {
     private boolean shuffle;
     private boolean doneLoading;
 
-    // Contains a list of all supported extensions.
-    // Especially concerned about .ts as it is not seekable and might break the app
-    public static final String[] SUPPORTED_FORMATS = {".mp3", ".wav", ".ogg", ".3gp", ".mp4", ".m4a",
-            ".aac", ".ts", ".amr", ".flac", ".mid", ".xmf", ".mxmf", ".rtttl", ".rtx", ".ota", ".imy", ".mkv"};
-    public static final UUID FAVORITES_PLAYLIST_ID = UUID.fromString("3a47e9a7-7cb6-4b47-8b98-7ee7d4b865f0");
-
     /**
      * SongsData custom constructor.
      * When created automatically reloads all songs and creates the playingQueue
@@ -55,6 +53,17 @@ public class SongsData {
     private SongsData(@NonNull Context context) {
         playingQueue = new ArrayList<>();
         database = Room.databaseBuilder(context, AppDatabase.class, AppDatabase.DATABASE_NAME).build();
+    }
+
+    /**
+     * Creates an instance of the class if it doesn't already exist
+     *
+     * @return the new created class
+     */
+    public static SongsData getInstance(Context context) {
+        if (data == null)
+            data = new SongsData(context);
+        return data;
     }
 
     /**
@@ -86,17 +95,6 @@ public class SongsData {
     public Song playPrev() {
         setPlayingIndex(playingQueueIndex - 1);
         return getSongPlaying();
-    }
-
-    /**
-     * Sets the playingQueueIndex to a specific index
-     *
-     * @param playingIndex the index of the song
-     */
-    public void setPlayingIndex(int playingIndex) {
-        playingQueueIndex = playingIndex;
-        if (playingQueueIndex < 0 || playingQueueIndex > playingQueue.size() - 1 && repeat)
-            playingQueueIndex = 0;
     }
 
     /**
@@ -137,17 +135,6 @@ public class SongsData {
      */
     public void addToQueue(int position) {
         playingQueue.add(allSongs.get(position));
-    }
-
-    /**
-     * Creates an instance of the class if it doesn't already exist
-     *
-     * @return the new created class
-     */
-    public static SongsData getInstance(Context context) {
-        if (data == null)
-            data = new SongsData(context);
-        return data;
     }
 
     /**
@@ -340,6 +327,7 @@ public class SongsData {
      * This method is needed in the loadSong method to get only the
      * File extension and therefore identify the type of songs
      * accurately
+     *
      * @param file File to check
      * @return Nothing if it has no extension, else the whole extension (with dot)
      */
@@ -403,21 +391,21 @@ public class SongsData {
     }
 
     /**
-     * Checks if the player is in shuffle mode or not
-     *
-     * @return True if in shuffle mode, else false
-     */
-    public boolean isShuffle() {
-        return shuffle;
-    }
-
-    /**
      * Changes the repeat state of a song, sets if the song should be repeated or not
      *
      * @param repeat True if the song should be repeated, or false if not
      */
     public void setRepeat(boolean repeat) {
         this.repeat = repeat;
+    }
+
+    /**
+     * Checks if the player is in shuffle mode or not
+     *
+     * @return True if in shuffle mode, else false
+     */
+    public boolean isShuffle() {
+        return shuffle;
     }
 
     /**
@@ -485,6 +473,17 @@ public class SongsData {
      */
     public int getPlayingIndex() {
         return playingQueueIndex;
+    }
+
+    /**
+     * Sets the playingQueueIndex to a specific index
+     *
+     * @param playingIndex the index of the song
+     */
+    public void setPlayingIndex(int playingIndex) {
+        playingQueueIndex = playingIndex;
+        if (playingQueueIndex < 0 || playingQueueIndex > playingQueue.size() - 1 && repeat)
+            playingQueueIndex = 0;
     }
 
     /**
@@ -572,12 +571,12 @@ public class SongsData {
         return allAlbums;
     }
 
-    public void setDoneLoading(boolean doneLoading) {
-        this.doneLoading = doneLoading;
-    }
-
     public boolean isDoneLoading() {
         return doneLoading;
+    }
+
+    public void setDoneLoading(boolean doneLoading) {
+        this.doneLoading = doneLoading;
     }
 
     public void playAlbumFrom(Album album, int position) {

@@ -52,6 +52,17 @@ public class PlayerFragment extends Fragment {
     private boolean currentlySeeking;
 
     /**
+     * Creates a new instance of the fragment
+     *
+     * @return The fragment as a class
+     */
+    public static PlayerFragment newInstance(boolean startPlaying) {
+        PlayerFragment instance = new PlayerFragment();
+        instance.startPlaying = startPlaying;
+        return instance;
+    }
+
+    /**
      * Gets automatically executed when the Player gets created
      *
      * @param savedInstanceState Standard Android stuff
@@ -323,18 +334,6 @@ public class PlayerFragment extends Fragment {
             songPager.get().getAdapter().notifyDataSetChanged();
             songPager.get().setCurrentItem(songsData.getPlayingIndex(), false);
         }
-    }
-
-
-    /**
-     * Creates a new instance of the fragment
-     *
-     * @return The fragment as a class
-     */
-    public static PlayerFragment newInstance(boolean startPlaying) {
-        PlayerFragment instance = new PlayerFragment();
-        instance.startPlaying = startPlaying;
-        return instance;
     }
 
     /**

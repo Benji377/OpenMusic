@@ -23,6 +23,8 @@ import java.util.UUID;
         onDelete = ForeignKey.SET_NULL)
 })
 public class Song implements Serializable {
+    @Ignore
+    private final String title;
     @PrimaryKey
     @ColumnInfo(name = "song_id")
     @NonNull
@@ -36,8 +38,6 @@ public class Song implements Serializable {
     @Nullable
     @Ignore
     private Album album;
-    @Ignore
-    private final String title;
 
     /**
      * First custom constructor for the Song class. Creates a Song with file only.
@@ -148,12 +148,12 @@ public class Song implements Serializable {
         this.albumID = albumID;
     }
 
-    public void setAlbum(@Nullable Album album) {
-        this.album = album;
-    }
-
     @Nullable
     public Album getAlbum() {
         return this.album;
+    }
+
+    public void setAlbum(@Nullable Album album) {
+        this.album = album;
     }
 }

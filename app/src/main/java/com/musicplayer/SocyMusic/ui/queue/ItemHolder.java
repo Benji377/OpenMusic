@@ -23,9 +23,8 @@ public class ItemHolder extends DragItemAdapter.ViewHolder {
     private final SongsData songsData;
     private final TextView songTitleTextView;
     private final BarVisualizer visualizer;
-    private Song song;
-
     private final ItemAdapter.onItemClickedListener onItemClickedListener;
+    private Song song;
 
     public ItemHolder(Context context, View itemView, @IdRes int grabHandleID, boolean dragOnLongPress, ItemAdapter.onItemClickedListener listener) {
         super(itemView, grabHandleID, dragOnLongPress);

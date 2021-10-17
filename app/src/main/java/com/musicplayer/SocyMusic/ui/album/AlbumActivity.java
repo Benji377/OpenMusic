@@ -20,12 +20,12 @@ import com.musicplayer.SocyMusic.utils.PreferenceUtils;
 import com.musicplayer.musicplayer.R;
 
 public class AlbumActivity extends PlayerFragmentHost implements AlbumFragment.Host {
-    private Album album;
-    private AlbumFragment albumFragment;
     public static final String EXTRA_ALBUM = "com.musicplayer.SocyMusic.ui.album.AlbumActivity.EXTRA_ALBUM";
     public static final String EXTRA_SHOW_PLAYER = "com.musicplayer.SocyMusic.ui.album.AlbumActivity.EXTRA_PLAYING";
     public static final String RESULT_EXTRA_QUEUE_CHANGED = "com.musicplayer.SocyMusic.ui.playlist.PlaylistActivity.EXTRA_PLAYING";
     SharedPreferences.OnSharedPreferenceChangeListener listener;
+    private Album album;
+    private AlbumFragment albumFragment;
 
     @Override
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {

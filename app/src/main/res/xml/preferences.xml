@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:title="Library"
-        android:icon="@drawable/ic_library">
+        android:icon="@drawable/ic_library"
+        android:title="Library">
         <Preference
             app:key="lib_paths"
             app:summary="@string/prefs_summery_lib_paths"
@@ -12,55 +12,52 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:icon="@drawable/ic_color_lens"
         android:title="Customisation"
-        app:key="appearance_category"
-        android:icon="@drawable/ic_color_lens">
+        app:key="appearance_category">
         <ListPreference
+            android:entries="@array/themeOptions"
+            android:entryValues="@array/themeValues"
             app:key="theme"
             app:summary="@string/prefs_summery_theme"
-            app:title="@string/prefs_title_theme"
-            android:entries="@array/themeOptions"
-            android:entryValues="@array/themeValues"/>
+            app:title="@string/prefs_title_theme" />
         <Preference
             app:key="sleeptime"
-            app:title="Sleep Timer"
-            app:summary="Put the app to sleep at a given time"/>
+            app:summary="Put the app to sleep at a given time"
+            app:title="Sleep Timer" />
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:icon="@drawable/ic_bug_report"
         android:title="Debugging"
-        app:key="logging_category"
-        android:icon="@drawable/ic_bug_report">
+        app:key="logging_category">
         <SwitchPreference
+            app:defaultValue="true"
             app:key="logging"
             app:summary="Enable saving log files for debugging"
-            app:title="Logs"
-            app:defaultValue="true"/>
+            app:title="Logs" />
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:icon="@drawable/ic_info"
         android:title="@string/main_menu_item_about"
-        app:key="about"
-        android:icon="@drawable/ic_info">
+        app:key="about">
         <Preference
             android:selectable="false"
-            android:summary="@string/about_description"
-            />
+            android:summary="@string/about_description" />
         <Preference
             android:icon="@drawable/about_icon_github"
             android:summary="Github repository">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:data="https://github.com/Benji377/SocyMusic"
-            />
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/Benji377/SocyMusic" />
         </Preference>
         <Preference
             android:icon="@drawable/about_icon_link"
             android:summary="SocyMusic website">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://benji377.github.io/SocyMusic/"
-                />
+                android:data="https://benji377.github.io/SocyMusic/" />
         </Preference>
         <Preference
             android:icon="@drawable/about_icon_google_play"
@@ -68,18 +65,14 @@
             app:key="versions">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/Benji377/SocyMusic/releases/latest"
-                />
+                android:data="https://github.com/Benji377/SocyMusic/releases/latest" />
         </Preference>
     </PreferenceCategory>
 
     <!-- These preferences are invisible -->
-    <PreferenceCategory
-        app:enabled="false">
-        <Preference
-            app:key="timepicker"/>
-        <Preference
-            app:key="timepicker_switch"/>
+    <PreferenceCategory app:enabled="false">
+        <Preference app:key="timepicker" />
+        <Preference app:key="timepicker_switch" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -10,12 +10,11 @@
         android:id="@+id/tab_layout_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?colorSurface"
         android:layout_gravity="center_horizontal"
-        app:tabMode="scrollable"
-        app:tabTextColor="?colorOnSurface"
+        android:background="?colorSurface"
         app:tabIndicatorColor="?colorPrimaryDark"
-        />
+        app:tabMode="scrollable"
+        app:tabTextColor="?colorOnSurface" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_main_tabs"

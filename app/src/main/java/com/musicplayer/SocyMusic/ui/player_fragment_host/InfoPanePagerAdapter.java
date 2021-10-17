@@ -43,12 +43,12 @@ public class InfoPanePagerAdapter extends RecyclerView.Adapter<InfoPanePageHolde
         return queue.size();
     }
 
-    public void setQueue(List<Song> queue) {
-        this.queue = queue;
-    }
-
     public List<Song> getQueue() {
         return queue;
+    }
+
+    public void setQueue(List<Song> queue) {
+        this.queue = queue;
     }
 
     public void setPaneListeners(PaneListeners listeners) {

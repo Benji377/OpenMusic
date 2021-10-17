@@ -32,6 +32,14 @@ public class PlaylistFragment extends Fragment {
     private TextView songCountTextview;
     private TextView totalDurationTextview;
 
+    public static PlaylistFragment newInstance(Playlist playlist) {
+        Bundle args = new Bundle();
+        args.putSerializable(KEY_PLAYLIST, playlist);
+        PlaylistFragment fragment = new PlaylistFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,14 +122,6 @@ public class PlaylistFragment extends Fragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement PlaylistFragment.Host");
         }
-    }
-
-    public static PlaylistFragment newInstance(Playlist playlist) {
-        Bundle args = new Bundle();
-        args.putSerializable(KEY_PLAYLIST, playlist);
-        PlaylistFragment fragment = new PlaylistFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     public void onPlaylistUpdate(Playlist newPlaylist) {

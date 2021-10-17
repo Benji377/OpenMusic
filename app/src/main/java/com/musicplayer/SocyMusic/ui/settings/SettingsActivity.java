@@ -17,8 +17,8 @@ import com.musicplayer.musicplayer.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private SettingsFragment settingsFragment;
     SharedPreferences.OnSharedPreferenceChangeListener listener;
+    private SettingsFragment settingsFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

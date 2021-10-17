@@ -15,8 +15,8 @@ import com.musicplayer.musicplayer.R;
 
 
 public class DirBrowserActivity extends AppCompatActivity {
-    private DirBrowserFragment dirBrowserFragment;
     SharedPreferences.OnSharedPreferenceChangeListener listener;
+    private DirBrowserFragment dirBrowserFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

@@ -3,11 +3,11 @@
 
     <item
         android:drawable="@drawable/filled_circle"
-        android:gravity="center"/>
+        android:gravity="center" />
 
     <item
-        android:drawable="@drawable/ic_music"
         android:width="18dp"
         android:height="18dp"
-        android:gravity="center"/>
+        android:drawable="@drawable/ic_music"
+        android:gravity="center" />
 </layer-list>

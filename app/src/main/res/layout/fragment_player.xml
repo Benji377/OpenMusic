@@ -16,11 +16,11 @@
             android:id="@+id/viewpager_player_song"
             android:layout_width="match_parent"
             android:layout_height="325dp"
+            android:layout_marginTop="75dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="75dp"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <SeekBar

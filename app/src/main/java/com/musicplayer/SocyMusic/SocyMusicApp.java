@@ -11,12 +11,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Environment;
+
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
+
 import com.musicplayer.musicplayer.R;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
+
 import timber.log.Timber;
 
 /**
@@ -39,6 +43,13 @@ public class SocyMusicApp extends Application {
     public static final String[] PERMISSIONS_NEEDED = {READ_EXTERNAL_STORAGE, RECORD_AUDIO};
     public static final String APP_FOLDER_ALBUMS_ART = "albumart";
 
+    public static boolean hasPermissions(Context context) {
+        boolean allGranted = true;
+        for (String permission : PERMISSIONS_NEEDED)
+            allGranted = allGranted && ContextCompat.checkSelfPermission(context, permission) == PERMISSION_GRANTED;
+        return allGranted;
+    }
+
     /**
      * When this class gets invoked, this method gets called
      */
@@ -51,7 +62,7 @@ public class SocyMusicApp extends Application {
         defaultPathsSet.add(Environment.getExternalStorageDirectory().getAbsolutePath());
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if(prefs.getBoolean(PREFS_KEY_LOGGING, true)) {
+        if (prefs.getBoolean(PREFS_KEY_LOGGING, true)) {
             enableLogging();
         }
     }
@@ -75,18 +86,11 @@ public class SocyMusicApp extends Application {
         }
     }
 
-    public static boolean hasPermissions(Context context) {
-        boolean allGranted = true;
-        for (String permission : PERMISSIONS_NEEDED)
-            allGranted = allGranted && ContextCompat.checkSelfPermission(context, permission) == PERMISSION_GRANTED;
-        return allGranted;
-    }
-
     public void enableLogging() {
         // Saves logcat output to a textfile!
         if (isExternalStorageWritable()) {
-            File logDirectory = new File(getApplicationContext().getExternalFilesDir(null).getParentFile() + "/logs" );
-            File logFile = new File(logDirectory, "logcat_" + System.currentTimeMillis() + ".txt" );
+            File logDirectory = new File(getApplicationContext().getExternalFilesDir(null).getParentFile() + "/logs");
+            File logFile = new File(logDirectory, "logcat_" + System.currentTimeMillis() + ".txt");
 
             // create log folder
             if (!logDirectory.exists()) {
@@ -97,12 +101,12 @@ public class SocyMusicApp extends Application {
             try {
                 Runtime.getRuntime().exec("logcat -c");
                 // To fix security issues
-                Runtime.getRuntime().exec(new String[] {"c:/path/to/latlon2utm.exe",
+                Runtime.getRuntime().exec(new String[]{"c:/path/to/latlon2utm.exe",
                         logFile.getPath()});
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if ( isExternalStorageReadable() ) {
+        } else if (isExternalStorageReadable()) {
             Timber.e("Storage only readable");
         } else {
             Timber.e("Storage not accessible");
