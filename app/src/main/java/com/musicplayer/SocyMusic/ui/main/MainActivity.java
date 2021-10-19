@@ -13,11 +13,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -49,7 +45,6 @@ import timber.log.Timber;
 public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
-    private DrawerLayout drawerLayout;
     private Snackbar loadingSnackBar;
     private SharedPreferences prefs;
 
@@ -63,16 +58,13 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         super.onCreate(savedInstanceState);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        View childView = getLayoutInflater().inflate(R.layout.content_main_drawelayout,
+        View childView = getLayoutInflater().inflate(R.layout.content_main,
                 findViewById(R.id.layout_main_tabs_holder), false);
         super.attachContentView(childView);
 
-        drawerLayout = findViewById(R.id.navigation_drawer_layout);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
+
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
         tabsLayout = findViewById(R.id.tab_layout_main);
@@ -82,18 +74,6 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         // Checks for all the required permissions
         runtimePermission();
         startSleeptimer();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            if (drawerLayout.isDrawerOpen(GravityCompat.END))
-                drawerLayout.closeDrawer(GravityCompat.END);
-            else
-                drawerLayout.openDrawer(GravityCompat.END);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     /**

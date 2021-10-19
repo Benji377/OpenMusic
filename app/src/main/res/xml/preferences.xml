@@ -64,7 +64,9 @@
     </PreferenceCategory>
 
     <!-- These preferences are invisible -->
-    <PreferenceCategory app:enabled="false">
+    <PreferenceCategory
+        app:enabled="false"
+        app:isPreferenceVisible="false">
         <Preference app:key="timepicker" />
         <Preference app:key="timepicker_switch" />
     </PreferenceCategory>
