@@ -14,6 +14,8 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -32,6 +34,7 @@ import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.albums_tab.AlbumsTabFragment;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
+import com.musicplayer.SocyMusic.ui.all_songs.SongListAdapter;
 import com.musicplayer.SocyMusic.ui.player_fragment_host.PlayerFragmentHost;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
@@ -47,6 +50,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     private TabLayout tabsLayout;
     private Snackbar loadingSnackBar;
     private SharedPreferences prefs;
+    SongListAdapter songListAdapter;
 
     /**
      * Gets executed every time the app starts
@@ -74,6 +78,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         // Checks for all the required permissions
         runtimePermission();
         startSleeptimer();
+        songListAdapter = new SongListAdapter(this, SongsData.data.getAllSongs());
     }
 
     /**
@@ -86,6 +91,23 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     public boolean onCreateOptionsMenu(Menu menu) {
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             getMenuInflater().inflate(R.menu.main, menu);
+            MenuItem searchview = menu.findItem(R.id.app_search_bar);
+            final SearchView searchView = (SearchView) searchview.getActionView();
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    searchView.clearFocus();
+                    return false;
+
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    songListAdapter.getFilter().filter(newText);
+                    //adapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
         } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             getMenuInflater().inflate(R.menu.playing, menu);
             MenuItem song_item = menu.findItem(R.id.song_info_button);

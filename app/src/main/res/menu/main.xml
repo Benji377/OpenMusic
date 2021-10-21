@@ -1,3 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity" />
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
+
+    <item
+    android:id="@+id/app_search_bar"
+    android:icon="@drawable/ic_search_icon"
+    android:title="Search"
+    app:showAsAction="ifRoom|withText"
+    app:actionViewClass="androidx.appcompat.widget.SearchView"
+        tools:ignore="HardcodedText" />
+
+</menu>
