@@ -30,6 +30,7 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.musicplayer.SocyMusic.SocyMusicApp;
+import com.musicplayer.SocyMusic.custom_views.SidenavMenu;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.albums_tab.AlbumsTabFragment;
@@ -50,6 +51,8 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     private TabLayout tabsLayout;
     private Snackbar loadingSnackBar;
     private SharedPreferences prefs;
+    // TODO: Add custom view to main content
+    private SidenavMenu sidenavmenu;
     SongListAdapter songListAdapter;
 
     /**
@@ -71,7 +74,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         actionBar.setDisplayHomeAsUpEnabled(false);
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
-        tabsLayout = findViewById(R.id.tab_layout_main);
+        //tabsLayout = findViewById(R.id.tab_layout_main);
 
         registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this);
 
@@ -91,22 +94,10 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     public boolean onCreateOptionsMenu(Menu menu) {
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             getMenuInflater().inflate(R.menu.main, menu);
-            MenuItem searchview = menu.findItem(R.id.app_search_bar);
-            final SearchView searchView = (SearchView) searchview.getActionView();
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    searchView.clearFocus();
-                    return false;
-
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    songListAdapter.getFilter().filter(newText);
-                    //adapter.getFilter().filter(newText);
-                    return false;
-                }
+            MenuItem menuItem = menu.findItem(R.id.app_menu);
+            menuItem.setOnMenuItemClickListener(item -> {
+                Toast.makeText(getApplicationContext(), "WOOO", Toast.LENGTH_SHORT).show();
+                return true;
             });
         } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
             getMenuInflater().inflate(R.menu.playing, menu);

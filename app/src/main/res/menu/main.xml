@@ -5,11 +5,10 @@
     tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
 
     <item
-    android:id="@+id/app_search_bar"
-    android:icon="@drawable/ic_search_icon"
-    android:title="Search"
+    android:id="@+id/app_menu"
+    android:icon="@drawable/ic_menu"
+    android:title="Menu"
     app:showAsAction="ifRoom|withText"
-    app:actionViewClass="androidx.appcompat.widget.SearchView"
-        tools:ignore="HardcodedText" />
+    tools:ignore="HardcodedText" />
 
 </menu>
