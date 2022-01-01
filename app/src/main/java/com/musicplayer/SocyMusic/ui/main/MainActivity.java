@@ -14,16 +14,12 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -48,7 +44,6 @@ import timber.log.Timber;
 
 public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
     private ViewPager2 tabsPager;
-    //private TabLayout tabsLayout;
     private Snackbar loadingSnackBar;
     private SharedPreferences prefs;
     private SidenavMenu sidenavmenu;
@@ -72,7 +67,15 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         actionBar.setDisplayHomeAsUpEnabled(false);
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
-        //tabsLayout = findViewById(R.id.tab_layout_main);
+        tabsPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                sidenavmenu.setSelection(position);
+                Toast.makeText(getApplicationContext(), "Tab changed! - "+tabsPager.getCurrentItem(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         sidenavmenu = (SidenavMenu) findViewById(R.id.sidenavmenu);
 
         registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this);
@@ -95,7 +98,12 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
             getMenuInflater().inflate(R.menu.main, menu);
             MenuItem menuItem = menu.findItem(R.id.app_menu);
             menuItem.setOnMenuItemClickListener(item -> {
-                Toast.makeText(getApplicationContext(), "WOOO", Toast.LENGTH_SHORT).show();
+                // This controls whetever the sidemenu is visible or not and changes accordingly
+                if (sidenavmenu.getVisibility() == View.VISIBLE) {
+                    sidenavmenu.setVisibility(View.GONE);
+                } else {
+                    sidenavmenu.setVisibility(View.VISIBLE);
+                }
                 return true;
             });
         } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
@@ -108,6 +116,8 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         }
         return super.onCreateOptionsMenu(menu);
     }
+
+
 
     /**
      * Checks for all required permissions
@@ -137,13 +147,6 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                     void finishLoading() {
                         // Display all the songs
                         tabsPager.setAdapter(new TabsPagerAdapter(MainActivity.this));
-                        /*
-                        new TabLayoutMediator(tabsLayout,
-                                tabsPager,
-                                (tab, position) -> tab.setText(getResources().getStringArray(R.array.main_tabs)[position]))
-                                .attach();
-
-                         */
                     }
 
 
