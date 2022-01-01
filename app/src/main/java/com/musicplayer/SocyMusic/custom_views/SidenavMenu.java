@@ -1,14 +1,9 @@
 package com.musicplayer.SocyMusic.custom_views;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
@@ -74,6 +69,7 @@ public class SidenavMenu extends RadioGroup {
 
     /**
      * Depending on the parameter, it sets a specific button as selected
+     *
      * @param sel Number of the button
      */
     public void setSelection(int sel) {

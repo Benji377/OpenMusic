@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
 import com.musicplayer.SocyMusic.data.Album;
 import com.musicplayer.SocyMusic.data.Playlist;
 import com.musicplayer.SocyMusic.data.Song;

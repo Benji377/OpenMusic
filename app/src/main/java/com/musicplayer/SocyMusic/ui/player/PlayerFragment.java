@@ -78,7 +78,7 @@ public class PlayerFragment extends Fragment {
         // Gets the song which is actually playing
         // (The one the user clicked on in the list before)
         songPlaying = songsData.getSongPlaying();
-        actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setTitle(songPlaying.getTitle());
 

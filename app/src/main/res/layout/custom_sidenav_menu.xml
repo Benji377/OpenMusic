@@ -25,7 +25,7 @@
         android:padding="6dp"
         android:text="Albums"
         android:layout_gravity="center"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp" />
 
     <com.google.android.material.radiobutton.MaterialRadioButton
         android:id="@+id/playlist_item"
@@ -37,7 +37,7 @@
         android:padding="6dp"
         android:text="Playlist"
         android:layout_gravity="center"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp" />
 
     <com.google.android.material.radiobutton.MaterialRadioButton
         android:id="@+id/settings_item"

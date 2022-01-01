@@ -8,6 +8,6 @@
         android:id="@+id/song_info_button"
         android:title="Settings"
         android:icon="@drawable/ic_info"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
 </menu>

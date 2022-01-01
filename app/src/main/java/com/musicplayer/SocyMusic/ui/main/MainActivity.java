@@ -118,7 +118,6 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     }
 
 
-
     /**
      * Checks for all required permissions
      * For musicplayer storage permission to find all the songs and record permission for the visualizer

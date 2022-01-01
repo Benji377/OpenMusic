@@ -5,10 +5,10 @@
     tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
 
     <item
-    android:id="@+id/app_menu"
-    android:icon="@drawable/ic_menu"
-    android:title="Menu"
-    app:showAsAction="ifRoom|withText"
-    tools:ignore="HardcodedText" />
+        android:id="@+id/app_menu"
+        android:icon="@drawable/ic_menu"
+        android:title="Menu"
+        app:showAsAction="ifRoom|withText"
+        tools:ignore="HardcodedText" />
 
 </menu>

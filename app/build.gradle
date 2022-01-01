@@ -10,8 +10,8 @@ android {
         applicationId 'com.musicplayer.socymusic'
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 9
-        versionName "v1.2.1-beta"
+        versionCode 10
+        versionName "v1.2.2-beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
@@ -35,15 +35,15 @@ android {
 
 dependencies {
     implementation "commons-io:commons-io:2.10.0"
-    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.karumi:dexter:6.2.2'
     implementation 'com.gauravk.audiovisualizer:audiovisualizer:0.9.2'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
-    implementation 'androidx.media:media:1.4.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'androidx.media:media:1.4.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.fragment:fragment-ktx:1.3.6'
-    implementation 'androidx.fragment:fragment:1.3.6'
+    implementation 'androidx.fragment:fragment-ktx:1.4.0'
+    implementation 'androidx.fragment:fragment:1.4.0'
     implementation 'com.github.woxthebox:draglistview:1.7.2'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.preference:preference:1.1.1'

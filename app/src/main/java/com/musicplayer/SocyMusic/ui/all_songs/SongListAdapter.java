@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.musicplayer.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,17 +71,17 @@ public class SongListAdapter extends RecyclerView.Adapter<SongHolder> implements
                 FilterResults results = new FilterResults();
 
                 //If there's nothing to filter on, return the original data for your list
-                if(charSequence == null || charSequence.length() == 0) {
+                if (charSequence == null || charSequence.length() == 0) {
                     results.values = allSongs;
                     results.count = allSongs.size();
                 } else {
                     ArrayList<Song> filterResultsData = new ArrayList<>();
 
-                    for(Song data : allSongs) {
+                    for (Song data : allSongs) {
                         //In this loop, you'll filter through originalData and compare each item to charSequence.
                         //If you find a match, add it to your new ArrayList
                         //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
-                        if(data.getTitle().contentEquals(charSequence)) {
+                        if (data.getTitle().contentEquals(charSequence)) {
                             filterResultsData.add(data);
                         }
                     }
@@ -94,9 +93,8 @@ public class SongListAdapter extends RecyclerView.Adapter<SongHolder> implements
             }
 
             @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults)
-            {
-                filteredData = (ArrayList<Song>)filterResults.values;
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredData = (ArrayList<Song>) filterResults.values;
                 notifyDataSetChanged();
             }
         };
