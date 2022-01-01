@@ -4,7 +4,7 @@
     android:id="@+id/layout_main_tabs_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <!--
     <com.google.android.material.tabs.TabLayout
@@ -18,13 +18,17 @@
         app:tabTextColor="?colorOnSurface" />
     -->
 
-    <com.musicplayer.SocyMusic.custom_views.SidenavMenu
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_main_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="start"/>
+
+    <com.musicplayer.SocyMusic.custom_views.SidenavMenu
+        android:id="@+id/sidenavmenu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity ="end"/>
 
 </LinearLayout>

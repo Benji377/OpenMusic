@@ -1,66 +1,54 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="#FF362E">
+<RadioGroup android:id="@+id/radioGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/songlist_item"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:button="@null"
+        android:drawableTop="@drawable/ic_music"
+        android:drawablePadding="4dp"
+        android:padding="6dp"
+        android:text="Songs"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/songlist_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawableTop="@drawable/ic_music"
-            android:drawablePadding="4dp"
-            android:gravity="center"
-            android:padding="6dp"
-            android:text="Songs"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"/>
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/albums_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@null"
+        android:drawableTop="@drawable/ic_music"
+        android:drawablePadding="4dp"
+        android:padding="6dp"
+        android:text="Albums"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/albums_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawableTop="@drawable/ic_music"
-            android:drawablePadding="4dp"
-            android:gravity="center"
-            android:padding="6dp"
-            android:text="Albums"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"/>
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/playlist_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@null"
+        android:drawableTop="@drawable/ic_music"
+        android:drawablePadding="4dp"
+        android:padding="6dp"
+        android:text="Playlist"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/playlist_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawableTop="@drawable/ic_music"
-            android:drawablePadding="4dp"
-            android:gravity="center"
-            android:padding="6dp"
-            android:text="Playlist"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"/>
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/settings_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@null"
+        android:drawableTop="@drawable/ic_music"
+        android:drawablePadding="4dp"
+        android:padding="6dp"
+        android:text="Settings"
+        android:layout_gravity="center"
+        android:layout_margin="10dp" />
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/settings_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawableTop="@drawable/ic_music"
-            android:drawablePadding="4dp"
-            android:gravity="center"
-            android:padding="6dp"
-            android:text="Settings"
-            android:layout_gravity="center"
-            android:layout_margin="10dp" />
-
-    </RadioGroup>
-
-</LinearLayout>
+</RadioGroup>

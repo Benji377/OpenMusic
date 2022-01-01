@@ -48,10 +48,9 @@ import timber.log.Timber;
 
 public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
     private ViewPager2 tabsPager;
-    private TabLayout tabsLayout;
+    //private TabLayout tabsLayout;
     private Snackbar loadingSnackBar;
     private SharedPreferences prefs;
-    // TODO: Add custom view to main content
     private SidenavMenu sidenavmenu;
     SongListAdapter songListAdapter;
 
@@ -64,7 +63,6 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
         View childView = getLayoutInflater().inflate(R.layout.content_main,
                 findViewById(R.id.layout_main_tabs_holder), false);
         super.attachContentView(childView);
@@ -75,6 +73,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
 
         tabsPager = findViewById(R.id.viewpager_main_tabs);
         //tabsLayout = findViewById(R.id.tab_layout_main);
+        sidenavmenu = (SidenavMenu) findViewById(R.id.sidenavmenu);
 
         registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this);
 
@@ -138,10 +137,13 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                     void finishLoading() {
                         // Display all the songs
                         tabsPager.setAdapter(new TabsPagerAdapter(MainActivity.this));
+                        /*
                         new TabLayoutMediator(tabsLayout,
                                 tabsPager,
                                 (tab, position) -> tab.setText(getResources().getStringArray(R.array.main_tabs)[position]))
                                 .attach();
+
+                         */
                     }
 
 
