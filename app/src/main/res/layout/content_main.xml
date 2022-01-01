@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_main_tabs_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-
-    <!--
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="?colorSurface"
-        app:tabIndicatorColor="?colorPrimaryDark"
-        app:tabMode="scrollable"
-        app:tabTextColor="?colorOnSurface" />
-    -->
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_main_tabs"
@@ -29,6 +16,7 @@
         android:id="@+id/sidenavmenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity ="end" />
+        android:gravity="end"
+        android:visibility="gone"/>
 
 </LinearLayout>

@@ -72,11 +72,11 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 sidenavmenu.setSelection(position);
-                Toast.makeText(getApplicationContext(), "Tab changed! - "+tabsPager.getCurrentItem(), Toast.LENGTH_SHORT).show();
             }
         });
 
         sidenavmenu = (SidenavMenu) findViewById(R.id.sidenavmenu);
+        sidenavmenu.setPager(tabsPager);
 
         registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this);
 
