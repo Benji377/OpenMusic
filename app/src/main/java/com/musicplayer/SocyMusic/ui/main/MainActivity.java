@@ -5,9 +5,11 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -20,6 +22,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -44,6 +48,7 @@ import timber.log.Timber;
 
 public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
     private ViewPager2 tabsPager;
+    private TabLayout tabsLayout;
     private Snackbar loadingSnackBar;
     private SharedPreferences prefs;
     private SidenavMenu sidenavmenu;
@@ -58,8 +63,15 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        View childView = getLayoutInflater().inflate(R.layout.content_main,
-                findViewById(R.id.layout_main_tabs_holder), false);
+        View childView;
+        Log.e("MENUS", "BOOO: " + prefs.getBoolean(SocyMusicApp.PREFS_KEY_MENUSWITCH, false));
+        if (prefs.getBoolean(SocyMusicApp.PREFS_KEY_MENUSWITCH, false)) {
+            childView = getLayoutInflater().inflate(R.layout.content_main2,
+                    findViewById(R.id.layout_main_tabs_holder), false);
+        } else {
+            childView = getLayoutInflater().inflate(R.layout.content_main,
+                    findViewById(R.id.layout_main_tabs_holder), false);
+        }
         super.attachContentView(childView);
 
 
@@ -74,7 +86,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                 sidenavmenu.setSelection(position);
             }
         });
-
+        tabsLayout = findViewById(R.id.tab_layout_main);
         sidenavmenu = (SidenavMenu) findViewById(R.id.sidenavmenu);
         sidenavmenu.setPager(tabsPager);
 
@@ -146,6 +158,10 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                     void finishLoading() {
                         // Display all the songs
                         tabsPager.setAdapter(new TabsPagerAdapter(MainActivity.this));
+                        new TabLayoutMediator(tabsLayout,
+                                tabsPager,
+                                (tab, position) -> tab.setText(getResources().getStringArray(R.array.main_tabs)[position]))
+                                .attach();
                     }
 
 

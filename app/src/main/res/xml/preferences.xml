@@ -19,6 +19,11 @@
             app:key="sleeptime"
             app:summary="Put the app to sleep at a given time"
             app:title="Sleep Timer" />
+        <SwitchPreference
+            app:key="menu_switch"
+            app:summary="Activates the vertical menu"
+            app:defaultValue="false"
+            app:title="Menu orientation"/>
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -3,6 +3,7 @@ package com.musicplayer.SocyMusic.ui.settings;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -12,20 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.dir_browser.DirBrowserActivity;
+import com.musicplayer.SocyMusic.ui.main.MainActivity;
 import com.musicplayer.SocyMusic.ui.sleeptime.SleepTimeActivity;
 import com.musicplayer.musicplayer.BuildConfig;
 import com.musicplayer.musicplayer.R;
 
-public class SettingsFragment extends PreferenceFragmentCompat {
-    private Preference libPathPreference;
-    private Preference versions;
-    private Preference logging;
-    private Preference sleeptime;
+import java.util.Objects;
 
+public class SettingsFragment extends PreferenceFragmentCompat {
     private SongsData songsData;
     private Host hostCallBack;
 
@@ -38,10 +38,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
-        libPathPreference = findPreference(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS);
-        versions = findPreference(SocyMusicApp.PREFS_KEY_VERSION);
-        logging = findPreference(SocyMusicApp.PREFS_KEY_LOGGING);
-        sleeptime = findPreference(SocyMusicApp.PREFS_KEY_SLEEPTIME);
+        Preference libPathPreference = findPreference(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS);
+        Preference versions = findPreference(SocyMusicApp.PREFS_KEY_VERSION);
+        Preference logging = findPreference(SocyMusicApp.PREFS_KEY_LOGGING);
+        Preference sleeptime = findPreference(SocyMusicApp.PREFS_KEY_SLEEPTIME);
+        Preference menuswitch = findPreference(SocyMusicApp.PREFS_KEY_MENUSWITCH);
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK)
                 hostCallBack.onLibraryDirsChanged();
@@ -60,6 +61,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             launcher.launch(intent);
             return true;
         });
+        menuswitch.setOnPreferenceClickListener(preference -> {
+            ((MainActivity) Objects.requireNonNull(getActivity())).recreate();
+            return true;
+        });
+
         versions.setSummary(getString(R.string.about_version, BuildConfig.VERSION_NAME));
     }
 
