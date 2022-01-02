@@ -3,7 +3,6 @@ package com.musicplayer.SocyMusic.ui.settings;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -13,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 
 import com.musicplayer.SocyMusic.SocyMusicApp;
 import com.musicplayer.SocyMusic.data.SongsData;

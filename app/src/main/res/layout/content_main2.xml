@@ -15,7 +15,7 @@
         app:tabIndicatorColor="?colorPrimaryDark"
         app:tabMode="scrollable"
         app:tabTextColor="?colorOnSurface"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_main_tabs"
@@ -28,6 +28,7 @@
         android:id="@+id/sidenavmenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="end" />
+        android:gravity="end"
+        android:visibility="gone"/>
 
 </LinearLayout>

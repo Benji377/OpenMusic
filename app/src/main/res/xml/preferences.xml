@@ -23,7 +23,7 @@
             app:key="menu_switch"
             app:summary="Activates the vertical menu"
             app:defaultValue="false"
-            app:title="Menu orientation"/>
+            app:title="Menu orientation" />
     </PreferenceCategory>
 
     <PreferenceCategory

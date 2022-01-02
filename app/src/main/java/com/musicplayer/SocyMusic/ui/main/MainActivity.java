@@ -5,11 +5,9 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -64,7 +62,6 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         super.onCreate(savedInstanceState);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         View childView;
-        Log.e("MENUS", "BOOO: " + prefs.getBoolean(SocyMusicApp.PREFS_KEY_MENUSWITCH, false));
         if (prefs.getBoolean(SocyMusicApp.PREFS_KEY_MENUSWITCH, false)) {
             childView = getLayoutInflater().inflate(R.layout.content_main2,
                     findViewById(R.id.layout_main_tabs_holder), false);
@@ -109,6 +106,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             getMenuInflater().inflate(R.menu.main, menu);
             MenuItem menuItem = menu.findItem(R.id.app_menu);
+            menuItem.setVisible(prefs.getBoolean(SocyMusicApp.PREFS_KEY_MENUSWITCH, false));
             menuItem.setOnMenuItemClickListener(item -> {
                 // This controls whetever the sidemenu is visible or not and changes accordingly
                 if (sidenavmenu.getVisibility() == View.VISIBLE) {
