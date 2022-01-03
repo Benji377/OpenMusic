@@ -106,7 +106,9 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             getMenuInflater().inflate(R.menu.main, menu);
             MenuItem menuItem = menu.findItem(R.id.app_menu);
+            MenuItem settingsItem = menu.findItem(R.id.app_settings);
             menuItem.setVisible(prefs.getBoolean(SocyMusicApp.PREFS_KEY_MENUSWITCH, false));
+            settingsItem.setVisible(!prefs.getBoolean(SocyMusicApp.PREFS_KEY_MENUSWITCH, false));
             menuItem.setOnMenuItemClickListener(item -> {
                 // This controls whetever the sidemenu is visible or not and changes accordingly
                 if (sidenavmenu.getVisibility() == View.VISIBLE) {
@@ -114,6 +116,10 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
                 } else {
                     sidenavmenu.setVisibility(View.VISIBLE);
                 }
+                return true;
+            });
+            settingsItem.setOnMenuItemClickListener(menuItem1 -> {
+                tabsPager.setCurrentItem(4, true);
                 return true;
             });
         } else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {

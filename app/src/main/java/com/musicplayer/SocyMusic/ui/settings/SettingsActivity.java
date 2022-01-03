@@ -15,7 +15,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(R.string.main_menu_item_settings);
         setContentView(R.layout.activity_settings);
@@ -28,6 +27,5 @@ public class SettingsActivity extends AppCompatActivity {
                     .commit();
         } else
             settingsFragment = (SettingsFragment) fragment;
-
     }
 }

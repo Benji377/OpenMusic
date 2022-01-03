@@ -38,7 +38,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         setPreferencesFromResource(R.xml.preferences, rootKey);
         Preference libPathPreference = findPreference(SocyMusicApp.PREFS_KEY_LIBRARY_PATHS);
         Preference versions = findPreference(SocyMusicApp.PREFS_KEY_VERSION);
-        Preference logging = findPreference(SocyMusicApp.PREFS_KEY_LOGGING);
+        //Preference logging = findPreference(SocyMusicApp.PREFS_KEY_LOGGING);
         Preference sleeptime = findPreference(SocyMusicApp.PREFS_KEY_SLEEPTIME);
         Preference menuswitch = findPreference(SocyMusicApp.PREFS_KEY_MENUSWITCH);
         ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {

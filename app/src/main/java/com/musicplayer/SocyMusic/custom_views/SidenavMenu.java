@@ -2,6 +2,7 @@ package com.musicplayer.SocyMusic.custom_views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -17,6 +18,7 @@ public class SidenavMenu extends RadioGroup {
     RadioButton songs_item;
     RadioButton albums_item;
     RadioButton playlist_item;
+    RadioButton search_item;
     RadioButton settings_item;
     ViewPager2 tabspager;
     // If you wish to add another button, please note that you need to change the whole file
@@ -58,11 +60,17 @@ public class SidenavMenu extends RadioGroup {
                 tabspager.setCurrentItem(2, true);
             }
         });
+        search_item = findViewById(R.id.search_item);
+        search_item.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (search_item.isChecked()) {
+                tabspager.setCurrentItem(3, true);
+            }
+        });
         settings_item = findViewById(R.id.settings_item);
         settings_item.setOnCheckedChangeListener((compoundButton, b) -> {
             if (settings_item.isChecked()) {
                 // Go to settings fragment
-                tabspager.setCurrentItem(3, true);
+                tabspager.setCurrentItem(4, true);
             }
         });
     }
@@ -84,6 +92,9 @@ public class SidenavMenu extends RadioGroup {
                 playlist_item.setChecked(true);
                 break;
             case 3:
+                search_item.setChecked(true);
+                break;
+            case 4:
                 settings_item.setChecked(true);
                 break;
         }

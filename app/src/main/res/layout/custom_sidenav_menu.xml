@@ -40,6 +40,18 @@
         android:layout_margin="10dp" />
 
     <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/search_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@null"
+        android:drawableTop="@drawable/ic_search_icon_selector"
+        android:drawablePadding="4dp"
+        android:padding="6dp"
+        android:text="Search"
+        android:layout_gravity="center"
+        android:layout_margin="10dp" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
         android:id="@+id/settings_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

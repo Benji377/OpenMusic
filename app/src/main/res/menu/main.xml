@@ -7,8 +7,15 @@
     <item
         android:id="@+id/app_menu"
         android:icon="@drawable/ic_menu"
+        app:showAsAction="ifRoom"
         android:title="Menu"
-        app:showAsAction="ifRoom|withText"
-        tools:ignore="HardcodedText" />
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/app_settings"
+        android:icon="@drawable/ic_settings"
+        app:showAsAction="ifRoom"
+        android:title="Settings"
+        android:visible="true"/>
 
 </menu>
