@@ -36,6 +36,7 @@ import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.all_songs.SongListAdapter;
 import com.musicplayer.SocyMusic.ui.player_fragment_host.PlayerFragmentHost;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
+import com.musicplayer.SocyMusic.ui.search.SearchFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
 import com.musicplayer.musicplayer.R;
 
@@ -44,7 +45,7 @@ import java.util.List;
 
 import timber.log.Timber;
 
-public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
+public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, SearchFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
     private Snackbar loadingSnackBar;

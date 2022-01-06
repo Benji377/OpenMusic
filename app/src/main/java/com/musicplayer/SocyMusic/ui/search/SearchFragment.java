@@ -1,6 +1,9 @@
 package com.musicplayer.SocyMusic.ui.search;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.musicplayer.SocyMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.data.SongsData;
+import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.all_songs.SongListAdapter;
 import com.musicplayer.musicplayer.R;
 import java.util.List;
@@ -26,6 +30,7 @@ public class SearchFragment extends Fragment {
     private SearchView searchView;
     private CustomRecyclerView recyclerView;
     private List<String> list;
+    private Host hostCallBack;
     private SongListAdapter songListAdapter;
 
     @Override
@@ -37,6 +42,31 @@ public class SearchFragment extends Fragment {
         list = songsData.getAllSongs().stream().map(Song::getTitle).collect(Collectors.toList());
         list = list.stream().map(String::toLowerCase).collect(Collectors.toList());
         songListAdapter = new SongListAdapter(getContext(), songsData.getAllSongs());
+        songListAdapter.setOnItemClickListener(new SongListAdapter.ItemClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onItemClick(int position, View view) {
+                // Error occured
+                if (!songsData.songExists(position)) {
+                    Toast.makeText(requireContext(), getText(R.string.main_err_file_gone), Toast.LENGTH_LONG).show();
+                    try {
+                        songsData.loadFromDatabase(requireContext()).join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    songListAdapter.notifyDataSetChanged();
+                    return;
+                }
+                songsData.playAllFrom(position);
+                Log.e("SONG", "Song at " + position + " = " + songsData.getSongAt(position));
+                hostCallBack.onSongClick(songsData.getSongAt(position));
+            }
+
+            @Override
+            public boolean onItemLongClick(int position, View view) {
+                return false;
+            }
+        });
     }
 
     @Nullable
@@ -65,5 +95,20 @@ public class SearchFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            this.hostCallBack = (Host) context;
+            // If implementation is missing
+        } catch (final ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement SearchFragment.Host");
+        }
+    }
+
+    public interface Host {
+        void onSongClick(Song songClicked);
     }
 }
