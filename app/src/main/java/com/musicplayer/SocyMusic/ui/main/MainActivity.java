@@ -3,6 +3,7 @@ package com.musicplayer.SocyMusic.ui.main;
 import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -34,8 +36,12 @@ import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.albums_tab.AlbumsTabFragment;
 import com.musicplayer.SocyMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.SocyMusic.ui.all_songs.SongListAdapter;
+import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
 import com.musicplayer.SocyMusic.ui.player_fragment_host.PlayerFragmentHost;
+import com.musicplayer.SocyMusic.ui.player_song_info.SonginfoActivity;
+import com.musicplayer.SocyMusic.ui.player_song_info.SonginfoFragment;
 import com.musicplayer.SocyMusic.ui.playlists_tab.PlaylistsTabFragment;
+import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.SocyMusic.ui.search.SearchFragment;
 import com.musicplayer.SocyMusic.ui.settings.SettingsFragment;
 import com.musicplayer.musicplayer.R;
@@ -127,7 +133,15 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
             getMenuInflater().inflate(R.menu.playing, menu);
             MenuItem song_item = menu.findItem(R.id.song_info_button);
             song_item.setOnMenuItemClickListener(item -> {
-                Toast.makeText(getApplicationContext(), "Work in progress", Toast.LENGTH_SHORT).show();
+                // TODO: Test this! Should display Songinfo fragment when clicking actionbar button
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                View playerFragmentView = findViewById(R.id.layout_player_holder);
+                SonginfoFragment songinfoFragment = new SonginfoFragment();
+                fragmentManager.beginTransaction().add(R.id.layout_songinfo_container, songinfoFragment).commit();
+                PlayerFragment playerFragment = new PlayerFragment();
+                playerFragment.releaseVisualizer();
+                playerFragmentView.setVisibility(View.INVISIBLE);
+                invalidateOptionsMenu();
                 return true;
             });
         }

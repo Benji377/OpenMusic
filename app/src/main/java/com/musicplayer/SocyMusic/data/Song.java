@@ -4,9 +4,11 @@ package com.musicplayer.SocyMusic.data;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -132,6 +134,19 @@ public class Song implements Serializable {
             return BitmapFactory.decodeByteArray(art, 0, art.length);
         return null;
     }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public Bitmap extractThumbnail() {
+        return getMetaDataReciever().getPrimaryImage();
+    }
+
+    public String extractArtists() {
+        return getMetaDataReciever().extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
+    }
+
+
+
 
     private MediaMetadataRetriever getMetaDataReciever() {
         MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();

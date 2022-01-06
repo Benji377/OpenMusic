@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?backgroundColor"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/imageview_song_art"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/main_list_background"
+        android:padding="2dp"
+        android:src="@drawable/ic_music" />
+
+    <TextView
+        android:id="@+id/textview_song_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="20dp"
+        android:ellipsize="marquee"
+        android:layout_below="@id/imageview_song_art"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="6dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="Song name"
+        android:textColor="?colorOnPrimary"
+        android:textSize="30sp"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textview_song_length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:ellipsize="marquee"
+        android:layout_below="@id/textview_song_title"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="6dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="Song length"
+        android:textColor="?colorOnPrimary"
+        android:textSize="30sp"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textview_song_artists"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:ellipsize="marquee"
+        android:layout_below="@id/textview_song_length"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="6dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="Song artists"
+        android:textColor="?colorOnPrimary"
+        android:textSize="30sp"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textview_song_albums"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:ellipsize="marquee"
+        android:layout_below="@id/textview_song_artists"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="6dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="Song albums"
+        android:textColor="?colorOnPrimary"
+        android:textSize="30sp"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textview_song_playlists"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:ellipsize="marquee"
+        android:layout_below="@id/textview_song_albums"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="6dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="Song playlists"
+        android:textColor="?colorOnPrimary"
+        android:textSize="30sp"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textview_song_tags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:ellipsize="marquee"
+        android:layout_below="@id/textview_song_playlists"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="6dp"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="Song tags"
+        android:textColor="?colorOnPrimary"
+        android:textSize="30sp"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>
