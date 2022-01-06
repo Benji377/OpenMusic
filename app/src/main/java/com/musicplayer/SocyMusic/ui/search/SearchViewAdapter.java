@@ -1,4 +1,4 @@
-package com.musicplayer.SocyMusic.ui.all_songs;
+package com.musicplayer.SocyMusic.ui.search;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,22 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.musicplayer.SocyMusic.data.Song;
+import com.musicplayer.SocyMusic.data.SongsData;
+import com.musicplayer.SocyMusic.ui.all_songs.SongHolder;
+import com.musicplayer.SocyMusic.ui.all_songs.SongListAdapter;
 import com.musicplayer.musicplayer.R;
+
 import java.util.List;
 
-/**
- * Custom adapter for SongsData related actions
- */
-public class SongListAdapter extends RecyclerView.Adapter<SongHolder> implements Filterable {
+public class SearchViewAdapter extends RecyclerView.Adapter<SongHolder> implements Filterable {
     private final Context context;
     private List<Song> allSongs;
-    private ItemClickListener clickListener;
+    private SongListAdapter.ItemClickListener clickListener;
     private List<Song> filteredList;
 
-    public SongListAdapter(Context context, List<Song> allSongs) {
+    public SearchViewAdapter(Context context, List<Song> allSongs) {
         super();
         this.allSongs = allSongs;
         this.context = context;
@@ -48,7 +51,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongHolder> implements
         return filteredList == null ? 0 : filteredList.size();
     }
 
-    public void setOnItemClickListener(ItemClickListener clickListener) {
+    public void setOnItemClickListener(SongListAdapter.ItemClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
@@ -63,12 +66,17 @@ public class SongListAdapter extends RecyclerView.Adapter<SongHolder> implements
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
+                Log.e("FILTER", "Performing filtering on " + charString);
+                Log.e("SONS", "Size: " + allSongs.size());
 
                 if (charString.isEmpty()) {
+                    Log.e("EMPTy", "String is empty");
                     filteredList = allSongs;
                 } else {
+                    filteredList.clear();
                     for (Song data : allSongs) {
                         if (data.getTitle().toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                            Log.e("FOUND", "Song: " + data.getTitle());
                             filteredList.add(data);
                         }
                     }
@@ -76,6 +84,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongHolder> implements
                 FilterResults results = new FilterResults();
                 results.values = filteredList;
                 results.count = filteredList.size();
+                Log.e("RESULT", "Res = " + results.count + ", items: " + results.values);
                 return results;
             }
 

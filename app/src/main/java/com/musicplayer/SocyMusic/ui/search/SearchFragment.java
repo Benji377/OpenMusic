@@ -31,7 +31,7 @@ public class SearchFragment extends Fragment {
     private CustomRecyclerView recyclerView;
     private List<String> list;
     private Host hostCallBack;
-    private SongListAdapter songListAdapter;
+    private SearchViewAdapter songListAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class SearchFragment extends Fragment {
         // so thats what we are building the list with
         list = songsData.getAllSongs().stream().map(Song::getTitle).collect(Collectors.toList());
         list = list.stream().map(String::toLowerCase).collect(Collectors.toList());
-        songListAdapter = new SongListAdapter(getContext(), songsData.getAllSongs());
+        songListAdapter = new SearchViewAdapter(getContext(), songsData.getAllSongs());
         songListAdapter.setOnItemClickListener(new SongListAdapter.ItemClickListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -83,14 +83,18 @@ public class SearchFragment extends Fragment {
                 if (list.contains(query.toLowerCase())) {
                     songListAdapter.getFilter().filter(query);
                 } else {
-                    Toast.makeText(requireContext(), "No song found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "No song found on " + songListAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
+                    songListAdapter.getFilter().filter("");
                 }
+                songListAdapter.setAllSongs(songsData.getAllSongs());
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                Toast.makeText(requireContext(), "Amount of songs: " + songListAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
                 songListAdapter.getFilter().filter(newText);
+                songListAdapter.setAllSongs(songsData.getAllSongs());
                 return false;
             }
         });
