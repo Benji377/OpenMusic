@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -28,6 +29,7 @@ import com.musicplayer.SocyMusic.custom_views.CustomViewPager2;
 import com.musicplayer.SocyMusic.data.Song;
 import com.musicplayer.SocyMusic.data.SongsData;
 import com.musicplayer.SocyMusic.ui.player.PlayerFragment;
+import com.musicplayer.SocyMusic.ui.player_song_info.SonginfoFragment;
 import com.musicplayer.SocyMusic.ui.queue.QueueFragment;
 import com.musicplayer.SocyMusic.utils.BluetoothUtil;
 import com.musicplayer.SocyMusic.utils.UiUtils;
@@ -293,6 +295,11 @@ public abstract class PlayerFragmentHost extends AppCompatActivity implements Pl
      */
     @Override
     public void onBackPressed() {
+        // Since the Songinfo Fragment might be present, we  need to recreate the Playerfragment first
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.layout_player_container, new PlayerFragment());
+        fragmentTransaction.commit();
+
         if (queueFragment != null)
             hideQueue();
         else if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED)

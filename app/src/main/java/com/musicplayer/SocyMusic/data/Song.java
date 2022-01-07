@@ -135,18 +135,9 @@ public class Song implements Serializable {
         return null;
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.P)
-    public Bitmap extractThumbnail() {
-        return getMetaDataReciever().getPrimaryImage();
-    }
-
     public String extractArtists() {
         return getMetaDataReciever().extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST);
     }
-
-
-
 
     private MediaMetadataRetriever getMetaDataReciever() {
         MediaMetadataRetriever metadataRetriever = new MediaMetadataRetriever();

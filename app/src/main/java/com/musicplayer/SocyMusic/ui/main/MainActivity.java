@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -133,15 +134,15 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
             getMenuInflater().inflate(R.menu.playing, menu);
             MenuItem song_item = menu.findItem(R.id.song_info_button);
             song_item.setOnMenuItemClickListener(item -> {
-                // TODO: Test this! Should display Songinfo fragment when clicking actionbar button
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                View playerFragmentView = findViewById(R.id.layout_player_holder);
-                SonginfoFragment songinfoFragment = new SonginfoFragment();
-                fragmentManager.beginTransaction().add(R.id.layout_songinfo_container, songinfoFragment).commit();
-                PlayerFragment playerFragment = new PlayerFragment();
-                playerFragment.releaseVisualizer();
-                playerFragmentView.setVisibility(View.INVISIBLE);
-                invalidateOptionsMenu();
+                // Checks what the current Fragment is and replaces it with the Songinfo or Player
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.layout_player_container);
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                if (fragment != null && fragment.getClass().toString().equals(PlayerFragment.class.toString())) {
+                    fragmentTransaction.replace(R.id.layout_player_container, new SonginfoFragment());
+                } else {
+                    fragmentTransaction.replace(R.id.layout_player_container, new PlayerFragment());
+                }
+                fragmentTransaction.commit();
                 return true;
             });
         }

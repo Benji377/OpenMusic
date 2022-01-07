@@ -32,7 +32,6 @@ public class SleepTimeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         sleepTimeFragment.onBackPressed();
     }
 }
