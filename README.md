@@ -10,3 +10,4 @@ SocyMusic is an open-source Android music player written entirely in Java. It's 
 - The app will always remain offline, this is one of our core concepts!
 
 If you find it interesting you might wanna check out our [Website](https://benji377.github.io/SocyMusic/) where you will find a lot more information.
+The main objective is also to implement as many suggestions posted [here on Reddit](https://www.reddit.com/r/androidapps/comments/ph1iue/what_are_some_features_you_would_ike_to_see_in_an/) as possible
