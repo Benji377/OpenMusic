@@ -2,7 +2,6 @@ package com.musicplayer.OpenMusic.custom_views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -11,7 +10,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.musicplayer.musicplayer.R;
 
+import timber.log.Timber;
 
+/**
+ * The app supports two types of navigation, one of them is a sidebar. The sidebar can be toggled in
+ * the settings. It is basically a collection of radioButtons with their respective actions.
+ * In standard Android there is no option for sidebar navigation, so we had to create our own
+ */
 public class SidenavMenu extends RadioGroup {
     // Defines all the buttons and its parent
     RadioGroup main_item;
@@ -24,16 +29,27 @@ public class SidenavMenu extends RadioGroup {
     // If you wish to add another button, please note that you need to change the whole file
     // and the XML file too
 
+    /**
+     * Constructor of the SideNavMenu. Basically sets the XML file it will add its logic to
+     * @param context Context of the app
+     * @param attrs An optional set of attributes
+     */
     public SidenavMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         // Inflates the XML file
+        Timber.i("Creating the sideNavigation");
         inflate(context, R.layout.custom_sidenav_menu, this);
     }
 
+    /**
+     * When the XML file has been inflated, it is time to add the logic to it.
+     * This function detects that the XML has finished inflating automatically
+     */
     @Override
     protected void onFinishInflate() {
         // Gets called after the inflation
         super.onFinishInflate();
+        // The root item is a radioGroup, containing all radioButtons
         main_item = findViewById(R.id.radioGroup);
         main_item.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.sidenav_background));
 
@@ -73,11 +89,11 @@ public class SidenavMenu extends RadioGroup {
                 tabspager.setCurrentItem(4, true);
             }
         });
+        Timber.i("Finished inflating XML and added logic to it");
     }
 
     /**
      * Depending on the parameter, it sets a specific button as selected
-     *
      * @param sel Number of the button
      */
     public void setSelection(int sel) {
@@ -100,6 +116,10 @@ public class SidenavMenu extends RadioGroup {
         }
     }
 
+    /**
+     * Sets the pager to use with the navigation
+     * @param pager a ViewPager
+     */
     public void setPager(ViewPager2 pager) {
         this.tabspager = pager;
     }

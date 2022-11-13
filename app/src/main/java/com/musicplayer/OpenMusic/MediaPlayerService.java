@@ -55,7 +55,7 @@ public class MediaPlayerService extends Service {
     public void onCreate() {
         super.onCreate();
         songsData = SongsData.getInstance(this);
-        // Creates a new mediasession with a unique tag
+        // Creates a new mediaSession with a unique tag
         mediaSession = new MediaSessionCompat(this, MEDIA_SESSION_TAG);
         /*
          * This is like aan action listener for buttons on the notification or bluetooth device
@@ -205,7 +205,7 @@ public class MediaPlayerService extends Service {
 
     /**
      * Returns the binder
-     * @param intent Intent which gets binded
+     * @param intent Intent which gets bound
      * @return The binder
      */
     @Nullable
