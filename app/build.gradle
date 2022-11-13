@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId 'com.musicplayer.socymusic'
+        applicationId 'com.musicplayer.OpenMusic'
         minSdkVersion 24
         targetSdkVersion 31
         versionCode 11

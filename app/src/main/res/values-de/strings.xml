@@ -1,5 +1,5 @@
 <resources>
-    <string name="all_app_name">SocyMusic</string>
+    <string name="all_app_name">OpenMusic</string>
 
     <string name="all_songs_list_empty">Keine Lieder gefunden…</string>
     <string name="playlist_tab_list_empty">Keine playlist gefunden</string>
@@ -8,7 +8,7 @@
     <string name="main_menu_item_about">Über uns</string>
     <string name="main_menu_item_settings">Einstellungen</string>
 
-    <string name="about_description">SocyMusic ist ein in Java geschriebener Open-Source Android Musikplayer, zu dem jeder beitragen kann.</string>
+    <string name="about_description">OpenMusic ist ein in Java geschriebener Open-Source Android Musikplayer, zu dem jeder beitragen kann.</string>
     <string name="about_version">Version %s</string>
 
     <string name="notif_channel_media_name">Medienkanal</string>

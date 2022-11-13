@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?backgroundColor"
-    tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
+    tools:context="com.musicplayer.OpenMusic.ui.main.MainActivity">
 
-    <com.musicplayer.SocyMusic.custom_views.CustomRecyclerView
+    <com.musicplayer.OpenMusic.custom_views.CustomRecyclerView
         android:id="@+id/recyclerview_all_songs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

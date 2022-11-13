@@ -7,7 +7,7 @@
     android:background="?backgroundColor">
 
 
-    <com.musicplayer.SocyMusic.custom_views.CustomRecyclerView
+    <com.musicplayer.OpenMusic.custom_views.CustomRecyclerView
         android:id="@+id/recyclerview_playlists_tab_playlists"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

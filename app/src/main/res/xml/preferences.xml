@@ -49,14 +49,14 @@
             android:summary="Github repository">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/Benji377/SocyMusic" />
+                android:data="https://github.com/Benji377/OpenMusic" />
         </Preference>
         <Preference
             android:icon="@drawable/about_icon_link"
-            android:summary="SocyMusic website">
+            android:summary="OpenMusic website">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://benji377.github.io/SocyMusic/" />
+                android:data="https://benji377.github.io/OpenMusic/" />
         </Preference>
         <Preference
             android:icon="@drawable/about_icon_google_play"
@@ -64,7 +64,7 @@
             app:key="versions">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/Benji377/SocyMusic/releases/latest" />
+                android:data="https://github.com/Benji377/OpenMusic/releases/latest" />
         </Preference>
     </PreferenceCategory>
 

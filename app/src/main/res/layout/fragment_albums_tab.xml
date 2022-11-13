@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.musicplayer.SocyMusic.custom_views.CustomRecyclerView
+    <com.musicplayer.OpenMusic.custom_views.CustomRecyclerView
         android:id="@+id/recyclerview_albums_tab_all"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

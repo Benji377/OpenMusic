@@ -2,7 +2,7 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.musicplayer.SocyMusic.ui.main.MainActivity">
+    tools:context="com.musicplayer.OpenMusic.ui.main.MainActivity">
 
     <item
         android:id="@+id/app_menu"
