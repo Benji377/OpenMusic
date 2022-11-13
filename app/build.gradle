@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.karumi:dexter:6.2.3'
     implementation 'com.gauravk.audiovisualizer:audiovisualizer:0.9.2'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.media:media:1.6.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.fragment:fragment-ktx:1.5.4'
