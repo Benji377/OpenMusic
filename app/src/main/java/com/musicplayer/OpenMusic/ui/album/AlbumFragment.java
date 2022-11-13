@@ -57,7 +57,7 @@ public class AlbumFragment extends Fragment {
         CollapsingToolbarLayout toolbarLayout = view.findViewById(R.id.layout_album_collapsing_toolbar);
         toolbarLayout.setTitle(album.getTitle());
 
-        AppBarLayout appBarLayout = (AppBarLayout) view.findViewById(R.id.layout_album_appbar);
+        AppBarLayout appBarLayout = view.findViewById(R.id.layout_album_appbar);
         View toolbarContent = view.findViewById(R.id.layout_album_toolbar_content);
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -116,7 +116,7 @@ public class AlbumFragment extends Fragment {
         try {
             this.hostCallback = (Host) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement AlbumFragment.Host");
+            throw new ClassCastException(context + " must implement AlbumFragment.Host");
         }
     }
 

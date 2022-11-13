@@ -92,7 +92,7 @@ public class MainActivity extends PlayerFragmentHost implements AllSongsFragment
             }
         });
         tabsLayout = findViewById(R.id.tab_layout_main);
-        sidenavmenu = (SidenavMenu) findViewById(R.id.sidenavmenu);
+        sidenavmenu = findViewById(R.id.sidenavmenu);
         sidenavmenu.setPager(tabsPager);
 
         registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), this);

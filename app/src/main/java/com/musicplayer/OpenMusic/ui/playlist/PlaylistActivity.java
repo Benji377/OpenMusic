@@ -26,7 +26,7 @@ public class PlaylistActivity extends PlayerFragmentHost implements PlaylistFrag
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View childView = getLayoutInflater().inflate(R.layout.content_playlist,
-                (ViewGroup) findViewById(R.id.layout_playlist_content), false);
+                findViewById(R.id.layout_playlist_content), false);
         super.attachContentView(childView);
 
         playlist = (Playlist) getIntent().getExtras().getSerializable(EXTRA_PLAYLIST);

@@ -113,7 +113,7 @@ public class PlaylistsTabFragment extends Fragment {
         try {
             hostCallback = (Host) context;
         } catch (ClassCastException exception) {
-            throw new ClassCastException(context.toString() + " must implement PlaylistsTabFragment.Host");
+            throw new ClassCastException(context + " must implement PlaylistsTabFragment.Host");
         }
         super.onAttach(context);
     }

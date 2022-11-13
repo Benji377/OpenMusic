@@ -60,7 +60,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             return true;
         });
         menuswitch.setOnPreferenceClickListener(preference -> {
-            ((MainActivity) Objects.requireNonNull(getActivity())).recreate();
+            Objects.requireNonNull(getActivity()).recreate();
             return true;
         });
 
@@ -79,7 +79,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             this.hostCallBack = (Host) context;
             // If implementation is missing
         } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement SettingsFragment.Host");
+            throw new ClassCastException(context + " must implement SettingsFragment.Host");
         }
     }
 

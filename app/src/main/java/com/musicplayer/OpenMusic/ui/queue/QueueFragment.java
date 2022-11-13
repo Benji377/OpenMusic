@@ -83,7 +83,7 @@ public class QueueFragment extends Fragment {
         try {
             this.hostCallBack = (Host) context;
         } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement QueueFragment.Host");
+            throw new ClassCastException(context + " must implement QueueFragment.Host");
         }
     }
 

@@ -59,7 +59,7 @@ public class PlaylistFragment extends Fragment {
         CollapsingToolbarLayout toolbarLayout = view.findViewById(R.id.layout_playlist_collapsing_toolbar);
         toolbarLayout.setTitle(playlist.getName());
 
-        AppBarLayout appBarLayout = (AppBarLayout) view.findViewById(R.id.layout_playlist_appbar);
+        AppBarLayout appBarLayout = view.findViewById(R.id.layout_playlist_appbar);
         View toolbarContent = view.findViewById(R.id.layout_playlist_toolbar_content);
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -120,7 +120,7 @@ public class PlaylistFragment extends Fragment {
         try {
             this.hostCallback = (Host) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement PlaylistFragment.Host");
+            throw new ClassCastException(context + " must implement PlaylistFragment.Host");
         }
     }
 

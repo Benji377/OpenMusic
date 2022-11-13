@@ -295,7 +295,7 @@ public class PlayerFragment extends Fragment {
             this.hostCallBack = (Host) context;
             // If implementation is missing
         } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement PlayerFragment.Host");
+            throw new ClassCastException(context + " must implement PlayerFragment.Host");
         }
     }
 

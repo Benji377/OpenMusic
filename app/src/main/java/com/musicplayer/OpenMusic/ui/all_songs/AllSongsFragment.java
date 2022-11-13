@@ -94,7 +94,7 @@ public class AllSongsFragment extends Fragment {
             this.hostCallBack = (Host) context;
             // If implementation is missing
         } catch (final ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement AllSongsFragment.Host");
+            throw new ClassCastException(context + " must implement AllSongsFragment.Host");
         }
     }
 

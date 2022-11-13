@@ -76,7 +76,7 @@ public class AlbumsTabFragment extends Fragment {
         try {
             this.hostCallback = (Host) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + "must implement AlbumsTabFragment.Host");
+            throw new ClassCastException(context + "must implement AlbumsTabFragment.Host");
         }
     }
 
