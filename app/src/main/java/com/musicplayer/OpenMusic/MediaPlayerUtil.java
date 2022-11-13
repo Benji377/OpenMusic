@@ -11,11 +11,12 @@ import com.musicplayer.OpenMusic.data.SongsData;
 import com.musicplayer.OpenMusic.ui.main.MainActivity;
 
 public class MediaPlayerUtil {
+    // Mediaplayer is a Android component used to play various media like songs or videos
     private static MediaPlayer mediaPlayer;
 
     /**
-     * Starts the mediaplayer and returns its state
-     *
+     * Uses the mediaPlayer to start playing a song. It then also outputs if this
+     * action was successfully or not.
      * @param context Context of the app
      * @param song    Song to be played
      * @return true if successful, else false
@@ -23,27 +24,40 @@ public class MediaPlayerUtil {
     public static boolean startPlaying(@NonNull Context context, Song song) {
         // Gets the file from the Song
         Uri uri = Uri.fromFile(song.getFile());
-        // If the mediaplayer already exists or is playing
+        // If the mediaplayer already exists or is playing it should be stopped and released
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
         }
-        // Creates a new mediaplayer
+        // Creates a new mediaplayer from the app context and the file extracted above
         mediaPlayer = MediaPlayer.create(context, uri);
-        // Something went wrong
+        // Something went wrong and the mediaPlayer was not created
         if (mediaPlayer == null)
             return false;
-        // Mediaplayer is ready
+        /*
+         * Mediaplayer is ready and we are notifying a completionListener here.
+         * The Listener will handle what happens when the current song (mediaPlayer) stops playing
+         * In our case we want it to continue playing the next song, and that's what we are given
+         * in the first parameter. In the second parameter we give him a method that should be
+         * executed when the next song starts playing
+         */
         mediaPlayer.setOnCompletionListener(mp -> {
             playNext(context);
             if (context instanceof MainActivity)
                 ((MainActivity) context).onSongPlayingUpdate();
         });
-        // Start playing
+        // Finally we start the mediaPlayer, and if everything went well until here we can return
+        // a positive state, as the method got executed successfully.
         mediaPlayer.start();
         return true;
     }
 
+    /**
+     * This methods is mainly used when the user stops the current song and then wants to keep
+     * on playing it again. We therefore just look which song is currently assigned to the mediaPlayer
+     * and execute the startPlaying method to resume the song
+     * @param context Context of the app
+     */
     public static void playCurrent(Context context) {
         SongsData songsData = SongsData.getInstance(context);
         startPlaying(context, songsData.getSongPlaying());
