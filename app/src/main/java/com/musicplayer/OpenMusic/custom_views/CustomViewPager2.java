@@ -25,6 +25,7 @@ public class CustomViewPager2 {
     /**
      * CustomViewPager constructor. Defines its possible methods, actions and
      * register action listeners.
+     *
      * @param viewPager2 The viewpager to wrap the custom viewpager around
      */
     public CustomViewPager2(ViewPager2 viewPager2) {
@@ -72,7 +73,8 @@ public class CustomViewPager2 {
 
     /**
      * Gives us the ability to scroll to a set item (position) programmatically
-     * @param item Position to scroll to
+     *
+     * @param item         Position to scroll to
      * @param smoothScroll If scrolling should happen smoothly (visibly)
      */
     public void scrollByCode(int item, boolean smoothScroll) {
@@ -91,6 +93,7 @@ public class CustomViewPager2 {
 
     /**
      * Gets the current viewPager
+     *
      * @return This viewPager
      */
     public ViewPager2 get() {
@@ -99,6 +102,7 @@ public class CustomViewPager2 {
 
     /**
      * Sets the pageChange actionListener when the page changes
+     *
      * @param onPageChange The actionListener
      */
     public void setOnPageChange(ViewPager2.OnPageChangeCallback onPageChange) {

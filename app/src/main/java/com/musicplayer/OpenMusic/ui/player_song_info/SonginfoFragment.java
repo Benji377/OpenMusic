@@ -1,8 +1,6 @@
 package com.musicplayer.OpenMusic.ui.player_song_info;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +10,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.musicplayer.OpenMusic.MediaPlayerUtil;
-import com.musicplayer.OpenMusic.OpenMusicApp;
 import com.musicplayer.OpenMusic.data.Song;
 import com.musicplayer.OpenMusic.data.SongsData;
-import com.musicplayer.OpenMusic.ui.player.PlayerFragment;
 import com.musicplayer.musicplayer.R;
 
 
@@ -59,8 +52,9 @@ public class SonginfoFragment extends Fragment {
 
     /**
      * A helper method to update all layout fields. This method can also be called from the outside
+     *
      * @param song If the song is null, it will try to take the currently playing song,
-     * if that is null too it gives an error.
+     *             if that is null too it gives an error.
      */
     @SuppressLint({"DefaultLocale", "SetTextI18n"})
     public void updateFields(Song song) {

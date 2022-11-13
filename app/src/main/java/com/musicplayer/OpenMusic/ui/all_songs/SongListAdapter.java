@@ -1,16 +1,18 @@
 package com.musicplayer.OpenMusic.ui.all_songs;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.musicplayer.OpenMusic.data.Song;
 import com.musicplayer.musicplayer.R;
+
 import java.util.List;
 
 /**

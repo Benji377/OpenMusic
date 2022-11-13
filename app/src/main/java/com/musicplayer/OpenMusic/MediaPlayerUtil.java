@@ -3,13 +3,14 @@ package com.musicplayer.OpenMusic;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import timber.log.Timber;
 
 import androidx.annotation.NonNull;
 
 import com.musicplayer.OpenMusic.data.Song;
 import com.musicplayer.OpenMusic.data.SongsData;
 import com.musicplayer.OpenMusic.ui.main.MainActivity;
+
+import timber.log.Timber;
 
 public class MediaPlayerUtil {
     // mediaPlayer is a Android component used to play various media like songs or videos
@@ -18,6 +19,7 @@ public class MediaPlayerUtil {
     /**
      * Uses the mediaPlayer to start playing a song. It then also outputs if this
      * action was successfully or not.
+     *
      * @param context Context of the app
      * @param song    Song to be played
      * @return true if successful, else false
@@ -62,6 +64,7 @@ public class MediaPlayerUtil {
      * This methods is mainly used when the user stops the current song and then wants to keep
      * on playing it again. We therefore just look which song is currently assigned to the mediaPlayer
      * and execute the startPlaying method to resume the song
+     *
      * @param context Context of the app
      */
     public static void playCurrent(Context context) {
@@ -73,6 +76,7 @@ public class MediaPlayerUtil {
      * Plays the next song.
      * If repeat is set to true then it will just keep playing the same song
      * If the song is the last in queue it will play the first song in queue again
+     *
      * @param context Context of the app
      */
     public static void playNext(Context context) {
@@ -83,12 +87,12 @@ public class MediaPlayerUtil {
         // If the song is set on repeat, it will just set the same song as playing again
         if (songsData.isRepeat()) {
             SongsData.getInstance(context).setPlayingIndex(songsData.getPlayingIndex());
-        // else, if the song should not get repeated, it will check if the song is th last in queue
+            // else, if the song should not get repeated, it will check if the song is th last in queue
         } else if (songsData.lastInQueue() && !songsData.isRepeat()) {
             // If the song is the last in queue, the first one will be played again
             songsData.setPlayingIndex(0);
-        // if the song should not be repeated and its not the last in queue, just play the song
-        // that comes after it
+            // if the song should not be repeated and its not the last in queue, just play the song
+            // that comes after it
         } else {
             // WARNING! This doesn't directly play the next song, but just gets the instance of it
             songsData.playNext();
@@ -102,6 +106,7 @@ public class MediaPlayerUtil {
      * Plays the previous song in queue
      * If the actual song is the first song it just plays the last song in queue
      * If  repeat is set to true, it just plays the same song again
+     *
      * @param context Context of the app
      */
     public static void playPrev(Context context) {
@@ -111,10 +116,10 @@ public class MediaPlayerUtil {
         // If the song is set on repeat, just set the same song as playing again
         if (songsData.isRepeat()) {
             SongsData.getInstance(context).setPlayingIndex(songsData.getPlayingIndex());
-        // If the song is the first in queue, we just pick the last song in queue
+            // If the song is the first in queue, we just pick the last song in queue
         } else if (songsData.firstInQueue() && !songsData.isRepeat()) {
             songsData.setPlayingIndex(songsData.songsCount() - 1);
-        // Else, set the next song as playable
+            // Else, set the next song as playable
         } else {
             // WARNING! Doesn't actually play the song, but gets the instance of it
             songsData.playPrev();
@@ -189,6 +194,7 @@ public class MediaPlayerUtil {
 
     /**
      * Checks if the mediaPlayer is stopped
+     *
      * @return true if stopped, else false
      */
     public static boolean isStopped() {
@@ -197,6 +203,7 @@ public class MediaPlayerUtil {
 
     /**
      * Checks if the mediaPlayer is playing
+     *
      * @return true if playing, else false
      */
     public static boolean isPlaying() {
@@ -205,6 +212,7 @@ public class MediaPlayerUtil {
 
     /**
      * Sets the mediaPlayer to play at a defined position in the song
+     *
      * @param pos Position to be played at (in seconds)
      */
     public static void seekTo(int pos) {
@@ -214,6 +222,7 @@ public class MediaPlayerUtil {
 
     /**
      * Gets the position the mediaPlayer is currently at (in seconds)
+     *
      * @return The position the player is at right now or -1 if an error occurs
      */
     public static int getPosition() {
@@ -226,6 +235,7 @@ public class MediaPlayerUtil {
 
     /**
      * Gets the duration of the song that is being played right now ( in seconds)
+     *
      * @return The duration of the song or -1 if an error occurs
      */
     public static int getDuration() {
@@ -238,6 +248,7 @@ public class MediaPlayerUtil {
 
     /**
      * Gets the AudioSessionID of the mediaPlayer
+     *
      * @return the ID or 0 if an error occurs
      */
     public static int getAudioSessionId() {
@@ -250,6 +261,7 @@ public class MediaPlayerUtil {
 
     /**
      * Converts the milliseconds in a displayable time-format like this --> min:sec
+     *
      * @param duration time in milliseconds
      * @return String with the converted time in minutes and seconds
      */

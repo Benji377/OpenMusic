@@ -16,7 +16,6 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.musicplayer.OpenMusic.OpenMusicApp;
 import com.musicplayer.OpenMusic.data.SongsData;
 import com.musicplayer.OpenMusic.ui.dir_browser.DirBrowserActivity;
-import com.musicplayer.OpenMusic.ui.main.MainActivity;
 import com.musicplayer.OpenMusic.ui.sleeptime.SleepTimeActivity;
 import com.musicplayer.musicplayer.BuildConfig;
 import com.musicplayer.musicplayer.R;

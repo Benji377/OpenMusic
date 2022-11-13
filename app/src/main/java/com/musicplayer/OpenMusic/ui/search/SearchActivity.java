@@ -1,10 +1,12 @@
 package com.musicplayer.OpenMusic.ui.search;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
 import com.musicplayer.musicplayer.R;
 
 public class SearchActivity extends AppCompatActivity {

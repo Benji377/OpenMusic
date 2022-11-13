@@ -3,20 +3,17 @@ package com.musicplayer.OpenMusic.ui.main;
 import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager2.widget.ViewPager2;
@@ -39,10 +36,8 @@ import com.musicplayer.OpenMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.OpenMusic.ui.all_songs.SongListAdapter;
 import com.musicplayer.OpenMusic.ui.player.PlayerFragment;
 import com.musicplayer.OpenMusic.ui.player_fragment_host.PlayerFragmentHost;
-import com.musicplayer.OpenMusic.ui.player_song_info.SonginfoActivity;
 import com.musicplayer.OpenMusic.ui.player_song_info.SonginfoFragment;
 import com.musicplayer.OpenMusic.ui.playlists_tab.PlaylistsTabFragment;
-import com.musicplayer.OpenMusic.ui.queue.QueueFragment;
 import com.musicplayer.OpenMusic.ui.search.SearchFragment;
 import com.musicplayer.OpenMusic.ui.settings.SettingsFragment;
 import com.musicplayer.musicplayer.R;
@@ -53,12 +48,12 @@ import java.util.List;
 import timber.log.Timber;
 
 public class MainActivity extends PlayerFragmentHost implements AllSongsFragment.Host, AlbumsTabFragment.Host, PlaylistsTabFragment.Host, SettingsFragment.Host, SearchFragment.Host, ActivityResultCallback<ActivityResult>, SongsData.LoadListener {
+    SongListAdapter songListAdapter;
     private ViewPager2 tabsPager;
     private TabLayout tabsLayout;
     private Snackbar loadingSnackBar;
     private SharedPreferences prefs;
     private SidenavMenu sidenavmenu;
-    SongListAdapter songListAdapter;
 
     /**
      * Gets executed every time the app starts

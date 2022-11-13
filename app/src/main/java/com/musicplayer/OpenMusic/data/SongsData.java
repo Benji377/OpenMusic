@@ -585,7 +585,7 @@ public class SongsData {
 
     public String getPlaylistsOfSong(Song song) {
         StringBuilder ret = new StringBuilder();
-        for(int i = 0; i < getAllPlaylists().size(); i++) {
+        for (int i = 0; i < getAllPlaylists().size(); i++) {
             if (getAllPlaylists().get(i).contains(song)) {
                 ret.append(getAllPlaylists().get(i).getName()).append(", ");
             }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.musicplayer.OpenMusic.ui.main.MainActivity">
 
     <item
         android:id="@+id/song_info_button"
-        android:title="Settings"
         android:icon="@drawable/ic_info"
+        android:title="Settings"
         app:showAsAction="always" />
 
 </menu>

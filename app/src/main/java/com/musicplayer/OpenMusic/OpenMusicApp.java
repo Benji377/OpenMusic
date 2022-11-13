@@ -52,6 +52,7 @@ public class OpenMusicApp extends Application {
 
     /**
      * A method to verify if the user has granted the necessary permissions to the app
+     *
      * @param context The context of the app
      * @return True if granted, else False
      */
@@ -149,6 +150,7 @@ public class OpenMusicApp extends Application {
      * Checks if external storage is available for read and write.
      * This is important because the app needs to read it to get the music files,
      * but also write to it to save settings for example
+     *
      * @return True if the storage is readable and writable, False if otherwise
      */
     public boolean isExternalStorageWritable() {
@@ -158,6 +160,7 @@ public class OpenMusicApp extends Application {
 
     /**
      * Checks if external storage is available to at least read
+     *
      * @return True if the storage is readable, else false
      */
     public boolean isExternalStorageReadable() {

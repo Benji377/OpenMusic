@@ -37,8 +37,8 @@
         <activity android:name="com.musicplayer.OpenMusic.ui.settings.SettingsActivity" />
         <activity android:name="com.musicplayer.OpenMusic.ui.dir_browser.DirBrowserActivity" />
         <activity android:name="com.musicplayer.OpenMusic.ui.sleeptime.SleepTimeActivity" />
-        <activity android:name="com.musicplayer.OpenMusic.ui.search.SearchActivity"/>
-        <activity android:name="com.musicplayer.OpenMusic.ui.player_song_info.SonginfoActivity"/>
+        <activity android:name="com.musicplayer.OpenMusic.ui.search.SearchActivity" />
+        <activity android:name="com.musicplayer.OpenMusic.ui.player_song_info.SonginfoActivity" />
 
         <service
             android:name="com.musicplayer.OpenMusic.MediaPlayerService"

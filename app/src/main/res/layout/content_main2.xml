@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- This xml is used when the horizontal menu option is selected -->
+<?xml version="1.0" encoding="utf-8"?><!-- This xml is used when the horizontal menu option is selected -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_main_tabs_holder"
@@ -13,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="?colorSurface"
+        android:visibility="gone"
         app:tabIndicatorColor="?colorPrimaryDark"
         app:tabMode="scrollable"
-        app:tabTextColor="?colorOnSurface"
-        android:visibility="gone" />
+        app:tabTextColor="?colorOnSurface" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager_main_tabs"
@@ -30,6 +29,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="end"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </LinearLayout>

@@ -29,7 +29,6 @@ import com.musicplayer.OpenMusic.custom_views.CustomViewPager2;
 import com.musicplayer.OpenMusic.data.Song;
 import com.musicplayer.OpenMusic.data.SongsData;
 import com.musicplayer.OpenMusic.ui.player.PlayerFragment;
-import com.musicplayer.OpenMusic.ui.player_song_info.SonginfoFragment;
 import com.musicplayer.OpenMusic.ui.queue.QueueFragment;
 import com.musicplayer.OpenMusic.utils.BluetoothUtil;
 import com.musicplayer.OpenMusic.utils.UiUtils;

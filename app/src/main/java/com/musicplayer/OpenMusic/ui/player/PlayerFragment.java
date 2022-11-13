@@ -31,6 +31,7 @@ import com.musicplayer.musicplayer.R;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class PlayerFragment extends Fragment {
+    ActionBar actionBar;
     private Button playSongButton;
     private Button nextSongButton;
     private Button previousSongButton;
@@ -39,21 +40,16 @@ public class PlayerFragment extends Fragment {
     private CheckBox repeatCheckBox;
     private CheckBox shuffleCheckBox;
     private CheckBox favoriteCheckBox;
-
     private CustomViewPager2 songPager;
     private TextView songStartTimeTextview;
     private TextView songEndTimeTextview;
-
     private SeekBar songSeekBar;
     private BarVisualizer visualizer;
-
     private Host hostCallBack;
     private SongsData songsData;
     private Song songPlaying;
     private boolean startPlaying;
     private boolean currentlySeeking;
-
-    ActionBar actionBar;
 
     /**
      * Creates a new instance of the fragment

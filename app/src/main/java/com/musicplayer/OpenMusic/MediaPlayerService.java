@@ -19,6 +19,7 @@ import com.musicplayer.OpenMusic.data.Song;
 import com.musicplayer.OpenMusic.data.SongsData;
 import com.musicplayer.OpenMusic.ui.main.MainActivity;
 import com.musicplayer.musicplayer.R;
+
 import timber.log.Timber;
 
 /**
@@ -107,6 +108,7 @@ public class MediaPlayerService extends Service {
 
     /**
      * Creates a new notification of the app
+     *
      * @param intent  For communication between classes
      * @param flags   For extra parameters
      * @param startId ID of the startCommand
@@ -145,6 +147,7 @@ public class MediaPlayerService extends Service {
 
     /**
      * Sets all parameters and actions of the notification
+     *
      * @return The new built notification
      */
     private Notification buildNotification() {
@@ -194,6 +197,7 @@ public class MediaPlayerService extends Service {
 
     /**
      * Gets executed if a task gets removed
+     *
      * @param rootIntent The main Intent
      */
     @Override
@@ -205,6 +209,7 @@ public class MediaPlayerService extends Service {
 
     /**
      * Returns the binder
+     *
      * @param intent Intent which gets bound
      * @return The binder
      */

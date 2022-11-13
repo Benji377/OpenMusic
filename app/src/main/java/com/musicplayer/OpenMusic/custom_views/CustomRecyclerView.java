@@ -42,6 +42,7 @@ public class CustomRecyclerView extends RecyclerView {
 
     /**
      * Constructor for the RecyclerView
+     *
      * @param context Context of the app
      */
     public CustomRecyclerView(Context context) {
@@ -50,8 +51,9 @@ public class CustomRecyclerView extends RecyclerView {
 
     /**
      * Constructor for the RecyclerView
+     *
      * @param context Context of the app
-     * @param attrs Custom AttributeSet
+     * @param attrs   Custom AttributeSet
      */
     public CustomRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -59,8 +61,9 @@ public class CustomRecyclerView extends RecyclerView {
 
     /**
      * Constructor for the RecyclerView
-     * @param context Context of the app
-     * @param attrs Custom AttributeSet
+     *
+     * @param context  Context of the app
+     * @param attrs    Custom AttributeSet
      * @param defStyle Defined Styling
      */
     public CustomRecyclerView(Context context, AttributeSet attrs, int defStyle) {
@@ -82,6 +85,7 @@ public class CustomRecyclerView extends RecyclerView {
 
     /**
      * Sets the Adapter for the Observer on the view
+     *
      * @param adapter Adapter to set on the View
      */
     @Override
@@ -101,6 +105,7 @@ public class CustomRecyclerView extends RecyclerView {
 
     /**
      * Manually sets this view as empty
+     *
      * @param emptyView The view to empty
      */
     public void setEmptyView(View emptyView) {

@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.musicplayer.OpenMusic.custom_views.CustomRecyclerView;
 import com.musicplayer.OpenMusic.data.Song;
 import com.musicplayer.OpenMusic.data.SongsData;
-import com.musicplayer.OpenMusic.ui.all_songs.AllSongsFragment;
 import com.musicplayer.OpenMusic.ui.all_songs.SongListAdapter;
 import com.musicplayer.musicplayer.R;
+
 import java.util.List;
 import java.util.stream.Collectors;
 

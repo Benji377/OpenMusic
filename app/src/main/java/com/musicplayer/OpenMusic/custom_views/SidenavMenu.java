@@ -31,8 +31,9 @@ public class SidenavMenu extends RadioGroup {
 
     /**
      * Constructor of the SideNavMenu. Basically sets the XML file it will add its logic to
+     *
      * @param context Context of the app
-     * @param attrs An optional set of attributes
+     * @param attrs   An optional set of attributes
      */
     public SidenavMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -94,6 +95,7 @@ public class SidenavMenu extends RadioGroup {
 
     /**
      * Depending on the parameter, it sets a specific button as selected
+     *
      * @param sel Number of the button
      */
     public void setSelection(int sel) {
@@ -118,6 +120,7 @@ public class SidenavMenu extends RadioGroup {
 
     /**
      * Sets the pager to use with the navigation
+     *
      * @param pager a ViewPager
      */
     public void setPager(ViewPager2 pager) {
