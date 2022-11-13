@@ -56,6 +56,7 @@ public class OpenMusicApp extends Application {
      * @return True if granted, else False
      */
     public static boolean hasPermissions(Context context) {
+        Timber.i("Inspecting permissions");
         boolean allGranted = true;
         for (String permission : PERMISSIONS_NEEDED)
             allGranted = allGranted && ContextCompat.checkSelfPermission(context, permission) == PERMISSION_GRANTED;
@@ -92,6 +93,7 @@ public class OpenMusicApp extends Application {
      * display on peoples devices
      */
     private void createNotificationChannels() {
+        Timber.i("Creating a Notification channel");
         // Checks for Buildversion == Androidversion
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
@@ -113,6 +115,7 @@ public class OpenMusicApp extends Application {
      * might have failed. The logs are simply stored as textfiles and can be read by everyone
      */
     public void enableLogging() {
+        Timber.i("Enabling logging");
         // Saves logcat output to a textfile!
         if (isExternalStorageWritable()) {
             // Creates or tries to access a directory called "logs"
@@ -129,6 +132,9 @@ public class OpenMusicApp extends Application {
             // This doesn't delete the previous logfile, it just clears the console
             try {
                 Runtime.getRuntime().exec("logcat -c");
+                // TODO: Inspect what this line of code does exactly, and if debugging works as intended
+                Runtime.getRuntime().exec(new String[]{"c:/path/to/latlon2utm.exe",
+                        logFile.getPath()});
             } catch (IOException e) {
                 e.printStackTrace();
             }
