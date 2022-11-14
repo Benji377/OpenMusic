@@ -11,6 +11,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.File;
@@ -26,13 +27,13 @@ public class Song implements Serializable {
     @Ignore
     private final String title;
     @PrimaryKey
-    @ColumnInfo(name = "song_id")
+    @ColumnInfo(name = "song_id", index = true)
     @NonNull
     private UUID songId;
     @ColumnInfo(name = "song_path")
     @NonNull
     private File file;
-    @ColumnInfo(name = "album_id")
+    @ColumnInfo(name = "album_id", index = true)
     @Nullable
     private UUID albumID;
     @Nullable

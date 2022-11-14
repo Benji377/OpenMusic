@@ -25,7 +25,7 @@ public class PlaylistSong {
     @ColumnInfo(name = "playlist_id")
     public final UUID playlistID;
     @NonNull
-    @ColumnInfo(name = "song_id")
+    @ColumnInfo(name = "song_id", index = true)
     public final UUID songID;
     @ColumnInfo(name = "song_index")
     public int index;

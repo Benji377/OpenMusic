@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "e2f5a5ae56f66080244a176a1a223339",
+    "identityHash": "0e69ccd10d8d33a90cbfe1774c7cddfc",
     "entities": [
       {
         "tableName": "Song",
@@ -33,7 +33,26 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_Song_song_id",
+            "unique": false,
+            "columnNames": [
+              "song_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Song_song_id` ON `${TABLE_NAME}` (`song_id`)"
+          },
+          {
+            "name": "index_Song_album_id",
+            "unique": false,
+            "columnNames": [
+              "album_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Song_album_id` ON `${TABLE_NAME}` (`album_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "Album",
@@ -137,7 +156,17 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_Playlist_Song_song_id",
+            "unique": false,
+            "columnNames": [
+              "song_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_Playlist_Song_song_id` ON `${TABLE_NAME}` (`song_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "Playlist",
@@ -167,7 +196,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e2f5a5ae56f66080244a176a1a223339')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e69ccd10d8d33a90cbfe1774c7cddfc')"
     ]
   }
 }
