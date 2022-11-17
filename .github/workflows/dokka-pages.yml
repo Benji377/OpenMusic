@@ -21,7 +21,6 @@ jobs:
         run: chmod +x gradlew
       - name: Build html
         run: ./gradlew dokkaHtml --no-daemon --stacktrace
-        working-directory: /
       - name: Upload artifact
         uses: actions/upload-artifact@v2
 
