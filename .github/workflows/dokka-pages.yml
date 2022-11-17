@@ -21,24 +21,31 @@ jobs:
         run: chmod +x gradlew
       - name: Build html
         run: ./gradlew dokkaHtml --no-daemon --stacktrace
+        working-directory: documentation
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: dokkahtml
-          path: gradle/build/dokka
+          path: documentation
 
 
-  deploy-pages:
+  deploy:
+    name : Deploy 🚀
+    needs: [build-page]
     runs-on: ubuntu-latest
-    needs: build-page
+    permissions: write-all
     steps:
-      - uses: actions/download-artifact@v2
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Download Artifact
+        uses: actions/download-artifact@master
         with:
-          path: public
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+          name: documentation
+          path: documentation
+      - name: Deploy to github pages
+        uses: JamesIves/github-pages-deploy-action@3.6.2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          keep_files: false
-          publish_dir: ./public
-          full_commit_message: Publish examples
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: documentation # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
