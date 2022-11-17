@@ -23,6 +23,9 @@ jobs:
         run: ./gradlew dokkaHtml --no-daemon --stacktrace
       - name: Upload artifact
         uses: actions/upload-artifact@v2
+        with:
+          name: dokkahtml
+          path: gradle/build/dokka
 
 
   deploy-pages:
