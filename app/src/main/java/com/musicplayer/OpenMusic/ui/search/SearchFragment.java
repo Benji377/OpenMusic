@@ -47,7 +47,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemClick(int position, View view) {
                 // Error occured
-                if (!songsData.songExists(position)) {
+                if (songsData.songExists(position)) {
                     Toast.makeText(requireContext(), getText(R.string.main_err_file_gone), Toast.LENGTH_LONG).show();
                     try {
                         songsData.loadFromDatabase(requireContext()).join();

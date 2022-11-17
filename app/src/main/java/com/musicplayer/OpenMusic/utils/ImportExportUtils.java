@@ -130,10 +130,12 @@ public class ImportExportUtils {
             FileWriter fileWriter = new FileWriter(jsonFile);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            for (int i = 0; i < Objects.requireNonNull(jsonObj).toString().split(",").length; i++) {
-                //System.out.println(jsonObj.toString().split(",")[i]);
-                bufferedWriter.write(jsonObj.toString().split(",")[i]);
-                bufferedWriter.write("\n");
+            if (jsonObj != null) {
+                for (int i = 0; i < jsonObj.toString().split(",").length; i++) {
+                    //DEBUG: System.out.println(jsonObj.toString().split(",")[i]);
+                    bufferedWriter.write(jsonObj.toString().split(",")[i]);
+                    bufferedWriter.write("\n");
+                }
             }
 
             bufferedWriter.close();

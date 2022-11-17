@@ -20,8 +20,6 @@ import com.musicplayer.OpenMusic.ui.sleeptime.SleepTimeActivity;
 import com.musicplayer.musicplayer.BuildConfig;
 import com.musicplayer.musicplayer.R;
 
-import java.util.Objects;
-
 public class SettingsFragment extends PreferenceFragmentCompat {
     private SongsData songsData;
     private Host hostCallBack;
@@ -44,6 +42,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             if (result.getResultCode() == Activity.RESULT_OK)
                 hostCallBack.onLibraryDirsChanged();
         });
+        assert libPathPreference != null;
         libPathPreference.setOnPreferenceClickListener(preference -> {
             if (!songsData.isDoneLoading()) {
                 Toast.makeText(requireContext(), R.string.settings_cannot_change_lib, Toast.LENGTH_SHORT).show();
@@ -53,16 +52,19 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             launcher.launch(intent);
             return true;
         });
+        assert sleeptime != null;
         sleeptime.setOnPreferenceClickListener(preference -> {
             Intent intent = new Intent(getContext(), SleepTimeActivity.class);
             launcher.launch(intent);
             return true;
         });
+        assert menuswitch != null;
         menuswitch.setOnPreferenceClickListener(preference -> {
-            Objects.requireNonNull(getActivity()).recreate();
+            requireActivity().recreate();
             return true;
         });
 
+        assert versions != null;
         versions.setSummary(getString(R.string.about_version, BuildConfig.VERSION_NAME));
     }
 

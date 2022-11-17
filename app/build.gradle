@@ -4,6 +4,15 @@ plugins {
     id 'org.jetbrains.dokka'
 }
 
+dokkaHtml.configure {
+    dokkaSourceSets {
+        named("main") {
+            includeNonPublic.set(true)
+            outputDirectory.set(file("../documentation/"))
+        }
+    }
+}
+
 android {
     compileSdkVersion 33
     buildToolsVersion "30.0.3"
@@ -73,8 +82,4 @@ dependencies {
     implementation "androidx.room:room-paging:2.5.0-beta02"
 
     dokkaHtmlPlugin "org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20"
-}
-
-tasks.dokkaHtml.configure {
-    outputDirectory.set(file("../documentation"))
 }

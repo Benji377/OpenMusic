@@ -352,9 +352,9 @@ public class SongsData {
      */
     public boolean songExists(int position) {
         try {
-            return allSongs.get(position).getFile().exists();
+            return !allSongs.get(position).getFile().exists();
         } catch (IndexOutOfBoundsException ex) {
-            return false;
+            return true;
         }
     }
 

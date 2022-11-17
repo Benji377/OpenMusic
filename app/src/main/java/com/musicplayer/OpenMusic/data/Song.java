@@ -11,7 +11,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.io.File;
@@ -44,7 +43,7 @@ public class Song implements Serializable {
      * First custom constructor for the Song class. Creates a Song with file only.
      *
      * @param file   File to create a song from
-     * @param songId
+     * @param songId ID of the song
      */
     public Song(@NonNull UUID songId, File file) {
         // removes invalid characters from the filename before creating a song out of it
@@ -55,7 +54,7 @@ public class Song implements Serializable {
     /**
      * Second custom constructor for the Song class. Creates a Song with file and title.
      *
-     * @param songId
+     * @param songId ID of the song
      * @param file   File to create a song from
      * @param title  Name of the song
      */
