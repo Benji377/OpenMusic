@@ -25,7 +25,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: dokkahtml
+          name: documentation
           path: documentation
 
 
