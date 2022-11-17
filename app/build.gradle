@@ -72,3 +72,7 @@ dependencies {
     implementation "androidx.room:room-paging:2.5.0-beta02"
 
 }
+
+tasks.named("dokkaHtml") {
+    outputDirectory.set(buildDir.resolve("documentation"))
+}
