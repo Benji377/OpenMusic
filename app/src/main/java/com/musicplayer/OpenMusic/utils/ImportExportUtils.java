@@ -8,10 +8,7 @@ import androidx.annotation.RequiresApi;
 import com.musicplayer.OpenMusic.data.Playlist;
 import com.musicplayer.OpenMusic.data.Song;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.XML;
-
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,9 +20,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 import timber.log.Timber;
 
 /**
@@ -126,18 +125,19 @@ public class ImportExportUtils {
             }
 
             String xml = builder.toString();
-            JSONObject jsonObj = XML.toJSONObject(xml);
+            XmlToJson xmlToJson = new XmlToJson.Builder(xml).build();
+            JSONObject jsonObj = xmlToJson.toJson();
             FileWriter fileWriter = new FileWriter(jsonFile);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            for (int i = 0; i < jsonObj.toString().split(",").length; i++) {
+            for (int i = 0; i < Objects.requireNonNull(jsonObj).toString().split(",").length; i++) {
                 //System.out.println(jsonObj.toString().split(",")[i]);
                 bufferedWriter.write(jsonObj.toString().split(",")[i]);
                 bufferedWriter.write("\n");
             }
 
             bufferedWriter.close();
-        } catch (IOException | JSONException ex) {
+        } catch (IOException ex) {
             System.out.println("Error writing to file '" + jsonFile.getName() + "'");
         }
     }
