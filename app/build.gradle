@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation "commons-io:commons-io:2.11.0"
+    implementation 'commons-io:commons-io:20030203.000550'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.karumi:dexter:6.2.3'
     implementation 'com.gauravk.audiovisualizer:audiovisualizer:0.9.2'
@@ -52,10 +52,10 @@ dependencies {
     implementation 'com.github.hendrawd:StorageUtil:1.0.0'
     implementation 'com.github.sephiroth74:Tri-State-Checkbox:1.0.0'
     implementation 'com.github.bumptech.glide:glide:4.14.2'
-    implementation 'org.json:json:20220924'
+    implementation 'org.json:json:20220924' // Generates error
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 
-    def room_version = "2.4.3"
+    def room_version = "2.5.0-beta02"
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
