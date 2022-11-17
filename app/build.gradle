@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
     id 'org.jetbrains.dokka'
 }
 
@@ -71,6 +72,7 @@ dependencies {
     // optional - Paging 3 Integration
     implementation "androidx.room:room-paging:2.5.0-beta02"
 
+    dokkaHtmlPlugin "org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20"
 }
 
 tasks.dokkaHtml.configure {
