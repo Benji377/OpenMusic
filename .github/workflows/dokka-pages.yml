@@ -17,8 +17,6 @@ jobs:
           distribution: 'zulu'
           java-version: 11
       - uses: gradle/gradle-build-action@v2
-      - name: Look for gradlew
-        run: find / -type f -name "gradlew" 2>/dev/null
       - name: Build html
         run: gradle dokkaHtml --no-daemon --stacktrace
         working-directory: /
