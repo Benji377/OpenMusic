@@ -18,9 +18,9 @@ jobs:
           java-version: 11
       - uses: gradle/gradle-build-action@v2
       - name: Look for gradlew
-        run: find / -type f -name "gradlew"
+        run: find / -type f -name "gradlew" 2>/dev/null
       - name: Build html
-        run: ./gradlew dokkaHtml --no-daemon --stacktrace
+        run: gradle dokkaHtml --no-daemon --stacktrace
         working-directory: /
       - name: Upload artifact
         uses: actions/upload-artifact@v2
