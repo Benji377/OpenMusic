@@ -73,6 +73,6 @@ dependencies {
 
 }
 
-tasks.named("dokkaHtml") {
-    outputDirectory.set(buildDir.resolve("documentation"))
+tasks.dokkaHtml.configure {
+    outputDirectory.set(file("documentation"))
 }
