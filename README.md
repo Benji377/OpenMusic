@@ -14,3 +14,9 @@ OpenMusic is an open-source Android music player written entirely in Java. It's 
 
 If you find it interesting you might wanna check out our [Website](https://benji377.github.io/OpenMusic/) where you will find a lot more information.
 The main objective is also to implement as many suggestions posted [here on Reddit](https://www.reddit.com/r/androidapps/comments/ph1iue/what_are_some_features_you_would_ike_to_see_in_an/) as possible
+
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/Benji377/OpenMusic.svg)](https://starchart.cc/Benji377/OpenMusic)
+
