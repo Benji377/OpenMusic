@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.ui.all_songs.SongHolder
 import com.musicplayer.openmusic.ui.all_songs.SongListAdapter
-import com.musicplayer.musicplayer.R
 import timber.log.Timber
 import java.util.*
 

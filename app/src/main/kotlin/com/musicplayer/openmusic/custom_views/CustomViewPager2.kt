@@ -1,6 +1,7 @@
 package com.musicplayer.openmusic.custom_views
 
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -72,7 +73,7 @@ class CustomViewPager2(private val viewPager2: ViewPager2) {
         Timber.i("ViewPager scrolled by code")
         isScrolledByCode = true
         viewPager2.setCurrentItem(item, smoothScroll)
-        Handler().postDelayed({ onIdle() }, 50)
+        Handler(Looper.getMainLooper()).postDelayed({ onIdle() }, 50)
     }
 
     /**

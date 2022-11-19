@@ -6,15 +6,16 @@ import android.app.Service
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Binder
+import android.os.Build
 import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.MediaPlayerUtil.stop
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.data.SongsData
 import com.musicplayer.openmusic.ui.main.MainActivity
-import com.musicplayer.musicplayer.R
 import timber.log.Timber
 
 /**
@@ -48,7 +49,7 @@ class MediaPlayerService : Service() {
             override fun onMediaButtonEvent(mediaButtonEvent: Intent): Boolean {
                 Timber.i("MediaButton has been pressed")
                 // Gets the pressed key and its event (double click for example)
-                val event = mediaButtonEvent.extras!![Intent.EXTRA_KEY_EVENT] as KeyEvent?
+                val event = mediaButtonEvent.extras!!.getString(Intent.EXTRA_KEY_EVENT) as KeyEvent?
                 if (event == null || event.action != KeyEvent.ACTION_UP) {
                     Timber.e("KeyPress not recognized, exiting")
                     return false
@@ -87,7 +88,13 @@ class MediaPlayerService : Service() {
      */
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         // Gets the currently playing song
-        songPlaying = intent.getSerializableExtra(EXTRA_SONG) as Song
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            songPlaying = intent.getSerializableExtra(EXTRA_SONG, Song::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            songPlaying = intent.getSerializableExtra(EXTRA_SONG) as Song
+        }
         // Builds the notification for it
         val notification = buildNotification()
         // Starts the notification in the foreground

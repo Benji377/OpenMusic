@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.data.Playlist
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.data.SongsData
-import com.musicplayer.musicplayer.R
 import java.util.*
 
 object DialogUtils {

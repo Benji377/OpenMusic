@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.musicplayer.openmusic.ui.dir_browser.FolderAdapter.AdapterListeners
 import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.ui.dir_browser.FolderAdapter.AdapterListeners
 import it.sephiroth.android.library.checkbox3state.CheckBox3
 import java.io.File
 

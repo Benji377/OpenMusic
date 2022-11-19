@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.FrameLayout
+import android.window.OnBackInvokedDispatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.MediaPlayerService
 import com.musicplayer.openmusic.MediaPlayerService.LocalBinder
 import com.musicplayer.openmusic.MediaPlayerUtil.pause
@@ -32,7 +34,6 @@ import com.musicplayer.openmusic.ui.player_fragment_host.InfoPanePagerAdapter.Pa
 import com.musicplayer.openmusic.ui.queue.QueueFragment
 import com.musicplayer.openmusic.utils.BluetoothUtil
 import com.musicplayer.openmusic.utils.UiUtils.dpToPixel
-import com.musicplayer.musicplayer.R
 
 abstract class PlayerFragmentHost : AppCompatActivity(), PlayerFragment.Host, QueueFragment.Host,
     ServiceConnection {
@@ -247,14 +248,17 @@ abstract class PlayerFragmentHost : AppCompatActivity(), PlayerFragment.Host, Qu
     /**
      * Sets what happens if the user presses the 'back'-key
      */
-    override fun onBackPressed() {
+
+    override fun getOnBackInvokedDispatcher(): OnBackInvokedDispatcher {
         // Since the Songinfo Fragment might be present, we  need to recreate the Playerfragment first
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.layout_player_container, PlayerFragment())
         fragmentTransaction.commit()
-        if (queueFragment != null) hideQueue() else if (bottomSheetBehavior!!.state == BottomSheetBehavior.STATE_EXPANDED) bottomSheetBehavior!!.setState(
+        if (queueFragment != null)
+            hideQueue()
+        else if (bottomSheetBehavior!!.state == BottomSheetBehavior.STATE_EXPANDED) bottomSheetBehavior!!.state =
             BottomSheetBehavior.STATE_COLLAPSED
-        ) else super.onBackPressed()
+        return super.getOnBackInvokedDispatcher()
     }
 
     protected val rootView: ViewGroup

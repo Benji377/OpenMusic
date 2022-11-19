@@ -6,8 +6,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.musicplayer.openmusic.data.Song
 import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.data.Song
 
 class SongPageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val songTitleTextView: TextView

@@ -9,12 +9,12 @@ import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import androidx.core.content.res.ResourcesCompat
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.MediaPlayerUtil.audioSessionId
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.data.SongsData
 import com.musicplayer.openmusic.data.SongsData.Companion.getInstance
 import com.musicplayer.openmusic.ui.queue.ItemAdapter.OnItemClickedListener
-import com.musicplayer.musicplayer.R
 import com.woxthebox.draglistview.DragItemAdapter
 
 class ItemHolder(

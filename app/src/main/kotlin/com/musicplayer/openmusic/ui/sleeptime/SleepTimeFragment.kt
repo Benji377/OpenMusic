@@ -11,8 +11,8 @@ import android.widget.TimePicker
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
-import com.musicplayer.openmusic.OpenMusicApp
 import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.OpenMusicApp
 
 /**
  * Class that controls the sleeptime functionality

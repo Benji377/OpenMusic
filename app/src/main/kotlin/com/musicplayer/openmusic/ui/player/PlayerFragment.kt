@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.MediaPlayerUtil
 import com.musicplayer.openmusic.MediaPlayerUtil.audioSessionId
 import com.musicplayer.openmusic.MediaPlayerUtil.createTime
@@ -35,7 +37,6 @@ import com.musicplayer.openmusic.data.SongsData.Companion.getInstance
 import com.musicplayer.openmusic.utils.DialogUtils.OnNewPlaylistCallback
 import com.musicplayer.openmusic.utils.DialogUtils.OnPlaylistUpdateCallback
 import com.musicplayer.openmusic.utils.DialogUtils.showAddToPlaylistDialog
-import com.musicplayer.musicplayer.R
 
 class PlayerFragment : Fragment() {
     private var actionBar: ActionBar? = null
@@ -195,7 +196,7 @@ class PlayerFragment : Fragment() {
         })
 
         // Handles time
-        val handler = Handler()
+        val handler = Handler(Looper.getMainLooper())
         val delay = 1000
         handler.postDelayed(object : Runnable {
             override fun run() {

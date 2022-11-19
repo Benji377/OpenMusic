@@ -1,11 +1,12 @@
 package com.musicplayer.openmusic.ui.playlist
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.data.Playlist
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.ui.player_fragment_host.PlayerFragmentHost
-import com.musicplayer.musicplayer.R
 
 class PlaylistActivity : PlayerFragmentHost(), PlaylistFragment.Host {
     private var playlistFragment: PlaylistFragment? = null
@@ -17,7 +18,14 @@ class PlaylistActivity : PlayerFragmentHost(), PlaylistFragment.Host {
             findViewById(R.id.layout_playlist_content), false
         )
         super.attachContentView(childView)
-        playlist = intent.extras!!.getSerializable(EXTRA_PLAYLIST) as Playlist?
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            playlist = intent.extras!!.getSerializable(EXTRA_PLAYLIST, Playlist::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            playlist = intent.extras!!.getSerializable(EXTRA_PLAYLIST) as Playlist
+        }
+
         val showPlayer = intent.extras!!.getBoolean(EXTRA_SHOW_PLAYER)
         if (showPlayer) super.startPlayer(false)
         val fragmentManager = supportFragmentManager

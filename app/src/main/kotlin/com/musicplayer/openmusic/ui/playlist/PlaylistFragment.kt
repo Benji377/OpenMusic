@@ -1,6 +1,7 @@
 package com.musicplayer.openmusic.ui.playlist
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.MediaPlayerUtil.createTime
 import com.musicplayer.openmusic.custom_views.CustomRecyclerView
 import com.musicplayer.openmusic.data.Playlist
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.data.SongsData
 import com.musicplayer.openmusic.data.SongsData.Companion.getInstance
-import com.musicplayer.musicplayer.R
 
 class PlaylistFragment : Fragment() {
     private var playlist: Playlist? = null
@@ -30,8 +31,14 @@ class PlaylistFragment : Fragment() {
     private var totalDurationTextview: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) playlist =
-            requireArguments().getSerializable(KEY_PLAYLIST) as Playlist
+        if (arguments != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                playlist = requireArguments().getSerializable(KEY_PLAYLIST, Playlist::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                playlist = requireArguments().getSerializable(KEY_PLAYLIST) as Playlist
+            }
+        }
         songsData = getInstance(requireContext())
     }
 

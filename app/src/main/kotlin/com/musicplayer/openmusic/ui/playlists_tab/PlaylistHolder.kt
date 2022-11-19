@@ -3,8 +3,8 @@ package com.musicplayer.openmusic.ui.playlists_tab
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.musicplayer.openmusic.data.Playlist
 import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.data.Playlist
 
 class PlaylistHolder(itemView: View, clickListeners: PlaylistsAdapter.ItemClickListener) :
     RecyclerView.ViewHolder(itemView) {

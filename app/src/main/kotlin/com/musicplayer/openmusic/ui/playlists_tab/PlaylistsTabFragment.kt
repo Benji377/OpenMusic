@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.custom_views.CustomRecyclerView
 import com.musicplayer.openmusic.data.Playlist
 import com.musicplayer.openmusic.data.SongsData
@@ -22,7 +23,6 @@ import com.musicplayer.openmusic.utils.DialogUtils.OnNewPlaylistCallback
 import com.musicplayer.openmusic.utils.DialogUtils.OnPlaylistDeleteCallback
 import com.musicplayer.openmusic.utils.DialogUtils.showDeletePlaylistDialog
 import com.musicplayer.openmusic.utils.DialogUtils.showNewPlaylistDialog
-import com.musicplayer.musicplayer.R
 
 class PlaylistsTabFragment : Fragment() {
     private var songsData: SongsData? = null

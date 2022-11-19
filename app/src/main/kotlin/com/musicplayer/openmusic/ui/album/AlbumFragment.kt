@@ -1,6 +1,7 @@
 package com.musicplayer.openmusic.ui.album
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +14,12 @@ import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.custom_views.CustomRecyclerView
 import com.musicplayer.openmusic.data.Album
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.data.SongsData
 import com.musicplayer.openmusic.data.SongsData.Companion.getInstance
-import com.musicplayer.musicplayer.R
 
 class AlbumFragment : Fragment() {
     private var album: Album? = null
@@ -30,7 +31,14 @@ class AlbumFragment : Fragment() {
     private var songCountTextview: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) album = requireArguments().getSerializable(KEY_ALBUM) as Album
+        if (arguments != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                album = requireArguments().getSerializable(KEY_ALBUM, Album::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                album = requireArguments().getSerializable(KEY_ALBUM) as Album
+            }
+        }
         songsData = getInstance(requireContext())
     }
 

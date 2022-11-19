@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.musicplayer.openmusic.data.Song
 import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.data.Song
 
 class AlbumSongAdapter(private val context: Context, private val albumSongs: List<Song>) :
     RecyclerView.Adapter<AlbumSongHolder>() {

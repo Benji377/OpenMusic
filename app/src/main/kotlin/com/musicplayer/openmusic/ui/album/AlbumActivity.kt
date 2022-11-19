@@ -1,12 +1,13 @@
 package com.musicplayer.openmusic.ui.album
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.data.Album
 import com.musicplayer.openmusic.data.Playlist
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.ui.player_fragment_host.PlayerFragmentHost
-import com.musicplayer.musicplayer.R
 
 class AlbumActivity : PlayerFragmentHost(), AlbumFragment.Host {
     private var album: Album? = null
@@ -18,7 +19,14 @@ class AlbumActivity : PlayerFragmentHost(), AlbumFragment.Host {
             findViewById(R.id.layout_album_content), false
         )
         super.attachContentView(childView)
-        album = intent.extras!!.getSerializable(EXTRA_ALBUM) as Album
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            album = intent.extras!!.getSerializable(EXTRA_ALBUM, Album::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            album = intent.extras!!.getSerializable(EXTRA_ALBUM) as Album
+        }
+
         val showPlayer = intent.extras!!.getBoolean(EXTRA_SHOW_PLAYER)
         if (showPlayer) super.startPlayer(false)
         val fragmentManager = supportFragmentManager

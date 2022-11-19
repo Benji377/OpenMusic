@@ -22,6 +22,7 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.OpenMusicApp
 import com.musicplayer.openmusic.OpenMusicApp.Companion.hasPermissions
 import com.musicplayer.openmusic.custom_views.SidenavMenu
@@ -38,7 +39,6 @@ import com.musicplayer.openmusic.ui.player_song_info.SonginfoFragment
 import com.musicplayer.openmusic.ui.playlists_tab.PlaylistsTabFragment
 import com.musicplayer.openmusic.ui.search.SearchFragment
 import com.musicplayer.openmusic.ui.settings.SettingsFragment
-import com.musicplayer.musicplayer.R
 import timber.log.Timber
 import java.util.*
 import kotlin.system.exitProcess

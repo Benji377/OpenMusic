@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.musicplayer.openmusic.data.Song
 import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.data.Song
 
 class SongPagerAdapter(private val context: Context, private var queue: List<Song>) :
     RecyclerView.Adapter<SongPageHolder>() {

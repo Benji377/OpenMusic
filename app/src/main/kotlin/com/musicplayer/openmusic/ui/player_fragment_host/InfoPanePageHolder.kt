@@ -6,10 +6,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.MediaPlayerUtil.isPlaying
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.ui.player_fragment_host.InfoPanePagerAdapter.PaneListeners
-import com.musicplayer.musicplayer.R
 
 class InfoPanePageHolder(itemView: View, listeners: PaneListeners) :
     RecyclerView.ViewHolder(itemView) {
