@@ -1,7 +1,7 @@
 import java.time.LocalDate
 
 plugins {
-    // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
+    // Apply the org.jetbrains.kotlin.android Plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     // Apply the application plugin to add support for building a CLI application in Java.
@@ -97,13 +97,12 @@ dependencies {
     implementation("org.json:json:20220924")
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
     implementation("com.github.smart-fun:XmlToJson:1.5.1")
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20")
 
-    val roomVersion = "2.4.3"
-
-    implementation("androidx.room:room-runtime:${roomVersion}")
-
+    val roomVersion = "2.5.0-alpha02"
     kapt("androidx.room:room-compiler:${roomVersion}")
-
+    implementation("androidx.room:room-runtime:${roomVersion}")
+    implementation("androidx.room:room-ktx:${roomVersion}")
     // optional - RxJava2 support for Room
     implementation("androidx.room:room-rxjava2:${roomVersion}")
     // optional - RxJava3 support for Room
@@ -113,9 +112,5 @@ dependencies {
     // optional - Test helpers
     testImplementation("androidx.room:room-testing:${roomVersion}")
     // optional - Paging 3 Integration
-    implementation("androidx.room:room-paging:2.5.0-beta02")
-
-    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20")
-
-
+    implementation("androidx.room:room-paging:${roomVersion}")
 }
