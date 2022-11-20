@@ -12,7 +12,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.custom_views.CustomRecyclerView
 import com.musicplayer.openmusic.data.SongsData
 import com.musicplayer.openmusic.data.SongsData.Companion.getInstance

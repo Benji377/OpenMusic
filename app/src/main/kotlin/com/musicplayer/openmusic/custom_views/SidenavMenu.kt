@@ -7,7 +7,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 import timber.log.Timber
 
 /**

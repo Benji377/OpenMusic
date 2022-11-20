@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.MediaPlayerUtil.createTime
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.data.SongsData
 import com.musicplayer.openmusic.data.SongsData.Companion.getInstance

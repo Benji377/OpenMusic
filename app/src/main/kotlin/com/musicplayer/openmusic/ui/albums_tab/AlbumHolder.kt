@@ -5,7 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.data.Album
 
 class AlbumHolder(itemView: View, clickListener: AlbumsListAdapter.ItemClickListener) :

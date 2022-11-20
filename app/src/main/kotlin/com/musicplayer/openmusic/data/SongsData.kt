@@ -5,8 +5,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.preference.PreferenceManager
 import androidx.room.Room.databaseBuilder
-import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.OpenMusicApp
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.data.base.AppDatabase
 import com.musicplayer.openmusic.data.base.PlaylistSong
 import com.musicplayer.openmusic.utils.PathUtils.getPathDown

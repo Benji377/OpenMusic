@@ -11,7 +11,6 @@ import android.os.IBinder
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
-import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.MediaPlayerUtil.stop
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.data.SongsData

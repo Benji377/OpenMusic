@@ -22,9 +22,9 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.OpenMusicApp
 import com.musicplayer.openmusic.OpenMusicApp.Companion.hasPermissions
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.custom_views.SidenavMenu
 import com.musicplayer.openmusic.data.Playlist
 import com.musicplayer.openmusic.data.Song

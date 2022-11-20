@@ -10,7 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.custom_views.CustomRecyclerView
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.data.SongsData

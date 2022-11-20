@@ -3,7 +3,7 @@ package com.musicplayer.openmusic.ui.player_song_info
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 
 class SonginfoActivity : AppCompatActivity() {
     private var songinfoFragment: SonginfoFragment? = null

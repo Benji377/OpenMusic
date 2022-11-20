@@ -2,7 +2,7 @@ package com.musicplayer.openmusic.ui.search
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 
 class SearchActivity : AppCompatActivity() {
     private var searchFragment: SearchFragment? = null

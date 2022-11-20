@@ -9,9 +9,9 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.musicplayer.musicplayer.BuildConfig
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.BuildConfig
 import com.musicplayer.openmusic.OpenMusicApp
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.data.SongsData
 import com.musicplayer.openmusic.data.SongsData.Companion.getInstance
 import com.musicplayer.openmusic.ui.dir_browser.DirBrowserActivity

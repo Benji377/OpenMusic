@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.MediaPlayerUtil.playCurrent
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.data.SongsData
 import com.musicplayer.openmusic.data.SongsData.Companion.getInstance
 import com.musicplayer.openmusic.ui.queue.ItemAdapter.OnItemClickedListener

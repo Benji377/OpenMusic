@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
-import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.MediaPlayerService
 import com.musicplayer.openmusic.MediaPlayerService.LocalBinder
 import com.musicplayer.openmusic.MediaPlayerUtil.pause
@@ -24,6 +23,7 @@ import com.musicplayer.openmusic.MediaPlayerUtil.playNext
 import com.musicplayer.openmusic.MediaPlayerUtil.playPrev
 import com.musicplayer.openmusic.MediaPlayerUtil.startPlaying
 import com.musicplayer.openmusic.MediaPlayerUtil.togglePlayPause
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.custom_views.CustomViewPager2
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.data.SongsData

@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.custom_views.CustomRecyclerView
 import com.musicplayer.openmusic.data.Album
 import com.musicplayer.openmusic.data.Song

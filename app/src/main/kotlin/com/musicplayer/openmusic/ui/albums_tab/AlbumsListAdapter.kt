@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.data.Album
 
 class AlbumsListAdapter(private val context: Context, private var albumList: List<Album>) :

@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.gauravk.audiovisualizer.visualizer.BarVisualizer
-import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.MediaPlayerUtil
 import com.musicplayer.openmusic.MediaPlayerUtil.audioSessionId
 import com.musicplayer.openmusic.MediaPlayerUtil.createTime
@@ -29,6 +28,7 @@ import com.musicplayer.openmusic.MediaPlayerUtil.playPrev
 import com.musicplayer.openmusic.MediaPlayerUtil.position
 import com.musicplayer.openmusic.MediaPlayerUtil.seekTo
 import com.musicplayer.openmusic.MediaPlayerUtil.startPlaying
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.custom_views.CustomViewPager2
 import com.musicplayer.openmusic.data.Playlist
 import com.musicplayer.openmusic.data.Song

@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.musicplayer.musicplayer.R
 import com.musicplayer.openmusic.OpenMusicApp
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.custom_views.CustomRecyclerView
 import com.musicplayer.openmusic.ui.dir_browser.FolderAdapter.AdapterListeners
 import com.musicplayer.openmusic.ui.dir_browser.FolderHolder.FolderCallBack

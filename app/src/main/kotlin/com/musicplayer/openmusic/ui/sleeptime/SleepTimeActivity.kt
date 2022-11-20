@@ -2,7 +2,7 @@ package com.musicplayer.openmusic.ui.sleeptime
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 
 class SleepTimeActivity : AppCompatActivity() {
     private var sleepTimeFragment: SleepTimeFragment? = null

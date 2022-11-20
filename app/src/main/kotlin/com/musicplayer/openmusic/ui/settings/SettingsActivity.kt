@@ -2,7 +2,7 @@ package com.musicplayer.openmusic.ui.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 
 class SettingsActivity : AppCompatActivity() {
     private var settingsFragment: SettingsFragment? = null

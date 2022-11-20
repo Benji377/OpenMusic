@@ -3,7 +3,7 @@ package com.musicplayer.openmusic.ui.album
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.data.Album
 import com.musicplayer.openmusic.data.Playlist
 import com.musicplayer.openmusic.data.Song

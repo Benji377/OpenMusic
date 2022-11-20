@@ -2,7 +2,7 @@ package com.musicplayer.openmusic.ui.dir_browser
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.musicplayer.musicplayer.R
+import com.musicplayer.openmusic.R
 
 class DirBrowserActivity : AppCompatActivity() {
     private var dirBrowserFragment: DirBrowserFragment? = null
