@@ -98,11 +98,11 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
     implementation("com.github.smart-fun:XmlToJson:1.5.1")
 
-    val roomVersion = "2.5.0-beta02"
+    val roomVersion = "2.4.3"
 
     implementation("androidx.room:room-runtime:${roomVersion}")
 
-    // kapt("androidx.room:room-compiler:${roomVersion}")
+    kapt("androidx.room:room-compiler:${roomVersion}")
 
     // optional - RxJava2 support for Room
     implementation("androidx.room:room-rxjava2:${roomVersion}")
