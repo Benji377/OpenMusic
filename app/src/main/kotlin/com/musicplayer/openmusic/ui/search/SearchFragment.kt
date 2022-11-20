@@ -14,11 +14,12 @@ import com.musicplayer.openmusic.custom_views.CustomRecyclerView
 import com.musicplayer.openmusic.data.Song
 import com.musicplayer.openmusic.data.SongsData
 import com.musicplayer.openmusic.ui.all_songs.SongListAdapter
+import timber.log.Timber
 import java.util.*
 import java.util.stream.Collectors
 
 
-class SearchFragment: Fragment() {
+class SearchFragment : Fragment() {
     private var songsData: SongsData? = null
     private var searchView: SearchView? = null
     private var recyclerView: CustomRecyclerView? = null
@@ -29,32 +30,39 @@ class SearchFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        songsData = SongsData.getInstance(requireContext());
+        songsData = SongsData.getInstance(requireContext())
         // Gets the list of songs, but we only need the title,
         // so thats what we are building the list with
-        list = songsData!!.getAllSongs()?.stream().map(Song.title).collect(Collectors.toList())
-        list = list?.stream()?.map(String::toLowerCase)?.collect(Collectors.toList())
-        songListAdapter = SearchViewAdapter(requireContext(), songsData?.getAllSongs())
+        list = songsData!!.getAllSongs()?.stream()?.map(Song::title)?.collect(Collectors.toList())
+        list = list?.stream()?.map(String::lowercase)?.collect(Collectors.toList())
+        songListAdapter = SearchViewAdapter(
+            requireContext(),
+            songsData?.getAllSongs() as MutableList<Song>
+        )
 
         songListAdapter?.setOnItemClickListener(object : SongListAdapter.ItemClickListener {
             override fun onItemClick(position: Int, view: View) {
-                if (songsData.songExists(position)) {
-                    Toast.makeText(requireContext(), getText(R.string.main_err_file_gone), Toast.LENGTH_LONG).show();
+                if (songsData!!.songExists(position)) {
+                    Toast.makeText(
+                        requireContext(),
+                        getText(R.string.main_err_file_gone),
+                        Toast.LENGTH_LONG
+                    ).show()
                     try {
-                        songsData.loadFromDatabase(requireContext()).join();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        songsData?.loadFromDatabase(requireContext())?.join()
+                    } catch (e: InterruptedException) {
+                        e.printStackTrace()
                     }
-                    songListAdapter.notifyDataSetChanged();
-                    return;
+                    songListAdapter?.notifyDataSetChanged()
+                    return
                 }
-                songsData.playAllFrom(position);
-                Timber.e("Song at %s = %s", position, songsData.getSongAt(position));
-                hostCallBack.onSongClick(songsData.getSongAt(position));
+                songsData?.playAllFrom(position)
+                Timber.e("Song at %s = %s", position, songsData?.getSongAt(position))
+                hostCallBack?.onSongClick(songsData!!.getSongAt(position))
             }
 
             override fun onItemLongClick(position: Int, view: View): Boolean {
-                return false;
+                return false
             }
         })
     }
@@ -67,7 +75,7 @@ class SearchFragment: Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_search, container, false)
         searchView = view.findViewById(R.id.search_view)
         recyclerView = view.findViewById(R.id.recycler_view)
-        recyclerView?.setAdapter(songListAdapter)
+        recyclerView?.adapter = songListAdapter
         recyclerView?.layoutManager = LinearLayoutManager(requireContext())
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -76,7 +84,7 @@ class SearchFragment: Fragment() {
                 } else {
                     Toast.makeText(
                         requireContext(),
-                        "No song found on " + songListAdapter.getItemCount(),
+                        "No song found on " + songListAdapter?.itemCount,
                         Toast.LENGTH_SHORT
                     ).show()
                     songListAdapter?.filter?.filter("")
@@ -110,7 +118,7 @@ class SearchFragment: Fragment() {
     }
 
     interface Host {
-        fun onSongClick(songClicked: Song?)
+        fun onSongClick(songClicked: Song)
     }
 
 }

@@ -72,7 +72,8 @@ class SongListAdapter(private val context: Context, private var allSongs: Mutabl
             }
 
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
-                filteredList = filterResults.values as MutableList<Song>
+                filteredList =
+                    (filterResults.values as MutableList<*>).filterIsInstance<Song>() as MutableList<Song>
                 notifyDataSetChanged()
             }
         }
