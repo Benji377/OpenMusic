@@ -60,6 +60,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    kotlinOptions {
+        jvmTarget="11"
+    }
 }
 
 
@@ -95,7 +98,7 @@ dependencies {
     implementation("com.github.sephiroth74:Tri-State-Checkbox:1.0.0")
     implementation("com.github.bumptech.glide:glide:4.14.2")
     implementation("org.json:json:20220924")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
+    // annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
     implementation("com.github.smart-fun:XmlToJson:1.5.1")
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20")
 
