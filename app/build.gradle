@@ -54,7 +54,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.media:media:1.6.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.fragment:fragment-ktx:1.5.4'
+    implementation 'androidx.fragment:fragment-ktx:1.5.5'
     implementation 'androidx.fragment:fragment:1.5.4'
     implementation 'com.github.woxthebox:draglistview:1.7.2'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
