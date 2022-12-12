@@ -90,7 +90,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.media:media:1.6.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
-    implementation("androidx.fragment:fragment-ktx:1.5.4")
+    implementation("androidx.fragment:fragment-ktx:1.5.5")
     implementation("com.github.woxthebox:draglistview:1.7.2")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.preference:preference-ktx:1.2.0")
@@ -102,7 +102,7 @@ dependencies {
     implementation("com.github.smart-fun:XmlToJson:1.5.1")
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20")
 
-    val roomVersion = "2.5.0-alpha02"
+    val roomVersion = "2.5.0-rc01"
     kapt("androidx.room:room-compiler:${roomVersion}")
     implementation("androidx.room:room-runtime:${roomVersion}")
     implementation("androidx.room:room-ktx:${roomVersion}")

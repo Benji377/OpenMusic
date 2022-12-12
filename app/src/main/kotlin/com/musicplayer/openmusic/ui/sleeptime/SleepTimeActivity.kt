@@ -22,6 +22,7 @@ class SleepTimeActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         sleepTimeFragment!!.onBackPressed()
     }

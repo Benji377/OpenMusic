@@ -20,6 +20,7 @@ class DirBrowserActivity : AppCompatActivity() {
         } else dirBrowserFragment = fragment as DirBrowserFragment?
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         dirBrowserFragment!!.onBackPressed()
     }
