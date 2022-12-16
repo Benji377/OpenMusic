@@ -9,7 +9,7 @@
         <item name="playerBackground">@drawable/default_background_image_light</item>
         <item name="backgroundColor">@color/white</item>
 
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+        <item name="android:statusBarColor" >?attr/colorPrimary</item>
         <item name="android:navigationBarColor">@color/black</item>
 
         <item name="colorAccent">?attr/colorPrimary</item>

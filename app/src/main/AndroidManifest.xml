@@ -20,7 +20,8 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MusicPlayer">
+        android:theme="@style/Theme.MusicPlayer"
+        android:dataExtractionRules="@xml/data_extraction_rules">
         <activity
             android:name="com.musicplayer.openmusic.ui.main.MainActivity"
             android:exported="true"

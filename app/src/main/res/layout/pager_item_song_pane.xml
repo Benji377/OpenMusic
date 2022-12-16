@@ -11,7 +11,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:padding="5dp"
-        app:srcCompat="@drawable/music_combined" />
+        app:srcCompat="@drawable/music_combined"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/textview_song_pane_item_title"
