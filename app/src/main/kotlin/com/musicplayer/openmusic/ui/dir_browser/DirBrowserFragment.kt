@@ -84,7 +84,7 @@ class DirBrowserFragment : Fragment() {
                 )
 
                 //remove sub-dirs (whether this dir was added or removed)
-                val pathsToRemove = ArrayList<String>()
+                val pathsToRemove = mutableListOf<String>()
                 for (savedPath in savedPaths!!) {
                     if (isSubDir(savedPath, folder!!.absolutePath)) pathsToRemove.add(savedPath)
                 }

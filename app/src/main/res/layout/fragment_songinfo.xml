@@ -13,9 +13,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:background="@drawable/main_list_background"
+        android:contentDescription="Song art"
         android:padding="2dp"
-        android:src="@drawable/ic_music"
-        android:contentDescription="TODO" />
+        android:src="@drawable/ic_music" />
 
     <TextView
         android:id="@+id/textview_song_title"

@@ -18,9 +18,9 @@ class Playlist : Serializable {
     var name: String
 
     @Ignore
-    var songList: ArrayList<Song>
+    var songList: MutableList<Song>
 
-    constructor(id: UUID, name: String, songList: ArrayList<Song>) {
+    constructor(id: UUID, name: String, songList: MutableList<Song>) {
         this.id = id
         this.name = name
         this.songList = songList
@@ -29,7 +29,7 @@ class Playlist : Serializable {
     constructor(id: UUID, name: String) {
         this.id = id
         this.name = name
-        songList = ArrayList()
+        songList = mutableListOf()
     }
 
     val songCount: Int

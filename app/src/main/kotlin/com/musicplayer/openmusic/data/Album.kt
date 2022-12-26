@@ -15,10 +15,10 @@ class Album(
 ) : Serializable {
 
     @Ignore
-    private var songList: ArrayList<Song>?
+    private var songList: MutableList<Song>?
 
     init {
-        songList = ArrayList()
+        songList = mutableListOf()
     }
 
     val songCount: Int
@@ -36,11 +36,11 @@ class Album(
     val isEmpty: Boolean
         get() = songList!!.isEmpty()
 
-    fun getSongList(): ArrayList<Song>? {
+    fun getSongList(): MutableList<Song>? {
         return songList
     }
 
-    fun setSongList(songList: ArrayList<Song>?) {
+    fun setSongList(songList: MutableList<Song>?) {
         this.songList = songList
         if (songList != null) {
             for (song in songList) song.album = this

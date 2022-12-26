@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.preference.PreferenceManager
-import androidx.room.Room.Companion.databaseBuilder
+import androidx.room.Room.databaseBuilder
 import com.musicplayer.openmusic.OpenMusicApp
 import com.musicplayer.openmusic.R
 import com.musicplayer.openmusic.data.base.AppDatabase
@@ -21,11 +21,11 @@ class SongsData private constructor(context: Context) {
     private val database: AppDatabase
 
     @Volatile
-    private var allSongs: ArrayList<Song>? = null
-    var allPlaylists: ArrayList<Playlist>? = null
-    var allAlbums: ArrayList<Album>? = null
-    private var playingQueue: ArrayList<Song>? = null
-    private var originalQueue: ArrayList<Song>? = null
+    private var allSongs: MutableList<Song>? = null
+    var allPlaylists: MutableList<Playlist>? = null
+    var allAlbums: MutableList<Album>? = null
+    private var playingQueue: MutableList<Song>? = null
+    private var originalQueue: MutableList<Song>? = null
     private var playingQueueIndex = 0
     /**
      * Checks if the player is in repeat mode or not
@@ -72,7 +72,7 @@ class SongsData private constructor(context: Context) {
      * When created automatically reloads all songs and creates the playingQueue
      */
     init {
-        playingQueue = ArrayList()
+        playingQueue = mutableListOf()
         database =
             databaseBuilder(context, AppDatabase::class.java, AppDatabase.DATABASE_NAME).build()
     }
@@ -121,8 +121,8 @@ class SongsData private constructor(context: Context) {
         setPlayingQueue(playlist.songList, position)
     }
 
-    private fun setPlayingQueue(newPlayingQueue: ArrayList<Song>, position: Int) {
-        playingQueue = ArrayList()
+    private fun setPlayingQueue(newPlayingQueue: MutableList<Song>, position: Int) {
+        playingQueue = mutableListOf()
         playingQueue!!.addAll(newPlayingQueue)
         playingQueueIndex = position
         originalQueue = playingQueue
@@ -326,11 +326,11 @@ class SongsData private constructor(context: Context) {
      * @param dir Directory in which the songs should be searched
      * @return Array with songs
      */
-    private fun loadSongs(dir: File): ArrayList<Song> {
+    private fun loadSongs(dir: File): MutableList<Song> {
         // All files in given directory
         val files = dir.listFiles()
         // Array that stores all songs
-        val songsFound = ArrayList<Song>()
+        val songsFound = mutableListOf<Song>()
         if (files != null) {
             // All files in the directory
             for (singlefile in files) {
@@ -429,7 +429,7 @@ class SongsData private constructor(context: Context) {
         return playingQueueIndex == 0
     }
 
-    fun getPlayingQueue(): ArrayList<Song>? {
+    fun getPlayingQueue(): MutableList<Song>? {
         return playingQueue
     }
 
@@ -462,7 +462,7 @@ class SongsData private constructor(context: Context) {
      */
     private fun setRandomQueue() {
         // Temporary Arraylist to store all the songs
-        val temporary = ArrayList<Song>()
+        val temporary = mutableListOf<Song>()
         val r = Random()
         // Avoids getting double random numbers
         // Example: The number 5 only gets called once

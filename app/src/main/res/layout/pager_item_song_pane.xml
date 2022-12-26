@@ -10,9 +10,9 @@
         android:id="@+id/imageview_song_pane_item_album_art"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:contentDescription="Album icon"
         android:padding="5dp"
-        app:srcCompat="@drawable/music_combined"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/music_combined" />
 
     <TextView
         android:id="@+id/textview_song_pane_item_title"

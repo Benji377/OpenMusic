@@ -22,8 +22,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/main_list_background"
-            android:src="@drawable/ic_playlist"
-            android:contentDescription="TODO" />
+            android:contentDescription="Playlist icon"
+            android:src="@drawable/ic_playlist" />
 
         <TextView
             android:id="@+id/textview_playlist_item_name"

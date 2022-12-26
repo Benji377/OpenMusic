@@ -30,8 +30,8 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/ic_playlist"
-                    android:contentDescription="TODO" />
+                    android:contentDescription="Playlist icon"
+                    android:src="@drawable/ic_playlist" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

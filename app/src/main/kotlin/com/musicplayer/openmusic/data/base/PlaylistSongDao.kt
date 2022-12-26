@@ -20,10 +20,10 @@ abstract class PlaylistSongDao {
     abstract fun deletePlaylist(playlistId: String)
 
     @Query("SELECT * FROM Playlist_Song WHERE playlist_id=:playlistId ORDER BY song_index")
-    protected abstract fun getPlaylistSongs(playlistId: String): ArrayList<PlaylistSong>
+    protected abstract fun getPlaylistSongs(playlistId: String): MutableList<PlaylistSong>
 
     @Query("SELECT * FROM Playlist_Song WHERE song_id=:songId ORDER BY playlist_id, song_index")
-    protected abstract fun getSongPlaylists(songId: String): ArrayList<PlaylistSong>
+    protected abstract fun getSongPlaylists(songId: String): MutableList<PlaylistSong>
 
     @Query("UPDATE Playlist_Song SET song_index=:songIndex WHERE playlist_id=:playlistId AND song_id=:songId")
     protected abstract fun updateIndex(playlistId: String, songId: String, songIndex: Int)

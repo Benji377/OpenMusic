@@ -13,10 +13,10 @@ interface AlbumDao {
     fun insert(album: Album)
 
     @get:Query("SELECT * FROM ALBUM")
-    val all: ArrayList<Album>
+    val all: MutableList<Album>
 
     @Query("SELECT * FROM Song WHERE Song.album_id=:albumId")
-    fun getSongs(albumId: String): ArrayList<Song>
+    fun getSongs(albumId: String): MutableList<Song>
 
     @Delete
     fun delete(album: Album)

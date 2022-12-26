@@ -12,10 +12,10 @@ interface SongDao {
     fun insert(song: Song)
 
     @Insert
-    fun insertAll(song: ArrayList<Song>)
+    fun insertAll(song: MutableList<Song>)
 
     @get:Query("SELECT * FROM Song ORDER BY song_path")
-    val all: ArrayList<Song>
+    val all: MutableList<Song>
 
     @Query("DELETE FROM Song")
     fun clearAll()
