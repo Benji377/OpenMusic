@@ -58,7 +58,7 @@ $dokka.location:com.musicplayer.openmusic.data.base/SongDao/clearAll/#/PointingT
 $dokka.location:com.musicplayer.openmusic.data.base/SongDao/delete/#com.musicplayer.openmusic.data.Song/PointingToDeclaration/app/com.musicplayer.openmusic.data.base/-song-dao/delete.html
 $dokka.location:com.musicplayer.openmusic.data.base/SongDao/getAll/#/PointingToDeclaration/app/com.musicplayer.openmusic.data.base/-song-dao/get-all.html
 $dokka.location:com.musicplayer.openmusic.data.base/SongDao/insert/#com.musicplayer.openmusic.data.Song/PointingToDeclaration/app/com.musicplayer.openmusic.data.base/-song-dao/insert.html
-$dokka.location:com.musicplayer.openmusic.data.base/SongDao/insertAll/#java.util.ArrayList[com.musicplayer.openmusic.data.Song]/PointingToDeclaration/app/com.musicplayer.openmusic.data.base/-song-dao/insert-all.html
+$dokka.location:com.musicplayer.openmusic.data.base/SongDao/insertAll/#kotlin.collections.MutableList[com.musicplayer.openmusic.data.Song]/PointingToDeclaration/app/com.musicplayer.openmusic.data.base/-song-dao/insert-all.html
 $dokka.location:com.musicplayer.openmusic.data.base/SongDao/setAlbum/#kotlin.String#kotlin.String/PointingToDeclaration/app/com.musicplayer.openmusic.data.base/-song-dao/set-album.html
 $dokka.location:com.musicplayer.openmusic.data.base/UUIDConverter///PointingToDeclaration/app/com.musicplayer.openmusic.data.base/-u-u-i-d-converter/index.html
 $dokka.location:com.musicplayer.openmusic.data.base/UUIDConverter/fromUUID/#java.util.UUID/PointingToDeclaration/app/com.musicplayer.openmusic.data.base/-u-u-i-d-converter/from-u-u-i-d.html
@@ -77,10 +77,10 @@ $dokka.location:com.musicplayer.openmusic.data/Album/getTitle/#/PointingToDeclar
 $dokka.location:com.musicplayer.openmusic.data/Album/isEmpty/#/PointingToDeclaration/app/com.musicplayer.openmusic.data/-album/is-empty.html
 $dokka.location:com.musicplayer.openmusic.data/Album/setArtPath/#kotlin.String?/PointingToDeclaration/app/com.musicplayer.openmusic.data/-album/set-art-path.html
 $dokka.location:com.musicplayer.openmusic.data/Album/setId/#java.util.UUID/PointingToDeclaration/app/com.musicplayer.openmusic.data/-album/set-id.html
-$dokka.location:com.musicplayer.openmusic.data/Album/setSongList/#java.util.ArrayList[com.musicplayer.openmusic.data.Song]?/PointingToDeclaration/app/com.musicplayer.openmusic.data/-album/set-song-list.html
+$dokka.location:com.musicplayer.openmusic.data/Album/setSongList/#kotlin.collections.MutableList[com.musicplayer.openmusic.data.Song]?/PointingToDeclaration/app/com.musicplayer.openmusic.data/-album/set-song-list.html
 $dokka.location:com.musicplayer.openmusic.data/Album/setTitle/#kotlin.String/PointingToDeclaration/app/com.musicplayer.openmusic.data/-album/set-title.html
 $dokka.location:com.musicplayer.openmusic.data/Playlist///PointingToDeclaration/app/com.musicplayer.openmusic.data/-playlist/index.html
-$dokka.location:com.musicplayer.openmusic.data/Playlist/Playlist/#java.util.UUID#kotlin.String#java.util.ArrayList[com.musicplayer.openmusic.data.Song]/PointingToDeclaration/app/com.musicplayer.openmusic.data/-playlist/-playlist.html
+$dokka.location:com.musicplayer.openmusic.data/Playlist/Playlist/#java.util.UUID#kotlin.String#kotlin.collections.MutableList[com.musicplayer.openmusic.data.Song]/PointingToDeclaration/app/com.musicplayer.openmusic.data/-playlist/-playlist.html
 $dokka.location:com.musicplayer.openmusic.data/Playlist/Playlist/#java.util.UUID#kotlin.String/PointingToDeclaration/app/com.musicplayer.openmusic.data/-playlist/-playlist.html
 $dokka.location:com.musicplayer.openmusic.data/Playlist/addSong/#com.musicplayer.openmusic.data.Song/PointingToDeclaration/app/com.musicplayer.openmusic.data/-playlist/add-song.html
 $dokka.location:com.musicplayer.openmusic.data/Playlist/calculateTotalDuration/#/PointingToDeclaration/app/com.musicplayer.openmusic.data/-playlist/calculate-total-duration.html
@@ -96,7 +96,7 @@ $dokka.location:com.musicplayer.openmusic.data/Playlist/isFavorites/#/PointingTo
 $dokka.location:com.musicplayer.openmusic.data/Playlist/removeSong/#com.musicplayer.openmusic.data.Song/PointingToDeclaration/app/com.musicplayer.openmusic.data/-playlist/remove-song.html
 $dokka.location:com.musicplayer.openmusic.data/Playlist/removeSongAt/#kotlin.Int/PointingToDeclaration/app/com.musicplayer.openmusic.data/-playlist/remove-song-at.html
 $dokka.location:com.musicplayer.openmusic.data/Playlist/setName/#kotlin.String/PointingToDeclaration/app/com.musicplayer.openmusic.data/-playlist/set-name.html
-$dokka.location:com.musicplayer.openmusic.data/Playlist/setSongList/#java.util.ArrayList[com.musicplayer.openmusic.data.Song]/PointingToDeclaration/app/com.musicplayer.openmusic.data/-playlist/set-song-list.html
+$dokka.location:com.musicplayer.openmusic.data/Playlist/setSongList/#kotlin.collections.MutableList[com.musicplayer.openmusic.data.Song]/PointingToDeclaration/app/com.musicplayer.openmusic.data/-playlist/set-song-list.html
 $dokka.location:com.musicplayer.openmusic.data/Song///PointingToDeclaration/app/com.musicplayer.openmusic.data/-song/index.html
 $dokka.location:com.musicplayer.openmusic.data/Song/Song/#java.util.UUID#java.io.File#kotlin.String/PointingToDeclaration/app/com.musicplayer.openmusic.data/-song/-song.html
 $dokka.location:com.musicplayer.openmusic.data/Song/Song/#java.util.UUID#java.io.File/PointingToDeclaration/app/com.musicplayer.openmusic.data/-song/-song.html
@@ -158,8 +158,8 @@ $dokka.location:com.musicplayer.openmusic.data/SongsData/playNext/#/PointingToDe
 $dokka.location:com.musicplayer.openmusic.data/SongsData/playPlaylistFrom/#com.musicplayer.openmusic.data.Playlist#kotlin.Int/PointingToDeclaration/app/com.musicplayer.openmusic.data/-songs-data/play-playlist-from.html
 $dokka.location:com.musicplayer.openmusic.data/SongsData/playPrev/#/PointingToDeclaration/app/com.musicplayer.openmusic.data/-songs-data/play-prev.html
 $dokka.location:com.musicplayer.openmusic.data/SongsData/removeFromPlaylist/#com.musicplayer.openmusic.data.Playlist#com.musicplayer.openmusic.data.Song#kotlin.Int#kotlin.Boolean/PointingToDeclaration/app/com.musicplayer.openmusic.data/-songs-data/remove-from-playlist.html
-$dokka.location:com.musicplayer.openmusic.data/SongsData/setAllAlbums/#java.util.ArrayList[com.musicplayer.openmusic.data.Album]?/PointingToDeclaration/app/com.musicplayer.openmusic.data/-songs-data/set-all-albums.html
-$dokka.location:com.musicplayer.openmusic.data/SongsData/setAllPlaylists/#java.util.ArrayList[com.musicplayer.openmusic.data.Playlist]?/PointingToDeclaration/app/com.musicplayer.openmusic.data/-songs-data/set-all-playlists.html
+$dokka.location:com.musicplayer.openmusic.data/SongsData/setAllAlbums/#kotlin.collections.MutableList[com.musicplayer.openmusic.data.Album]?/PointingToDeclaration/app/com.musicplayer.openmusic.data/-songs-data/set-all-albums.html
+$dokka.location:com.musicplayer.openmusic.data/SongsData/setAllPlaylists/#kotlin.collections.MutableList[com.musicplayer.openmusic.data.Playlist]?/PointingToDeclaration/app/com.musicplayer.openmusic.data/-songs-data/set-all-playlists.html
 $dokka.location:com.musicplayer.openmusic.data/SongsData/setDoneLoading/#kotlin.Boolean/PointingToDeclaration/app/com.musicplayer.openmusic.data/-songs-data/set-done-loading.html
 $dokka.location:com.musicplayer.openmusic.data/SongsData/setPlayingIndex/#kotlin.Int/PointingToDeclaration/app/com.musicplayer.openmusic.data/-songs-data/set-playing-index.html
 $dokka.location:com.musicplayer.openmusic.data/SongsData/setRepeat/#kotlin.Boolean/PointingToDeclaration/app/com.musicplayer.openmusic.data/-songs-data/set-repeat.html
