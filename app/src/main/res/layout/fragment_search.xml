@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.musicplayer.OpenMusic.ui.search.SearchActivity">
+    tools:context="com.musicplayer.openmusic.ui.search.SearchActivity">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         app:iconifiedByDefault="false" />
 
-    <com.musicplayer.OpenMusic.custom_views.CustomRecyclerView
+    <com.musicplayer.openmusic.custom_views.CustomRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

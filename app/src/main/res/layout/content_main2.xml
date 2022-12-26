@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:gravity="start" />
 
-    <com.musicplayer.OpenMusic.custom_views.SidenavMenu
+    <com.musicplayer.openmusic.custom_views.SidenavMenu
         android:id="@+id/sidenavmenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

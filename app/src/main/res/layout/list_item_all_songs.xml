@@ -23,7 +23,8 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/main_list_background"
             android:padding="2dp"
-            android:src="@drawable/ic_music" />
+            android:src="@drawable/ic_music"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/textview_all_songs_item_song_title"

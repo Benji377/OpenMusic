@@ -41,7 +41,8 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/layout_dir_item_checkbox_holder"
-            android:src="@drawable/ic_folder" />
+            android:src="@drawable/ic_folder"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/textview_dir_item_name"

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "0e69ccd10d8d33a90cbfe1774c7cddfc",
+    "identityHash": "d6c16687be8f0e952e0a82ee4b81506e",
     "entities": [
       {
         "tableName": "Song",
@@ -28,10 +28,10 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "song_id"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [
           {
@@ -69,7 +69,7 @@
       },
       {
         "tableName": "Playlist",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`playlist_id` TEXT NOT NULL, `playlist_name` TEXT, PRIMARY KEY(`playlist_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`playlist_id` TEXT NOT NULL, `playlist_name` TEXT NOT NULL, PRIMARY KEY(`playlist_id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -81,21 +81,21 @@
             "fieldPath": "name",
             "columnName": "playlist_name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "playlist_id"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "Album",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album_id` TEXT NOT NULL, `album_title` TEXT, `album_art_path` TEXT, PRIMARY KEY(`album_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album_id` TEXT NOT NULL, `album_title` TEXT NOT NULL, `album_art_path` TEXT, PRIMARY KEY(`album_id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -107,7 +107,7 @@
             "fieldPath": "title",
             "columnName": "album_title",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "artPath",
@@ -117,10 +117,10 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "album_id"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [],
         "foreignKeys": []
@@ -149,12 +149,12 @@
           }
         ],
         "primaryKey": {
+          "autoGenerate": false,
           "columnNames": [
             "playlist_id",
             "song_id",
             "song_index"
-          ],
-          "autoGenerate": false
+          ]
         },
         "indices": [
           {
@@ -196,7 +196,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e69ccd10d8d33a90cbfe1774c7cddfc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd6c16687be8f0e952e0a82ee4b81506e')"
     ]
   }
 }
