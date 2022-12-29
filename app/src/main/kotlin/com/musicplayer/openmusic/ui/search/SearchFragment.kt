@@ -118,7 +118,7 @@ class SearchFragment : Fragment() {
     }
 
     interface Host {
-        fun onSongClick(songClicked: Song)
+        fun onSongClick(song: Song)
     }
 
 }

@@ -21,7 +21,7 @@ class SongsData private constructor(context: Context) {
     private val database: AppDatabase
 
     @Volatile
-    private var allSongs: MutableList<Song>? = null
+    private var allSongs: MutableList<Song> = mutableListOf()
     var allPlaylists: MutableList<Playlist>? = null
     var allAlbums: MutableList<Album>? = null
     private var playingQueue: MutableList<Song>? = null

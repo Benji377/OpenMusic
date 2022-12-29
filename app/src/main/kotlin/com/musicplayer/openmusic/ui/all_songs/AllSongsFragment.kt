@@ -92,6 +92,6 @@ class AllSongsFragment : Fragment() {
     }
 
     interface Host {
-        fun onSongClick(songClicked: Song)
+        fun onSongClick(song: Song)
     }
 }

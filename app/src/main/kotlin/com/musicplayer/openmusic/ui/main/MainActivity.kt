@@ -43,7 +43,7 @@ import timber.log.Timber
 import java.util.*
 import kotlin.system.exitProcess
 
-abstract class MainActivity : PlayerFragmentHost(), AllSongsFragment.Host, AlbumsTabFragment.Host,
+class MainActivity : PlayerFragmentHost(), AllSongsFragment.Host, AlbumsTabFragment.Host,
     PlaylistsTabFragment.Host, SettingsFragment.Host, SearchFragment.Host,
     ActivityResultCallback<ActivityResult>, LoadListener {
     private var songListAdapter: SongListAdapter? = null
@@ -90,7 +90,7 @@ abstract class MainActivity : PlayerFragmentHost(), AllSongsFragment.Host, Album
         // Checks for all the required permissions
         runtimePermission()
         startSleeptimer()
-        songListAdapter = SongListAdapter(this, SongsData.data!!.getAllSongs() as MutableList<Song>)
+        songListAdapter = SongListAdapter(this, SongsData.data?.getAllSongs() as MutableList<Song>)
     }
 
     /**
@@ -208,6 +208,9 @@ abstract class MainActivity : PlayerFragmentHost(), AllSongsFragment.Host, Album
         }
         tabsPager!!.adapter = TabsPagerAdapter(this)
     }
+
+    override val isShowingPlayer: Boolean
+        get() = TODO("Not yet implemented")
 
     override fun onSongListClick() {
         super.unregisterMediaReceiver()
