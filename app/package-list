@@ -277,6 +277,7 @@ $dokka.location:com.musicplayer.openmusic.ui.dir_browser/FolderHolder/setFolder/
 $dokka.location:com.musicplayer.openmusic.ui.main////PointingToDeclaration/app/com.musicplayer.openmusic.ui.main/index.html
 $dokka.location:com.musicplayer.openmusic.ui.main/MainActivity///PointingToDeclaration/app/com.musicplayer.openmusic.ui.main/-main-activity/index.html
 $dokka.location:com.musicplayer.openmusic.ui.main/MainActivity/MainActivity/#/PointingToDeclaration/app/com.musicplayer.openmusic.ui.main/-main-activity/-main-activity.html
+$dokka.location:com.musicplayer.openmusic.ui.main/MainActivity/isShowingPlayer/#/PointingToDeclaration/app/com.musicplayer.openmusic.ui.main/-main-activity/is-showing-player.html
 $dokka.location:com.musicplayer.openmusic.ui.main/MainActivity/onActivityResult/#androidx.activity.result.ActivityResult?/PointingToDeclaration/app/com.musicplayer.openmusic.ui.main/-main-activity/on-activity-result.html
 $dokka.location:com.musicplayer.openmusic.ui.main/MainActivity/onAddedAlbums/#/PointingToDeclaration/app/com.musicplayer.openmusic.ui.main/-main-activity/on-added-albums.html
 $dokka.location:com.musicplayer.openmusic.ui.main/MainActivity/onAddedSongs/#/PointingToDeclaration/app/com.musicplayer.openmusic.ui.main/-main-activity/on-added-songs.html
