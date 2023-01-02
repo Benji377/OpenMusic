@@ -99,7 +99,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.14.2")
     implementation("org.json:json:20220924")
     // annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
-    implementation("com.github.smart-fun:XmlToJson:1.5.1")
+    implementation("com.github.smart-fun:XmlToJson:1.5.2")
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20")
 
     val roomVersion = "2.5.0-rc01"
