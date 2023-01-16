@@ -102,7 +102,7 @@ dependencies {
     implementation("com.github.smart-fun:XmlToJson:1.5.2")
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.7.20")
 
-    val roomVersion = "2.5.0-rc01"
+    val roomVersion = "2.5.0"
     kapt("androidx.room:room-compiler:${roomVersion}")
     implementation("androidx.room:room-runtime:${roomVersion}")
     implementation("androidx.room:room-ktx:${roomVersion}")
