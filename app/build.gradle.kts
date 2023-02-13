@@ -83,7 +83,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
     implementation("commons-io:commons-io:20030203.000550")
-    implementation("androidx.appcompat:appcompat:1.6.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.karumi:dexter:6.2.3")
     implementation("com.gauravk.audiovisualizer:audiovisualizer:0.9.2")
     implementation("com.google.android.material:material:1.8.0")
